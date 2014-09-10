@@ -19,11 +19,11 @@
 --><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.mycompany</groupId>
-    <artifactId>myapp</artifactId>
+    <groupId>FourHeads</groupId>
+    <artifactId>GestionEscuelaIsis</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-    <name>Simple App</name>
+    <name>Simple Wicket/Restful/JDO App</name>
 
     <packaging>pom</packaging>
 
@@ -315,18 +315,18 @@
 
             <!-- this project's own modules -->
             <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>myapp-dom</artifactId>
+                <groupId>FourHeads</groupId>
+                <artifactId>GestionEscuelaIsis-dom</artifactId>
                 <version>1.0-SNAPSHOT</version>
             </dependency>
             <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>myapp-fixture</artifactId>
+                <groupId>FourHeads</groupId>
+                <artifactId>GestionEscuelaIsis-fixture</artifactId>
                 <version>1.0-SNAPSHOT</version>
             </dependency>
             <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>myapp-webapp</artifactId>
+                <groupId>FourHeads</groupId>
+                <artifactId>GestionEscuelaIsis-webapp</artifactId>
                 <version>1.0-SNAPSHOT</version>
             </dependency>
         </dependencies>

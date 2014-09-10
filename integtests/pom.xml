@@ -20,13 +20,13 @@
 	<modelVersion>4.0.0</modelVersion>
 
     <parent>
-    	<groupId>com.mycompany</groupId>
-        <artifactId>myapp</artifactId>
+        <artifactId>GestionEscuelaIsis</artifactId>
         <version>1.0-SNAPSHOT</version>
+        <groupId>FourHeads</groupId>
     </parent>
 
-	<artifactId>myapp-integtests</artifactId>
-	<name>Simple App Integration Tests</name>
+	<artifactId>GestionEscuelaIsis-integtests</artifactId>
+	<name>Simple Wicket/Restful/JDO Integration Tests</name>
 
     <build>
         <testResources>
@@ -48,8 +48,8 @@
 	
 		<!-- other modules in this project -->
 		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>myapp-fixture</artifactId>
+			<groupId>FourHeads</groupId>
+			<artifactId>GestionEscuelaIsis-fixture</artifactId>
 		</dependency>
 
         <dependency>

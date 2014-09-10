@@ -20,18 +20,18 @@
 	<modelVersion>4.0.0</modelVersion>
 
     <parent>
-    	<groupId>com.mycompany</groupId>
-        <artifactId>myapp</artifactId>
         <version>1.0-SNAPSHOT</version>
+        <artifactId>GestionEscuelaIsis</artifactId>
+        <groupId>FourHeads</groupId>
     </parent>
 
-	<artifactId>myapp-fixture</artifactId>
-	<name>Simple App Fixtures</name>
+	<artifactId>GestionEscuelaIsis-fixture</artifactId>
+	<name>Simple Wicket/Restful/JDO Fixtures</name>
 
 	<dependencies>
 		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>myapp-dom</artifactId>
+			<groupId>FourHeads</groupId>
+			<artifactId>GestionEscuelaIsis-dom</artifactId>
 		</dependency>
 	</dependencies>
 

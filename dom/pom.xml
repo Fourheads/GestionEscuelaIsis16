@@ -20,13 +20,13 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-    	<groupId>com.mycompany</groupId>
-    	<artifactId>myapp</artifactId>
         <version>1.0-SNAPSHOT</version>
+        <artifactId>GestionEscuelaIsis</artifactId>
+        <groupId>FourHeads</groupId>
 	</parent>
 
-	<artifactId>myapp-dom</artifactId>
-	<name>Simple App DOM</name>
+	<artifactId>GestionEscuelaIsis-dom</artifactId>
+	<name>Simple Wicket/Restful/JDO DOM</name>
 
 	<build>
         <resources>
