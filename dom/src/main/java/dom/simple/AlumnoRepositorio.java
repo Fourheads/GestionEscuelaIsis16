@@ -25,17 +25,10 @@ package dom.simple;
 import java.util.List;
 
 import org.apache.isis.applib.DomainObjectContainer;
-import org.apache.isis.applib.annotation.ActionSemantics;
-import org.apache.isis.applib.annotation.Bookmarkable;
-import org.apache.isis.applib.annotation.Mask;
-import org.apache.isis.applib.annotation.MemberOrder;
-import org.apache.isis.applib.annotation.Named;
-import org.apache.isis.applib.annotation.Programmatic;
-import org.apache.isis.applib.annotation.ActionSemantics.Of;
-import org.apache.isis.applib.annotation.Optional;
-import org.apache.isis.applib.annotation.RegEx;
 import org.apache.isis.applib.query.QueryDefault;
 import org.joda.time.LocalDate;
+import org.apache.isis.applib.annotation.*;
+import org.apache.isis.applib.annotation.ActionSemantics.Of;
 
 import dom.simple.Localidad.E_localidades;
 import dom.simple.Persona.E_nacionalidad;
@@ -44,6 +37,7 @@ import dom.simple.Persona.E_sexo;
 
 ///GestionEscuela
 
+@DomainService(menuOrder = "16", repositoryFor = Materia.class)
 @Named("Alumnos")
 public class AlumnoRepositorio {
 
