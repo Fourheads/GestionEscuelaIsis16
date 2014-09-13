@@ -232,7 +232,60 @@ public class Curso {
     }
 	
 	
-    @javax.inject.Inject 
+    
+    
+    @Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((ListaAlumno == null) ? 0 : ListaAlumno.hashCode());
+		result = prime * result
+				+ ((ListaMateria == null) ? 0 : ListaMateria.hashCode());
+		result = prime * result + anio;
+		result = prime * result
+				+ ((division == null) ? 0 : division.hashCode());
+		result = prime * result
+				+ ((preceptor == null) ? 0 : preceptor.hashCode());
+		result = prime * result + ((turno == null) ? 0 : turno.hashCode());
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Curso other = (Curso) obj;
+		if (ListaAlumno == null) {
+			if (other.ListaAlumno != null)
+				return false;
+		} else if (!ListaAlumno.equals(other.ListaAlumno))
+			return false;
+		if (ListaMateria == null) {
+			if (other.ListaMateria != null)
+				return false;
+		} else if (!ListaMateria.equals(other.ListaMateria))
+			return false;
+		if (anio != other.anio)
+			return false;
+		if (division == null) {
+			if (other.division != null)
+				return false;
+		} else if (!division.equals(other.division))
+			return false;
+		if (preceptor == null) {
+			if (other.preceptor != null)
+				return false;
+		} else if (!preceptor.equals(other.preceptor))
+			return false;
+		if (turno != other.turno)
+			return false;
+		return true;
+	}
+	@javax.inject.Inject 
     DomainObjectContainer container;
 
 }
