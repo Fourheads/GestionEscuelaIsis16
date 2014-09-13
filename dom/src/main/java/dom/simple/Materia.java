@@ -111,8 +111,7 @@ public class Materia {
 	
     
 	public String title(){
-		String titulo="Materia: "+getNombre()+" "+getAnio();
-		return titulo;
+		return "Materia: "+getNombre()+" "+String.valueOf(getAnio());
 	}
 	
 	@Override

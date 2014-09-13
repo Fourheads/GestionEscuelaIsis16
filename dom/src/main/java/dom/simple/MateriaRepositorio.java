@@ -33,6 +33,7 @@ import org.apache.isis.applib.annotation.MaxLength;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.MultiLine;
 import org.apache.isis.applib.annotation.Named;
+import org.apache.isis.applib.annotation.RegEx;
 import org.apache.isis.applib.annotation.ActionSemantics.Of;
 import org.apache.isis.applib.annotation.Where;
 
@@ -74,7 +75,9 @@ public class MateriaRepositorio {
         @Named ("Crear Materia")
         public Materia create(
                 final @Named("Nombre") String Nombre,
-                final @MaxLength(2048) @MultiLine @Named("Programa") String Programa)
+                final @Named("Año") @RegEx(validation = "/d{1,1}") int anio,
+                final @MaxLength(2048) @MultiLine @Named("Programa") String Programa
+                )
         {
         	final Materia obj = container.newTransientInstance(Materia.class);
             obj.setNombre(Nombre);
