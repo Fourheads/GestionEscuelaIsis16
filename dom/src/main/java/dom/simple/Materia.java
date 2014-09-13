@@ -38,23 +38,25 @@ import org.apache.isis.applib.annotation.Named;
 import org.apache.isis.applib.annotation.PublishedAction;
 import org.apache.isis.applib.query.QueryDefault;
 
+import dom.simple.Funcion.E_funciones;
+
 
 
 @Bounded
 @PersistenceCapable
 public class Materia {
 	
-	private int anio;
+	private int año;
 	
 	
 	@Column(allowsNull = "true")
 	@MemberOrder(sequence = "1")
 	@Persistent
-	public int getAnio() {
-		return anio;
+	public int getAño() {
+		return año;
 	}
-	public void setAnio(int anio) {
-		this.anio = anio;
+	public void setAño(int anio) {
+		this.año = anio;
 	}
 
 	private String nombre;	
@@ -106,19 +108,19 @@ public class Materia {
     
     public List<Personal> choices0AsignarProfesor(){
     	return container.allMatches(
-    			new QueryDefault<Personal>(Personal.class, "findProfesores"));
+    	new QueryDefault<Personal>(Personal.class, "findByFuncion", "nombre", E_funciones.PROFESOR.toString()));
     }
 	
     
 	public String title(){
-		return "Materia: "+getNombre()+" "+String.valueOf(getAnio());
+		return "Materia: "+getNombre()+" "+String.valueOf(getAño());
 	}
 	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + anio;
+		result = prime * result + año;
 		result = prime * result + ((nombre == null) ? 0 : nombre.hashCode());
 		result = prime * result
 				+ ((programa == null) ? 0 : programa.hashCode());
@@ -133,7 +135,7 @@ public class Materia {
 		if (getClass() != obj.getClass())
 			return false;
 		Materia other = (Materia) obj;
-		if (anio != other.anio)
+		if (año != other.año)
 			return false;
 		if (nombre == null) {
 			if (other.nombre != null)
