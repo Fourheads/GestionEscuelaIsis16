@@ -109,8 +109,9 @@ public class Materia {
     			new QueryDefault<Personal>(Personal.class, "findProfesores"));
     }
 	
+    
 	public String title(){
-		String titulo=String.valueOf("Materia: "+getNombre());
+		String titulo="Materia: "+getNombre()+" "+getAnio();
 		return titulo;
 	}
 	
