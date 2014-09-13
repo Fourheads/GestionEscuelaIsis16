@@ -44,6 +44,19 @@ import org.apache.isis.applib.query.QueryDefault;
 @PersistenceCapable
 public class Materia {
 	
+	private int anio;
+	
+	
+	@Column(allowsNull = "true")
+	@MemberOrder(sequence = "1")
+	@Persistent
+	public int getAnio() {
+		return anio;
+	}
+	public void setAnio(int anio) {
+		this.anio = anio;
+	}
+
 	private String nombre;	
 	
 	@Column(allowsNull = "true")
@@ -141,12 +154,13 @@ public class Materia {
 			return false;
 		return true;
 	}
+	/*
 	@PublishedAction
 	@Bulk
 	public String eliminar(){
 		container.removeIfNotAlready(this);
 		container.informUser("blalballa");
 		return "La materia se elimino";
-	}
+	}*/
 
 }
