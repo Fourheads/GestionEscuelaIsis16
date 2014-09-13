@@ -115,6 +115,41 @@ public class Materia {
 		return titulo;
 	}
 	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + anio;
+		result = prime * result + ((nombre == null) ? 0 : nombre.hashCode());
+		result = prime * result
+				+ ((programa == null) ? 0 : programa.hashCode());
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Materia other = (Materia) obj;
+		if (anio != other.anio)
+			return false;
+		if (nombre == null) {
+			if (other.nombre != null)
+				return false;
+		} else if (!nombre.equals(other.nombre))
+			return false;
+		if (programa == null) {
+			if (other.programa != null)
+				return false;
+		} else if (!programa.equals(other.programa))
+			return false;
+		return true;
+	}
+
+	
 	//efective java programing
 	
 	
@@ -125,36 +160,8 @@ public class Materia {
     @javax.inject.Inject 
     DomainObjectContainer container;
 
-	@Override
-	public int hashCode() {
-		final int prime = 7;
-		int result = 5;
-		result = prime * result + ((nombre == null) ? 0 : nombre.hashCode());
-		result = prime * result
-				+ ((profesor == null) ? 0 : profesor.hashCode());
-		return result;
-	}
+
 	
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null || this.getClass() != obj.getClass()){
-            return false;
-     }
-		Materia other = (Materia) obj;
-		if (nombre == null) {
-			if (other.nombre != null)
-				return false;
-		} else if (!nombre.equals(other.nombre))
-			return false;
-		if (profesor == null) {
-			if (other.profesor != null)
-				return false;
-		} else if (!profesor.equals(other.profesor))
-			return false;
-		return true;
-	}
 	/*
 	@PublishedAction
 	@Bulk
