@@ -117,9 +117,9 @@ public class Curso {
 	    @MemberOrder(sequence = "4")
 	    @Named("Quitar materias del curso")
 	    public Curso removeMateria(
-	            final @Named("Materia") Materia mate) {
+	            final @Named("Materia") Materia materia) {
 	    	
-	    	getListaMateria().remove(mate);    	
+	    	getListaMateria().remove(materia);    	
 	        return this;
 	    }
 
@@ -171,6 +171,21 @@ public class Curso {
     	return container.allInstances(Alumno.class);
     }
 	
+    
+    @MemberOrder(sequence = "3.4")
+    @Named("Quitar alumnos del curso")
+    public Curso removeAlumno(
+            final @Named("Alumno") Alumno alumno) {
+    	
+    	getAlumnos().remove(alumno);    	
+        return this;
+    }
+
+    
+    public SortedSet<Alumno> choices0RemoveAlumno(){
+    	return getAlumnos();
+    }
+    
 	// }}
 	
 	/*
