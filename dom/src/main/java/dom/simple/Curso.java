@@ -104,14 +104,29 @@ public class Curso {
 		return ListaMateria;
 	}
 
-	public void setListaMateria(final SortedSet<Materia> listamateria) {
-		this.ListaMateria = listamateria;
-	}
-	
-	@Hidden
-	public void addMateria(Materia materia){
-		this.ListaMateria.add(materia);			
-	}
+	  @MemberOrder(sequence = "2")
+	    @Named("Asinganar materias")
+		public void asignarMateria(@Named("Materia") Materia materia){
+			this.ListaMateria.add(materia);			
+		}
+		
+	    public List<Materia> choices0AsignarMateria(){
+	    	return container.allInstances(Materia.class);
+	    }
+	    
+	    @MemberOrder(sequence = "4")
+	    @Named("Quitar materias del curso")
+	    public Curso removeMateria(
+	            final @Named("Materia") Materia mate) {
+	    	
+	    	getListaMateria().remove(mate);    	
+	        return this;
+	    }
+
+	    
+	    public SortedSet<Materia> choices0RemoveMateria(){
+	    	return getListaMateria();
+	    }
 	// }}
 	
 	//private List<Materia> materias;
@@ -146,10 +161,15 @@ public class Curso {
 		this.ListaAlumno = listaalumno;
 	}
 	
-	@Hidden
-	public void addAlumnos(Alumno alumno){
+    @MemberOrder(sequence = "3")
+    @Named("Asinganar alumnos")
+	public void asignarAlumnos(@Named("Alumno")Alumno alumno){
 		this.ListaAlumno.add(alumno);			
 	}
+	
+    public List<Alumno> choices0AsignarAlumnos(){
+    	return container.allInstances(Alumno.class);
+    }
 	
 	// }}
 	
