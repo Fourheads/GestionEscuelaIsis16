@@ -40,6 +40,8 @@ import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Named;
 import org.apache.isis.applib.query.QueryDefault;
 
+import dom.simple.Funcion.E_funciones;
+
 //import org.apache.isis.applib.annotation.Title;
 
 @Bounded
@@ -228,11 +230,8 @@ public class Curso {
     
     public List<Personal> choices0AsignarPreceptor(){
     	return container.allMatches(
-    			new QueryDefault<Personal>(Personal.class, "findPreceptores"));
-    }
-	
-	
-    
+    			new QueryDefault<Personal>(Personal.class, "findByFuncion", "nombre", E_funciones.PRECEPTOR.toString()));
+    }    
     
     @Override
 	public int hashCode() {
