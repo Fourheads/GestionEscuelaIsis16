@@ -91,17 +91,15 @@ public class MateriaRepositorio {
         //region > remove User (action)
         // //////////////////////////////////////
         
-       /*
-        //@Hidden(where=Where.OBJECT_FORMS)
+      
         @ActionSemantics(Of.NON_IDEMPOTENT)
         @MemberOrder(sequence = "1.6")
         @Named("Borrar Materia")
-        public String removeMateria(final @Named("Materia") Materia mate) {
+        public String removeMateria(@Named("Materia") Materia mate) {
     			container.remove(mate);
     			return "La materia " + mate.getNombre()+ " fue borrada con exito";
     	}
         
-        */
         
         //endregion
       
