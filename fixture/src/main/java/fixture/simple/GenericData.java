@@ -23,8 +23,8 @@ import java.util.Random;
 
 public class GenericData {
 	
-	private static String Nombre="Adrian, Manuel, Jose, Gogo, Pedro, Mariano, Leandro, Gonzalo, Roberto, Daniel, Fernando, Damian, Oscar, Lautaro, Miguel, Diego, Pablo, Raul, Ricardo, Matias, Hector, Juan, Emiliano, Cesar, Gerardo";
-	private static String Apellido="Garcia, Perez, Torres, Torrez, Sanchez, Zanchez, Rubilar, Abelen, Cosme, Cornillo, Cara, Rubio, Lalala, Gonzalez, Rodriguez, Gomez, Lopez,Sosa,Alvarez,Diaz,Godoy, Villalva,Ponce, Vera, Navarro,Soto, Campos, Cola,Bravo, Valdez";
+	private static String Nombre="Adrian,Manuel,Jose,Gogo,Pedro,Mariano,Leandro,Gonzalo,Roberto,Daniel,Fernando,Damian,Oscar,Lautaro,Miguel,Diego,Pablo,Raul,Ricardo,Matias,Hector,Juan,Emiliano,Cesar,Gerardo";
+	private static String Apellido="Garcia,Perez,Torres,Torrez,Sanchez,Zanchez,Rubilar,Abelen,Cosme,Cornillo,Cara,Rubio,Lalala,Gonzalez,Rodriguez,Gomez,Lopez,Sosa,Alvarez,Diaz,Godoy,Villalva,Ponce,Vera,Navarro,Soto,Campos,Cola,Bravo,Valdez";
 	private static String Ciencia="Lengua,Historia,Fisica,Matematica,Civica,Biologia,Geografia,Quimica,Analisis Matematico,Contabilidad,Musica,Plastica,Lengua y literatura,Dibujo,Educacion fisica";
 	private static String Calle="Jujuy,La Rioja,Salta,Pampa,Misiones,Buenos Ahires,Bahia Blanca,Mendoza,Santafe,Boedo,San Martin,Belgrano,Aconcagua,Domene,Chile,España,Godoy,Perito Moreno";
 	private static String Letras="A,B,C,D,E,F,G,H";
