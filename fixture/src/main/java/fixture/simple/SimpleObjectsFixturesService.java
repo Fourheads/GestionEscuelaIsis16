@@ -39,7 +39,8 @@ public class SimpleObjectsFixturesService extends FixtureScripts {
         super("fixture.simple");
     }
 
-    //@Override // compatibility with core 1.5.0
+    
+    @Override // compatibility with core 1.5.0
     public FixtureScript default0RunFixtureScript() {
         return findFixtureScriptFor(SimpleFixtureScript.class);
     }
