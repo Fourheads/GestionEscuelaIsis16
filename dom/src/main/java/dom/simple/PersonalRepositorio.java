@@ -7,12 +7,14 @@ import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.annotation.ActionSemantics;
 import org.apache.isis.applib.annotation.Bookmarkable;
 import org.apache.isis.applib.annotation.DomainService;
+import org.apache.isis.applib.annotation.Hidden;
 import org.apache.isis.applib.annotation.Mask;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Named;
 import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.annotation.ActionSemantics.Of;
 import org.apache.isis.applib.annotation.RegEx;
+import org.apache.isis.applib.annotation.Where;
 import org.apache.isis.applib.query.QueryDefault;
 import org.joda.time.LocalDate;
 
@@ -129,11 +131,29 @@ public class PersonalRepositorio {
     
     // FIN LISTADOS //
     
-    private LocalDate choices0FechaNacimiento()//VALIDAR FECHA!!!
-	{
-		LocalDate dt=new LocalDate();
-		LocalDate dtmax=dt.now().year().withMaximumValue();
-		return dt;
+    //Eliminar
+    
+    @Hidden(where = Where.OBJECT_FORMS)
+    
+    @ActionSemantics(Of.NON_IDEMPOTENT)
+    @MemberOrder(sequence = "3")
+    @Named("Eliminar Personal")
+    public String removePersonal(@Named("Personal") Personal delPersonal) {
+    		String remPersonal = delPersonal.title();
+			//container.remove(delPersonal);
+			container.removeIfNotAlready(delPersonal);
+			//container.warnUser("¡¡Personal eliminado con éxito!!");
+			//return;
+			return  remPersonal + " fue eliminado";
+			
+	}
+    
+    private void validateNacimiento(LocalDate fechaIngreso)//VALIDAR FECHA!!!
+	{	
+		if (fechaIngreso.equals(LocalDate.now())){
+			//fechaIngreso.toDate().after(LocalDate.now().toDate())
+			container.warnUser("Debe ingresar una fecha menor a la actual");
+		}
 	}
     
     @javax.inject.Inject 

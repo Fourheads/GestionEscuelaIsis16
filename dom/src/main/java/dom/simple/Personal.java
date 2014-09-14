@@ -27,19 +27,7 @@ import dom.simple.Funcion.E_funciones;
 @javax.jdo.annotations.DatastoreIdentity(
         strategy=javax.jdo.annotations.IdGeneratorStrategy.IDENTITY,
          column="id")
-@javax.jdo.annotations.Queries( {
-	@javax.jdo.annotations.Query(name = "findPreceptores", language = "JDOQL",
-		value ="SELECT FROM dom.simple.Personal, " +
-				" WHERE funciones.contains(funcion) && funcion.nombre == 'PRECEPTOR'"),
-	@javax.jdo.annotations.Query(name = "findProfesores", language = "JDOQL",
-		value ="SELECT FROM dom.simple.Personal, " +
-				" WHERE funciones.contains(funcion) && funcion.nombre == 'PROFESOR'"),
-	@javax.jdo.annotations.Query(name = "findDirectores", language = "JDOQL",
-		value ="SELECT FROM dom.simple.Personal, " +
-				" WHERE funciones.contains(funcion) && funcion.nombre == 'DIRECTOR'"),
-	@javax.jdo.annotations.Query(name = "findSecretarios", language = "JDOQL",
-		value ="SELECT FROM dom.simple.Personal, " +
-				" WHERE funciones.contains(funcion) && funcion.nombre == 'SECRETARIO'"),
+@javax.jdo.annotations.Queries( {	
 	@javax.jdo.annotations.Query(name = "findByFuncion", language = "JDOQL",
 		value ="SELECT FROM dom.simple.Personal, " +
 				" WHERE funciones.contains(funcion) && funcion.nombre == :nombre"),
@@ -72,7 +60,7 @@ public class Personal extends Persona implements Comparable<Personal>{
 	
 	// {{ Funciones (property)
 	
-	@Element(column = "FUNCION", dependent = "true")
+	@Element(column = "id_personal", dependent = "true")
 	private SortedSet<Funcion> funciones = new TreeSet<Funcion>();
 	
 	@Render(Type.EAGERLY)
@@ -95,7 +83,8 @@ public class Personal extends Persona implements Comparable<Personal>{
 	}
 	
 	public String title() {
-		return getApellido() + ", " + getNombre();
+		
+		return String.valueOf(getApellido() + ", " + getNombre());
 	}
 
 	@Override
