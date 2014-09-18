@@ -48,7 +48,7 @@ public class PersonalFixture extends FixtureScript {
     // //////////////////////////////////////
 
     private Personal create(final String nombre, String apellido,Persona.E_sexo sexo, int dni, LocalDate nacimiento,Persona.E_nacionalidad nacionalidad, Localidad.E_localidades localidad, String calle, int numero, String piso,String departamento,String telefono, ExecutionContext executionContext) {
-        return executionContext.add(this, personal.create(nombre, apellido, sexo, dni, nacimiento, nacionalidad, localidad, calle, numero, piso, departamento, telefono));
+        return executionContext.add(this, personal.createPersonal(nombre, apellido, sexo, dni, nacimiento, nacionalidad, localidad, calle, numero, piso, departamento, telefono));
     }
 
     // //////////////////////////////////////

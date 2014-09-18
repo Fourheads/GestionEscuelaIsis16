@@ -16,6 +16,7 @@ import org.apache.isis.applib.annotation.ActionSemantics.Of;
 import org.apache.isis.applib.annotation.RegEx;
 import org.apache.isis.applib.annotation.Where;
 import org.apache.isis.applib.query.QueryDefault;
+import org.apache.isis.applib.value.DateTime;
 import org.joda.time.LocalDate;
 
 import dom.simple.Funcion.E_funciones;
@@ -40,7 +41,7 @@ public class PersonalRepositorio {
     
     @MemberOrder(sequence = "2")
     @Named ("Crear Personal")
-    public Personal create(final @RegEx(validation = "[A-Za-z]+") @Named("Nombre") String nombre,
+    public Personal createPersonal(final @RegEx(validation = "[A-Za-z]+") @Named("Nombre") String nombre,
             final @RegEx(validation = "[A-Za-z]+") @Named("Apellido") String apellido,
             final @Named("Sexo") E_sexo sexo,
             final @RegEx(validation = "/d{6,10}") @Named("DNI") int dni, 
@@ -57,6 +58,7 @@ public class PersonalRepositorio {
     	final Direccion newDireccion = new Direccion();
         final Localidad newLocalidad = new Localidad();
     	
+        
         newLocalidad.setNombre(localidad);
         
         newDireccion.setCalle(calle.toUpperCase());
@@ -148,11 +150,15 @@ public class PersonalRepositorio {
 			
 	}
     
-    private void validateNacimiento(LocalDate fechaIngreso)//VALIDAR FECHA!!!
+    public String validateCreatePersonal(String nombre, String apellido, E_sexo sexo, int dni, LocalDate nacimiento, E_nacionalidad nacionalidad,
+    		 E_localidades localidad, String calle, int numero, String piso, String departamento, String telefono)
 	{	
-		if (fechaIngreso.equals(LocalDate.now())){
-			//fechaIngreso.toDate().after(LocalDate.now().toDate())
-			container.warnUser("Debe ingresar una fecha menor a la actual");
+		if (nacimiento.isAfter(LocalDate.now())){
+					
+			return "La fecha de nacimiento debe ser menor a la actual";
+			
+		}else{
+			return null;
 		}
 	}
     

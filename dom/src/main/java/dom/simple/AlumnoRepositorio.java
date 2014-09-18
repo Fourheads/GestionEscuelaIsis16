@@ -156,6 +156,16 @@ public class AlumnoRepositorio {
                     "dni", dni));
     }
 	
+	public String validateCreate(String nombre, String apellido, E_sexo sexo, int dni, LocalDate nacimiento, E_nacionalidad nacionalidad,
+   		 E_localidades localidad, String calle, int numero, String piso, String departamento, String telefono)	
+	{	
+		if (nacimiento.isAfter(LocalDate.now())){					
+			return "La fecha de nacimiento debe ser menor a la actual";			
+		}
+			return null;
+		
+	}
+	
     // //////////////////////////////////////
     // Injected services
     // //////////////////////////////////////
