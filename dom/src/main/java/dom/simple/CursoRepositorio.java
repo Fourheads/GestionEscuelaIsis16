@@ -69,10 +69,10 @@ public class CursoRepositorio {
     
     @MemberOrder(sequence = "1.1")
     @Named ("Crear curso")
-    public Curso create(
+    public Curso create(final @RegEx(validation = "/d{1,1}") @Named("Año") int anio,
             final @RegEx(validation = "[A-Ha-h]") @Named("Division") String division,
-            @Named("Turno") Turno turno,
-            final @RegEx(validation = "/d{1,1}") @Named("Año") int anio){
+            @Named("Turno") Turno turno
+            ){
         
     	final Curso obj = container.newTransientInstance(Curso.class);
         

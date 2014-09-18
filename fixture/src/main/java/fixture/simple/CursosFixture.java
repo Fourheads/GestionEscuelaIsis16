@@ -51,7 +51,7 @@ public class CursosFixture extends FixtureScript {
     // //////////////////////////////////////
 
     private Curso create(final int anio, String division, Turno turno,ExecutionContext executionContext) {
-        return executionContext.add(this, cursos.create(division, turno, anio));
+        return executionContext.add(this, cursos.create(anio, division, turno ));
     }
 
     // //////////////////////////////////////
