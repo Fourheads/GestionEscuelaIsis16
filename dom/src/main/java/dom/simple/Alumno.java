@@ -35,6 +35,7 @@ import org.apache.isis.applib.annotation.Where;
 import org.apache.isis.applib.util.ObjectContracts;
 
 
+
 @javax.jdo.annotations.PersistenceCapable(identityType=IdentityType.DATASTORE)
 @javax.jdo.annotations.DatastoreIdentity(
         strategy=javax.jdo.annotations.IdGeneratorStrategy.IDENTITY,
@@ -82,7 +83,19 @@ public class Alumno extends Persona implements Comparable<Alumno>{
 	// }}
 
 
-	
+	// {{ Curso (property)
+		private Curso curso;
+
+		@MemberOrder(sequence = "4")
+		@javax.jdo.annotations.Column(allowsNull = "true")
+		public Curso getCurso() {
+			return curso;
+		}
+
+		public void setCurso(final Curso curso) {
+			this.curso = curso;
+		}
+		// }}
 	
 	
 	
