@@ -33,7 +33,7 @@ public class AsistenciaAlumnoRepositorio {
 												String division,
 												Date desde,
 												Date hasta,
-												String dni
+												int dni
 											){
 		
 		List<AsistenciaAlumno> tempList = container.allMatches(new

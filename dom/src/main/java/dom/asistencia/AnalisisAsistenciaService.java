@@ -29,7 +29,7 @@ public class AnalisisAsistenciaService {
 
 		int anioInt = Integer.parseInt(anio);
 		String division = (parametros[2]);
-		String dni = (parametros[3]);
+		int dni = Integer.parseInt(parametros[3]);
 		String nombre = parametros[4];
 		String apellido = parametros[5];
 		String desde = parametros[6];
