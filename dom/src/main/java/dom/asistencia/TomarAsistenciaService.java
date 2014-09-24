@@ -79,8 +79,10 @@ public class TomarAsistenciaService {
 	}
 
 	public Curso default1PorCurso() {
-		return container.allMatches(
-				new QueryDefault<Curso>(Curso.class, "todosLosCursos")).get(0);
+		if (choices1PorCurso().isEmpty()){
+			return null;
+		}
+		return choices1PorCurso().get(0);
 	}
 
 	public List<Asistencia> choices0PorCurso() {
@@ -88,6 +90,9 @@ public class TomarAsistenciaService {
 	}
 
 	public Asistencia default0PorCurso() {
+		if (choices0PorCurso().isEmpty()){
+			return null;
+		}
 		return choices0PorCurso().get(0);
 	}
 
