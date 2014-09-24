@@ -10,7 +10,9 @@ import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Named;
 import org.apache.isis.applib.annotation.PublishedAction;
 import org.apache.isis.applib.annotation.PublishedObject;
+import org.apache.isis.applib.query.QueryDefault;
 
+import dom.simple.Alumno;
 import dom.simple.Curso;
 import dom.simple.CursoRepositorio;
 
@@ -69,6 +71,21 @@ public class ContabilizarAsistenciasService {
 	public Curso default1ContarAsistenciasCurso() {
 
 		return choices1ContarAsistenciasCurso().get(0);
+	}
+
+	public String validateContarAsistenciasCurso(Asistencia esquema,
+			Curso curso, Date desde, Date hasta) {
+
+		List<Alumno> listadoAlumnos = container
+				.allMatches(new QueryDefault<Alumno>(Alumno.class,
+						"alumnosDeUnCurso", "anio", curso.getAnio(),
+						"division", curso.getDivision()));
+
+		if (listadoAlumnos.isEmpty()) {
+			return "El curso seleccionado no posee alumnos";
+		}
+
+		return null;
 	}
 
 	// region > injected services
