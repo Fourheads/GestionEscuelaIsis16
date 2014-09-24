@@ -76,7 +76,7 @@ public class CursoRepositorio {
         
     	final Curso obj = container.newTransientInstance(Curso.class);
         
-        obj.setAño(anio);
+        obj.setAnio(anio);
         obj.setDivision(division);
         obj.setTurno(turno);
      	

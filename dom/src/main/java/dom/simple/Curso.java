@@ -66,7 +66,7 @@ public class Curso {
 
 	// }}
 	public String title() {
-		String titulo = String.valueOf(getAño()) + "° " + getDivision()
+		String titulo = String.valueOf(getAnio()) + "° " + getDivision()
 				+ " Turno:" + getTurno();
 		return titulo;
 	}
@@ -95,11 +95,11 @@ public class Curso {
 	// @Title
 	@Column(allowsNull = "true")
 	@MemberOrder(sequence = "1.1")
-	public int getAño() {
+	public int getAnio() {
 		return anio;
 	}
 
-	public void setAño(int anio) {
+	public void setAnio(int anio) {
 		this.anio = anio;
 	}
 
