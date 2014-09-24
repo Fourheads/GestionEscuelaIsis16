@@ -99,15 +99,15 @@ public class TomarAsistenciaService {
 						"BuscarAsistenciDiaPorFechaParaUnEsquema", "fecha",
 						fecha, "descripcion", asistencia.getDescripcion()));
 
-		List<Alumno> listadoAlumnos = container.allMatches(new QueryDefault<Alumno>(Alumno.class, "alumnosDeUnCurso",
-															"anio",curso.getAnio(),"division",curso.getDivision()));
-		
-		
-		
+		List<Alumno> listadoAlumnos = container
+				.allMatches(new QueryDefault<Alumno>(Alumno.class,
+						"alumnosDeUnCurso", "anio", curso.getAnio(),
+						"division", curso.getDivision()));
+
 		if (asistenciaDiaList.isEmpty()) {
 			return "No existe asistencia creada para ese dia en este esquema de asistencia";
 		}
-		
+
 		if (listadoAlumnos.isEmpty()) {
 			return "El curso seleccionado no posee alumnos";
 		}
