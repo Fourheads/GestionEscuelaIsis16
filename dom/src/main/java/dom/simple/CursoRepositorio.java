@@ -84,6 +84,15 @@ public class CursoRepositorio {
         return obj;
     }
     
+    
+    @MemberOrder(sequence = "2")
+    @Named ("Seleccionar curso")
+    public Curso verUnCurso(final Curso curso){
+      
+        return curso;
+    }
+    
+    
     // //////////////////////////////////////
     // Injected services
     // //////////////////////////////////////
