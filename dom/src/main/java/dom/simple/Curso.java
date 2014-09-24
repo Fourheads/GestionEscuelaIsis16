@@ -20,6 +20,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
+
 package dom.simple;
 
 import java.util.List;
@@ -44,6 +45,11 @@ import org.apache.isis.applib.query.QueryDefault;
 import dom.simple.Funcion.E_funciones;
 
 //import org.apache.isis.applib.annotation.Title;
+@javax.jdo.annotations.Queries({
+	@javax.jdo.annotations.Query(name = "todosLosCursos", language = "JDOQL", 
+			value = "SELECT FROM dom.asistencia.Curso"
+			+ " order by anio asc, division asc"
+			) })
 
 @Bounded
 @PersistenceCapable
