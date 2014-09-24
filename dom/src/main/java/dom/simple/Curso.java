@@ -147,7 +147,7 @@ public class Curso {
 
 	// {{ Alumnos (Property)
 	@Join
-	@Element(dependent = "false")
+	@Persistent(mappedBy = "curso", dependentElement = "false")
 	private SortedSet<Alumno> ListaAlumno = new TreeSet<Alumno>();
 
 	@Render(Type.EAGERLY)
