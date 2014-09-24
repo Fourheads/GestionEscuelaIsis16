@@ -18,8 +18,7 @@
  * 
  * 
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
-*/
-
+ */
 
 package dom.simple;
 
@@ -38,6 +37,8 @@ import org.apache.isis.applib.annotation.Bounded;
 import org.apache.isis.applib.annotation.Hidden;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Named;
+import org.apache.isis.applib.annotation.Render;
+import org.apache.isis.applib.annotation.Render.Type;
 import org.apache.isis.applib.query.QueryDefault;
 
 import dom.simple.Funcion.E_funciones;
@@ -47,113 +48,109 @@ import dom.simple.Funcion.E_funciones;
 @Bounded
 @PersistenceCapable
 public class Curso {
-	
+
 	// {{ Division (property)
 	private String division;
 
 	@Persistent
-	//@Title
+	// @Title
 	@Column(allowsNull = "true")
 	@MemberOrder(sequence = "1.2")
 	public String getDivision() {
 		return division;
 	}
+
 	public void setDivision(String division) {
 		this.division = division;
 	}
-	//}}
-	public String title(){
-		String titulo=String.valueOf(getAño())+"° "+getDivision()+" Turno:"+getTurno();
+
+	// }}
+	public String title() {
+		String titulo = String.valueOf(getAño()) + "° " + getDivision()
+				+ " Turno:" + getTurno();
 		return titulo;
 	}
+
 	// {{ Turno (property)
 	private Turno turno;
-	
+
 	@Persistent
-	//@Title
+	// @Title
 	@Column(allowsNull = "true")
 	@MemberOrder(sequence = "1.3")
 	public Turno getTurno() {
 		return turno;
 	}
+
 	public void setTurno(Turno turno) {
 		this.turno = turno;
 	}
-	//}}
-	
+
+	// }}
+
 	// {{ Anio (property)
 	private int anio;
 
 	@Persistent
-	//@Title
+	// @Title
 	@Column(allowsNull = "true")
 	@MemberOrder(sequence = "1.1")
 	public int getAño() {
 		return anio;
 	}
+
 	public void setAño(int anio) {
 		this.anio = anio;
 	}
-	//}}	
+
+	// }}
 
 	// {{ Materias (Property)
 	@Join
 	@Element(dependent = "false")
 	private SortedSet<Materia> ListaMateria = new TreeSet<Materia>();
 
+	@Render(Type.EAGERLY)
 	@MemberOrder(sequence = "1.4")
 	public SortedSet<Materia> getListaMateria() {
 		return ListaMateria;
 	}
+	
+	public void setListaMateria(SortedSet<Materia> ListaMateria) {
+		this.ListaMateria = ListaMateria;
+	}
+	
 
-	  @MemberOrder(sequence = "2")
-	    @Named("Asinganar materias")
-		public void asignarMateria(@Named("Materia") Materia materia){
-			this.ListaMateria.add(materia);			
-		}
-		
-	    public List<Materia> choices0AsignarMateria(){
-	    	return container.allInstances(Materia.class);
-	    }
-	    
-	    @MemberOrder(sequence = "4")
-	    @Named("Quitar materias del curso")
-	    public Curso removeMateria(
-	            final @Named("Materia") Materia materia) {
-	    	
-	    	getListaMateria().remove(materia);    	
-	        return this;
-	    }
+	@MemberOrder(sequence = "2")
+	@Named("Asinganar materias")
+	public void asignarMateria(@Named("Materia") Materia materia) {
+		this.ListaMateria.add(materia);
+	}
 
-	    
-	    public SortedSet<Materia> choices0RemoveMateria(){
-	    	return getListaMateria();
-	    }
+	public List<Materia> choices0AsignarMateria() {
+		return container.allInstances(Materia.class);
+	}
+
+	@MemberOrder(sequence = "4")
+	@Named("Quitar materias del curso")
+	public Curso removeMateria(final @Named("Materia") Materia materia) {
+
+		getListaMateria().remove(materia);
+		return this;
+	}
+
+	public SortedSet<Materia> choices0RemoveMateria() {
+		return getListaMateria();
+	}
+
 	// }}
-	
-	//private List<Materia> materias;
-	/*
-	//@Title
-	//@Element(column="Materia_ID")
-	@MemberOrder(sequence = "1.4")
-	public List<Materia> getMaterias() {
-		return materias;
-	}
-	public void setMaterias(final List<Materia> materias) {
-		this.materias = materias;
-	}
-	
-	public void addMaterias(Materia NuevaMateria){
-		this.materias.add(NuevaMateria);
-	}
-	//}}*/
-	
-	
+
 	// {{ Alumnos (Property)
 	@Join
 	@Element(dependent = "false")
 	private SortedSet<Alumno> ListaAlumno = new TreeSet<Alumno>();
 
+	@Render(Type.EAGERLY)
 	@MemberOrder(sequence = "1.5")
 	public SortedSet<Alumno> getAlumnos() {
 		return ListaAlumno;
@@ -162,78 +159,73 @@ public class Curso {
 	public void setAlumnos(final SortedSet<Alumno> listaalumno) {
 		this.ListaAlumno = listaalumno;
 	}
-	
-    @MemberOrder(sequence = "3")
-    @Named("Asinganar alumnos")
-	public void asignarAlumnos(@Named("Alumno")Alumno alumno){
-		this.ListaAlumno.add(alumno);			
-	}
-	
-    public List<Alumno> choices0AsignarAlumnos(){
-    	return container.allInstances(Alumno.class);
-    }
-	
-    
-    @MemberOrder(sequence = "3.4")
-    @Named("Quitar alumnos del curso")
-    public Curso removeAlumno(
-            final @Named("Alumno") Alumno alumno) {
-    	
-    	getAlumnos().remove(alumno);    	
-        return this;
-    }
 
-    
-    public SortedSet<Alumno> choices0RemoveAlumno(){
-    	return getAlumnos();
-    }
-    
+	@MemberOrder(sequence = "3")
+	@Named("Asinganar alumnos")
+	public void asignarAlumnos(@Named("Alumno") Alumno alumno) {
+		this.ListaAlumno.add(alumno);
+	}
+
+	public List<Alumno> choices0AsignarAlumnos() {
+		return container.allInstances(Alumno.class);
+	}
+
+	@MemberOrder(sequence = "3.4")
+	@Named("Quitar alumnos del curso")
+	public Curso removeAlumno(final @Named("Alumno") Alumno alumno) {
+
+		getAlumnos().remove(alumno);
+		return this;
+	}
+
+	public SortedSet<Alumno> choices0RemoveAlumno() {
+		return getAlumnos();
+	}
+
 	// }}
-	
+
 	/*
-	private List<Alumno> alumnos;
-	
-	//@Title
-	@Column(allowsNull = "true")
-	@Element(column="Alumno_id")
-	@MemberOrder(sequence = "1.5")
-	public List<Alumno> getAlumnos() {
-		return alumnos;
-	}
-	public void setAlumnos(final List<Alumno> Alumnos) {
-		this.alumnos = Alumnos;
-	}
-	public void addAlumno(Alumno NuevaAlumno){
-		this.alumnos.add(NuevaAlumno);
-	}
-	//}}*/
-	
+	 * private List<Alumno> alumnos;
+	 * 
+	 * //@Title
+	 * 
+	 * @Column(allowsNull = "true")
+	 * 
+	 * @Element(column="Alumno_id")
+	 * 
+	 * @MemberOrder(sequence = "1.5") public List<Alumno> getAlumnos() { return
+	 * alumnos; } public void setAlumnos(final List<Alumno> Alumnos) {
+	 * this.alumnos = Alumnos; } public void addAlumno(Alumno NuevaAlumno){
+	 * this.alumnos.add(NuevaAlumno); } //}}
+	 */
+
 	// {{ Preceptor (property)
 	private Personal preceptor;
-	
+
 	@Persistent
-	//@Title
+	// @Title
 	@Column(allowsNull = "true")
 	@MemberOrder(sequence = "1.6")
 	public Personal getPreceptor() {
 		return preceptor;
 	}
+
 	public void setPreceptor(Personal Preceptor) {
 		this.preceptor = Preceptor;
 	}
-	
-    @MemberOrder(sequence = "1.7")
-    @Named("Asinganar preceptor")
-    public void asignarPreceptor(final @Named("Preceptor") Personal prece){
-    	this.preceptor=prece;
-    }
-    
-    public List<Personal> choices0AsignarPreceptor(){
-    	return container.allMatches(
-    			new QueryDefault<Personal>(Personal.class, "findByFuncion", "nombre", E_funciones.PRECEPTOR.toString()));
-    }    
-    
-    @Override
+
+	@MemberOrder(sequence = "1.7")
+	@Named("Asinganar preceptor")
+	public void asignarPreceptor(final @Named("Preceptor") Personal prece) {
+		this.preceptor = prece;
+	}
+
+	public List<Personal> choices0AsignarPreceptor() {
+		return container.allMatches(new QueryDefault<Personal>(Personal.class,
+				"findByFuncion", "nombre", E_funciones.PRECEPTOR.toString()));
+	}
+
+	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
@@ -249,6 +241,7 @@ public class Curso {
 		result = prime * result + ((turno == null) ? 0 : turno.hashCode());
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -284,7 +277,8 @@ public class Curso {
 			return false;
 		return true;
 	}
-	@javax.inject.Inject 
-    DomainObjectContainer container;
+
+	@javax.inject.Inject
+	DomainObjectContainer container;
 
 }
