@@ -19,6 +19,8 @@ import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Named;
 import org.apache.isis.applib.annotation.ActionSemantics.Of;
 import org.apache.isis.applib.query.QueryDefault;
+
+import dom.simple.Alumno;
 import dom.simple.Curso;
 
 @Named("Tomar Asistencia")
@@ -97,11 +99,20 @@ public class TomarAsistenciaService {
 						"BuscarAsistenciDiaPorFechaParaUnEsquema", "fecha",
 						fecha, "descripcion", asistencia.getDescripcion()));
 
-		if (!asistenciaDiaList.isEmpty()) {
-			return null;
+		List<Alumno> listadoAlumnos = container.allMatches(new QueryDefault<Alumno>(Alumno.class, "alumnosDeUnCurso",
+															"anio",curso.getAnio(),"division",curso.getDivision()));
+		
+		
+		
+		if (asistenciaDiaList.isEmpty()) {
+			return "No existe asistencia creada para ese dia en este esquema de asistencia";
+		}
+		
+		if (listadoAlumnos.isEmpty()) {
+			return "El curso seleccionado no posee alumnos";
 		}
 
-		return "No existe asistencia creada para ese dia en este esquema de asistencia";
+		return null;
 	}
 
 	// region > injected services
