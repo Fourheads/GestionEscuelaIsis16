@@ -162,8 +162,9 @@ public class Curso {
 
 	@MemberOrder(sequence = "3")
 	@Named("Asinganar alumnos")
-	public void asignarAlumnos(@Named("Alumno") Alumno alumno) {
+	public Curso asignarAlumnos(@Named("Alumno") Alumno alumno) {
 		this.ListaAlumno.add(alumno);
+		return this;
 	}
 
 	public List<Alumno> choices0AsignarAlumnos() {
