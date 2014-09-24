@@ -168,7 +168,8 @@ public class Curso {
 	}
 
 	public List<Alumno> choices0AsignarAlumnos() {
-		return container.allInstances(Alumno.class);
+		return container.allMatches(new QueryDefault<Alumno>(Alumno.class,
+				"alumnosSinCurso"));
 	}
 
 	@MemberOrder(sequence = "3.4")
