@@ -41,7 +41,8 @@ import org.apache.isis.applib.util.ObjectContracts;
 		@javax.jdo.annotations.Query(name = "findByDni", language = "JDOQL", value = "SELECT "
 				+ "FROM dom.simple.Alumno " + "WHERE dni == :dni"),
 		@javax.jdo.annotations.Query(name = "alumnosSinCurso", language = "JDOQL", value = "SELECT FROM dom.simple.Alumno"
-				+ " WHERE this.curso == null"),
+				+ " WHERE this.curso == null "
+				+ "order by this.apellido asc, this.nombre asc"),
 		@javax.jdo.annotations.Query(name = "findByApellido", language = "JDOQL", value = "SELECT "
 				+ "FROM dom.simple.Alumno "
 				+ "WHERE apellido.startsWith(:apellido)") })
