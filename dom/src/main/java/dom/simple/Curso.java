@@ -115,11 +115,10 @@ public class Curso {
 	public SortedSet<Materia> getListaMateria() {
 		return ListaMateria;
 	}
-	
+
 	public void setListaMateria(SortedSet<Materia> ListaMateria) {
 		this.ListaMateria = ListaMateria;
 	}
-	
 
 	@MemberOrder(sequence = "2")
 	@Named("Asinganar materias")
@@ -170,6 +169,10 @@ public class Curso {
 	public List<Alumno> choices0AsignarAlumnos() {
 		return container.allMatches(new QueryDefault<Alumno>(Alumno.class,
 				"alumnosSinCurso"));
+	}
+
+	public Alumno default0AsignarAlumnos() {
+		return choices0AsignarAlumnos().get(0);
 	}
 
 	@MemberOrder(sequence = "3.4")
