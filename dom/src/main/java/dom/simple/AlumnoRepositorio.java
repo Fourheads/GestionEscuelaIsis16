@@ -29,7 +29,6 @@ import org.apache.isis.applib.query.QueryDefault;
 import org.joda.time.LocalDate;
 import org.apache.isis.applib.annotation.*;
 import org.apache.isis.applib.annotation.ActionSemantics.Of;
-
 import dom.simple.Localidad.E_localidades;
 import dom.simple.Persona.E_nacionalidad;
 import dom.simple.Persona.E_sexo;
@@ -166,10 +165,17 @@ public class AlumnoRepositorio {
 		
 	}
 	
+	@Programmatic
+	public static List<Alumno> queryListarAlumnosDeUnCurso(final int anio, final String division) {
+		return container.allMatches(new QueryDefault<Alumno>(Alumno.class,
+				"alumnosDeUnCurso", "anio", anio, "division", division));
+	}
+	
+	
     // //////////////////////////////////////
     // Injected services
     // //////////////////////////////////////
 
-    @javax.inject.Inject 
-    DomainObjectContainer container;
+    @javax.inject.Inject
+	static DomainObjectContainer container;
 }
