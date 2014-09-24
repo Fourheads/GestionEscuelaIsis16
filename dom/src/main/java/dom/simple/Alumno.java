@@ -18,7 +18,7 @@
  * 
  * 
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
-*/
+ */
 
 package dom.simple;
 
@@ -34,44 +34,28 @@ import org.apache.isis.applib.annotation.ObjectType;
 import org.apache.isis.applib.annotation.Where;
 import org.apache.isis.applib.util.ObjectContracts;
 
-
-
-@javax.jdo.annotations.PersistenceCapable(identityType=IdentityType.DATASTORE)
-@javax.jdo.annotations.DatastoreIdentity(
-        strategy=javax.jdo.annotations.IdGeneratorStrategy.IDENTITY,
-         column="id")
-@javax.jdo.annotations.Version(
-        strategy=VersionStrategy.VERSION_NUMBER, 
-        column="version")
-@javax.jdo.annotations.Queries( {
-    @javax.jdo.annotations.Query(
-            name = "findByDni", language = "JDOQL",
-            value = "SELECT "
-                    + "FROM dom.simple.Alumno "
-                    + "WHERE dni == :dni"),
-    @javax.jdo.annotations.Query(
-            name = "findByApellido", language = "JDOQL",
-            value = "SELECT "
-                    + "FROM dom.simple.Alumno "
-                    + "WHERE apellido.startsWith(:apellido)")
-})
+@javax.jdo.annotations.PersistenceCapable(identityType = IdentityType.DATASTORE)
+@javax.jdo.annotations.DatastoreIdentity(strategy = javax.jdo.annotations.IdGeneratorStrategy.IDENTITY, column = "id")
+@javax.jdo.annotations.Version(strategy = VersionStrategy.VERSION_NUMBER, column = "version")
+@javax.jdo.annotations.Queries({
+		@javax.jdo.annotations.Query(name = "findByDni", language = "JDOQL", value = "SELECT "
+				+ "FROM dom.simple.Alumno " + "WHERE dni == :dni"),
+		@javax.jdo.annotations.Query(name = "alumnosSinCurso", language = "JDOQL", value = "SELECT FROM dom.simple.Alumno"
+				+ " WHERE this.curso == null"),
+		@javax.jdo.annotations.Query(name = "findByApellido", language = "JDOQL", value = "SELECT "
+				+ "FROM dom.simple.Alumno "
+				+ "WHERE apellido.startsWith(:apellido)") })
 @ObjectType("ALUMNO")
 @Bookmarkable
+// /GestionEscuela
+public class Alumno extends Persona implements Comparable<Alumno> {
 
-
-///GestionEscuela
-
-
-public class Alumno extends Persona implements Comparable<Alumno>{
-
-	
-	
 	// {{ Legajo (property)
 	private Legajo legajo;
 
 	@Persistent
 	@MemberOrder(sequence = "8")
-	@javax.jdo.annotations.Column(allowsNull="false", name = "LEGAJO_ID")
+	@javax.jdo.annotations.Column(allowsNull = "false", name = "LEGAJO_ID")
 	@Hidden(where = Where.ALL_TABLES)
 	public Legajo getLegajo() {
 		return legajo;
@@ -80,41 +64,36 @@ public class Alumno extends Persona implements Comparable<Alumno>{
 	public void setLegajo(final Legajo legajo) {
 		this.legajo = legajo;
 	}
+
 	// }}
 
-
 	// {{ Curso (property)
-		private Curso curso;
+	private Curso curso;
 
-		@MemberOrder(sequence = "4")
-		@javax.jdo.annotations.Column(allowsNull = "true")
-		public Curso getCurso() {
-			return curso;
-		}
+	@MemberOrder(sequence = "4")
+	@javax.jdo.annotations.Column(allowsNull = "true")
+	public Curso getCurso() {
+		return curso;
+	}
 
-		public void setCurso(final Curso curso) {
-			this.curso = curso;
-		}
-		// }}
-	
-	
-	
-	
-	
-	
+	public void setCurso(final Curso curso) {
+		this.curso = curso;
+	}
+
+	// }}
+
 	@Override
 	public int compareTo(Alumno alumno) {
-		
+
 		return ObjectContracts.compare(this, alumno, "dni");
 	}
 
-
 	public String title() {
-			return getApellido() + ", " + getNombre();
-		}
-	
+		return getApellido() + ", " + getNombre();
+	}
+
 	@javax.inject.Inject
-    @SuppressWarnings("unused")
-    private DomainObjectContainer container;
-	
+	@SuppressWarnings("unused")
+	private DomainObjectContainer container;
+
 }
