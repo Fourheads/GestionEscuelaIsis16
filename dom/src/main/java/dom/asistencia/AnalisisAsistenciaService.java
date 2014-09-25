@@ -9,6 +9,7 @@ import java.util.List;
 import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.query.QueryDefault;
+import org.joda.time.LocalDate;
 
 import dom.simple.Alumno;
 import dom.simple.AlumnoRepositorio;
@@ -17,40 +18,15 @@ import dom.simple.AlumnoRepositorio;
 public class AnalisisAsistenciaService {
 
 	public static AnalisisAsistenciaView analizarIntervaloAsistenciaAlumno(
-			String memento) {
+			String asistencia, int anio, String division, int dni,
+			String nombre, String apellido, LocalDate desde, LocalDate hasta) {
 
 		// memento asistencia, anio, division, dni, , nombre, apellido,
 		// fechadesde, fechahasta
 
-		String[] parametros = memento.split(",");
-
-		String asistencia = parametros[0];
-		String anio = (parametros[1]);
-
-		int anioInt = Integer.parseInt(anio);
-		String division = (parametros[2]);
-		int dni = Integer.parseInt(parametros[3]);
-		String nombre = parametros[4];
-		String apellido = parametros[5];
-		String desde = parametros[6];
-		Date desdeDate = null;
-		try {
-			desdeDate = TraductorService.stringToDate(desde);
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		String hasta = parametros[7];
-		Date hastaDate = null;
-		try {
-			hastaDate = TraductorService.stringToDate(hasta);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-
 		List<AsistenciaAlumno> tempList = AsistenciaAlumnoRepositorio
-				.queryAsistenciaAlumnoPorCursoEnUnIntervalo(asistencia,
-						anioInt, division, desdeDate, hastaDate, dni);
+				.queryAsistenciaAlumnoPorCursoEnUnIntervalo(asistencia, anio,
+						division, desde, hasta, dni);
 
 		// total asistencias
 
@@ -119,7 +95,8 @@ public class AnalisisAsistenciaService {
 	}
 
 	public static List<AnalisisAsistenciaView> analizarIntervaloAsistenciaCurso(
-			String asistencia, int anio, String division, Date desde, Date hasta) {
+			String asistencia, int anio, String division, LocalDate desde,
+			LocalDate hasta) {
 
 		// memento asistencia, anio, curso, dni, nombre, apellido, fechadesde,
 		// fechahasta
@@ -132,14 +109,12 @@ public class AnalisisAsistenciaService {
 
 		for (Alumno alumno : alumnoList) {
 
-			mementoAnalisis = asistencia + "," + anio + "," + division + ","
-					+ alumno.getDni() + "," + alumno.getNombre() + ","
-					+ alumno.getApellido() + ","
-					+ TraductorService.DateToString(desde) + ","
-					+ TraductorService.DateToString(hasta);
+			int dni = alumno.getDni();
+			String nombre = alumno.getNombre();
+			String apellido = alumno.getApellido();
 
-			listaAnalisis
-					.add(analizarIntervaloAsistenciaAlumno(mementoAnalisis));
+			listaAnalisis.add(analizarIntervaloAsistenciaAlumno(asistencia, anio, division, dni, nombre,
+					apellido, desde, hasta));
 
 		}
 

@@ -60,9 +60,9 @@ public class ContabilizarAsistenciasView extends AbstractViewModel {
 		setDivision(memento.get("division", String.class));
 				
 		
-		// setAnalisisAsistenciaView(AnalisisAsistenciaService
-		// .analizarIntervaloAsistenciaCurso(getAsistencia(), getAnio(),
-		// getDivision(), getDesde(), getHasta()));
+		 setAnalisisAsistenciaViewList(AnalisisAsistenciaService
+		 .analizarIntervaloAsistenciaCurso(getAsistencia(), getAnio(),
+		 getDivision(), getDesde(), getHasta()));
 
 	}
 
@@ -150,18 +150,18 @@ public class ContabilizarAsistenciasView extends AbstractViewModel {
 
 	@Join
 	@Element(dependent = "true")
-	private List<AnalisisAsistenciaView> analisisAsistenciaList = new ArrayList<AnalisisAsistenciaView>();
+	private List<AnalisisAsistenciaView> analisisAsistenciaViewList = new ArrayList<AnalisisAsistenciaView>();
 
 	@Render(Type.EAGERLY)
 	@MemberOrder(sequence = "1")
 	@Named("Analisis de Asistencia por Alumno")
-	public List<AnalisisAsistenciaView> getAnalisisAsistenciaView() {
-		return analisisAsistenciaList;
+	public List<AnalisisAsistenciaView> getAnalisisAsistenciaViewList() {
+		return analisisAsistenciaViewList;
 	}
 
-	public void setAnalisisAsistenciaView(
-			final List<AnalisisAsistenciaView> analisisAsistenciaList) {
-		this.analisisAsistenciaList = analisisAsistenciaList;
+	public void setAnalisisAsistenciaViewList(
+			final List<AnalisisAsistenciaView> analisisAsistenciaViewList) {
+		this.analisisAsistenciaViewList = analisisAsistenciaViewList;
 	}
 
 	// }} (end region)

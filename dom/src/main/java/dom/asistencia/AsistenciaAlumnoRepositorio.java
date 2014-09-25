@@ -32,8 +32,8 @@ public class AsistenciaAlumnoRepositorio {
 												String asistencia,
 												int anio, 
 												String division,
-												Date desde,
-												Date hasta,
+												LocalDate desde,
+												LocalDate hasta,
 												int dni
 											){
 		
