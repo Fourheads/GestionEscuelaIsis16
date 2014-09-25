@@ -96,7 +96,7 @@ public class AlumnoRepositorio {
         
         loca.setNombre(localidad);
         
-        dire.setCalle(calle);
+        dire.setCalle(calle.toUpperCase());
         dire.setNumero(numero);
         dire.setPiso(piso);
         dire.setDepartamento(departamento);
@@ -105,8 +105,8 @@ public class AlumnoRepositorio {
         legajo.setPropietario(propietario);
         
         obj.setSexo(sexo);
-        obj.setNombre(nombre);
-        obj.setApellido(apellido);
+        obj.setNombre(nombre.toUpperCase());
+        obj.setApellido(apellido.toUpperCase());
         obj.setDni(dni);
         obj.setFechaNacimiento(nacimiento);
         obj.setDireccion(dire);
