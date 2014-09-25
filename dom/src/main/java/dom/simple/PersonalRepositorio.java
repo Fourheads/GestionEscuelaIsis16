@@ -37,10 +37,9 @@ public class PersonalRepositorio {
     }
     
         
-    //Crear personal
-    
-    @MemberOrder(sequence = "2")
-    @Named ("Crear Personal")
+    //Crear personal    
+    @MemberOrder(sequence = "1")
+    @Named ("Ingresar Nuevo")
     public Personal createPersonal(final @RegEx(validation = "[A-Za-z]+") @Named("Nombre") String nombre,
             final @RegEx(validation = "[A-Za-z]+") @Named("Apellido") String apellido,
             final @Named("Sexo") E_sexo sexo,
@@ -80,22 +79,35 @@ public class PersonalRepositorio {
     	return newPersonal;
     }
     
+    //Validar createPersonal
+    public String validateCreatePersonal(String nombre, String apellido, E_sexo sexo, int dni, LocalDate nacimiento, E_nacionalidad nacionalidad,
+   		 E_localidades localidad, String calle, int numero, String piso, String departamento, String telefono)
+	{	
+    	List<Personal> dniPersonal = container.allMatches((new QueryDefault<Personal>(Personal.class, "findByDni", "dni", dni)));
+    	if(!dniPersonal.isEmpty()){					
+			return "El número de dni ya existe";			
+		}
+    	if (nacimiento.isAfter(LocalDate.now())){		
+			return "La fecha de nacimiento debe ser menor al día actual";
+		}
+		return null;
+		
+	}
     
-    // LISTADOS//
+    // Listados  ////////////////////
         
-    //Listar personal
+    //Todo
     @Bookmarkable
     @ActionSemantics(Of.SAFE)
-    @MemberOrder(sequence = "1")
-    @Named ("Listar Personal")
+    @MemberOrder(sequence = "3.5")
+    @Named ("Todos")
     public List<Personal> listAll(){    	
     	return container.allInstances(Personal.class);
     }
     
     
-    //Listar Preceptores
-    
-    @MemberOrder(sequence = "1.1")
+    // Preceptores    
+    @MemberOrder(sequence = "3.1")
     @ActionSemantics(Of.SAFE)
     @Named ("Preceptores")
     public List<Personal> listPreceptor(){
@@ -103,64 +115,45 @@ public class PersonalRepositorio {
     			new QueryDefault<Personal>(Personal.class, "findByFuncion", "nombre", E_funciones.PRECEPTOR.toString()));
     }
     
-    //Listar Profesores
-    
-    @MemberOrder(sequence = "1.2")
+    // Profesores    
+    @MemberOrder(sequence = "3.2")
     @Named ("Profesores")
     public List<Personal> listProfesor(){
     	return container.allMatches(
     			new QueryDefault<Personal>(Personal.class, "findByFuncion", "nombre", E_funciones.PROFESOR.toString()));
     }
     
-    //Listar Directores
-    
-    @MemberOrder(sequence = "1.3")
+    // Directores    
+    @MemberOrder(sequence = "3.3")
     @Named ("Directores")
     public List<Personal> listDirector(){
     	return container.allMatches(
     			new QueryDefault<Personal>(Personal.class, "findByFuncion", "nombre", E_funciones.DIRECTOR.toString()));
     }
     
-    //Listar Secretarios
-    
-    @MemberOrder(sequence = "1.4")
+    // Secretarios    
+    @MemberOrder(sequence = "3.4")
     @Named ("Secretarios")
     public List<Personal> listSecretario(){
     	return container.allMatches(
     			new QueryDefault<Personal>(Personal.class, "findByFuncion", "nombre", E_funciones.SECRETARIO.toString()));
-    }
+    }    
+    
+    //  Fin Listados  ////////////////////
     
     
-    // FIN LISTADOS //
-    
-    //Eliminar
-    
-    @Hidden(where = Where.OBJECT_FORMS)
-    
+    // Eliminar Personal    
+    @Hidden(where = Where.OBJECT_FORMS)    
     @ActionSemantics(Of.NON_IDEMPOTENT)
-    @MemberOrder(sequence = "3")
-    @Named("Eliminar Personal")
+    @MemberOrder(sequence = "2")
+    @Named("Eliminar")    
     public String removePersonal(@Named("Personal") Personal delPersonal) {
-    		String remPersonal = delPersonal.title();
-			//container.remove(delPersonal);
-			container.removeIfNotAlready(delPersonal);
-			//container.warnUser("¡¡Personal eliminado con éxito!!");
-			//return;
+    		String remPersonal = delPersonal.title();			
+			container.removeIfNotAlready(delPersonal);			
 			return  remPersonal + " fue eliminado";
 			
 	}
-    
-    public String validateCreatePersonal(String nombre, String apellido, E_sexo sexo, int dni, LocalDate nacimiento, E_nacionalidad nacionalidad,
-    		 E_localidades localidad, String calle, int numero, String piso, String departamento, String telefono)
-	{	
-		if (nacimiento.isAfter(LocalDate.now())){
-					
-			return "La fecha de nacimiento debe ser menor a la actual";
-			
-		}else{
-			return null;
-		}
-	}
+        
     
     @javax.inject.Inject 
     DomainObjectContainer container;
