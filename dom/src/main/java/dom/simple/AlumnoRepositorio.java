@@ -163,6 +163,17 @@ public class AlumnoRepositorio {
 				"alumnosDeUnCurso", "anio", anio, "division", division));
 	}
 	
+
+	@Hidden(where = Where.OBJECT_FORMS)    
+    @ActionSemantics(Of.NON_IDEMPOTENT)
+    @MemberOrder(sequence = "3")
+    @Named("Eliminar")    
+    public String removeAlumno(@Named("Eliminar: ") Alumno delAlumno) {
+    		String remAlumno = delAlumno.title();			
+			container.removeIfNotAlready(delAlumno);			
+			return  remAlumno + " fue eliminado";
+			
+	}
 	
     // //////////////////////////////////////
     // Injected services
