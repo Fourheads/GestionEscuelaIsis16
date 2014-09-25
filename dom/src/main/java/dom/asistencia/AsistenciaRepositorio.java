@@ -16,6 +16,7 @@ import org.apache.isis.applib.annotation.Named;
 import org.apache.isis.applib.annotation.Where;
 import org.apache.isis.applib.annotation.ActionSemantics.Of;
 import org.apache.isis.applib.query.QueryDefault;
+import org.joda.time.LocalDate;
 
 import dom.simple.Alumno;
 
@@ -90,7 +91,7 @@ public class AsistenciaRepositorio {
 	@Named("Crear Asistencia Diaria")
 	
 	public Asistencia createAsistenciaDia(final @Named("Esquema") Asistencia asistencia,
-											final @Named("Fecha") Date fecha) {
+											final @Named("Fecha") LocalDate fecha) {
 
 		AsistenciaDia asistenciaDia = new AsistenciaDia();
 		List<Alumno> todosLosAlumnos = container.allInstances(Alumno.class);
@@ -121,7 +122,7 @@ public class AsistenciaRepositorio {
 	}
 
 	
-	public String validateCreateAsistenciaDia(Asistencia asistencia, Date fecha){
+	public String validateCreateAsistenciaDia(Asistencia asistencia, LocalDate fecha){
 		List<AsistenciaDia> asistenciaDiaList = container.allMatches(
 				new QueryDefault<AsistenciaDia>(AsistenciaDia.class,
 				"BuscarAsistenciDiaPorFechaParaUnEsquema", 

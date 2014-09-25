@@ -23,6 +23,7 @@ import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Named;
 import org.apache.isis.applib.annotation.Render;
 import org.apache.isis.applib.annotation.Render.Type;
+import org.joda.time.LocalDate;
 
 @javax.jdo.annotations.PersistenceCapable(identityType = IdentityType.DATASTORE)
 @javax.jdo.annotations.DatastoreIdentity(strategy = javax.jdo.annotations.IdGeneratorStrategy.IDENTITY, column = "id")
@@ -41,15 +42,15 @@ import org.apache.isis.applib.annotation.Render.Type;
 public class AsistenciaDia {
 
 	// {{ Fecha (property)
-	private Date fecha;
+	private LocalDate fecha;
 	@Disabled
 	@MemberOrder(sequence = "1")
 	@javax.jdo.annotations.Column(allowsNull = "false")
-	public Date getFecha() {
+	public LocalDate getFecha() {
 		return fecha;
 	}
 
-	public void setFecha(final Date fecha) {
+	public void setFecha(final LocalDate fecha) {
 		this.fecha = fecha;
 	}
 
@@ -93,10 +94,7 @@ public class AsistenciaDia {
 
 	public String title() {
 
-		Format formatter = new SimpleDateFormat("dd-MM-yyyy");
-		String titulo = formatter.format(getFecha());
-
-		return titulo;
+		return getFecha().toString();
 	}
 
 	

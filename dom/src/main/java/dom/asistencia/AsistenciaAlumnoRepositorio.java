@@ -10,13 +10,14 @@ import org.apache.isis.applib.annotation.Named;
 import org.apache.isis.applib.query.QueryDefault;
 import org.apache.isis.applib.services.memento.MementoService;
 import org.apache.isis.applib.services.memento.MementoService.Memento;
+import org.joda.time.LocalDate;
 
 @DomainService
 public class AsistenciaAlumnoRepositorio {
 	
 	
 	public static List<AsistenciaAlumno> queryAsistenciaAlumnoPorCursoPorDia(
-			Date fecha, int anio, String division, String asistencia) {
+			LocalDate fecha, int anio, String division, String asistencia) {
 		return container.allMatches(new QueryDefault<AsistenciaAlumno>(
 				AsistenciaAlumno.class, "asistenciaAlumno_asistenciaDiaCurso", 
 				"anio", anio, 

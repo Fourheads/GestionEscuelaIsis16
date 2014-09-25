@@ -47,7 +47,7 @@ import dom.simple.Funcion.E_funciones;
 //import org.apache.isis.applib.annotation.Title;
 @javax.jdo.annotations.Queries({
 	@javax.jdo.annotations.Query(name = "todosLosCursos", language = "JDOQL", 
-			value = "SELECT FROM dom.asistencia.Curso"
+			value = "SELECT FROM dom.simple.Curso"
 			+ " order by anio asc, division asc"
 			) })
 

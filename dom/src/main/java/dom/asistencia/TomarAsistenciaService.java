@@ -19,6 +19,9 @@ import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Named;
 import org.apache.isis.applib.annotation.ActionSemantics.Of;
 import org.apache.isis.applib.query.QueryDefault;
+import org.apache.isis.applib.services.memento.MementoService;
+import org.apache.isis.applib.services.memento.MementoService.Memento;
+import org.joda.time.LocalDate;
 
 import dom.simple.Alumno;
 import dom.simple.Curso;
@@ -49,25 +52,19 @@ public class TomarAsistenciaService {
 	@MemberOrder(sequence = "2")
 	public TomarAsistenciaView porCurso(
 			@Named("Esquema") final Asistencia asistencia,
-			@Named("Curso") Curso curso, @Named("Fecha") Date fecha) {
-		int anio = curso.getAnio();
-		String division = curso.getDivision();
-		String asistenciaDescripcion = asistencia.getDescripcion();
-		// memento:
-		// titulo, asistencia, fecha, anio, division, alumnoactivo
-
-		String titulo = "Tomar asistencia";
-		String fechaString = TraductorService.DateToString(fecha);
-		String mementoString = titulo + "," + asistencia.getDescripcion() + ","
-				+ fechaString + "," + curso.getAnio() + ","
-				+ curso.getDivision() + "," + "0";
-
-		System.out.println("");
-		System.out.println(mementoString);
-		System.out.println("");
-
+			@Named("Curso") Curso curso, @Named("Fecha") LocalDate fecha) {
+		
+		Memento memento = mementoService.create();
+		
+		memento.set("titulo", "Tomar asistencia");
+		memento.set("asistencia", asistencia.getDescripcion());
+		memento.set("fecha", fecha);
+		memento.set("anio", curso.getAnio());		
+		memento.set("division", curso.getDivision());
+		memento.set("alumnoActivo", 0);
+		
 		final TomarAsistenciaView tomarAsistenciaView = container
-				.newViewModelInstance(TomarAsistenciaView.class, mementoString);
+				.newViewModelInstance(TomarAsistenciaView.class, memento.asString());
 
 		return tomarAsistenciaView;
 
@@ -79,7 +76,7 @@ public class TomarAsistenciaService {
 	}
 
 	public Curso default1PorCurso() {
-		if (choices1PorCurso().isEmpty()){
+		if (choices1PorCurso().isEmpty()) {
 			return null;
 		}
 		return choices1PorCurso().get(0);
@@ -90,14 +87,14 @@ public class TomarAsistenciaService {
 	}
 
 	public Asistencia default0PorCurso() {
-		if (choices0PorCurso().isEmpty()){
+		if (choices0PorCurso().isEmpty()) {
 			return null;
 		}
 		return choices0PorCurso().get(0);
 	}
 
 	public String validatePorCurso(Asistencia asistencia, Curso curso,
-			Date fecha) {
+			LocalDate fecha) {
 		List<AsistenciaDia> asistenciaDiaList = container
 				.allMatches(new QueryDefault<AsistenciaDia>(
 						AsistenciaDia.class,
@@ -125,6 +122,8 @@ public class TomarAsistenciaService {
 
 	@javax.inject.Inject
 	DomainObjectContainer container;
+	@javax.inject.Inject
+	MementoService mementoService;
 
 	// endregion
 }

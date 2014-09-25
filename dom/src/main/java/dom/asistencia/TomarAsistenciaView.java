@@ -42,6 +42,9 @@ import org.apache.isis.applib.annotation.PublishedAction;
 import org.apache.isis.applib.annotation.Render;
 import org.apache.isis.applib.annotation.Render.Type;
 import org.apache.isis.applib.annotation.Where;
+import org.apache.isis.applib.services.memento.MementoService;
+import org.apache.isis.applib.services.memento.MementoService.Memento;
+import org.joda.time.LocalDate;
 
 @Named("Tomar Asistencia View")
 @Bookmarkable
@@ -75,17 +78,21 @@ public class TomarAsistenciaView extends AbstractViewModel {
 	}
 
 	@Override
-	public void viewModelInit(String memento) {
-		this.memento = memento;
+	public void viewModelInit(String mementoString) {
+		this.memento = mementoString;
 
-		String[] parametros = memento.split(",");
+		Memento memento = mementoService.parse(mementoString);
+		title = memento.get("titulo", String.class);
+		setAsistencia(memento.get("asistencia", String.class));
+		setFecha(memento.get("fecha", LocalDate.class));
+		setAnio(memento.get("anio", String.class));
+		setDivision(memento.get("division", String.class));
+		setIndiceAlumno(memento.get("alumnoActivo", Integer.class));
 
-		title = parametros[0];
-		setAsistencia(parametros[1]);
-		setFecha(parametros[2]);
-		setAnio(parametros[3]);
-		setDivision(parametros[4]);
-		setIndiceAlumno(Integer.parseInt(parametros[5]));
+		System.out.println(" ");
+		System.out.println(" ");
+		System.out.println(" ");
+		System.out.println(getFecha());
 
 		try {
 			inicializarListaAlumnos(asistencia, anio, division, fecha);
@@ -98,12 +105,12 @@ public class TomarAsistenciaView extends AbstractViewModel {
 
 	@Programmatic
 	private void inicializarListaAlumnos(String asistencia, String anio,
-			String division, String fecha) throws ParseException {
+			String division, LocalDate fecha) throws ParseException {
 		int anioInt = Integer.parseInt(anio);
-		Date fechaDate = TraductorService.stringToDate(fecha);
+
 		setAsistenciAlumnos(AsistenciaAlumnoRepositorio
-				.queryAsistenciaAlumnoPorCursoPorDia(fechaDate, anioInt,
-						division, asistencia));
+				.queryAsistenciaAlumnoPorCursoPorDia(fecha, anioInt, division,
+						asistencia));
 	}
 
 	@Programmatic
@@ -143,15 +150,15 @@ public class TomarAsistenciaView extends AbstractViewModel {
 	// }}
 
 	// {{ Fecha (property)
-	private String fecha;
+	private LocalDate fecha;
 
 	@MemberOrder(sequence = "1.3")
 	@Column(allowsNull = "true")
-	public String getFecha() {
+	public LocalDate getFecha() {
 		return fecha;
 	}
 
-	public void setFecha(final String fecha) {
+	public void setFecha(final LocalDate fecha) {
 		this.fecha = fecha;
 	}
 
@@ -233,18 +240,7 @@ public class TomarAsistenciaView extends AbstractViewModel {
 	@PublishedAction
 	public TomarAsistenciaView pasarAlSiguienteAlumno() {
 
-		int nuevoIndice = getIndiceAlumno() + 1;
-
-		if (nuevoIndice == getAsistenciAlumnos().size()) {
-			nuevoIndice = 0;
-		}
-
-		String mementoString = title() + "," + getAsistencia() + ","
-				+ getFecha() + "," + getAnio() + "," + getDivision() + ","
-				+ nuevoIndice;
-
-		return container.newViewModelInstance(TomarAsistenciaView.class,
-				mementoString);
+		return generarNuevoViewModel();
 	}
 
 	// }}
@@ -258,18 +254,7 @@ public class TomarAsistenciaView extends AbstractViewModel {
 		getAlumnoActivo().setEstaPresente(true);
 		getAlumnoActivo().setLlegoTarde(false);
 
-		int nuevoIndice = getIndiceAlumno() + 1;
-
-		if (nuevoIndice == getAsistenciAlumnos().size()) {
-			nuevoIndice = 0;
-		}
-
-		String mementoString = title() + "," + getAsistencia() + ","
-				+ getFecha() + "," + getAnio() + "," + getDivision() + ","
-				+ nuevoIndice;
-
-		return container.newViewModelInstance(TomarAsistenciaView.class,
-				mementoString);
+		return generarNuevoViewModel();
 	}
 
 	// }}
@@ -283,23 +268,10 @@ public class TomarAsistenciaView extends AbstractViewModel {
 		getAlumnoActivo().setEstaPresente(true);
 		getAlumnoActivo().setLlegoTarde(true);
 
-		int nuevoIndice = getIndiceAlumno() + 1;
-
-		if (nuevoIndice == getAsistenciAlumnos().size()) {
-			nuevoIndice = 0;
-		}
-
-		String mementoString = title() + "," + getAsistencia() + ","
-				+ getFecha() + "," + getAnio() + "," + getDivision() + ","
-				+ nuevoIndice;
-
-		return container.newViewModelInstance(TomarAsistenciaView.class,
-				mementoString);
+		return generarNuevoViewModel();
 	}
 
 	// }}
-	
-
 
 	// {{ MarcarAlumnoAusente (action)
 	@Named("Ausente")
@@ -310,25 +282,37 @@ public class TomarAsistenciaView extends AbstractViewModel {
 		getAlumnoActivo().setEstaPresente(false);
 		getAlumnoActivo().setLlegoTarde(false);
 
+		return generarNuevoViewModel();
+	}
+
+	@Programmatic
+	private TomarAsistenciaView generarNuevoViewModel() {
 		int nuevoIndice = getIndiceAlumno() + 1;
 
 		if (nuevoIndice == getAsistenciAlumnos().size()) {
 			nuevoIndice = 0;
 		}
 
-		String mementoString = title() + "," + getAsistencia() + ","
-				+ getFecha() + "," + getAnio() + "," + getDivision() + ","
-				+ nuevoIndice;
+		Memento memento = mementoService.create();
+
+		memento.set("titulo", "Tomar asistencia");
+		memento.set("asistencia", getAsistencia());
+		memento.set("fecha", fecha);
+		memento.set("anio", getAnio());
+		memento.set("division", getDivision());
+		memento.set("alumnoActivo", nuevoIndice);
 
 		return container.newViewModelInstance(TomarAsistenciaView.class,
-				mementoString);
+				memento.asString());
 	}
 
 	// }}
-	
+
 	// region > injected services
 	@javax.inject.Inject
 	private DomainObjectContainer container;
+	@javax.inject.Inject
+	MementoService mementoService;
 
 	// endregion
 
