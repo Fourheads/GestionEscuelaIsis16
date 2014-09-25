@@ -117,21 +117,22 @@ public class AlumnoRepositorio {
         container.persistIfNotAlready(obj);
         return obj;
     }
-
-	private LocalDate validateFechaNacimiento(final LocalDate nacimiento)//VALIDAR FECHA!!!
-	{
-		LocalDate dt=new LocalDate();
-		LocalDate dtmax=dt.now();
-		if(nacimiento.isBefore(dtmax) )
-		{
-			
+    
+    // Validar atributos dni y fechaNacimiento
+    public String validateCreate(String nombre, String apellido, E_sexo sexo, int dni, LocalDate nacimiento, E_nacionalidad nacionalidad,
+	   		 E_localidades localidad, String calle, int numero, String piso, String departamento, String telefono){	
+    	List<Alumno> dniAlumno = container.allMatches((new QueryDefault<Alumno>(Alumno.class, "findByDni", "dni", dni)));
+    	if(!dniAlumno.isEmpty()){					
+			return "El número de dni ya existe";			
 		}
-		else
-		{
-			
+    	if (nacimiento.isAfter(LocalDate.now())){		
+			return "La fecha de nacimiento debe ser menor al día actual";
 		}
-		return dt;
+		return null;
+			
 	}
+    
+	
     
 	// //////////////////////////////////////
     // FindByDni (action)
@@ -155,16 +156,7 @@ public class AlumnoRepositorio {
                     "dni", dni));
     }
 	
-	public String validateCreate(String nombre, String apellido, E_sexo sexo, int dni, LocalDate nacimiento, E_nacionalidad nacionalidad,
-   		 E_localidades localidad, String calle, int numero, String piso, String departamento, String telefono)	
-	{	
-		if (nacimiento.isAfter(LocalDate.now())){					
-			return "La fecha de nacimiento debe ser menor a la actual";			
-		}
-			return null;
 		
-	}
-	
 	@Programmatic
 	public static List<Alumno> queryListarAlumnosDeUnCurso(final int anio, final String division) {
 		return container.allMatches(new QueryDefault<Alumno>(Alumno.class,
