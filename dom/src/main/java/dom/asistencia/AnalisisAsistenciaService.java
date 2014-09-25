@@ -9,6 +9,8 @@ import java.util.List;
 import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.query.QueryDefault;
+import org.apache.isis.applib.services.memento.MementoService;
+import org.apache.isis.applib.services.memento.MementoService.Memento;
 import org.joda.time.LocalDate;
 
 import dom.simple.Alumno;
@@ -30,7 +32,7 @@ public class AnalisisAsistenciaService {
 
 		// total asistencias
 
-		int totalAsistencias = tempList.size();
+		int cantidadAsistencia = tempList.size();
 
 		// total presente ausente tarde
 
@@ -60,21 +62,18 @@ public class AnalisisAsistenciaService {
 		BigDecimal tardeBD = new BigDecimal(tarde);
 		BigDecimal ausenteBD = new BigDecimal(ausente);
 
-		if (totalAsistencias != 0) {
+		if (cantidadAsistencia != 0) {
 
 			porcentajeTarde = tardeBD.multiply(new BigDecimal(100)).divide(
-					new BigDecimal(totalAsistencias), 2,
+					new BigDecimal(cantidadAsistencia), 2,
 					BigDecimal.ROUND_HALF_UP);
 			porcentajeAusente = ausenteBD.multiply(new BigDecimal(100)).divide(
-					new BigDecimal(totalAsistencias), 2,
+					new BigDecimal(cantidadAsistencia), 2,
 					BigDecimal.ROUND_HALF_UP);
 		} else {
 			porcentajeTarde = new BigDecimal(0);
 			porcentajeAusente = new BigDecimal(0);
 		}
-
-		// double porcentajeTarde = tarde * 100 / totalAsistencias;
-		// double porcentajeAusente = ausente * 100 / totalAsistencias;
 
 		// total inasistencias
 
@@ -83,23 +82,28 @@ public class AnalisisAsistenciaService {
 		BigDecimal totalInasistencias = new BigDecimal(ausente).add(mediaFalta);
 
 		// memento= nombre,apellido,cantidadAsistencia,presente,tarde,ausente,
-		// porcTarde,porcAusente,totalInasistencias
+		// porcentajeTarde,porcentajeAusente,totalInasistencias
 
-		String mementoAnalisis = nombre + "," + apellido + ","
-				+ totalAsistencias + "," + presente + "," + tarde + ","
-				+ ausente + "," + porcentajeTarde + "," + porcentajeAusente
-				+ "," + totalInasistencias;
+		Memento memento = mementoService.create();
 
+		memento.set("nombre", nombre);
+		memento.set("apellido", apellido);
+		memento.set("cantidadAsistencia", cantidadAsistencia);
+		memento.set("presente", presente);
+		memento.set("tarde", tarde);
+		memento.set("ausente", ausente);
+		memento.set("porcentajeTarde", porcentajeTarde);
+		memento.set("porcentajeAusente", porcentajeAusente);
+		memento.set("totalInasistencias", totalInasistencias);
+				
 		return container.newViewModelInstance(AnalisisAsistenciaView.class,
-				mementoAnalisis);
+				memento.asString());
 	}
 
 	public static List<AnalisisAsistenciaView> analizarIntervaloAsistenciaCurso(
 			String asistencia, int anio, String division, LocalDate desde,
 			LocalDate hasta) {
 
-		// memento asistencia, anio, curso, dni, nombre, apellido, fechadesde,
-		// fechahasta
 		List<AnalisisAsistenciaView> listaAnalisis = new ArrayList<AnalisisAsistenciaView>();
 
 		String mementoAnalisis;
@@ -124,7 +128,9 @@ public class AnalisisAsistenciaService {
 	// region > injected services
 	@javax.inject.Inject
 	private static DomainObjectContainer container;
-
+	@javax.inject.Inject
+	static MementoService mementoService;
+	
 	// endregion
 
 }

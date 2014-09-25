@@ -1,10 +1,14 @@
 package dom.asistencia;
 
+import java.math.BigDecimal;
+
 import javax.jdo.annotations.Column;
 
 import org.apache.isis.applib.AbstractViewModel;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Named;
+import org.apache.isis.applib.services.memento.MementoService;
+import org.apache.isis.applib.services.memento.MementoService.Memento;
 
 public class AnalisisAsistenciaView extends AbstractViewModel {
 
@@ -16,30 +20,23 @@ public class AnalisisAsistenciaView extends AbstractViewModel {
 	}
 
 	@Override
-	public void viewModelInit(String memento) {
-		this.memento = memento;
-
-		String[] parametros = memento.split(",");
+	public void viewModelInit(String mementoString) {
+		this.memento = mementoString;
 
 		// memento= nombre,apellido,cantidadAsistencia,presente,tarde,ausente,
 		// porcTarde,porcAusente,totalInasistencias
 
-		setNombre(parametros[0]);
-		setApellido(parametros[1]);
-		setAsistenciasRegistradas(parametros[2]);
-		setPresente(parametros[3]);
+		Memento memento = mementoService.parse(mementoString);
 
-		System.out.println("");
-		System.out.println("");
-		System.out.println(getPresente());
-		System.out.println("");
-		System.out.println("");
-
-		setTarde((parametros[4]));
-		setAusente((parametros[5]));
-		setPorcentajeTarde((parametros[6]));
-		setPorcentaje_ausente((parametros[7]));
-		setTotalFaltas((parametros[8]));
+		setNombre(memento.get("nombre", String.class));
+		setApellido(memento.get("apellido", String.class));
+		setAsistenciasRegistradas(memento.get("cantidadAsistencia",	Integer.class).toString());
+		setPresente(memento.get("presente", Integer.class).toString());
+		setTarde(memento.get("tarde", Integer.class).toString());
+		setAusente(memento.get("ausente", Integer.class).toString());
+		setPorcentajeTarde(memento.get("porcentajeTarde", BigDecimal.class).toString());
+		setPorcentaje_ausente(memento.get("porcentajeAusente", BigDecimal.class).toString());
+		setTotalFaltas(memento.get("totalInasistencias", BigDecimal.class).toString());
 
 	}
 
@@ -183,6 +180,9 @@ public class AnalisisAsistenciaView extends AbstractViewModel {
 	public void setTotalFaltas(final String totalFaltas) {
 		this.totalFaltas = totalFaltas;
 	}
+
 	// }}
 
+	@javax.inject.Inject
+	MementoService mementoService;
 }
