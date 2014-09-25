@@ -25,6 +25,9 @@ import org.apache.isis.applib.annotation.Render;
 import org.apache.isis.applib.annotation.Title;
 import org.apache.isis.applib.annotation.Render.Type;
 import org.apache.isis.applib.annotation.TypicalLength;
+import org.apache.isis.applib.services.memento.MementoService;
+import org.apache.isis.applib.services.memento.MementoService.Memento;
+import org.joda.time.LocalDate;
 
 @Named("Contabilizar Asistencias View")
 @Bookmarkable
@@ -44,58 +47,50 @@ public class ContabilizarAsistenciasView extends AbstractViewModel {
 	}
 
 	@Override
-	public void viewModelInit(String memento) {
-		this.memento = memento;
+	public void viewModelInit(String mementoString) {
+		this.memento = mementoString;
+		
+		Memento memento = mementoService.parse(mementoString);
 
-		String[] parametros = memento.split(",");
-
-		title = "Estadísticas de Asistencia";
-		setAsistencia(parametros[0]);
-		setAnio(Integer.parseInt(parametros[1]));
-		setDivision(parametros[2]);
-		try {
-			setDesde(TraductorService.stringToDate(parametros[3]));
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		try {
-			setHasta(TraductorService.stringToDate(parametros[4]));
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		setIndice(Integer.parseInt(parametros[5]));
-
-		setAnalisisAsistenciaView(AnalisisAsistenciaService
-				.analizarIntervaloAsistenciaCurso(getAsistencia(), getAnio(),
-						getDivision(), getDesde(), getHasta()));
+		title = memento.get("titulo", String.class);
+		setAsistencia(memento.get("asistencia", String.class));
+		setDesde(memento.get("desde", LocalDate.class));
+		setHasta(memento.get("hasta", LocalDate.class));
+		setAnio(memento.get("anio", Integer.class));
+		setDivision(memento.get("division", String.class));
+				
+		
+		// setAnalisisAsistenciaView(AnalisisAsistenciaService
+		// .analizarIntervaloAsistenciaCurso(getAsistencia(), getAnio(),
+		// getDivision(), getDesde(), getHasta()));
 
 	}
 
 	// {{ Desde (property)
-	private Date desde;
+	private LocalDate desde;
 
 	@MemberOrder(sequence = "1", name = "Intervalo")
 	@Column(allowsNull = "true")
-	public Date getDesde() {
+	public LocalDate getDesde() {
 		return desde;
 	}
 
-	public void setDesde(final Date desde) {
-		this.desde = desde;
+	public void setDesde(final LocalDate localDate) {
+		this.desde = localDate;
 	}
 
 	// }}
 
 	// {{ Hasta (property)
-	private Date hasta;
+	private LocalDate hasta;
 
 	@MemberOrder(sequence = "2", name = "Intervalo")
 	@Column(allowsNull = "true")
-	public Date getHasta() {
+	public LocalDate getHasta() {
 		return hasta;
 	}
 
-	public void setHasta(final Date hasta) {
+	public void setHasta(final LocalDate hasta) {
 		this.hasta = hasta;
 	}
 
@@ -134,21 +129,7 @@ public class ContabilizarAsistenciasView extends AbstractViewModel {
 
 	// }}
 
-	// {{ Indice (property)
-	private int indice;
-
-	@Hidden
-	@Column(allowsNull = "true")
-	public int getIndice() {
-		return indice;
-	}
-
-	public void setIndice(final int indice) {
-		this.indice = indice;
-	}
-
-	// }}
-
+	
 	// {{ Asistencia (property)
 	private String asistencia;
 
@@ -186,4 +167,6 @@ public class ContabilizarAsistenciasView extends AbstractViewModel {
 	// }} (end region)
 	// //////////////////////////////////////
 
+	@javax.inject.Inject
+	MementoService mementoService;
 }

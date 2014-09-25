@@ -11,6 +11,9 @@ import org.apache.isis.applib.annotation.Named;
 import org.apache.isis.applib.annotation.PublishedAction;
 import org.apache.isis.applib.annotation.PublishedObject;
 import org.apache.isis.applib.query.QueryDefault;
+import org.apache.isis.applib.services.memento.MementoService;
+import org.apache.isis.applib.services.memento.MementoService.Memento;
+import org.joda.time.LocalDate;
 
 import dom.simple.Alumno;
 import dom.simple.Curso;
@@ -39,18 +42,23 @@ public class ContabilizarAsistenciasService {
 	@MemberOrder(sequence = "2")
 	@PublishedAction
 	public ContabilizarAsistenciasView contarAsistenciasCurso(
-			@Named("Esquema") Asistencia esquema, @Named("Curso") Curso curso,
-			@Named("Desde") Date desde, @Named("Hasta") Date hasta) {
+			@Named("Esquema") Asistencia asistencia,
+			@Named("Curso") Curso curso, @Named("Desde") LocalDate desde,
+			@Named("Hasta") LocalDate hasta) {
 
 		// memento: esquema, anio, division, desde, hasta
 
-		String mementoString = esquema.getDescripcion() + "," + curso.getAnio()
-				+ "," + curso.getDivision() + ","
-				+ TraductorService.DateToString(desde) + ","
-				+ TraductorService.DateToString(hasta) + ",-1";
+		Memento memento = mementoService.create();
+
+		memento.set("titulo", desde + " / " + hasta);
+		memento.set("asistencia", asistencia.getDescripcion());
+		memento.set("anio", curso.getAnio());
+		memento.set("division", curso.getDivision());
+		memento.set("desde", desde);
+		memento.set("hasta", hasta);
 
 		return container.newViewModelInstance(
-				ContabilizarAsistenciasView.class, mementoString);
+				ContabilizarAsistenciasView.class, memento.asString());
 	}
 
 	public List<Asistencia> choices0ContarAsistenciasCurso() {
@@ -74,7 +82,7 @@ public class ContabilizarAsistenciasService {
 	}
 
 	public String validateContarAsistenciasCurso(Asistencia esquema,
-			Curso curso, Date desde, Date hasta) {
+			Curso curso, LocalDate desde, LocalDate hasta) {
 
 		List<Alumno> listadoAlumnos = container
 				.allMatches(new QueryDefault<Alumno>(Alumno.class,
@@ -93,6 +101,8 @@ public class ContabilizarAsistenciasService {
 
 	@javax.inject.Inject
 	static DomainObjectContainer container;
+	@javax.inject.Inject
+	MementoService mementoService;
 
 	// endregion
 }
