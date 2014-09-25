@@ -31,6 +31,9 @@ import dom.simple.Funcion.E_funciones;
 	@javax.jdo.annotations.Query(name = "findByFuncion", language = "JDOQL",
 		value ="SELECT FROM dom.simple.Personal, " +
 				" WHERE funciones.contains(funcion) && funcion.nombre == :nombre"),
+	@javax.jdo.annotations.Query(name = "findByDni", language = "JDOQL",
+		value ="SELECT FROM dom.simple.Personal, " +
+				" WHERE this.dni == :dni"),
 } )
 
 @ObjectType("PERSONAL")
