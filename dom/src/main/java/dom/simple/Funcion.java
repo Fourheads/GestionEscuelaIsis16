@@ -7,6 +7,7 @@ import javax.jdo.annotations.Persistent;
 import org.apache.isis.applib.annotation.MaxLength;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.MultiLine;
+import org.apache.isis.applib.annotation.Optional;
 import org.apache.isis.applib.util.ObjectContracts;
 
 @PersistenceCapable
@@ -34,6 +35,7 @@ public class Funcion implements Comparable<Funcion>{
 	@MemberOrder(sequence = "1.1")
 	@Persistent
 	@MultiLine
+	@Optional
 	final @MaxLength(2048)
 	public String getObservaciones() {
 		return observaciones;
