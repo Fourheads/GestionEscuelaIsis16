@@ -18,7 +18,7 @@
  * 
  * 
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
-*/
+ */
 
 package dom.simple;
 
@@ -40,82 +40,85 @@ import org.apache.isis.applib.query.QueryDefault;
 
 import dom.simple.Funcion.E_funciones;
 
-
-
 @Bounded
 @PersistenceCapable
 public class Materia {
-	
+
 	private int año;
-	
-	
+
 	@Column(allowsNull = "true")
 	@MemberOrder(sequence = "1")
 	@Persistent
 	public int getAño() {
 		return año;
 	}
+
 	public void setAño(int anio) {
 		this.año = anio;
 	}
 
-	private String nombre;	
-	
+	private String nombre;
+
 	@Column(allowsNull = "true")
 	@MemberOrder(sequence = "1.1")
 	@Persistent
 	public String getNombre() {
 		return nombre;
 	}
+
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-	
+
 	private String programa;
-	
-	final @MaxLength(2048)
-	@MultiLine 
-	@Column(allowsNull = "true")
-	@MemberOrder(sequence = "1.2")
-	@Persistent
-	public String getPrograma() {
+
+	final @MaxLength(2048) @MultiLine @Column(allowsNull = "true") @MemberOrder(sequence = "1.2") @Persistent public String getPrograma() {
 		return programa;
 	}
+
 	public void setPrograma(String programa) {
 		this.programa = programa;
 	}
-	
+
 	private Personal profesor;
-	
+
 	@Persistent
-	//@Title
+	// @Title
 	@Column(allowsNull = "true")
 	@MemberOrder(sequence = "1.3")
 	public Personal getProfesor() {
 		return profesor;
 	}
-	
 
 	public void setProfesor(Personal profesor) {
 		this.profesor = profesor;
 	}
-	
-    @MemberOrder(sequence = "1.4")
-    @Named("Asinganar profesor")
-    public void asignarProfesor(final @Named("Profesor") Personal profesor){
-    	this.profesor=profesor;
-    }
-    
-    public List<Personal> choices0AsignarProfesor(){
-    	return container.allMatches(
-    	new QueryDefault<Personal>(Personal.class, "findByFuncion", "nombre", E_funciones.PROFESOR.toString()));
-    }
-	
-    
-	public String title(){
-		return "Materia: "+getNombre()+" "+String.valueOf(getAño());
+
+	@MemberOrder(sequence = "1.4")
+	@Named("Asinganar profesor")
+	public void asignarProfesor(final @Named("Profesor") Personal profesor) {
+		this.profesor = profesor;
 	}
-	
+
+	public List<Personal> choices0AsignarProfesor() {
+		return container.allMatches(new QueryDefault<Personal>(Personal.class,
+				"findByFuncion", "nombre", E_funciones.PROFESOR.toString()));
+	}
+
+	public String title() {
+		String terminacion = "to";
+
+		if ((getAño() == 1) || (getAño() == 3)) {
+			terminacion = "er";
+		} else {
+			if (getAño() == 2) {
+				terminacion = "do";
+			}
+		}
+
+		return getNombre() + " de " + getAño() + terminacion +" Año";
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -126,6 +129,7 @@ public class Materia {
 				+ ((programa == null) ? 0 : programa.hashCode());
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -150,26 +154,19 @@ public class Materia {
 		return true;
 	}
 
-	
-	//efective java programing
-	
-	
-	
-    //region > injected services
-    // //////////////////////////////////////
+	// efective java programing
 
-    @javax.inject.Inject 
-    DomainObjectContainer container;
+	// region > injected services
+	// //////////////////////////////////////
 
+	@javax.inject.Inject
+	DomainObjectContainer container;
 
-	
 	/*
-	@PublishedAction
-	@Bulk
-	public String eliminar(){
-		container.removeIfNotAlready(this);
-		container.informUser("blalballa");
-		return "La materia se elimino";
-	}*/
+	 * @PublishedAction
+	 * 
+	 * @Bulk public String eliminar(){ container.removeIfNotAlready(this);
+	 * container.informUser("blalballa"); return "La materia se elimino"; }
+	 */
 
 }

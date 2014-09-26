@@ -17,6 +17,7 @@ import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.MultiLine;
 import org.apache.isis.applib.annotation.Named;
 import org.apache.isis.applib.annotation.ObjectType;
+import org.apache.isis.applib.annotation.Optional;
 import org.apache.isis.applib.annotation.Render;
 import org.apache.isis.applib.annotation.Render.Type;
 import org.apache.isis.applib.util.ObjectContracts;
@@ -47,7 +48,7 @@ public class Personal extends Persona implements Comparable<Personal>{
 	public Personal createFuncion(
 			final @Named("Funcion") E_funciones funcion,
 			final @MaxLength(2048)
-	    	  	  @MultiLine 
+	    	  	  @MultiLine
 	    	  	  @Named("Observaciones") String observaciones){
 			
 		final Funcion newFuncion = new Funcion();

@@ -81,6 +81,7 @@ public class MateriaRepositorio {
         {
         	final Materia obj = container.newTransientInstance(Materia.class);
             obj.setNombre(Nombre);
+            obj.setAño(anio);
             obj.setPrograma(Programa);
         	
             container.persistIfNotAlready(obj);
