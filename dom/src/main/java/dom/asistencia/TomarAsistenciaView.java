@@ -240,11 +240,22 @@ public class TomarAsistenciaView extends AbstractViewModel {
 	@PublishedAction
 	public TomarAsistenciaView pasarAlSiguienteAlumno() {
 
-		return generarNuevoViewModel();
+		return generarNuevoViewModel(alumnoIndiceSiguiente());
 	}
 
 	// }}
 
+	// {{ pasarAlAlumnoAnterior (action)
+		@Named("Alumno Anterior")
+		@MemberOrder(sequence = "5", name = "alumnoActivo")
+		@PublishedAction
+		public TomarAsistenciaView pasarAlAlumnoAnterior() {
+						
+			return generarNuevoViewModel(alumnoIndiceAnterior());
+		}
+
+		// }}
+	
 	// {{ MarcarAlumnoPresente (action)
 	@Named("Presente")
 	@MemberOrder(sequence = "1", name = "alumnoActivo")
@@ -253,8 +264,8 @@ public class TomarAsistenciaView extends AbstractViewModel {
 
 		getAlumnoActivo().setEstaPresente(true);
 		getAlumnoActivo().setLlegoTarde(false);
-
-		return generarNuevoViewModel();
+		
+		return generarNuevoViewModel(alumnoIndiceSiguiente());
 	}
 
 	// }}
@@ -267,8 +278,8 @@ public class TomarAsistenciaView extends AbstractViewModel {
 
 		getAlumnoActivo().setEstaPresente(true);
 		getAlumnoActivo().setLlegoTarde(true);
-
-		return generarNuevoViewModel();
+		
+		return generarNuevoViewModel(alumnoIndiceSiguiente());
 	}
 
 	// }}
@@ -281,18 +292,16 @@ public class TomarAsistenciaView extends AbstractViewModel {
 
 		getAlumnoActivo().setEstaPresente(false);
 		getAlumnoActivo().setLlegoTarde(false);
-
-		return generarNuevoViewModel();
+		
+		
+		return generarNuevoViewModel(alumnoIndiceSiguiente());
 	}
 
 	@Programmatic
-	private TomarAsistenciaView generarNuevoViewModel() {
-		int nuevoIndice = getIndiceAlumno() + 1;
-
-		if (nuevoIndice == getAsistenciAlumnos().size()) {
-			nuevoIndice = 0;
-		}
-
+	private TomarAsistenciaView generarNuevoViewModel(int nuevoIndice) {
+		
+		
+		
 		Memento memento = mementoService.create();
 
 		memento.set("titulo", "Tomar asistencia");
@@ -305,6 +314,26 @@ public class TomarAsistenciaView extends AbstractViewModel {
 		return container.newViewModelInstance(TomarAsistenciaView.class,
 				memento.asString());
 	}
+
+	@Programmatic
+	public int alumnoIndiceSiguiente() {
+		int nuevoIndice = getIndiceAlumno() + 1;
+
+		if (nuevoIndice == getAsistenciAlumnos().size()) {
+			nuevoIndice = 0;
+		}
+		return nuevoIndice;
+	}
+	
+	public int alumnoIndiceAnterior() {
+		int nuevoIndice = getIndiceAlumno() - 1;
+
+		if (nuevoIndice == -1) {
+			nuevoIndice = getAsistenciAlumnos().size() -1;
+		}
+		return nuevoIndice;
+	}
+	
 
 	// }}
 
