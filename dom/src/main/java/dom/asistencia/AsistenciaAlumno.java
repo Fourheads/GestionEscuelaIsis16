@@ -25,7 +25,7 @@ import dom.simple.Alumno;
 @javax.jdo.annotations.Version(strategy = VersionStrategy.VERSION_NUMBER, column = "version")
 @javax.jdo.annotations.Queries({
 		@javax.jdo.annotations.Query(name = "asistenciaAlumno_asistenciaDiaCurso", language = "JDOQL", value = "SELECT FROM dom.asistencia.AsistenciaAlumno"
-				+ " WHERE this.alumno.curso.anio == :anio "
+				+ " WHERE this.alumno.curso.anio.anioNumero == :anio "
 				+ "&& this.alumno.curso.division == :division "
 				+ "&& this.asistenciaDia.fecha == :fecha "
 				+ "&& this.asistenciaDia.asistencia.descripcion == :asistencia "
@@ -33,7 +33,7 @@ import dom.simple.Alumno;
 
 		@javax.jdo.annotations.Query(name = "asistenciaAlumno_ContarAsistencias", language = "JDOQL", value = "SELECT FROM dom.asistencia.AsistenciaAlumno "
 				+ "WHERE this.asistenciaDia.asistencia.descripcion == :asistencia "
-				+ "&& this.alumno.curso.anio == :anio "
+				+ "&& this.alumno.curso.anio.anioNumero == :anio "
 				+ "&& this.alumno.curso.division == :division "
 				+ "&& this.asistenciaDia.fecha >= :desde "
 				+ "&& this.asistenciaDia.fecha <= :hasta "

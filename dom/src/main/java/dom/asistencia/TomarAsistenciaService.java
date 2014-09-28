@@ -60,7 +60,7 @@ public class TomarAsistenciaService {
 		memento.set("titulo", "Tomar asistencia");
 		memento.set("asistencia", asistencia.getDescripcion());
 		memento.set("fecha", fecha);
-		memento.set("anio", curso.getAnio());		
+		memento.set("anio", curso.getAnio().getAnioNumero());		
 		memento.set("division", curso.getDivision());
 		memento.set("alumnoActivo", 0);
 		
