@@ -6,8 +6,10 @@ import javax.jdo.annotations.VersionStrategy;
 
 import org.apache.isis.applib.annotation.Bookmarkable;
 import org.apache.isis.applib.annotation.Bounded;
+import org.apache.isis.applib.annotation.Hidden;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.ObjectType;
+import org.apache.isis.applib.annotation.Where;
 
 import dom.planEstudio.Materia;
 
@@ -34,24 +36,12 @@ public class MateriaDelCurso {
 	}
 	// }}
 
-//	// {{ Profesor (property)
-//	private Profesor profesor;
-//
-//	@MemberOrder(sequence = "1")
-//	@Column(allowsNull = "true")
-//	public Profesor getProfesor() {
-//		return profesor;
-//	}
-//
-//	public void setProfesor(final Profesor profesor) {
-//		this.profesor = profesor;
-//	}
-//	// }}
+
 	
 	// {{ Curso (property)
 	private Curso curso;
-
-	@MemberOrder(sequence = "1")
+	@Hidden(where = Where.ALL_TABLES)
+	@MemberOrder(sequence = "2")
 	@Column(allowsNull = "true")
 	public Curso getCurso() {
 		return curso;
@@ -62,7 +52,19 @@ public class MateriaDelCurso {
 	}
 	// }}
 
+	// {{ Profesor (property)
+	private Personal profesor;
 
+	@MemberOrder(sequence = "3")
+	@Column(allowsNull = "true")
+	public Personal getProfesor() {
+		return profesor;
+	}
+
+	public void setProfesor(final Personal profesor) {
+		this.profesor = profesor;
+	}
+	// }}
 
 	// Title (GUI)
 	// //////////////////////////////////////////

@@ -13,10 +13,11 @@ import dom.planEstudio.Anio;
 import dom.planEstudio.Materia;
 import dom.planEstudio.Plan;
 import dom.planEstudio.PlanRepositorio;
-@Hidden
+
 @DomainService(repositoryFor = Curso.class)
 public class CursoRepositorio {
 
+	@MemberOrder(sequence = "1")
 	public Curso crearCurso(Plan plan, 
 							Anio anio, 
 							String division,
@@ -38,6 +39,20 @@ public class CursoRepositorio {
 		container.persistIfNotAlready(curso);
 		return curso;
 	}
+	
+	public List<Plan> choices0CrearCurso() {
+
+		return planRepositorio.queryListarPlanesAlfabeticamente();
+	}
+
+	public Plan default0CrearCurso() {
+		if (choices0CrearCurso().isEmpty()){
+			return null;
+		}
+		
+		return choices0CrearCurso().get(0);
+	}
+	
 
 	// {{ listarCursosDeUnPlan (action)
 	@MemberOrder(sequence = "2")
@@ -58,6 +73,28 @@ public class CursoRepositorio {
 		}
 		
 		return choices0ListarCursosDeUnPlan().get(0);
+	}
+	
+	// {{ SeleccionarUnCurso (action)
+	@MemberOrder(sequence = "1")
+	public Curso seleccionarUnCurso(Plan plan, 
+							Curso curso 
+							) {
+	
+		return curso;
+	}
+	
+	public List<Plan> choices0SeleccionarUnCurso() {
+
+		return planRepositorio.queryListarPlanesAlfabeticamente();
+	}
+
+	public Plan default0SeleccionarUnCurso() {
+		if (choices0SeleccionarUnCurso().isEmpty()){
+			return null;
+		}
+		
+		return choices0SeleccionarUnCurso().get(0);
 	}
 	
 	
