@@ -42,7 +42,7 @@ import dom.simple.Funcion.E_funciones;
 
 @Bounded
 @PersistenceCapable
-public class Materia {
+public class Materia_old {
 
 	private int año;
 
@@ -119,40 +119,7 @@ public class Materia {
 		return getNombre() + " de " + getAño() + terminacion +" Año";
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + año;
-		result = prime * result + ((nombre == null) ? 0 : nombre.hashCode());
-		result = prime * result
-				+ ((programa == null) ? 0 : programa.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Materia other = (Materia) obj;
-		if (año != other.año)
-			return false;
-		if (nombre == null) {
-			if (other.nombre != null)
-				return false;
-		} else if (!nombre.equals(other.nombre))
-			return false;
-		if (programa == null) {
-			if (other.programa != null)
-				return false;
-		} else if (!programa.equals(other.programa))
-			return false;
-		return true;
-	}
+		
 
 	// efective java programing
 

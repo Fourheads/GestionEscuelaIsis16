@@ -20,9 +20,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-
 package dom.simple;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -42,15 +42,15 @@ import org.apache.isis.applib.annotation.Render;
 import org.apache.isis.applib.annotation.Render.Type;
 import org.apache.isis.applib.query.QueryDefault;
 
+import dom.planEstudio.Anio;
 import dom.simple.Funcion.E_funciones;
 
 //import org.apache.isis.applib.annotation.Title;
-@javax.jdo.annotations.Queries({
-	@javax.jdo.annotations.Query(name = "todosLosCursos", language = "JDOQL", 
-			value = "SELECT FROM dom.simple.Curso"
-			+ " order by anio asc, division asc"
-			) })
-
+@javax.jdo.annotations.Queries({ @javax.jdo.annotations.Query(name = "todosLosCursos", language = "JDOQL", value = "SELECT FROM dom.simple.Curso"
+		+ " order by anio.anioNumero asc, division asc"),
+		@javax.jdo.annotations.Query(name = "listarCursosDeUnPlan", language = "JDOQL", value = "SELECT "
+				+ "FROM dom.simple.Curso "
+				+ "WHERE this.anio.plan.descripcion == :plan")})
 @Bounded
 @PersistenceCapable
 public class Curso {
@@ -59,7 +59,6 @@ public class Curso {
 	private String division;
 
 	@Persistent
-	// @Title
 	@Column(allowsNull = "true")
 	@MemberOrder(sequence = "1.2")
 	public String getDivision() {
@@ -95,58 +94,57 @@ public class Curso {
 	// }}
 
 	// {{ Anio (property)
-	private int anio;
+		private Anio anio;
 
-	@Persistent
-	// @Title
-	@Column(allowsNull = "true")
-	@MemberOrder(sequence = "1.1")
-	public int getAnio() {
-		return anio;
-	}
+		@MemberOrder(sequence = "1")
+		@Column(allowsNull = "true")
+		public Anio getAnio() {
+			return anio;
+		}
 
-	public void setAnio(int anio) {
-		this.anio = anio;
-	}
+		public void setAnio(final Anio anio) {
+			this.anio = anio;
+		}
+		// }}
 
 	// }}
 
-	// {{ Materias (Property)
-	@Join
-	@Element(dependent = "false")
-	private SortedSet<Materia> ListaMateria = new TreeSet<Materia>();
-
-	@Render(Type.EAGERLY)
-	@MemberOrder(sequence = "1.4")
-	public SortedSet<Materia> getListaMateria() {
-		return ListaMateria;
-	}
-
-	public void setListaMateria(SortedSet<Materia> ListaMateria) {
-		this.ListaMateria = ListaMateria;
-	}
-
-	@MemberOrder(sequence = "2")
-	@Named("Asinganar materias")
-	public void asignarMateria(@Named("Materia") Materia materia) {
-		this.ListaMateria.add(materia);
-	}
-
-	public List<Materia> choices0AsignarMateria() {
-		return container.allInstances(Materia.class);
-	}
-
-	@MemberOrder(sequence = "4")
-	@Named("Quitar materias del curso")
-	public Curso removeMateria(final @Named("Materia") Materia materia) {
-
-		getListaMateria().remove(materia);
-		return this;
-	}
-
-	public SortedSet<Materia> choices0RemoveMateria() {
-		return getListaMateria();
-	}
+	// // {{ Materias (Property)
+	// @Join
+	// @Element(dependent = "false")
+	// private SortedSet<Materia> ListaMateria = new TreeSet<Materia>();
+	//
+	// @Render(Type.EAGERLY)
+	// @MemberOrder(sequence = "1.4")
+	// public SortedSet<Materia> getListaMateria() {
+	// return ListaMateria;
+	// }
+	//
+	// public void setListaMateria(SortedSet<Materia> ListaMateria) {
+	// this.ListaMateria = ListaMateria;
+	// }
+	//
+	// @MemberOrder(sequence = "2")
+	// @Named("Asinganar materias")
+	// public void asignarMateria(@Named("Materia") Materia materia) {
+	// this.ListaMateria.add(materia);
+	// }
+	//
+	// public List<Materia> choices0AsignarMateria() {
+	// return container.allInstances(Materia.class);
+	// }
+	//
+	// @MemberOrder(sequence = "4")
+	// @Named("Quitar materias del curso")
+	// public Curso removeMateria(final @Named("Materia") Materia materia) {
+	//
+	// getListaMateria().remove(materia);
+	// return this;
+	// }
+	//
+	// public SortedSet<Materia> choices0RemoveMateria() {
+	// return getListaMateria();
+	// }
 
 	// }}
 
@@ -164,6 +162,26 @@ public class Curso {
 	public void setAlumnos(final SortedSet<Alumno> listaalumno) {
 		this.ListaAlumno = listaalumno;
 	}
+
+	// MateriaDelCursoList (Collection)
+	// //////////////////////////////////////////
+
+	@Persistent(mappedBy = "curso", dependentElement = "true")
+	@Join
+	private List<MateriaDelCurso> materiaDelCursoList = new ArrayList<MateriaDelCurso>();
+
+	@MemberOrder(sequence = "1")
+	@Render(Type.EAGERLY)
+	public List<MateriaDelCurso> getMateriaDelCursoList() {
+		return materiaDelCursoList;
+	}
+
+	public void setMateriaDelCursoList(
+			final List<MateriaDelCurso> materiaDelCursoList) {
+		this.materiaDelCursoList = materiaDelCursoList;
+	}
+
+	// end region MateriaDelCursoList (Collection)
 
 	@MemberOrder(sequence = "3")
 	@Named("Asinganar alumnos")
@@ -234,59 +252,6 @@ public class Curso {
 	public List<Personal> choices0AsignarPreceptor() {
 		return container.allMatches(new QueryDefault<Personal>(Personal.class,
 				"findByFuncion", "nombre", E_funciones.PRECEPTOR.toString()));
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result
-				+ ((ListaAlumno == null) ? 0 : ListaAlumno.hashCode());
-		result = prime * result
-				+ ((ListaMateria == null) ? 0 : ListaMateria.hashCode());
-		result = prime * result + anio;
-		result = prime * result
-				+ ((division == null) ? 0 : division.hashCode());
-		result = prime * result
-				+ ((preceptor == null) ? 0 : preceptor.hashCode());
-		result = prime * result + ((turno == null) ? 0 : turno.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Curso other = (Curso) obj;
-		if (ListaAlumno == null) {
-			if (other.ListaAlumno != null)
-				return false;
-		} else if (!ListaAlumno.equals(other.ListaAlumno))
-			return false;
-		if (ListaMateria == null) {
-			if (other.ListaMateria != null)
-				return false;
-		} else if (!ListaMateria.equals(other.ListaMateria))
-			return false;
-		if (anio != other.anio)
-			return false;
-		if (division == null) {
-			if (other.division != null)
-				return false;
-		} else if (!division.equals(other.division))
-			return false;
-		if (preceptor == null) {
-			if (other.preceptor != null)
-				return false;
-		} else if (!preceptor.equals(other.preceptor))
-			return false;
-		if (turno != other.turno)
-			return false;
-		return true;
 	}
 
 	@javax.inject.Inject

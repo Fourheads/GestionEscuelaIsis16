@@ -37,7 +37,7 @@ import org.apache.isis.applib.annotation.RegEx;
 import org.apache.isis.applib.annotation.ActionSemantics.Of;
 import org.apache.isis.applib.annotation.Where;
 
-@DomainService(menuOrder = "17", repositoryFor = Materia.class)
+//@DomainService(menuOrder = "17", repositoryFor = Materia.class)
 @Named("Materias")
 public class MateriaRepositorio {
 	
@@ -54,52 +54,52 @@ public class MateriaRepositorio {
         return "SimpleObject";
     }
     
- // //////////////////////////////////////
-    // List (action)
-    // //////////////////////////////////////
-    @Bookmarkable
-    @ActionSemantics(Of.SAFE)
-    @MemberOrder(sequence = "1.1")
-    @Named ("Listar Materias")
-    public List<Materia> complete() {
-        return container.allInstances(Materia.class);
-    }
-    
-
-        // //////////////////////////////////////
-        // Create (action)
-        // //////////////////////////////////////
-          
-        
-        @MemberOrder(sequence = "1.0")
-        @Named ("Crear Materia")
-        public Materia create(
-                final @Named("Nombre") String Nombre,
-                final @Named("Año") @RegEx(validation = "/d{1,1}") int anio,
-                final @MaxLength(2048) @MultiLine @Named("Programa") String Programa
-                )
-        {
-        	final Materia obj = container.newTransientInstance(Materia.class);
-            obj.setNombre(Nombre);
-            obj.setAño(anio);
-            obj.setPrograma(Programa);
-        	
-            container.persistIfNotAlready(obj);
-            return obj;
-        }
-      
-        
-        //region > remove User (action)
-        // //////////////////////////////////////
-        
-      
-        @ActionSemantics(Of.NON_IDEMPOTENT)
-        @MemberOrder(sequence = "1.6")
-        @Named("Borrar Materia")
-        public String removeMateria(@Named("Materia") Materia mate) {
-    			container.remove(mate);
-    			return "La materia " + mate.getNombre()+ " fue borrada con exito";
-    	}
+// // //////////////////////////////////////
+//    // List (action)
+//    // //////////////////////////////////////
+//    @Bookmarkable
+//    @ActionSemantics(Of.SAFE)
+//    @MemberOrder(sequence = "1.1")
+//    @Named ("Listar Materias")
+//    public List<Materia> complete() {
+//        return container.allInstances(Materia.class);
+//    }
+//    
+//
+//        // //////////////////////////////////////
+//        // Create (action)
+//        // //////////////////////////////////////
+//          
+//        
+//        @MemberOrder(sequence = "1.0")
+//        @Named ("Crear Materia")
+//        public Materia create(
+//                final @Named("Nombre") String Nombre,
+//                final @Named("Año") @RegEx(validation = "/d{1,1}") int anio,
+//                final @MaxLength(2048) @MultiLine @Named("Programa") String Programa
+//                )
+//        {
+//        	final Materia obj = container.newTransientInstance(Materia.class);
+//            obj.setNombre(Nombre);
+//            obj.setAño(anio);
+//            obj.setPrograma(Programa);
+//        	
+//            container.persistIfNotAlready(obj);
+//            return obj;
+//        }
+//      
+//        
+//        //region > remove User (action)
+//        // //////////////////////////////////////
+//        
+//      
+//        @ActionSemantics(Of.NON_IDEMPOTENT)
+//        @MemberOrder(sequence = "1.6")
+//        @Named("Borrar Materia")
+//        public String removeMateria(@Named("Materia") Materia mate) {
+//    			container.remove(mate);
+//    			return "La materia " + mate.getNombre()+ " fue borrada con exito";
+//    	}
         
         
         //endregion

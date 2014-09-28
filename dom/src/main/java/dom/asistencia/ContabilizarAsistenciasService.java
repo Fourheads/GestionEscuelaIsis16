@@ -73,7 +73,7 @@ public class ContabilizarAsistenciasService {
 
 	public List<Curso> choices1ContarAsistenciasCurso() {
 
-		return CursoRepositorio.querylistAll();
+		return container.allInstances(Curso.class);
 	}
 
 	public Curso default1ContarAsistenciasCurso() {

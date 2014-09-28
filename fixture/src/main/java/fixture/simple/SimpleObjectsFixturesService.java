@@ -72,19 +72,7 @@ public class SimpleObjectsFixturesService extends FixtureScripts {
         return run.get(0).getObject();
     }
     
-    @Prototype
-    @MemberOrder(sequence="20")
-    public Object instalarFixturesCursos() {
-        final List<FixtureResult> run = findFixtureScriptFor(CursosFixture.class).run(null);
-        return run.get(0).getObject();
-    }
-    
-    @Prototype
-    @MemberOrder(sequence="20")
-    public Object instalarFixturesMaterias() {
-        final List<FixtureResult> run = findFixtureScriptFor(MateriaFixture.class).run(null);
-        return run.get(0).getObject();
-    }
+   
     
     @Prototype
     @MemberOrder(sequence="20")
