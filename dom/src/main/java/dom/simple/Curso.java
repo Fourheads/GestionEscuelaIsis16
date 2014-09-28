@@ -51,11 +51,13 @@ import dom.simple.Funcion.E_funciones;
 				+ " order by anio.anioNumero asc, division asc"),
 		@javax.jdo.annotations.Query(name = "listarCursosDeUnPlan", language = "JDOQL", value = "SELECT "
 				+ "FROM dom.simple.Curso "
-				+ "WHERE this.anio.plan.descripcion == :plan"),
+				+ "WHERE this.anio.plan.descripcion == :plan "
+				+ "ORDER BY this.anio.anioNumero asc, this.division asc"),
 		@javax.jdo.annotations.Query(name = "listarCursosDeUnAnio", language = "JDOQL", value = "SELECT "
 				+ "FROM dom.simple.Curso "
 				+ "WHERE this.anio.plan.descripcion == :plan "
-				+ "&& this.anio.anioNumero == :anio") })
+				+ "&& this.anio.anioNumero == :anio " 
+				+ "ORDER BY this.division asc") })
 @Bounded
 @PersistenceCapable
 public class Curso {
