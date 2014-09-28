@@ -12,17 +12,8 @@ import org.apache.isis.applib.annotation.NotInServiceMenu;
 @DomainService(repositoryFor = Anio.class)
 public class AnioRepositorio {
 
-	@NotInServiceMenu
-	@MemberOrder(sequence = "3")
-	public Anio agregarMateria(final @Named("Año") Anio anio,
-			final @Named("Nombre") String nombre) {
-
-		Materia materia = new Materia();
-		materia.setNombre(nombre);
-		anio.getMateriaList().add(materia);
-
-		return anio;
-	}
+	
+	
 
 	// region > agregarAnio
 	// //////////////////////////////////////

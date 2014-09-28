@@ -9,6 +9,7 @@ import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Named;
 import org.apache.isis.applib.annotation.NotContributed;
 import org.apache.isis.applib.annotation.NotInServiceMenu;
+import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.annotation.PublishedAction;
 import org.apache.isis.applib.query.QueryDefault;
 import org.datanucleus.store.query.Query;
@@ -22,7 +23,7 @@ public class MateriaRepositorio {
 	@NotContributed
 	@NotInServiceMenu
 	public List<Materia> listarMateriasDeUnAnio(final @Named("Plan") Plan plan,
-			final @Named("") Anio anio) {
+			final @Named("Año") Anio anio) {
 		return container.allMatches(new QueryDefault<Materia>(Materia.class,
 				"listarMateriasDeUnAnio", 
 				"anio", anio.getAnioNumero(), 
@@ -45,6 +46,24 @@ public class MateriaRepositorio {
 	
 	// }}
 
+	// region > agregarMateria
+			// //////////////////////////////////////
+		@NotInServiceMenu
+		@MemberOrder(sequence = "3")
+		public Anio agregarMateria(final @Named("Año") Anio anio,
+				final @Named("Nombre") String nombre) {
+
+			Materia materia = new Materia();
+			materia.setNombre(nombre);
+			anio.getMateriaList().add(materia);
+
+			return anio;
+		}
+	
+	@Programmatic
+	private void actualizarCursosYaCreados(Anio anio){
+		
+	}
 	
 	// region > injected services
 	// //////////////////////////////////////
