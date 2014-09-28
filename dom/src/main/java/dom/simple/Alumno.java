@@ -45,7 +45,7 @@ import org.apache.isis.applib.util.ObjectContracts;
 				+ " WHERE this.curso == null "
 				+ "order by this.apellido asc, this.nombre asc"),
 		@javax.jdo.annotations.Query(name = "alumnosDeUnCurso", language = "JDOQL", value = "SELECT FROM dom.simple.Alumno"
-				+ " WHERE this.curso.anio == :anio"
+				+ " WHERE this.curso.anio.anioNumero == :anio"
 				+ " && this.curso.division == :division"),
 		@javax.jdo.annotations.Query(name = "findByApellido", language = "JDOQL", value = "SELECT "
 				+ "FROM dom.simple.Alumno "

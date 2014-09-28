@@ -24,6 +24,7 @@ import org.apache.isis.applib.services.memento.MementoService.Memento;
 import org.joda.time.LocalDate;
 
 import dom.simple.Alumno;
+import dom.simple.AlumnoRepositorio;
 import dom.simple.Curso;
 
 
@@ -98,10 +99,7 @@ public class TomarAsistenciaService {
 			LocalDate fecha) {
 		List<AsistenciaDia> asistenciaDiaList = asistenciaDiaRepositorio.porFechaParaUnEsquema(fecha, asistencia);
 
-		List<Alumno> listadoAlumnos = container
-				.allMatches(new QueryDefault<Alumno>(Alumno.class,
-						"alumnosDeUnCurso", "anio", curso.getAnio(),
-						"division", curso.getDivision()));
+		List<Alumno> listadoAlumnos = alumnoRepositorio.queryListarAlumnosDeUnCurso(curso.getAnio().getAnioNumero(), curso.getDivision());
 
 		if (asistenciaDiaList.isEmpty()) {
 			return "No existe asistencia creada para ese dia en este esquema de asistencia";
@@ -123,6 +121,8 @@ public class TomarAsistenciaService {
 	MementoService mementoService;
 	@javax.inject.Inject
 	AsistenciaDiaRepositorio asistenciaDiaRepositorio;
+	@javax.inject.Inject
+	AlumnoRepositorio alumnoRepositorio;
 	
 	// endregion
 }

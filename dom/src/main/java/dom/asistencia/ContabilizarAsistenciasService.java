@@ -52,7 +52,7 @@ public class ContabilizarAsistenciasService {
 
 		memento.set("titulo", desde + " / " + hasta);
 		memento.set("asistencia", asistencia.getDescripcion());
-		memento.set("anio", curso.getAnio());
+		memento.set("anio", curso.getAnio().getAnioNumero());
 		memento.set("division", curso.getDivision());
 		memento.set("desde", desde);
 		memento.set("hasta", hasta);

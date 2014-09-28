@@ -19,7 +19,7 @@ import dom.simple.AlumnoRepositorio;
 @DomainService
 public class AnalisisAsistenciaService {
 
-	public static AnalisisAsistenciaView analizarIntervaloAsistenciaAlumno(
+	public AnalisisAsistenciaView analizarIntervaloAsistenciaAlumno(
 			String asistencia, int anio, String division, int dni,
 			String nombre, String apellido, LocalDate desde, LocalDate hasta) {
 
@@ -100,7 +100,7 @@ public class AnalisisAsistenciaService {
 				memento.asString());
 	}
 
-	public static List<AnalisisAsistenciaView> analizarIntervaloAsistenciaCurso(
+	public List<AnalisisAsistenciaView> analizarIntervaloAsistenciaCurso(
 			String asistencia, int anio, String division, LocalDate desde,
 			LocalDate hasta) {
 
@@ -108,8 +108,7 @@ public class AnalisisAsistenciaService {
 
 		String mementoAnalisis;
 
-		List<Alumno> alumnoList = AlumnoRepositorio
-				.queryListarAlumnosDeUnCurso(anio, division);
+		List<Alumno> alumnoList = alumnoRepositorio.queryListarAlumnosDeUnCurso(anio, division);
 
 		for (Alumno alumno : alumnoList) {
 
@@ -127,9 +126,11 @@ public class AnalisisAsistenciaService {
 
 	// region > injected services
 	@javax.inject.Inject
-	private static DomainObjectContainer container;
+	DomainObjectContainer container;
 	@javax.inject.Inject
-	static MementoService mementoService;
+	MementoService mementoService;
+	@javax.inject.Inject
+	AlumnoRepositorio alumnoRepositorio;
 	
 	// endregion
 

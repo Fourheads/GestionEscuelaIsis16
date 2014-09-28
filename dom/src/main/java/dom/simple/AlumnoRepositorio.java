@@ -158,7 +158,7 @@ public class AlumnoRepositorio {
 	
 		
 	@Programmatic
-	public static List<Alumno> queryListarAlumnosDeUnCurso(final int anio, final String division) {
+	public List<Alumno> queryListarAlumnosDeUnCurso(final int anio, final String division) {
 		return container.allMatches(new QueryDefault<Alumno>(Alumno.class,
 				"alumnosDeUnCurso", "anio", anio, "division", division));
 	}
@@ -180,5 +180,5 @@ public class AlumnoRepositorio {
     // //////////////////////////////////////
 
     @javax.inject.Inject
-	static DomainObjectContainer container;
+	DomainObjectContainer container;
 }

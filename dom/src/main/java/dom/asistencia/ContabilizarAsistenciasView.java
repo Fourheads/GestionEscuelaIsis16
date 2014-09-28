@@ -60,9 +60,8 @@ public class ContabilizarAsistenciasView extends AbstractViewModel {
 		setDivision(memento.get("division", String.class));
 				
 		
-		 setAnalisisAsistenciaViewList(AnalisisAsistenciaService
-		 .analizarIntervaloAsistenciaCurso(getAsistencia(), getAnio(),
-		 getDivision(), getDesde(), getHasta()));
+		 setAnalisisAsistenciaViewList(analisisAsistenciaService.analizarIntervaloAsistenciaCurso(
+				 getAsistencia(), getAnio(), getDivision(), getDesde(), getHasta()));
 
 	}
 
@@ -169,4 +168,6 @@ public class ContabilizarAsistenciasView extends AbstractViewModel {
 
 	@javax.inject.Inject
 	MementoService mementoService;
+	@javax.inject.Inject
+	AnalisisAsistenciaService analisisAsistenciaService;
 }
