@@ -17,12 +17,16 @@ import dom.planEstudio.PlanRepositorio;
 @DomainService(repositoryFor = Curso.class)
 public class CursoRepositorio {
 
-	public Curso crearCurso(Plan plan, Anio anio, String division) {
+	public Curso crearCurso(Plan plan, 
+							Anio anio, 
+							String division,
+							@Named("Turno") Turno turno) {
 
 		Curso curso = container.newTransientInstance(Curso.class);
 		curso.setAnio(anio);
 		curso.setDivision(division);
-
+		curso.setTurno(turno);
+				
 		for (Materia materia : anio.getMateriaList()) {
 
 			MateriaDelCurso materiaDelCurso = new MateriaDelCurso();

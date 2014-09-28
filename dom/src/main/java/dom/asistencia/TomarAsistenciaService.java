@@ -26,8 +26,9 @@ import org.joda.time.LocalDate;
 import dom.simple.Alumno;
 import dom.simple.Curso;
 
+
 @Named("Tomar Asistencia")
-@DomainService(menuOrder = "80")
+@DomainService
 public class TomarAsistenciaService {
 
 	// region > identification in the UI
@@ -49,7 +50,7 @@ public class TomarAsistenciaService {
 	@Named("Tomar Asistencia")
 	@Bookmarkable
 	@ActionSemantics(Of.SAFE)
-	@MemberOrder(sequence = "2")
+	@MemberOrder(name = "AsistenciaRepositorio", sequence = "20")
 	public TomarAsistenciaView porCurso(
 			@Named("Esquema") final Asistencia asistencia,
 			@Named("Curso") Curso curso, @Named("Fecha") LocalDate fecha) {

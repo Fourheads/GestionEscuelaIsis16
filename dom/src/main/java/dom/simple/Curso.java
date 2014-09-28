@@ -46,11 +46,12 @@ import dom.planEstudio.Anio;
 import dom.simple.Funcion.E_funciones;
 
 //import org.apache.isis.applib.annotation.Title;
-@javax.jdo.annotations.Queries({ @javax.jdo.annotations.Query(name = "todosLosCursos", language = "JDOQL", value = "SELECT FROM dom.simple.Curso"
-		+ " order by anio.anioNumero asc, division asc"),
+@javax.jdo.annotations.Queries({
+		@javax.jdo.annotations.Query(name = "todosLosCursos", language = "JDOQL", value = "SELECT FROM dom.simple.Curso"
+				+ " order by anio.anioNumero asc, division asc"),
 		@javax.jdo.annotations.Query(name = "listarCursosDeUnPlan", language = "JDOQL", value = "SELECT "
 				+ "FROM dom.simple.Curso "
-				+ "WHERE this.anio.plan.descripcion == :plan")})
+				+ "WHERE this.anio.plan.descripcion == :plan") })
 @Bounded
 @PersistenceCapable
 public class Curso {
@@ -71,8 +72,8 @@ public class Curso {
 
 	// }}
 	public String title() {
-		String titulo = String.valueOf(getAnio()) + "° " + getDivision()
-				+ " Turno:" + getTurno();
+		String titulo = getAnio().getAnioNumero() + "° " + getDivision() 
+				+ " (" + getAnio().getPlan().getDescripcion() + ") Turno " + getTurno();
 		return titulo;
 	}
 
@@ -94,18 +95,19 @@ public class Curso {
 	// }}
 
 	// {{ Anio (property)
-		private Anio anio;
+	private Anio anio;
 
-		@MemberOrder(sequence = "1")
-		@Column(allowsNull = "true")
-		public Anio getAnio() {
-			return anio;
-		}
+	@MemberOrder(sequence = "1")
+	@Column(allowsNull = "true")
+	public Anio getAnio() {
+		return anio;
+	}
 
-		public void setAnio(final Anio anio) {
-			this.anio = anio;
-		}
-		// }}
+	public void setAnio(final Anio anio) {
+		this.anio = anio;
+	}
+
+	// }}
 
 	// }}
 
