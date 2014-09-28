@@ -51,7 +51,7 @@ public class TomarAsistenciaService {
 	@Named("Tomar Asistencia")
 	@Bookmarkable
 	@ActionSemantics(Of.SAFE)
-	@MemberOrder(name = "AsistenciaRepositorio", sequence = "20")
+	@MemberOrder(name = "Asistencias", sequence = "12")
 	public TomarAsistenciaView porCurso(
 			@Named("Esquema") final Asistencia asistencia,
 			@Named("Curso") Curso curso, @Named("Fecha") LocalDate fecha) {

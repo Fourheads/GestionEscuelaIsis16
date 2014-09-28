@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.annotation.DomainService;
+import org.apache.isis.applib.annotation.Hidden;
 import org.apache.isis.applib.query.QueryDefault;
 import org.apache.isis.applib.services.memento.MementoService;
 import org.apache.isis.applib.services.memento.MementoService.Memento;
@@ -16,6 +17,7 @@ import org.joda.time.LocalDate;
 import dom.simple.Alumno;
 import dom.simple.AlumnoRepositorio;
 
+@Hidden
 @DomainService
 public class AnalisisAsistenciaService {
 

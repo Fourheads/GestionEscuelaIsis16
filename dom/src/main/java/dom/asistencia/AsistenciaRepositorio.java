@@ -20,7 +20,7 @@ import org.joda.time.LocalDate;
 
 import dom.simple.Alumno;
 
-@DomainService(menuOrder = "50", repositoryFor = Asistencia.class)
+@DomainService(menuOrder = "50")
 @Named("Asistencias")
 public class AsistenciaRepositorio {
 

@@ -4,12 +4,15 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.isis.applib.DomainObjectContainer;
+import org.apache.isis.applib.annotation.ActionSemantics;
+import org.apache.isis.applib.annotation.Bookmarkable;
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.Hidden;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Named;
 import org.apache.isis.applib.annotation.PublishedAction;
 import org.apache.isis.applib.annotation.PublishedObject;
+import org.apache.isis.applib.annotation.ActionSemantics.Of;
 import org.apache.isis.applib.query.QueryDefault;
 import org.apache.isis.applib.services.memento.MementoService;
 import org.apache.isis.applib.services.memento.MementoService.Memento;
@@ -39,7 +42,7 @@ public class ContabilizarAsistenciasService {
 
 	// endregion
 
-	@MemberOrder(sequence = "2")
+	@MemberOrder(name = "Asistencias",sequence = "10")
 	@PublishedAction
 	public ContabilizarAsistenciasView contarAsistenciasCurso(
 			@Named("Esquema") Asistencia asistencia,
@@ -95,6 +98,9 @@ public class ContabilizarAsistenciasService {
 
 		return null;
 	}
+	
+	
+
 
 	// region > injected services
 	// //////////////////////////////////////
@@ -103,6 +109,6 @@ public class ContabilizarAsistenciasService {
 	DomainObjectContainer container;
 	@javax.inject.Inject
 	MementoService mementoService;
-
+	
 	// endregion
 }
