@@ -16,6 +16,9 @@ import org.apache.isis.applib.annotation.PublishedAction;
 import org.apache.isis.applib.query.QueryDefault;
 import org.datanucleus.store.query.Query;
 
+import dom.simple.Curso;
+import dom.simple.CursoRepositorio;
+
 @Hidden
 @DomainService(repositoryFor = Materia.class)
 public class MateriaRepositorio {
@@ -98,9 +101,12 @@ public class MateriaRepositorio {
 
 	// endregion > agregarMateria
 
-	@Programmatic
-	private void eliminarMateriaDeCursosYaCreados(Anio anio) {
-		//List<Curso> CursoList = 
+	
+	private List<Curso> eliminarMateriaDeCursosYaCreados(Anio anio) {
+		List<Curso> cursoList = cursoRepositorio.listarCursosDeUnAnio(anio.getPlan(), anio);
+		
+		return cursoList;
+		
 	}
 
 	// region > injected services
@@ -108,7 +114,8 @@ public class MateriaRepositorio {
 
 	@javax.inject.Inject
 	DomainObjectContainer container;
-
+	@javax.inject.Inject
+	CursoRepositorio cursoRepositorio;
 	// endregion
 
 }
