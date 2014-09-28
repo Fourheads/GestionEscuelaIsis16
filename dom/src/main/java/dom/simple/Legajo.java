@@ -46,30 +46,7 @@ import dom.simple.Tarjeta.ECategoria;
 @PersistenceCapable
 public class Legajo {	
 
-	@Column(allowsNull = "true", name = "TARJETAS_ID")
-	@MemberOrder(sequence = "1.1", name = "Nueva Tarjeta")
-	@Named("Nueva Tarjeta")
-	public Legajo create (
-			final @Named("Titulo") String titulo,
-			final @MaxLength(2048)
-		    	  @MultiLine 
-		    	  @Named("Comentarios") String comentario,
-		    final @Named("Categoria de Tarjeta") ECategoria categoria	  
-			){
-		
-		final Tarjeta tarjeta = new Tarjeta();
-		LocalDate fecha = LocalDate.now();
-		
-		tarjeta.setTitulo(titulo);
-		tarjeta.setComentarios(comentario);
-		tarjeta.setFecha(fecha);
-		tarjeta.setCategoria(categoria);
-		addTarjeta(tarjeta);
-		
-		//container.persistIfNotAlready(tarjeta);
-		addTarjeta(tarjeta);
-		return this;
-	}
+	
 	
 	// {{ Tarjetas (property)
 	@Element(column = "id_legajo", dependent = "false") 

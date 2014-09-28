@@ -139,7 +139,7 @@ public class AlumnoRepositorio {
     // //////////////////////////////////////
 	
 	@MemberOrder(sequence = "2")
-    @Named ("Listar por DNI")
+    @Named ("Buscar por DNI")
     public List<Alumno> ListByDni(
             final @Named("DNI") int dni){
 		
