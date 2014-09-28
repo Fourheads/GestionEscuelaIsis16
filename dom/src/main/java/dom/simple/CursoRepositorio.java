@@ -76,12 +76,40 @@ public class CursoRepositorio {
 		return choices0ListarCursosDeUnPlan().get(0);
 	}
 	
+	// {{ listarCursosDeUnAnio (action)
+		@MemberOrder(sequence = "2.5")
+		public List<Curso> listarCursosDeUnAnio(@Named("Plan") final Plan plan, 
+												@Named("Año") final Anio anio) {
+
+			return container.allMatches(new QueryDefault<Curso>(Curso.class,
+					"listarCursosDeUnAnio", 
+					"plan", plan.getDescripcion(),
+					"anio", anio.getAnioNumero()));
+		}
+	
+		public List<Plan> choices0ListarCursosDeUnAnio() {
+
+			return planRepositorio.queryListarPlanesAlfabeticamente();
+		}
+
+		public Plan default0ListarCursosDeUnAnio() {
+			if (choices0ListarCursosDeUnAnio().isEmpty()){
+				return null;
+			}
+			
+			return choices0ListarCursosDeUnAnio().get(0);
+		}	
+		
+		public List<Anio> choices1ListarCursosDeUnAnio(final Plan plan) {
+			return plan.getAnioList();
+		}
+		
+		
 	// {{ SeleccionarUnCurso (action)
 	@MemberOrder(sequence = "1")
 	public Curso seleccionarUnCurso(Plan plan, 
 							Curso curso 
 							) {
-	
 		return curso;
 	}
 	
