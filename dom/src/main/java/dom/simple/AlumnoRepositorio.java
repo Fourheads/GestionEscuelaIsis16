@@ -36,7 +36,7 @@ import dom.simple.Persona.E_sexo;
 
 ///GestionEscuela
 
-@DomainService(menuOrder = "16", repositoryFor = Alumno.class)
+@DomainService(menuOrder = "30", repositoryFor = Alumno.class)
 @Named("Alumnos")
 public class AlumnoRepositorio {
 

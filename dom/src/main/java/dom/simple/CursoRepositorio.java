@@ -14,7 +14,8 @@ import dom.planEstudio.Materia;
 import dom.planEstudio.Plan;
 import dom.planEstudio.PlanRepositorio;
 
-@DomainService(repositoryFor = Curso.class)
+@Named("Cursos")
+@DomainService(repositoryFor = Curso.class, menuOrder = "20")
 public class CursoRepositorio {
 
 	@MemberOrder(sequence = "1")

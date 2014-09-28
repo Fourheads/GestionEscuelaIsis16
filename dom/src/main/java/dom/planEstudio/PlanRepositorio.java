@@ -11,7 +11,7 @@ import org.apache.isis.applib.annotation.NotContributed;
 import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.query.Query;
 import org.apache.isis.applib.query.QueryDefault;
-
+@Named("Planes")
 @DomainService(menuOrder = "10", repositoryFor = Plan.class)
 public class PlanRepositorio {
 

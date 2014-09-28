@@ -32,7 +32,7 @@ import org.apache.isis.applib.fixturescripts.SimpleFixtureScript;
  * Enables fixtures to be installed from the application.
  */
 @Named("Prototyping")
-@DomainService(menuOrder = "20")
+@DomainService(menuOrder = "200")
 public class SimpleObjectsFixturesService extends FixtureScripts {
 
     public SimpleObjectsFixturesService() {

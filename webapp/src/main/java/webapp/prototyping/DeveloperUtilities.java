@@ -26,10 +26,10 @@ import org.apache.isis.core.metamodel.services.devutils.DeveloperUtilitiesServic
  * These overrides are simply to 'move' the action underneath the 
  * {@link fixture.simple.SimpleObjectsFixturesService prototyping} menu.
  */
-@DomainService(menuOrder = "20")
+@DomainService(menuOrder = "200")
 public class DeveloperUtilities extends DeveloperUtilitiesServiceDefault {
 
-    @MemberOrder(name="Prototyping", sequence="90")
+    @MemberOrder(name="Prototyping", sequence="200")
     @Override
     public Clob downloadMetaModel() {
         return super.downloadMetaModel();

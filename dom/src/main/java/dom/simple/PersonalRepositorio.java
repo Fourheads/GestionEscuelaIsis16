@@ -24,7 +24,7 @@ import dom.simple.Localidad.E_localidades;
 import dom.simple.Persona.E_nacionalidad;
 import dom.simple.Persona.E_sexo;
 
-@DomainService(menuOrder = "18", repositoryFor = Personal.class)
+@DomainService(menuOrder = "40", repositoryFor = Personal.class)
 @Named("Personal Educativo")
 public class PersonalRepositorio {
 
