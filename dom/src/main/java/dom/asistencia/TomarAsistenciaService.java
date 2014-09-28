@@ -96,11 +96,7 @@ public class TomarAsistenciaService {
 
 	public String validatePorCurso(Asistencia asistencia, Curso curso,
 			LocalDate fecha) {
-		List<AsistenciaDia> asistenciaDiaList = container
-				.allMatches(new QueryDefault<AsistenciaDia>(
-						AsistenciaDia.class,
-						"BuscarAsistenciDiaPorFechaParaUnEsquema", "fecha",
-						fecha, "descripcion", asistencia.getDescripcion()));
+		List<AsistenciaDia> asistenciaDiaList = asistenciaDiaRepositorio.porFechaParaUnEsquema(fecha, asistencia);
 
 		List<Alumno> listadoAlumnos = container
 				.allMatches(new QueryDefault<Alumno>(Alumno.class,
@@ -125,6 +121,8 @@ public class TomarAsistenciaService {
 	DomainObjectContainer container;
 	@javax.inject.Inject
 	MementoService mementoService;
-
+	@javax.inject.Inject
+	AsistenciaDiaRepositorio asistenciaDiaRepositorio;
+	
 	// endregion
 }

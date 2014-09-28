@@ -115,7 +115,11 @@ public class TomarAsistenciaView extends AbstractViewModel {
 
 	@Programmatic
 	private void inicializarAlumnoActivo() {
-		setAlumnoActivo(getAsistenciAlumnos().get(getIndiceAlumno()));
+		
+		if (!getAsistenciAlumnos().isEmpty()){
+			setAlumnoActivo(getAsistenciAlumnos().get(getIndiceAlumno()));
+		}
+		
 	}
 
 	// {{ Asistencia (property)
