@@ -83,9 +83,9 @@ public class AlumnoRepositorio {
             final @Named("Domicilio. Localidad") E_localidades localidad,
             final @Named("Domicilio. Calle") String calle,
             final @RegEx(validation = "/d{5}") @Named("Domicilio. Numero") int numero,
-            final @RegEx(validation = "/d+")@org.apache.isis.applib.annotation.Optional @Named("Domicilio. Piso") String piso,
-            final @org.apache.isis.applib.annotation.Optional @Named("Domicilio. Departamento") String departamento,
-            @RegEx(validation = "/d+") @SuppressWarnings("deprecation") final @Mask("(NNNN)NNN-NNNNNNN") @org.apache.isis.applib.annotation.Optional @Named("Teléfono") String telefono) {
+            final @RegEx(validation = "/d+")@Optional @Named("Domicilio. Piso") String piso,
+            final @Optional @Named("Domicilio. Departamento") String departamento,
+            final @RegEx(validation = "/d+") @Optional @Named("Teléfono") String telefono) {
         
     	final Alumno obj = container.newTransientInstance(Alumno.class);
         final Direccion dire = new Direccion();
