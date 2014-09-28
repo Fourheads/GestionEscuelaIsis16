@@ -1,6 +1,7 @@
 package dom.simple;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.isis.applib.DomainObjectContainer;
@@ -106,40 +107,57 @@ public class PersonalRepositorio {
     }
     
     
-    // Preceptores    
-    @MemberOrder(sequence = "3.1")
-    @ActionSemantics(Of.SAFE)
-    @Named ("Preceptores")
-    public List<Personal> listPreceptor(){
+//    // Preceptores    
+//    @MemberOrder(sequence = "3.1")
+//    @ActionSemantics(Of.SAFE)
+//    @Named ("Preceptores")
+//    public List<Personal> listPreceptor(){
+//    	return container.allMatches(
+//    			new QueryDefault<Personal>(Personal.class, "findByFuncion", "nombre", E_funciones.PRECEPTOR.toString()));
+//    }
+//    
+//    // Profesores    
+//    @MemberOrder(sequence = "3.2")
+//    @Named ("Profesores")
+//    public List<Personal> listProfesor(){
+//    	return container.allMatches(
+//    			new QueryDefault<Personal>(Personal.class, "findByFuncion", "nombre", E_funciones.PROFESOR.toString()));
+//    }
+//    
+//    // Directores    
+//    @MemberOrder(sequence = "3.3")
+//    @Named ("Directores")
+//    public List<Personal> listDirector(){
+//    	return container.allMatches(
+//    			new QueryDefault<Personal>(Personal.class, "findByFuncion", "nombre", E_funciones.DIRECTOR.toString()));
+//    }
+//    
+//    // Secretarios    
+//    @MemberOrder(sequence = "3.4")
+//    @Named ("Secretarios")
+//    public List<Personal> listSecretario(){
+//    	return container.allMatches(
+//    			new QueryDefault<Personal>(Personal.class, "findByFuncion", "nombre", E_funciones.SECRETARIO.toString()));
+//    }    
+//    
+    @MemberOrder(sequence = "5")
+    @Named ("Listar Por funcion")
+    public List<Personal> listarPersonalSegunFuncion(@Named("Funcion")E_funciones funcion){
     	return container.allMatches(
-    			new QueryDefault<Personal>(Personal.class, "findByFuncion", "nombre", E_funciones.PRECEPTOR.toString()));
-    }
-    
-    // Profesores    
-    @MemberOrder(sequence = "3.2")
-    @Named ("Profesores")
-    public List<Personal> listProfesor(){
-    	return container.allMatches(
-    			new QueryDefault<Personal>(Personal.class, "findByFuncion", "nombre", E_funciones.PROFESOR.toString()));
-    }
-    
-    // Directores    
-    @MemberOrder(sequence = "3.3")
-    @Named ("Directores")
-    public List<Personal> listDirector(){
-    	return container.allMatches(
-    			new QueryDefault<Personal>(Personal.class, "findByFuncion", "nombre", E_funciones.DIRECTOR.toString()));
-    }
-    
-    // Secretarios    
-    @MemberOrder(sequence = "3.4")
-    @Named ("Secretarios")
-    public List<Personal> listSecretario(){
-    	return container.allMatches(
-    			new QueryDefault<Personal>(Personal.class, "findByFuncion", "nombre", E_funciones.SECRETARIO.toString()));
+    			new QueryDefault<Personal>(Personal.class, "findByFuncion", "nombre", funcion.toString()));
     }    
     
+    public E_funciones default0ListarPersonalSegunFuncion(){
+    	List<E_funciones> funciones = Arrays.asList(E_funciones.values());
+    	    	
+    	return funciones.get(0);
+    }
+    
+    
     //  Fin Listados  ////////////////////
+    
+    
+    
     
     
     // Eliminar Personal    

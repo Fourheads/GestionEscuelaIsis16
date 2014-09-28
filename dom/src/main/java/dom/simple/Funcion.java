@@ -47,7 +47,7 @@ public class Funcion implements Comparable<Funcion>{
 	// }}
 
 	public enum E_funciones{
-		SECRETARIO, PRECEPTOR, PROFESOR, DIRECTOR;
+		PROFESOR, PRECEPTOR, SECRETARIO, DIRECTOR;
 	}
 	
 	@Override
