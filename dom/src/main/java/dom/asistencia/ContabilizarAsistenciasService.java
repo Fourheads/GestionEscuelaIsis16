@@ -86,7 +86,7 @@ public class ContabilizarAsistenciasService {
 
 		List<Alumno> listadoAlumnos = container
 				.allMatches(new QueryDefault<Alumno>(Alumno.class,
-						"alumnosDeUnCurso", "anio", curso.getAnio(),
+						"alumnosDeUnCurso", "anio", curso.getAnio().getAnioNumero(),
 						"division", curso.getDivision()));
 
 		if (listadoAlumnos.isEmpty()) {
@@ -100,7 +100,7 @@ public class ContabilizarAsistenciasService {
 	// //////////////////////////////////////
 
 	@javax.inject.Inject
-	static DomainObjectContainer container;
+	DomainObjectContainer container;
 	@javax.inject.Inject
 	MementoService mementoService;
 
