@@ -26,7 +26,7 @@ public class AnalisisAsistenciaService {
 		// memento asistencia, anio, division, dni, , nombre, apellido,
 		// fechadesde, fechahasta
 
-		List<AsistenciaAlumno> tempList = AsistenciaAlumnoRepositorio
+		List<AsistenciaAlumno> tempList = asistenciaAlumnoRepositorio
 				.queryAsistenciaAlumnoPorCursoEnUnIntervalo(asistencia, anio,
 						division, desde, hasta, dni);
 
@@ -131,6 +131,8 @@ public class AnalisisAsistenciaService {
 	MementoService mementoService;
 	@javax.inject.Inject
 	AlumnoRepositorio alumnoRepositorio;
+	@javax.inject.Inject
+	AsistenciaAlumnoRepositorio asistenciaAlumnoRepositorio;
 	
 	// endregion
 

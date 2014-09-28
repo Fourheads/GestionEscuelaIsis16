@@ -16,7 +16,7 @@ import org.joda.time.LocalDate;
 public class AsistenciaAlumnoRepositorio {
 	
 	
-	public static List<AsistenciaAlumno> queryAsistenciaAlumnoPorCursoPorDia(
+	public List<AsistenciaAlumno> queryAsistenciaAlumnoPorCursoPorDia(
 			LocalDate fecha, int anio, String division, String asistencia) {
 		return container.allMatches(new QueryDefault<AsistenciaAlumno>(
 				AsistenciaAlumno.class, "asistenciaAlumno_asistenciaDiaCurso", 
@@ -28,7 +28,7 @@ public class AsistenciaAlumnoRepositorio {
 	}
 	
 	
-	public static List<AsistenciaAlumno> queryAsistenciaAlumnoPorCursoEnUnIntervalo (	
+	public List<AsistenciaAlumno> queryAsistenciaAlumnoPorCursoEnUnIntervalo (	
 												String asistencia,
 												int anio, 
 												String division,
@@ -59,7 +59,7 @@ public class AsistenciaAlumnoRepositorio {
 	
 	// region > injected services
 	@javax.inject.Inject
-	private static DomainObjectContainer container;
+	DomainObjectContainer container;
 
 	// endregion
 	

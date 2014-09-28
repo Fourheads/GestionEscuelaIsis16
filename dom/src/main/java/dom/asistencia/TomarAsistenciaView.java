@@ -108,7 +108,7 @@ public class TomarAsistenciaView extends AbstractViewModel {
 			String division, LocalDate fecha) throws ParseException {
 		int anioInt = Integer.parseInt(anio);
 
-		setAsistenciAlumnos(AsistenciaAlumnoRepositorio
+		setAsistenciAlumnos(asistenciaAlumnoRepositorio
 				.queryAsistenciaAlumnoPorCursoPorDia(fecha, anioInt, division,
 						asistencia));
 	}
@@ -343,9 +343,11 @@ public class TomarAsistenciaView extends AbstractViewModel {
 
 	// region > injected services
 	@javax.inject.Inject
-	private DomainObjectContainer container;
+	DomainObjectContainer container;
 	@javax.inject.Inject
 	MementoService mementoService;
+	@javax.inject.Inject
+	AsistenciaAlumnoRepositorio asistenciaAlumnoRepositorio;
 
 	// endregion
 
