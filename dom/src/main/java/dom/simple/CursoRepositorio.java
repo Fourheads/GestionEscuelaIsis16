@@ -13,6 +13,7 @@ import dom.planEstudio.Anio;
 import dom.planEstudio.Materia;
 import dom.planEstudio.Plan;
 import dom.planEstudio.PlanRepositorio;
+import dom.simple.Funcion.E_funciones;
 
 @Named("Cursos")
 @DomainService(repositoryFor = Curso.class, menuOrder = "20")
@@ -158,7 +159,9 @@ public class CursoRepositorio {
 		return null;
 	}
 	
-	
+	public List<Personal> choices3AsignarProfesorAMateriaDelCurso (){
+		return personalRepositorio.listarPersonalSegunFuncion(E_funciones.PROFESOR);
+	}
 	
 
 	// endregion
@@ -176,6 +179,8 @@ public class CursoRepositorio {
 	MateriaDelCursoRepositorio materiaDelCursoRepositorio;
 	@javax.inject.Inject
 	CursoRepositorio cursoRepositorio;
+	@javax.inject.Inject
+	PersonalRepositorio personalRepositorio;
 
 	// endregion
 
