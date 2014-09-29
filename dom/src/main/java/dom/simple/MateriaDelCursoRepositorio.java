@@ -2,9 +2,11 @@ package dom.simple;
 
 import java.util.List;
 
+import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.Hidden;
 import org.apache.isis.applib.annotation.Programmatic;
+import org.apache.isis.applib.query.QueryDefault;
 
 import dom.planEstudio.Materia;
 @DomainService
@@ -24,9 +26,15 @@ public class MateriaDelCursoRepositorio {
 	}
 	
 	@Hidden
-	public List<MateriaDelCurso> listarMateriaDelCursoParaUnCurso(){
+	public List<MateriaDelCurso> listarMateriaDelCursoParaUnCurso(Curso curso){
 		
-		return null;
+		return container.allMatches(new QueryDefault<MateriaDelCurso>(MateriaDelCurso.class,
+				"MateriaDelCursoDeUnCurso", 
+				"plan", curso.getAnio().getPlan().getDescripcion(), 
+				"anio", curso.getAnio().getAnioNumero(),
+				"division", curso.getDivision()));
 	}
 
+	@javax.inject.Inject
+	DomainObjectContainer container;
 }

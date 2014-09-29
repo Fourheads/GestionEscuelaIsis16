@@ -151,6 +151,12 @@ public class CursoRepositorio {
 		return cursoRepositorio.listarCursosDeUnPlan(plan);
 	}
 	
+	public List<MateriaDelCurso> choices2AsignarProfesorAMateriaDelCurso(@Named("Plan") final Plan plan, @Named("Curso") final Curso curso){
+		if (curso!=null){
+			return materiaDelCursoRepositorio.listarMateriaDelCursoParaUnCurso(curso);
+		}
+		return null;
+	}
 	
 	
 	
