@@ -1,5 +1,7 @@
 package dom.simple;
 
+import java.util.List;
+
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.Hidden;
 import org.apache.isis.applib.annotation.Programmatic;
@@ -19,6 +21,12 @@ public class MateriaDelCursoRepositorio {
 	public void asignarProfesorAMateriaDelCurso(MateriaDelCurso materia, Personal profesor){
 		
 		materia.setProfesor(profesor);
-	} 
+	}
+	
+	@Hidden
+	public List<MateriaDelCurso> listarMateriaDelCursoParaUnCurso(){
+		
+		return null;
+	}
 
 }
