@@ -21,7 +21,7 @@ public class CursoRepositorio {
 	@MemberOrder(sequence = "1")
 	public Curso crearCurso(Plan plan, 
 							Anio anio, 
-							String division,
+							@Named("División") String division,
 							@Named("Turno") Turno turno) {
 
 		Curso curso = container.newTransientInstance(Curso.class);
@@ -31,9 +31,6 @@ public class CursoRepositorio {
 				
 		for (Materia materia : anio.getMateriaList()) {
 
-//			MateriaDelCurso materiaDelCurso = new MateriaDelCurso();
-//			materiaDelCurso.setMateria(materia);
-//			curso.getMateriaDelCursoList().add(materiaDelCurso);
 			materiaDelCursoRepositorio.crearMateriaDelCurso(curso, materia);
 			
 		}
