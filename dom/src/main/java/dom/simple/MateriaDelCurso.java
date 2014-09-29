@@ -70,7 +70,10 @@ public class MateriaDelCurso {
 	// //////////////////////////////////////////
 
 	public String title() {
-		return getMateria().getNombre() + " de " + getMateria().getAnio() + "°";
+		return getMateria().getNombre() + " de " 
+				+ getMateria().getAnio().getAnioNumero() + "° " 
+				+ "'" + getCurso().getDivision() + "' "
+				+ "(" + getMateria().getAnio().getPlan().getDescripcion() + ")";
 	}
 
 	// end region Title (GUI)

@@ -146,6 +146,12 @@ public class CursoRepositorio {
 		return choices0AsignarProfesorAMateriaDelCurso().get(0);
 	}
 	
+	public List<Curso> choices1AsignarProfesorAMateriaDelCurso(final Plan plan){
+		
+		return cursoRepositorio.listarCursosDeUnPlan(plan);
+	}
+	
+	
 
 	// endregion
 	
@@ -160,6 +166,8 @@ public class CursoRepositorio {
 	PlanRepositorio planRepositorio;
 	@javax.inject.Inject
 	MateriaDelCursoRepositorio materiaDelCursoRepositorio;
+	@javax.inject.Inject
+	CursoRepositorio cursoRepositorio;
 
 	// endregion
 
