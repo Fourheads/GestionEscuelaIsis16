@@ -204,7 +204,10 @@ public class Curso {
 	}
 
 	public Alumno default0AsignarAlumnos() {
+		if (!choices0AsignarAlumnos().isEmpty()){
 		return choices0AsignarAlumnos().get(0);
+		}
+		return null;
 	}
 
 	@MemberOrder(sequence = "3.4")
