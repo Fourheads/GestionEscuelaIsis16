@@ -18,6 +18,7 @@ import org.datanucleus.store.query.Query;
 
 import dom.simple.Curso;
 import dom.simple.CursoRepositorio;
+import dom.simple.MateriaDelCurso;
 
 @Hidden
 @DomainService(repositoryFor = Materia.class)
@@ -73,7 +74,9 @@ public class MateriaRepositorio {
 	public Anio eliminarMateria(final @Named("Año") Anio anio,
 			final @Named("Nombre") Materia materia,
 			final @Named("Esta seguro?") Boolean seguro) {
-
+		
+		eliminarMateriaDeCursosYaCreados(anio, materia);
+		
 		container.remove(materia);
 		return anio;
 	}
@@ -101,14 +104,22 @@ public class MateriaRepositorio {
 
 	// endregion > agregarMateria
 
-	
-	private List<Curso> eliminarMateriaDeCursosYaCreados(Anio anio) {
+	@Programmatic
+	private void eliminarMateriaDeCursosYaCreados(Anio anio, Materia materia) {
+		
 		List<Curso> cursoList = cursoRepositorio.listarCursosDeUnAnio(anio.getPlan(), anio);
 		
-		return cursoList;
-		
+		for (Curso curso : cursoList){
+			List<MateriaDelCurso> materiaDelCursoList = curso.getMateriaDelCursoList();
+			for (MateriaDelCurso materiaDelCurso : materiaDelCursoList){
+				if (materiaDelCurso.getMateria() == materia){
+					container.remove(materiaDelCurso);
+				}
+			}
+		}
 	}
 
+	
 	// region > injected services
 	// //////////////////////////////////////
 
