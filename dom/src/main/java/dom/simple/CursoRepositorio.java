@@ -31,10 +31,11 @@ public class CursoRepositorio {
 				
 		for (Materia materia : anio.getMateriaList()) {
 
-			MateriaDelCurso materiaDelCurso = new MateriaDelCurso();
-			materiaDelCurso.setMateria(materia);
-			curso.getMateriaDelCursoList().add(materiaDelCurso);
-
+//			MateriaDelCurso materiaDelCurso = new MateriaDelCurso();
+//			materiaDelCurso.setMateria(materia);
+//			curso.getMateriaDelCursoList().add(materiaDelCurso);
+			materiaDelCursoRepositorio.crearMateriaDelCurso(curso, materia);
+			
 		}
 
 		container.persistIfNotAlready(curso);
@@ -136,6 +137,8 @@ public class CursoRepositorio {
 	DomainObjectContainer container;
 	@javax.inject.Inject
 	PlanRepositorio planRepositorio;
+	@javax.inject.Inject
+	MateriaDelCursoRepositorio materiaDelCursoRepositorio;
 
 	// endregion
 

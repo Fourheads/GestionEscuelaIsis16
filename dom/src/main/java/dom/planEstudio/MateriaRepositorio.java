@@ -19,6 +19,7 @@ import org.datanucleus.store.query.Query;
 import dom.simple.Curso;
 import dom.simple.CursoRepositorio;
 import dom.simple.MateriaDelCurso;
+import dom.simple.MateriaDelCursoRepositorio;
 
 @Hidden
 @DomainService(repositoryFor = Materia.class)
@@ -61,6 +62,8 @@ public class MateriaRepositorio {
 		materia.setNombre(nombre);
 		anio.getMateriaList().add(materia);
 
+		agregarMateriaCursosYaCreados(anio, materia);
+		
 		return anio;
 	}
 
@@ -75,7 +78,7 @@ public class MateriaRepositorio {
 			final @Named("Nombre") Materia materia,
 			final @Named("Esta seguro?") Boolean seguro) {
 		
-		eliminarMateriaDeCursosYaCreados(anio, materia);
+		eliminarMateriaCursosYaCreados(anio, materia);
 		
 		container.remove(materia);
 		return anio;
@@ -105,7 +108,7 @@ public class MateriaRepositorio {
 	// endregion > agregarMateria
 
 	@Programmatic
-	private void eliminarMateriaDeCursosYaCreados(Anio anio, Materia materia) {
+	private void eliminarMateriaCursosYaCreados(Anio anio, Materia materia) {
 		
 		List<Curso> cursoList = cursoRepositorio.listarCursosDeUnAnio(anio.getPlan(), anio);
 		
@@ -119,7 +122,14 @@ public class MateriaRepositorio {
 		}
 	}
 
-	
+	private void agregarMateriaCursosYaCreados(Anio anio, Materia materia) {
+		
+		List<Curso> cursoList = cursoRepositorio.listarCursosDeUnAnio(anio.getPlan(), anio);
+		for (Curso curso : cursoList){
+			materiaDelCursoRepositorio.crearMateriaDelCurso(curso, materia);
+		}
+		
+	}
 	// region > injected services
 	// //////////////////////////////////////
 
@@ -127,6 +137,8 @@ public class MateriaRepositorio {
 	DomainObjectContainer container;
 	@javax.inject.Inject
 	CursoRepositorio cursoRepositorio;
+	@javax.inject.Inject
+	MateriaDelCursoRepositorio materiaDelCursoRepositorio;
 	// endregion
 
 }
