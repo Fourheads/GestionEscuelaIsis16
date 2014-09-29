@@ -116,12 +116,15 @@ public class CursoRepositorio {
 
 		return choices0SeleccionarUnCurso().get(0);
 	}
+	// }}
 	
+
+	// region > Asignar profesor a materia (accion)
+	// //////////////////////////////////////
 	@Named("Asignar Profesor a Materia")
 	@MemberOrder(sequence = "4")
 	public Curso asignarProfesorAMateriaDelCurso(
-			@Named("Plan") final Plan plan,
-			@Named("Curso") final Curso curso,
+			@Named("Plan") final Plan plan, @Named("Curso") final Curso curso,
 			@Named("Materia") final MateriaDelCurso materia,
 			@Named("Profesor") final Personal profesor) {
 
@@ -130,8 +133,23 @@ public class CursoRepositorio {
 
 		return materia.getCurso();
 	}
+	
+	public List<Plan> choices0AsignarProfesorAMateriaDelCurso(){
+		
+		return planRepositorio.queryListarPlanesAlfabeticamente();
+	}
+	
+	public Plan default0AsignarProfesorAMateriaDelCurso(){
+		if (choices0AsignarProfesorAMateriaDelCurso().isEmpty()){
+			return null;
+		}
+		return choices0AsignarProfesorAMateriaDelCurso().get(0);
+	}
+	
 
-	// }}
+	// endregion
+	
+	
 
 	// region > injected services
 	// //////////////////////////////////////
