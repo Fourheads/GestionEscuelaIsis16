@@ -117,8 +117,45 @@ public class CursoRepositorio {
 
 		return choices0SeleccionarUnCurso().get(0);
 	}
+
 	// }}
-	
+
+	// region > Asignar profesor a materia (accion)
+	// //////////////////////////////////////
+	@Named("Asignar Preceptor a Curso")
+	@MemberOrder(sequence = "3")
+	public Curso asignarPreceptorAlCurso(@Named("Plan") final Plan plan,
+			@Named("Curso") final Curso curso,
+			@Named("Profesor") final Personal preceptor) {
+
+		curso.setPreceptor(preceptor);
+
+		return curso;
+	}
+
+	public List<Plan> choices0AsignarPreceptorAlCurso() {
+
+		return planRepositorio.queryListarPlanesAlfabeticamente();
+	}
+
+	public Plan default0AsignarPreceptorAlCurso() {
+		if (choices0AsignarPreceptorAlCurso().isEmpty()) {
+			return null;
+		}
+		return choices0AsignarPreceptorAlCurso().get(0);
+	}
+
+	public List<Curso> choices1AsignarPreceptorAlCurso(final Plan plan) {
+
+		return cursoRepositorio.listarCursosDeUnPlan(plan);
+	}
+
+	public List<Personal> choices2AsignarPreceptorAlCurso() {
+		return personalRepositorio
+				.listarPersonalSegunFuncion(E_funciones.PRECEPTOR);
+	}
+
+	// endregion
 
 	// region > Asignar profesor a materia (accion)
 	// //////////////////////////////////////
@@ -134,39 +171,39 @@ public class CursoRepositorio {
 
 		return materia.getCurso();
 	}
-	
-	public List<Plan> choices0AsignarProfesorAMateriaDelCurso(){
-		
+
+	public List<Plan> choices0AsignarProfesorAMateriaDelCurso() {
+
 		return planRepositorio.queryListarPlanesAlfabeticamente();
 	}
-	
-	public Plan default0AsignarProfesorAMateriaDelCurso(){
-		if (choices0AsignarProfesorAMateriaDelCurso().isEmpty()){
+
+	public Plan default0AsignarProfesorAMateriaDelCurso() {
+		if (choices0AsignarProfesorAMateriaDelCurso().isEmpty()) {
 			return null;
 		}
 		return choices0AsignarProfesorAMateriaDelCurso().get(0);
 	}
-	
-	public List<Curso> choices1AsignarProfesorAMateriaDelCurso(final Plan plan){
-		
+
+	public List<Curso> choices1AsignarProfesorAMateriaDelCurso(final Plan plan) {
+
 		return cursoRepositorio.listarCursosDeUnPlan(plan);
 	}
-	
-	public List<MateriaDelCurso> choices2AsignarProfesorAMateriaDelCurso(@Named("Plan") final Plan plan, @Named("Curso") final Curso curso){
-		if (curso!=null){
-			return materiaDelCursoRepositorio.listarMateriaDelCursoParaUnCurso(curso);
+
+	public List<MateriaDelCurso> choices2AsignarProfesorAMateriaDelCurso(
+			@Named("Plan") final Plan plan, @Named("Curso") final Curso curso) {
+		if (curso != null) {
+			return materiaDelCursoRepositorio
+					.listarMateriaDelCursoParaUnCurso(curso);
 		}
 		return null;
 	}
-	
-	public List<Personal> choices3AsignarProfesorAMateriaDelCurso (){
-		return personalRepositorio.listarPersonalSegunFuncion(E_funciones.PROFESOR);
+
+	public List<Personal> choices3AsignarProfesorAMateriaDelCurso() {
+		return personalRepositorio
+				.listarPersonalSegunFuncion(E_funciones.PROFESOR);
 	}
-	
 
 	// endregion
-	
-	
 
 	// region > injected services
 	// //////////////////////////////////////
