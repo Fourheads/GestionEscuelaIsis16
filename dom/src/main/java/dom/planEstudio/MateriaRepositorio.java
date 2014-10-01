@@ -1,6 +1,7 @@
 package dom.planEstudio;
 
 import java.util.List;
+import java.util.SortedSet;
 
 import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.annotation.DescribedAs;
@@ -44,7 +45,7 @@ public class MateriaRepositorio {
 		return tempList.get(0);
 	}
 
-	public List<Anio> choices1ListarMateriasDeUnAnio(Plan plan) {
+	public SortedSet<Anio> choices1ListarMateriasDeUnAnio(Plan plan) {
 
 		return plan.getAnioList();
 	}

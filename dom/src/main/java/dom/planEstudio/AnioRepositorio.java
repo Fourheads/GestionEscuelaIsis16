@@ -2,6 +2,7 @@ package dom.planEstudio;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.SortedSet;
 
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.Hidden;
@@ -46,7 +47,7 @@ public class AnioRepositorio {
 	}
 
 	public String validateAgregarAnio(Plan plan, int anioNumero) {
-		List<Anio> aniosList = plan.getAnioList();
+		SortedSet<Anio> aniosList = plan.getAnioList();
 		for (Anio anio : aniosList) {
 			if (anio.getAnioNumero() == anioNumero) {
 				return "El año '" + anioNumero + "' ya fué creado";

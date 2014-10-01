@@ -1,6 +1,7 @@
 package dom.simple;
 
 import java.util.List;
+import java.util.SortedSet;
 
 import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.annotation.DomainService;
@@ -95,7 +96,7 @@ public class CursoRepositorio {
 		return choices0ListarCursosDeUnAnio().get(0);
 	}
 
-	public List<Anio> choices1ListarCursosDeUnAnio(final Plan plan) {
+	public SortedSet<Anio> choices1ListarCursosDeUnAnio(final Plan plan) {
 		return plan.getAnioList();
 	}
 

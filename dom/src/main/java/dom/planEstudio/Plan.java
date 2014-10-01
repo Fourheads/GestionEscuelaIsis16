@@ -52,15 +52,15 @@ public class Plan implements Comparable<Plan>{
 
 	@Persistent(mappedBy = "plan", dependentElement = "true")
 	@Join
-	private List<Anio> aniolist = new ArrayList<Anio>();
+	private SortedSet<Anio> aniolist = new TreeSet<Anio>();
 
 	@MemberOrder(sequence = "1")
 	@Render(Type.EAGERLY)
-	public List<Anio> getAnioList() {
+	public SortedSet<Anio> getAnioList() {
 		return aniolist;
 	}
 
-	public void setAnioList(final List<Anio> aniolist) {
+	public void setAnioList(final SortedSet<Anio> aniolist) {
 		this.aniolist = aniolist;
 	}
 
