@@ -1,4 +1,4 @@
-package dom.cronograma;
+package dom.horario;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +14,7 @@ import org.apache.isis.applib.annotation.Render.Type;
 
 import dom.simple.Curso;
 
-public class CronogramaCursoView extends AbstractViewModel{
+public class HorarioCursoView extends AbstractViewModel{
 
 	String memento;
 	

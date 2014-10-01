@@ -1,6 +1,6 @@
-package dom.cronograma;
-import java.util.Set;
-import java.util.HashSet;
+package dom.horario;
+import dom.simple.MateriaDelCurso;
+import java.util.Date;
 
 
 /**
@@ -9,7 +9,7 @@ import java.util.HashSet;
  * @generated
  */
 
-public class CronogramaDia
+public class HorarioHora
 {
 	/**
 	 * <!-- begin-user-doc -->
@@ -18,7 +18,7 @@ public class CronogramaDia
 	 * @ordered
 	 */
 	
-	public CronogramaCurso cronogramaCurso;
+	public Date horaInicio;
 	
 	/**
 	 * <!-- begin-user-doc -->
@@ -27,7 +27,7 @@ public class CronogramaDia
 	 * @ordered
 	 */
 	
-	public Set<CronogramaHora> cronogramaHora;
+	public HorarioDia cronogramaDia;
 	
 	/**
 	 * <!-- begin-user-doc -->
@@ -36,14 +36,23 @@ public class CronogramaDia
 	 * @ordered
 	 */
 	
-	public E_CronogramaDiaSemana e_CronogramaDiaSemana;
+	public E_HorarioHoraTipo e_CronogramaHoraTipo;
+	
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!--  end-user-doc  -->
+	 * @generated
+	 * @ordered
+	 */
+	
+	public MateriaDelCurso materiaDelCurso;
 	
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!--  end-user-doc  -->
 	 * @generated
 	 */
-	public CronogramaDia(){
+	public HorarioHora(){
 		super();
 	}
 

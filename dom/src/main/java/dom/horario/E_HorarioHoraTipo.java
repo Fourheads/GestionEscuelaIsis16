@@ -1,4 +1,4 @@
-package dom.cronograma;
+package dom.horario;
 
 
 /**
@@ -7,7 +7,7 @@ package dom.cronograma;
  * @generated
  */
 
-public enum E_CronogramaHoraTipo
+public enum E_HorarioHoraTipo
 {
 	HORA_CATEDRA, RECREO, DESAYUNO, ALMUERZO, MERIENDA
 

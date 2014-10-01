@@ -1,4 +1,4 @@
-package dom.cronograma;
+package dom.horario;
 
 
 /**
@@ -7,7 +7,7 @@ package dom.cronograma;
  * @generated
  */
 
-public enum E_CronogramaDiaSemana
+public enum E_HorarioDiaSemana
 {
 	LUNES, MARTES, MIERCOLES, JUEVES, VIERNES
 
