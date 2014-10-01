@@ -17,6 +17,8 @@ import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.ObjectType;
 import org.apache.isis.applib.annotation.Render;
 import org.apache.isis.applib.annotation.Render.Type;
+import org.apache.isis.applib.util.ObjectContracts;
+import org.omg.CORBA.Object;
 
 /**
  * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -34,7 +36,7 @@ import org.apache.isis.applib.annotation.Render.Type;
 @ObjectType("HORARIO_DIA")
 @Bookmarkable
 @Bounded
-public class HorarioDia {
+public class HorarioDia implements Comparable<HorarioDia>{
 	// {{ DiaDeLaSemana (property)
 	private E_HorarioDiaSemana diaDeLaSemana;
 
@@ -82,6 +84,11 @@ public class HorarioDia {
 		this.horarioCurso = horarioCurso;
 	}
 	// }}
+
+	@Override
+	public int compareTo(HorarioDia o) {
+		return ObjectContracts.compare(this, o, "diaDeLaSemana");
+	}
 
 
 }

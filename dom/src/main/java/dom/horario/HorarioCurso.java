@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.HashSet;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import javax.jdo.annotations.Column;
 import javax.jdo.annotations.IdentityType;
@@ -58,15 +60,15 @@ public class HorarioCurso
 	
 	@Persistent(mappedBy = "horarioCurso", dependentElement = "true")
 	@Join
-	private List<HorarioDia> horarioDiaList = new ArrayList<HorarioDia>();
+	private SortedSet<HorarioDia> horarioDiaList = new TreeSet<HorarioDia>();
 
 	@MemberOrder(sequence = "1")
 	@Render(Type.EAGERLY)
-	public List<HorarioDia> getHorarioDiaList() {
+	public SortedSet<HorarioDia> getHorarioDiaList() {
 		return horarioDiaList;
 	}
 
-	public void setHorarioDiaList(final List<HorarioDia> horarioDiaList) {
+	public void setHorarioDiaList(final SortedSet<HorarioDia> horarioDiaList) {
 		this.horarioDiaList = horarioDiaList;
 	}
 	// end region HorarioDiaList (Collection)

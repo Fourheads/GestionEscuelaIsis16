@@ -42,6 +42,7 @@ import org.apache.isis.applib.annotation.Render;
 import org.apache.isis.applib.annotation.Render.Type;
 import org.apache.isis.applib.query.QueryDefault;
 
+import dom.horario.HorarioCurso;
 import dom.planEstudio.Anio;
 import dom.simple.Funcion.E_funciones;
 
@@ -113,9 +114,21 @@ public class Curso {
 		this.anio = anio;
 	}
 
+	// {{ HorarioCurso (property)
+	private HorarioCurso horarioCurso;
+
+	@MemberOrder(sequence = "1")
+	@Column(allowsNull = "true")
+	public HorarioCurso getHorarioCurso() {
+		return horarioCurso;
+	}
+
+	public void setHorarioCurso(final HorarioCurso horarioCurso) {
+		this.horarioCurso = horarioCurso;
+	}
 	// }}
 
-	// }}
+	
 
 	// // {{ Materias (Property)
 	// @Join
