@@ -7,25 +7,9 @@ package dom.cronograma;
  * @generated
  */
 
-public class E_CronogramaDiaSemana
+public enum E_CronogramaDiaSemana
 {
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
-	 */
-	
-	public CronogramaDia cronogramaDia;
-	
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 */
-	public E_CronogramaDiaSemana(){
-		super();
-	}
+	LUNES, MARTES, MIERCOLES, JUEVES, VIERNES
 
 }
 

@@ -7,25 +7,9 @@ package dom.cronograma;
  * @generated
  */
 
-public class E_CronogramaHoraTipo
+public enum E_CronogramaHoraTipo
 {
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
-	 */
-	
-	public CronogramaHora cronogramaHora;
-	
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 */
-	public E_CronogramaHoraTipo(){
-		super();
-	}
+	HORA_CATEDRA, RECREO, DESAYUNO, ALMUERZO, MERIENDA
 
 }
 
