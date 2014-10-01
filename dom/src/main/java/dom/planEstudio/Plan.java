@@ -11,12 +11,14 @@ import javax.jdo.annotations.Join;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.VersionStrategy;
+
 import org.apache.isis.applib.annotation.Bookmarkable;
 import org.apache.isis.applib.annotation.Bounded;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.ObjectType;
 import org.apache.isis.applib.annotation.Render;
 import org.apache.isis.applib.annotation.Render.Type;
+import org.apache.isis.applib.util.ObjectContracts;
 
 @SuppressWarnings("unused")
 @javax.jdo.annotations.PersistenceCapable(identityType = IdentityType.DATASTORE)
@@ -30,7 +32,7 @@ import org.apache.isis.applib.annotation.Render.Type;
 @ObjectType("PLAN")
 @Bookmarkable
 @Bounded
-public class Plan {
+public class Plan implements Comparable<Plan>{
 
 	// {{ Descripcion (property)
 	private String descripcion;
@@ -70,6 +72,12 @@ public class Plan {
 
 	public String title() {
 		return getDescripcion();
+	}
+
+	@Override
+	public int compareTo(Plan other) {
+		// TODO Auto-generated method stub
+		return ObjectContracts.compare(this, other, "descripcion");
 	}
 
 	// end region Title (GUI)
