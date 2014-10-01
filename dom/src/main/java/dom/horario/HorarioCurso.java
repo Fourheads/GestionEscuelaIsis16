@@ -1,17 +1,23 @@
 package dom.horario;
 import dom.simple.Curso;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import java.util.HashSet;
 
 import javax.jdo.annotations.Column;
 import javax.jdo.annotations.IdentityType;
+import javax.jdo.annotations.Join;
+import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.VersionStrategy;
 
 import org.apache.isis.applib.annotation.Bookmarkable;
 import org.apache.isis.applib.annotation.Bounded;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.ObjectType;
+import org.apache.isis.applib.annotation.Render;
+import org.apache.isis.applib.annotation.Render.Type;
 
 
 /**
@@ -26,7 +32,7 @@ import org.apache.isis.applib.annotation.ObjectType;
 //@javax.jdo.annotations.Queries({ @javax.jdo.annotations.Query(name = "listarAniosDeUnPlan", language = "JDOQL", value = "SELECT "
 //		+ "FROM dom.planEstudio.Anio "
 //		+ "WHERE this.plan.descripcion == :descripcion") })
-@ObjectType("CRONOGRAMA_CURSO")
+@ObjectType("HORARIO_CURSO")
 @Bookmarkable
 @Bounded
 public class HorarioCurso
@@ -47,6 +53,25 @@ public class HorarioCurso
 	// }}
 
 
+	// HorarioDiaList (Collection)
+	// //////////////////////////////////////////
+	
+	@Persistent(mappedBy = "horarioCurso", dependentElement = "true")
+	@Join
+	private List<HorarioDia> horarioDiaList = new ArrayList<HorarioDia>();
+
+	@MemberOrder(sequence = "1")
+	@Render(Type.EAGERLY)
+	public List<HorarioDia> getHorarioDiaList() {
+		return horarioDiaList;
+	}
+
+	public void setHorarioDiaList(final List<HorarioDia> horarioDiaList) {
+		this.horarioDiaList = horarioDiaList;
+	}
+	// end region HorarioDiaList (Collection)
+
+	
 	
 
 }
