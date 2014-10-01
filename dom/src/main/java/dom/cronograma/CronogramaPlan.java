@@ -34,8 +34,6 @@ import dom.planEstudio.Plan;
  */
 public class CronogramaPlan implements Comparable<CronogramaPlan> {
 
-	
-	
 	// {{ Plan (property)
 	private Plan plan;
 

@@ -1,6 +1,7 @@
 package dom.cronograma;
 
 import java.util.List;
+import java.util.SortedSet;
 
 import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.annotation.DomainService;
@@ -35,6 +36,14 @@ public class CronogramaPlanRepositorio{
 	}
 	
 
+	// {{ ListarPlanes (action)
+		@MemberOrder(sequence = "1")
+		public List<CronogramaPlan> ListarPlanes() {
+			return container.allInstances(CronogramaPlan.class);
+		}
+		// }}
+
+	
 	// region > injected services
 	// //////////////////////////////////////
 
