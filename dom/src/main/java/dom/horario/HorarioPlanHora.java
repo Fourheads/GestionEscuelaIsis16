@@ -21,7 +21,7 @@ import org.apache.isis.applib.annotation.ObjectType;
 @Bookmarkable
 @Bounded
 public class HorarioPlanHora {
-	
+
 	// {{ HorarioPlan (property)
 	private HorarioPlan horarioPlan;
 
@@ -34,6 +34,7 @@ public class HorarioPlanHora {
 	public void setHorarioPlan(final HorarioPlan horarioPlan) {
 		this.horarioPlan = horarioPlan;
 	}
+
 	// }}
 
 	// {{ HoraInicio (property)
@@ -48,6 +49,22 @@ public class HorarioPlanHora {
 	public void setHoraInicio(final Hora horaInicio) {
 		this.horaInicio = horaInicio;
 	}
+
+	// }}
+
+	// {{ HoraFin (property)
+	private Hora horaFin;
+
+	@MemberOrder(sequence = "1")
+	@Column(allowsNull = "true")
+	public Hora getHoraFin() {
+		return horaFin;
+	}
+
+	public void setHoraFin(final Hora horaFin) {
+		this.horaFin = horaFin;
+	}
+
 	// }}
 
 	// {{ TipoHoraPlan (property)
@@ -63,7 +80,5 @@ public class HorarioPlanHora {
 		this.tipoHoraPlan = tipoHoraPlan;
 	}
 	// }}
-
-
 
 }
