@@ -25,7 +25,7 @@ import dom.simple.SimpleObject;
 @javax.jdo.annotations.Version(strategy = VersionStrategy.VERSION_NUMBER, column = "version")
 @javax.jdo.annotations.Queries({ @javax.jdo.annotations.Query(name = "listarAniosDeUnPlan", language = "JDOQL", value = "SELECT "
 		+ "FROM dom.planEstudio.Anio "
-		+ "WHERE this.plan.descripcion == :descripcion") })
+		+ "WHERE this.plan.descripcion == :plan") })
 @ObjectType("ANIO")
 @Bookmarkable
 @Bounded
@@ -84,7 +84,7 @@ public class Anio implements Comparable<Anio>{
 	// //////////////////////////////////////////
 
 	public String title() {
-		return getAnioNumero() + "°";
+		return getAnioNumero() + "° (" + getPlan().getDescripcion() + ")" ;
 	}
 
 	@Override

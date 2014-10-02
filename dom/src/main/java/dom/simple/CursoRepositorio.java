@@ -13,6 +13,7 @@ import org.apache.isis.applib.query.QueryDefault;
 import dom.horario.HorarioCurso;
 import dom.horario.HorarioCursoRepositorio;
 import dom.planEstudio.Anio;
+import dom.planEstudio.AnioRepositorio;
 import dom.planEstudio.Materia;
 import dom.planEstudio.Plan;
 import dom.planEstudio.PlanRepositorio;
@@ -36,7 +37,7 @@ public class CursoRepositorio {
 			materiaDelCursoRepositorio.crearMateriaDelCurso(curso, materia);
 		}
 		curso.setHorarioCurso(horarioCursoRepositorio.crearHorarioCurso(curso));
-		
+
 		container.persistIfNotAlready(curso);
 		return curso;
 	}
@@ -52,6 +53,10 @@ public class CursoRepositorio {
 		}
 
 		return choices0CrearCurso().get(0);
+	}
+	
+	public List<Anio> choices1CrearCurso(Plan plan) {
+		return anioRepositorio.listarAniosDeUnPlan(plan);
 	}
 
 	// {{ listarCursosDeUnPlan (action)
@@ -223,7 +228,8 @@ public class CursoRepositorio {
 	PersonalRepositorio personalRepositorio;
 	@javax.inject.Inject
 	HorarioCursoRepositorio horarioCursoRepositorio;
-
+	@javax.inject.Inject
+	AnioRepositorio anioRepositorio;
 	// endregion
 
 }
