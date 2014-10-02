@@ -13,6 +13,7 @@ import javax.jdo.annotations.VersionStrategy;
 
 import org.apache.isis.applib.annotation.Bookmarkable;
 import org.apache.isis.applib.annotation.Bounded;
+import org.apache.isis.applib.annotation.Hidden;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.ObjectType;
 import org.apache.isis.applib.annotation.Render;
@@ -85,9 +86,25 @@ public class HorarioDia implements Comparable<HorarioDia>{
 	}
 	// }}
 
+	// {{ OrdenDias (property)
+	private int ordenDias;
+
+	@Hidden
+	@Column(allowsNull = "true")
+	public int getOrdenDias() {
+		return ordenDias;
+	}
+
+	public void setOrdenDias(final int ordenDias) {
+		this.ordenDias = ordenDias;
+	}
+	// }}
+
+
+	
 	@Override
 	public int compareTo(HorarioDia o) {
-		return ObjectContracts.compare(this, o, "diaDeLaSemana");
+		return ObjectContracts.compare(this, o, "ordenDias");
 	}
 
 
