@@ -17,50 +17,36 @@ import org.apache.isis.applib.annotation.ObjectType;
 // "listarAniosDeUnPlan", language = "JDOQL", value = "SELECT "
 // + "FROM dom.planEstudio.Anio "
 // + "WHERE this.plan.descripcion == :descripcion") })
-@ObjectType("HORARIO_PLAN_HORA")
+@ObjectType("HORA")
 @Bookmarkable
 @Bounded
-public class HorarioPlanHora {
+public class Hora {
 	
-	// {{ HorarioPlan (property)
-	private HorarioPlan horarioPlan;
+	// {{ Hora (property)
+	private int hora;
 
 	@MemberOrder(sequence = "1")
 	@Column(allowsNull = "true")
-	public HorarioPlan getHorarioPlan() {
-		return horarioPlan;
+	public int getHora() {
+		return hora;
 	}
 
-	public void setHorarioPlan(final HorarioPlan horarioPlan) {
-		this.horarioPlan = horarioPlan;
+	public void setHora(final int hora) {
+		this.hora = hora;
 	}
 	// }}
 
-	// {{ HoraInicio (property)
-	private Hora horaInicio;
+	// {{ Minutos (property)
+	private int minutos;
 
 	@MemberOrder(sequence = "1")
 	@Column(allowsNull = "true")
-	public Hora getHoraInicio() {
-		return horaInicio;
+	public int getMinutos() {
+		return minutos;
 	}
 
-	public void setHoraInicio(final Hora horaInicio) {
-		this.horaInicio = horaInicio;
-	}
-	// }}
-
-	// {{ TipoHoraPlan (property)
-	private E_HorarioHoraTipo tipoHoraPlan;
-
-	@MemberOrder(sequence = "1")
-	@Column(allowsNull = "true")
-	public E_HorarioHoraTipo getTipoHoraPlan() {
-		return tipoHoraPlan;
-	}
-
-	public void setTipoHoraPlan(final E_HorarioHoraTipo tipoHoraPlan) {
-		this.tipoHoraPlan = tipoHoraPlan;
+	public void setMinutos(final int minutos) {
+		this.minutos = minutos;
 	}
 	// }}
 
