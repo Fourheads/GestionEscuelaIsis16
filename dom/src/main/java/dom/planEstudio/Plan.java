@@ -20,6 +20,8 @@ import org.apache.isis.applib.annotation.Render;
 import org.apache.isis.applib.annotation.Render.Type;
 import org.apache.isis.applib.util.ObjectContracts;
 
+import dom.horario.HorarioPlan;
+
 @SuppressWarnings("unused")
 @javax.jdo.annotations.PersistenceCapable(identityType = IdentityType.DATASTORE)
 @javax.jdo.annotations.DatastoreIdentity(strategy = javax.jdo.annotations.IdGeneratorStrategy.IDENTITY, column = "id")
@@ -66,7 +68,24 @@ public class Plan implements Comparable<Plan>{
 
 	// end region AnioList (Collection)
 	// //////////////////////////////////////////
+	
+	// {{ HorarioPlan (property)
+	private HorarioPlan horarioPlan;
 
+	@MemberOrder(sequence = "1")
+	@Column(allowsNull = "true")
+	public HorarioPlan getHorarioPlan() {
+		return horarioPlan;
+	}
+
+	public void setHorarioPlan(final HorarioPlan horarioPlan) {
+		this.horarioPlan = horarioPlan;
+	}
+	// }}
+
+
+	
+	
 	// Title (GUI)
 	// //////////////////////////////////////////
 

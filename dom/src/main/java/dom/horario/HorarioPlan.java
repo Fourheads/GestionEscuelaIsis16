@@ -1,13 +1,20 @@
 package dom.horario;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.jdo.annotations.Column;
 import javax.jdo.annotations.IdentityType;
+import javax.jdo.annotations.Join;
+import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.VersionStrategy;
 
 import org.apache.isis.applib.annotation.Bookmarkable;
 import org.apache.isis.applib.annotation.Bounded;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.ObjectType;
+import org.apache.isis.applib.annotation.Render;
+import org.apache.isis.applib.annotation.Render.Type;
 
 import dom.planEstudio.Plan;
 
@@ -37,6 +44,23 @@ public class HorarioPlan {
 	}
 	// }}
 
+	// HorarioPlanHoraList (Collection)
+	// //////////////////////////////////////////
 	
+	@Persistent(mappedBy = "horarioPlan", dependentElement = "true")
+	@Join
+	private List<HorarioPlanHora> horarioPlanHoraList = new ArrayList<HorarioPlanHora>();
+
+	@MemberOrder(sequence = "1")
+	@Render(Type.EAGERLY)
+	public List<HorarioPlanHora> getHorarioPlanHoraList() {
+		return horarioPlanHoraList;
+	}
+
+	public void setHorarioPlanHoraList(final List<HorarioPlanHora> horarioPlanHoraList) {
+		this.horarioPlanHoraList = horarioPlanHoraList;
+	}
+	// end region HorarioPlanHoraList (Collection)
+
 
 }

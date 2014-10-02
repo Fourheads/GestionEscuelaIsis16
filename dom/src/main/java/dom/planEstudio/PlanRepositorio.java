@@ -11,6 +11,9 @@ import org.apache.isis.applib.annotation.NotContributed;
 import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.query.Query;
 import org.apache.isis.applib.query.QueryDefault;
+
+import dom.horario.HorarioPlan;
+import dom.horario.HorarioPlanRepositorio;
 @Named("Planes")
 @DomainService(menuOrder = "10", repositoryFor = Plan.class)
 public class PlanRepositorio {
@@ -22,6 +25,7 @@ public class PlanRepositorio {
 		Plan plan = container.newTransientInstance(Plan.class);
 
 		plan.setDescripcion(descripcion);
+		plan.setHorarioPlan(horarioPlanRepositorio.crearHorarioPlan(plan));
 
 		container.persistIfNotAlready(plan);
 
@@ -89,7 +93,8 @@ public class PlanRepositorio {
 
 	@javax.inject.Inject
 	DomainObjectContainer container;
-
+	@javax.inject.Inject
+	HorarioPlanRepositorio horarioPlanRepositorio;
 	// endregion
 
 }
