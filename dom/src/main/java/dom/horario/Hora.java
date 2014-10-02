@@ -21,7 +21,7 @@ import org.apache.isis.applib.annotation.ObjectType;
 @Bookmarkable
 @Bounded
 public class Hora {
-	
+
 	// {{ Hora (property)
 	private int hora;
 
@@ -34,6 +34,7 @@ public class Hora {
 	public void setHora(final int hora) {
 		this.hora = hora;
 	}
+
 	// }}
 
 	// {{ Minutos (property)
@@ -48,8 +49,15 @@ public class Hora {
 	public void setMinutos(final int minutos) {
 		this.minutos = minutos;
 	}
+
 	// }}
 
-
+	public String title() {
+		String relleno = "";
+		if (getMinutos() < 10) {
+			relleno = "0";
+		}
+		return getHora() + ":" + relleno + getMinutos();
+	}
 
 }
