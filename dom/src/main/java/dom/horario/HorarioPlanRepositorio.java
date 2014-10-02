@@ -6,6 +6,7 @@ import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.Hidden;
 import org.apache.isis.applib.annotation.MemberOrder;
+import org.apache.isis.applib.annotation.Named;
 
 import dom.planEstudio.Plan;
 
@@ -22,8 +23,9 @@ public class HorarioPlanRepositorio {
 	}
 
 	@MemberOrder(sequence = "1")
+	@Named("Crear Nueva Hora")
 	public HorarioPlan crearHorarioPlanHora(HorarioPlan horarioPlan){
-			horarioPlanHoraRepositorio.crearHorarioPlanHora(horarioPlan);
+			horarioPlan.getHorarioPlanHoraList().add(horarioPlanHoraRepositorio.crearHorarioPlanHora(horarioPlan));
 		return horarioPlan;
 	}
 	

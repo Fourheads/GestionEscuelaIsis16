@@ -12,11 +12,12 @@ import org.apache.isis.applib.annotation.NotContributed;
 public class HorarioPlanHoraRepositorio {
 
 	@NotContributed
-	public void crearHorarioPlanHora(HorarioPlan horarioPlan) {
+	public HorarioPlanHora crearHorarioPlanHora(HorarioPlan horarioPlan) {
 		HorarioPlanHora horarioPlanHora = container.newTransientInstance(HorarioPlanHora.class);
 		horarioPlanHora.setHorarioPlan(horarioPlan);
 		
 		container.persistIfNotAlready(horarioPlanHora);
+		return horarioPlanHora;
 		
 	}
 
