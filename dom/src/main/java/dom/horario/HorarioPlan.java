@@ -29,7 +29,7 @@ import dom.planEstudio.Plan;
 @ObjectType("HORARIO_PLAN")
 @Bookmarkable
 public class HorarioPlan {
-	
+
 	// {{ Plan (property)
 	private Plan plan;
 
@@ -42,11 +42,12 @@ public class HorarioPlan {
 	public void setPlan(final Plan plan) {
 		this.plan = plan;
 	}
+
 	// }}
 
 	// HorarioPlanHoraList (Collection)
 	// //////////////////////////////////////////
-	
+
 	@Persistent(mappedBy = "horarioPlan", dependentElement = "true")
 	@Join
 	private List<HorarioPlanHora> horarioPlanHoraList = new ArrayList<HorarioPlanHora>();
@@ -57,10 +58,16 @@ public class HorarioPlan {
 		return horarioPlanHoraList;
 	}
 
-	public void setHorarioPlanHoraList(final List<HorarioPlanHora> horarioPlanHoraList) {
+	public void setHorarioPlanHoraList(
+			final List<HorarioPlanHora> horarioPlanHoraList) {
 		this.horarioPlanHoraList = horarioPlanHoraList;
 	}
+
 	// end region HorarioPlanHoraList (Collection)
 
+	public String title() {
+
+		return "Horario de " + getPlan().getDescripcion();
+	}
 
 }

@@ -25,7 +25,7 @@ public class HorarioPlanHora {
 	// {{ HorarioPlan (property)
 	private HorarioPlan horarioPlan;
 
-	@MemberOrder(sequence = "1")
+	@MemberOrder(sequence = "10")
 	@Column(allowsNull = "true")
 	public HorarioPlan getHorarioPlan() {
 		return horarioPlan;
@@ -55,7 +55,7 @@ public class HorarioPlanHora {
 	// {{ HoraFin (property)
 	private Hora horaFin;
 
-	@MemberOrder(sequence = "1")
+	@MemberOrder(sequence = "2")
 	@Column(allowsNull = "true")
 	public Hora getHoraFin() {
 		return horaFin;
@@ -70,7 +70,7 @@ public class HorarioPlanHora {
 	// {{ TipoHoraPlan (property)
 	private E_HorarioHoraTipo tipoHoraPlan;
 
-	@MemberOrder(sequence = "1")
+	@MemberOrder(sequence = "3")
 	@Column(allowsNull = "true")
 	public E_HorarioHoraTipo getTipoHoraPlan() {
 		return tipoHoraPlan;
