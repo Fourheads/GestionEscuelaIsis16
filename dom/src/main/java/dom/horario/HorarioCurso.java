@@ -20,6 +20,7 @@ import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.ObjectType;
 import org.apache.isis.applib.annotation.Render;
 import org.apache.isis.applib.annotation.Render.Type;
+import org.apache.isis.applib.util.ObjectContracts;
 
 
 /**
@@ -37,8 +38,7 @@ import org.apache.isis.applib.annotation.Render.Type;
 @ObjectType("HORARIO_CURSO")
 @Bookmarkable
 @Bounded
-public class HorarioCurso
-{
+public class HorarioCurso implements Comparable<HorarioCurso>{
 	
 	// {{ Curso (property)
 	private Curso curso;
@@ -72,6 +72,11 @@ public class HorarioCurso
 		this.horarioDiaList = horarioDiaList;
 	}
 	// end region HorarioDiaList (Collection)
+
+	@Override
+	public int compareTo(HorarioCurso o) {
+		return ObjectContracts.compare(this, o, "curso");
+	}
 
 	
 	

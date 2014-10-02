@@ -35,7 +35,7 @@ public class CursoRepositorio {
 
 			materiaDelCursoRepositorio.crearMateriaDelCurso(curso, materia);
 		}
-		//curso.setHorarioCurso(horarioCursoRepositorio.crearHorarioCurso(curso));
+		curso.setHorarioCurso(horarioCursoRepositorio.crearHorarioCurso(curso));
 		
 		container.persistIfNotAlready(curso);
 		return curso;
