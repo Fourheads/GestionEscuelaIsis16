@@ -32,9 +32,7 @@ public class HorarioPlanRepositorio {
 	public HorarioPlan crearHorarioPlanHora(HorarioPlan horarioPlan,
 			@Named("Tipo de Hora") E_HorarioHoraTipo e_HorarioHoraTipo,
 			@Named("Duración (minutos)") Integer duracion) {
-
-		HorarioPlanHora horarioPlanHora = horarioPlanHoraRepositorio
-				.crearHorarioPlanHora(horarioPlan);
+		
 		
 		Hora inicio = new Hora();
 		Hora fin = new Hora();
@@ -55,9 +53,17 @@ public class HorarioPlanRepositorio {
 			minutosFin = minutosFin - 60;
 			horaFin++;
 		}
-
+		
+		if (horaFin>23){
+			container.warnUser("La hora de finalizacion no puede ser superior a las 23:59 hs");
+			return horarioPlan;
+		}
+		
 		fin.setHora(horaFin);
 		fin.setMinutos(minutosFin);
+		
+		HorarioPlanHora horarioPlanHora = horarioPlanHoraRepositorio
+				.crearHorarioPlanHora(horarioPlan);
 		
 		horarioPlanHora.setHoraInicio(inicio);
 		horarioPlanHora.setHoraFin(fin);
