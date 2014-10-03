@@ -16,7 +16,7 @@ public class HorarioCursoRepositorio {
 		
 		HorarioCurso horarioCurso = new HorarioCurso();
 		horarioCurso.setCurso(curso);
-		horarioCurso.setHorarioDiaList(horarioDiaRepositorio.crearHorarioDiaList());
+		horarioCurso.setHorarioDiaList(horarioDiaRepositorio.crearHorarioDiaList(curso));
 				
 		return horarioCurso;
 	}

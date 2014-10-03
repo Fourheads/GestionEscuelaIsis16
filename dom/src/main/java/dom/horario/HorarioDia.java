@@ -56,7 +56,7 @@ public class HorarioDia implements Comparable<HorarioDia>{
 	// HorarioHoraList (Collection)
 	// //////////////////////////////////////////
 
-	@Persistent(mappedBy = "HorarioHora", dependentElement = "true")
+	@Persistent(mappedBy = "horarioDia", dependentElement = "true")
 	@Join
 	private List<HorarioHora> horarioHoraList = new ArrayList<HorarioHora>();
 
