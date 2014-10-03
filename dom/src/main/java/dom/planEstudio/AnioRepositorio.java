@@ -14,6 +14,7 @@ import org.apache.isis.applib.annotation.Named;
 import org.apache.isis.applib.annotation.NotInServiceMenu;
 import org.apache.isis.applib.query.QueryDefault;
 
+@Hidden
 @DomainService(repositoryFor = Anio.class)
 public class AnioRepositorio {
 
