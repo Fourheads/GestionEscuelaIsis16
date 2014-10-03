@@ -128,46 +128,7 @@ public class Curso {
 	}
 	// }}
 
-	
 
-	// // {{ Materias (Property)
-	// @Join
-	// @Element(dependent = "false")
-	// private SortedSet<Materia> ListaMateria = new TreeSet<Materia>();
-	//
-	// @Render(Type.EAGERLY)
-	// @MemberOrder(sequence = "1.4")
-	// public SortedSet<Materia> getListaMateria() {
-	// return ListaMateria;
-	// }
-	//
-	// public void setListaMateria(SortedSet<Materia> ListaMateria) {
-	// this.ListaMateria = ListaMateria;
-	// }
-	//
-	// @MemberOrder(sequence = "2")
-	// @Named("Asinganar materias")
-	// public void asignarMateria(@Named("Materia") Materia materia) {
-	// this.ListaMateria.add(materia);
-	// }
-	//
-	// public List<Materia> choices0AsignarMateria() {
-	// return container.allInstances(Materia.class);
-	// }
-	//
-	// @MemberOrder(sequence = "4")
-	// @Named("Quitar materias del curso")
-	// public Curso removeMateria(final @Named("Materia") Materia materia) {
-	//
-	// getListaMateria().remove(materia);
-	// return this;
-	// }
-	//
-	// public SortedSet<Materia> choices0RemoveMateria() {
-	// return getListaMateria();
-	// }
-
-	// }}
 
 	// {{ Alumnos (Property)
 	@Join
@@ -234,29 +195,11 @@ public class Curso {
 	public SortedSet<Alumno> choices0RemoveAlumno() {
 		return getAlumnos();
 	}
-
-	// }}
-
-	/*
-	 * private List<Alumno> alumnos;
-	 * 
-	 * //@Title
-	 * 
-	 * @Column(allowsNull = "true")
-	 * 
-	 * @Element(column="Alumno_id")
-	 * 
-	 * @MemberOrder(sequence = "1.5") public List<Alumno> getAlumnos() { return
-	 * alumnos; } public void setAlumnos(final List<Alumno> Alumnos) {
-	 * this.alumnos = Alumnos; } public void addAlumno(Alumno NuevaAlumno){
-	 * this.alumnos.add(NuevaAlumno); } //}}
-	 */
-
+	
 	// {{ Preceptor (property)
 	private Personal preceptor;
 
 	@Persistent
-	// @Title
 	@Column(allowsNull = "true")
 	@MemberOrder(sequence = "1.6")
 	public Personal getPreceptor() {
@@ -278,6 +221,9 @@ public class Curso {
 				"findByFuncion", "nombre", E_funciones.PRECEPTOR.toString()));
 	}
 
+	
+	
+	
 	@javax.inject.Inject
 	DomainObjectContainer container;
 
