@@ -65,6 +65,21 @@ public class HorarioPlan {
 
 	// end region HorarioPlanHoraList (Collection)
 
+	// {{ InicioClases (property)
+	private Hora inicioClases;
+
+	@MemberOrder(sequence = "2")
+	@Column(allowsNull = "true")
+	public Hora getInicioClases() {
+		return inicioClases;
+	}
+
+	public void setInicioClases(final Hora inicioClases) {
+		this.inicioClases = inicioClases;
+	}
+
+	// }}
+
 	public String title() {
 
 		return "Horario de " + getPlan().getDescripcion();
