@@ -86,7 +86,8 @@ public class HorarioHora {
 		this.horarioPlanHora = horarioPlanHora;
 	}
 	// }}
-
+	
+	
 
 
 	

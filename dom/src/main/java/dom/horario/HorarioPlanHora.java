@@ -80,5 +80,10 @@ public class HorarioPlanHora {
 		this.tipoHoraPlan = tipoHoraPlan;
 	}
 	// }}
+	
+	public String title(){
+		
+		return getHoraInicio() + " a " + getHoraFin();
+	}
 
 }
