@@ -83,7 +83,7 @@ public class HorarioPlanHora {
 	
 	public String title(){
 		
-		return getHoraInicio() + " a " + getHoraFin();
+		return getHoraInicio().title() + " a " + getHoraFin().title();
 	}
 
 }

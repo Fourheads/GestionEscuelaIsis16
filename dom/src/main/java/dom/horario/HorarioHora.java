@@ -10,8 +10,10 @@ import javax.jdo.annotations.VersionStrategy;
 
 import org.apache.isis.applib.annotation.Bookmarkable;
 import org.apache.isis.applib.annotation.Bounded;
+import org.apache.isis.applib.annotation.Hidden;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.ObjectType;
+import org.apache.isis.applib.annotation.Where;
 
 /**
  * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -33,6 +35,7 @@ public class HorarioHora {
 	// {{ HorarioDia (property)
 	private HorarioDia horarioDia;
 
+	@Hidden(where = Where.ALL_TABLES)
 	@MemberOrder(sequence = "1")
 	@Column(allowsNull = "true")
 	public HorarioDia getHorarioDia() {
@@ -48,7 +51,7 @@ public class HorarioHora {
 	// {{ MateriaDelCurso (property)
 	private MateriaDelCurso materiaDelCurso;
 
-	@MemberOrder(sequence = "1")
+	@MemberOrder(sequence = "3")
 	@Column(allowsNull = "true")
 	public MateriaDelCurso getMateriaDelCurso() {
 		return materiaDelCurso;
@@ -62,7 +65,7 @@ public class HorarioHora {
 	// {{ HorarioHoraTipo (property)
 	private E_HorarioHoraTipo horarioHoraTipo;
 
-	@MemberOrder(sequence = "1")
+	@MemberOrder(sequence = "2")
 	@Column(allowsNull = "true")
 	public E_HorarioHoraTipo getHorarioHoraTipo() {
 		return horarioHoraTipo;
@@ -87,7 +90,9 @@ public class HorarioHora {
 	}
 	// }}
 	
-	
+	public String title(){
+		return getHorarioHoraTipo().toString();
+	}
 
 
 	

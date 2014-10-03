@@ -40,6 +40,7 @@ public class HorarioDiaRepositorio {
 			HorarioHora horarioHora = new HorarioHora();
 			horarioHora.setHorarioDia(horarioDia);
 			horarioHora.setHorarioPlanHora(horarioPlanHora);
+			horarioHora.setHorarioHoraTipo(horarioPlanHora.getTipoHoraPlan());
 			horarioHoraList.add(horarioHora);
 		}
 		horarioDia.setHorarioHoraList(horarioHoraList);

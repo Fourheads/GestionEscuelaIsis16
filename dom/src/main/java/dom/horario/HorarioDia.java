@@ -18,6 +18,7 @@ import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.ObjectType;
 import org.apache.isis.applib.annotation.Render;
 import org.apache.isis.applib.annotation.Render.Type;
+import org.apache.isis.applib.annotation.Where;
 import org.apache.isis.applib.util.ObjectContracts;
 import org.omg.CORBA.Object;
 
@@ -75,6 +76,7 @@ public class HorarioDia implements Comparable<HorarioDia>{
 	// {{ HorarioCurso (property)
 	private HorarioCurso horarioCurso;
 
+	@Hidden(where = Where.ALL_TABLES)
 	@MemberOrder(sequence = "1")
 	@Column(allowsNull = "true")
 	public HorarioCurso getHorarioCurso() {
@@ -107,5 +109,8 @@ public class HorarioDia implements Comparable<HorarioDia>{
 		return ObjectContracts.compare(this, o, "ordenDias");
 	}
 
+	public String title(){
+		return "Horario del " + getDiaDeLaSemana()+ " " + getHorarioCurso().getCurso().title();
+	}
 
 }
