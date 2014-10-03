@@ -35,15 +35,30 @@ public class HorarioPlanRepositorio {
 
 		HorarioPlanHora horarioPlanHora = horarioPlanHoraRepositorio
 				.crearHorarioPlanHora(horarioPlan);
-
+		
 		Hora inicio = new Hora();
 		Hora fin = new Hora();
+		
+		int tamañoListaHoras = horarioPlan.getHorarioPlanHoraList().size();
+		
+		if (tamañoListaHoras == 0){
+			inicio = horarioPlan.getInicioClases();
+		}
+		else{
+			
+			inicio = horarioPlan.getHorarioPlanHoraList().get(tamañoListaHoras-1).getHoraFin();
+		}
+		
+		int minutosFin = inicio.getMinutos() + duracion;
+		int horaFin = inicio.getHora();
+		if (minutosFin > 59 ){
+			minutosFin = minutosFin - 60;
+			horaFin++;
+		}
 
-		// inicio.setHora(inicioHora);
-		// inicio.setMinutos(inicioMinutos);
-		// fin.setHora(finHora);
-		// fin.setMinutos(finMinutos);
-
+		fin.setHora(horaFin);
+		fin.setMinutos(minutosFin);
+		
 		horarioPlanHora.setHoraInicio(inicio);
 		horarioPlanHora.setHoraFin(fin);
 		horarioPlanHora.setTipoHoraPlan(e_HorarioHoraTipo);
