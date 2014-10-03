@@ -11,6 +11,7 @@ import javax.jdo.annotations.VersionStrategy;
 
 import org.apache.isis.applib.annotation.Bookmarkable;
 import org.apache.isis.applib.annotation.Bounded;
+import org.apache.isis.applib.annotation.Disabled;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.ObjectType;
 import org.apache.isis.applib.annotation.Render;
@@ -32,7 +33,7 @@ public class HorarioPlan {
 
 	// {{ Plan (property)
 	private Plan plan;
-
+	@Disabled
 	@MemberOrder(sequence = "1")
 	@Column(allowsNull = "true")
 	public Plan getPlan() {
@@ -51,7 +52,7 @@ public class HorarioPlan {
 	@Persistent(mappedBy = "horarioPlan", dependentElement = "true")
 	@Join
 	private List<HorarioPlanHora> horarioPlanHoraList = new ArrayList<HorarioPlanHora>();
-
+	@Disabled
 	@MemberOrder(sequence = "1")
 	@Render(Type.EAGERLY)
 	public List<HorarioPlanHora> getHorarioPlanHoraList() {
@@ -67,7 +68,7 @@ public class HorarioPlan {
 
 	// {{ InicioClases (property)
 	private Hora inicioClases;
-
+	@Disabled
 	@MemberOrder(sequence = "2")
 	@Column(allowsNull = "true")
 	public Hora getInicioClases() {
