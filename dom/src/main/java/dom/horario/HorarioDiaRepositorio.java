@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import javax.inject.Inject;
+
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.Hidden;
 
@@ -37,14 +39,14 @@ public class HorarioDiaRepositorio {
 		
 		List <HorarioPlanHora> horarioPlanHoraList = curso.getAnio().getPlan().getHorarioPlan().getHorarioPlanHoraList();
 		for (HorarioPlanHora horarioPlanHora : horarioPlanHoraList){
-			HorarioHora horarioHora = new HorarioHora();
-			horarioHora.setHorarioDia(horarioDia);
-			horarioHora.setHorarioPlanHora(horarioPlanHora);
-			horarioHora.setHorarioHoraTipo(horarioPlanHora.getTipoHoraPlan());
-			horarioHoraList.add(horarioHora);
+
+			horarioHoraList.add(horaRepositorio.crearHorarioHora(horarioDia, horarioPlanHora));
 		}
 		horarioDia.setHorarioHoraList(horarioHoraList);
 		
 		return horarioDia;
 	}
+	
+	@javax.inject.Inject
+	HorarioHoraRepositorio horaRepositorio;
 }
