@@ -32,39 +32,39 @@ public class HorarioPlanRepositorio {
 	public HorarioPlan crearHorarioPlanHora(HorarioPlan horarioPlan,
 			@Named("Tipo de Hora") E_HorarioHoraTipo e_HorarioHoraTipo,
 			@Named("Duración (minutos)") Integer duracion) {
-		
-		
+
 		Hora inicio = new Hora();
 		Hora fin = new Hora();
-		
+
 		int tamañoListaHoras = horarioPlan.getHorarioPlanHoraList().size();
-		
-		if (tamañoListaHoras == 0){
+
+		if (tamañoListaHoras == 0) {
 			inicio = horarioPlan.getInicioClases();
+		} else {
+
+			inicio = horarioPlan.getHorarioPlanHoraList()
+					.get(tamañoListaHoras - 1).getHoraFin();
 		}
-		else{
-			
-			inicio = horarioPlan.getHorarioPlanHoraList().get(tamañoListaHoras-1).getHoraFin();
-		}
-		
+
 		int minutosFin = inicio.getMinutos() + duracion;
 		int horaFin = inicio.getHora();
-		if (minutosFin > 59 ){
+		if (minutosFin > 59) {
 			minutosFin = minutosFin - 60;
 			horaFin++;
 		}
-		
-		if (horaFin>23){
-			container.warnUser("La hora de finalizacion no puede ser superior a las 23:59 hs");
+
+		if (horaFin > 23) {
+			container
+					.warnUser("La hora de finalizacion no puede ser superior a las 23:59 hs");
 			return horarioPlan;
 		}
-		
+
 		fin.setHora(horaFin);
 		fin.setMinutos(minutosFin);
-		
+
 		HorarioPlanHora horarioPlanHora = horarioPlanHoraRepositorio
 				.crearHorarioPlanHora(horarioPlan);
-		
+
 		horarioPlanHora.setHoraInicio(inicio);
 		horarioPlanHora.setHoraFin(fin);
 		horarioPlanHora.setTipoHoraPlan(e_HorarioHoraTipo);
@@ -93,65 +93,62 @@ public class HorarioPlanRepositorio {
 			@Named("Tipo de Hora") E_HorarioHoraTipo e_HorarioHoraTipo,
 			@Named("Duración (minutos)") Integer duracion) {
 
-		if (horarioPlan.getInicioClases()==null){
+		if (horarioPlan.getInicioClases() == null) {
 			return "Antes de agregar una hora debe indicar la hora de inicio de clases";
 		}
 		return null;
 	}
 
-	
 	// {{ ingresarHoraInicio (action)
 	@MemberOrder(sequence = "1")
-	public HorarioPlan ingresarHoraInicio(final HorarioPlan horarioPlan, 
-			@Named("Hora")int hora,			
-			@Named("Minutos") int minutos) {
-		
-		if (horarioPlan.getHorarioPlanHoraList().isEmpty()){
-				
-		Hora horaInicio = new Hora();
-		horaInicio.setHora(hora);
-		horaInicio.setMinutos(minutos);
-		horarioPlan.setInicioClases(horaInicio);
+	public HorarioPlan ingresarHoraInicio(final HorarioPlan horarioPlan,
+			@Named("Hora") int hora, @Named("Minutos") int minutos) {
+
+		if (horarioPlan.getHorarioPlanHoraList().isEmpty()) {
+
+			Hora horaInicio = new Hora();
+			horaInicio.setHora(hora);
+			horaInicio.setMinutos(minutos);
+			horarioPlan.setInicioClases(horaInicio);
+		} else {
+			container
+					.warnUser("Para poder modificar la hora de inicio no deben haber horas ya creadas. Elimine las horas e intente nuevamente.");
 		}
-		else {
-			container.warnUser("Para poder modificar la hora de inicio no deben haber horas ya creadas. Elimine las horas e intente nuevamente.");
-		}
-		
+
 		return horarioPlan;
 	}
-	
-	public String validateIngresarHoraInicio(final HorarioPlan horarioPlan, int hora, int minutos) {
-		
+
+	public String validateIngresarHoraInicio(final HorarioPlan horarioPlan,
+			int hora, int minutos) {
+
 		if (hora < 0 || hora > 23) {
-			 return "ERROR. Ingrese por favor una hora entre 0 y 23";
-			 }
-			 if (minutos < 0 || minutos > 59) {
-			 return "ERROR. Ingrese por favor minutos entre 0 y 59";
-			 }
+			return "ERROR. Ingrese por favor una hora entre 0 y 23";
+		}
+		if (minutos < 0 || minutos > 59) {
+			return "ERROR. Ingrese por favor minutos entre 0 y 59";
+		}
 		return null;
 	}
-		
+
 	// }}
 
-	
 	// {{ eliminarUltimaHora (action)
 	@MemberOrder(sequence = "1")
 	public HorarioPlan eliminarUltimaHora(final HorarioPlan horarioPlan) {
-		if (horarioPlan.getHorarioPlanHoraList().isEmpty()){
+		if (horarioPlan.getHorarioPlanHoraList().isEmpty()) {
 			container.warnUser("No Existen horas para eliminar");
+		} else {
+			int ultimaHoraIngresada = horarioPlan.getHorarioPlanHoraList()
+					.size();
+			horarioPlan.getHorarioPlanHoraList()
+					.remove(ultimaHoraIngresada - 1);
 		}
-		else{
-			int ultimaHoraIngresada = horarioPlan.getHorarioPlanHoraList().size();
-			horarioPlan.getHorarioPlanHoraList().remove(ultimaHoraIngresada-1);
-		}
-		
+
 		return horarioPlan;
 	}
+
 	// }}
 
-
-
-	
 	@Inject
 	DomainObjectContainer container;
 	@Inject

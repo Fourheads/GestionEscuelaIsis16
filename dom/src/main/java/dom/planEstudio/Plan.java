@@ -14,6 +14,7 @@ import javax.jdo.annotations.VersionStrategy;
 
 import org.apache.isis.applib.annotation.Bookmarkable;
 import org.apache.isis.applib.annotation.Bounded;
+import org.apache.isis.applib.annotation.Disabled;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.ObjectType;
 import org.apache.isis.applib.annotation.Render;
@@ -72,6 +73,7 @@ public class Plan implements Comparable<Plan>{
 	// {{ HorarioPlan (property)
 	private HorarioPlan horarioPlan;
 
+	@Disabled
 	@MemberOrder(sequence = "1")
 	@Column(allowsNull = "true")
 	public HorarioPlan getHorarioPlan() {
