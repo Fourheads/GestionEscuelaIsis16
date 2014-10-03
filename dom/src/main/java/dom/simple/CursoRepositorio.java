@@ -126,6 +126,11 @@ public class CursoRepositorio {
 		return choices0SeleccionarUnCurso().get(0);
 	}
 
+	public List<Curso> choices1SeleccionarUnCurso(Plan plan, Curso curso) {
+		return container.allMatches(new QueryDefault<Curso>(Curso.class,
+				"listarCursosDeUnPlan", "plan", plan.getDescripcion()));
+	}
+		
 	// }}
 
 	// region > Asignar profesor a materia (accion)
