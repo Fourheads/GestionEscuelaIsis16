@@ -1,4 +1,5 @@
 package dom.horario;
+
 import dom.simple.Curso;
 
 import java.util.ArrayList;
@@ -22,24 +23,24 @@ import org.apache.isis.applib.annotation.Render;
 import org.apache.isis.applib.annotation.Render.Type;
 import org.apache.isis.applib.util.ObjectContracts;
 
-
 /**
- * <!-- begin-user-doc -->
- * <!--  end-user-doc  -->
+ * <!-- begin-user-doc --> <!-- end-user-doc -->
+ * 
  * @generated
  */
 @SuppressWarnings("unused")
 @javax.jdo.annotations.PersistenceCapable(identityType = IdentityType.DATASTORE)
 @javax.jdo.annotations.DatastoreIdentity(strategy = javax.jdo.annotations.IdGeneratorStrategy.IDENTITY, column = "id")
 @javax.jdo.annotations.Version(strategy = VersionStrategy.VERSION_NUMBER, column = "version")
-//@javax.jdo.annotations.Queries({ @javax.jdo.annotations.Query(name = "listarAniosDeUnPlan", language = "JDOQL", value = "SELECT "
-//		+ "FROM dom.planEstudio.Anio "
-//		+ "WHERE this.plan.descripcion == :descripcion") })
+// @javax.jdo.annotations.Queries({ @javax.jdo.annotations.Query(name =
+// "listarAniosDeUnPlan", language = "JDOQL", value = "SELECT "
+// + "FROM dom.planEstudio.Anio "
+// + "WHERE this.plan.descripcion == :descripcion") })
 @ObjectType("HORARIO_CURSO")
 @Bookmarkable
 @Bounded
-public class HorarioCurso implements Comparable<HorarioCurso>{
-	
+public class HorarioCurso implements Comparable<HorarioCurso> {
+
 	// {{ Curso (property)
 	private Curso curso;
 
@@ -52,12 +53,12 @@ public class HorarioCurso implements Comparable<HorarioCurso>{
 	public void setCurso(final Curso curso) {
 		this.curso = curso;
 	}
-	// }}
 
+	// }}
 
 	// HorarioDiaList (Collection)
 	// //////////////////////////////////////////
-	
+
 	@Persistent(mappedBy = "horarioCurso", dependentElement = "true")
 	@Join
 	private SortedSet<HorarioDia> horarioDiaList = new TreeSet<HorarioDia>();
@@ -71,6 +72,7 @@ public class HorarioCurso implements Comparable<HorarioCurso>{
 	public void setHorarioDiaList(final SortedSet<HorarioDia> horarioDiaList) {
 		this.horarioDiaList = horarioDiaList;
 	}
+
 	// end region HorarioDiaList (Collection)
 
 	@Override
@@ -78,8 +80,8 @@ public class HorarioCurso implements Comparable<HorarioCurso>{
 		return ObjectContracts.compare(this, o, "curso");
 	}
 
-	
-	
+	public String title() {
+		return "Horario de " + getCurso().title();
+	}
 
 }
-
