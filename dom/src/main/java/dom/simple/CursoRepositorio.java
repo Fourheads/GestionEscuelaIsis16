@@ -12,6 +12,8 @@ import org.apache.isis.applib.query.QueryDefault;
 
 import dom.horario.HorarioCurso;
 import dom.horario.HorarioCursoRepositorio;
+import dom.horario.HorarioCursoService;
+import dom.horario.HorarioCursoView;
 import dom.planEstudio.Anio;
 import dom.planEstudio.AnioRepositorio;
 import dom.planEstudio.Materia;
@@ -218,6 +220,35 @@ public class CursoRepositorio {
 
 	// endregion
 
+	
+	// {{ verHorarioDelCurso (action)
+	@MemberOrder(sequence = "10")
+	public HorarioCursoView verHorarioDelCurso(Plan plan, Curso curso) {
+		return horarioCursoService.verHorarioDeCurso(curso);
+	}
+
+	public List<Plan> choices0VerHorarioDelCurso() {
+
+		return planRepositorio.queryListarPlanesAlfabeticamente();
+	}
+
+	public Plan default0VerHorarioDelCurso() {
+		if (choices0VerHorarioDelCurso().isEmpty()) {
+			return null;
+		}
+
+		return choices0VerHorarioDelCurso().get(0);
+	}
+
+	public List<Curso> choices1VerHorarioDelCurso(Plan plan, Curso curso) {
+		return container.allMatches(new QueryDefault<Curso>(Curso.class,
+				"listarCursosDeUnPlan", "plan", plan.getDescripcion()));
+	}
+	// }}
+
+
+	
+	
 	// region > injected services
 	// //////////////////////////////////////
 
@@ -235,6 +266,8 @@ public class CursoRepositorio {
 	HorarioCursoRepositorio horarioCursoRepositorio;
 	@javax.inject.Inject
 	AnioRepositorio anioRepositorio;
+	@javax.inject.Inject
+	HorarioCursoService horarioCursoService;
 	// endregion
 
 }
