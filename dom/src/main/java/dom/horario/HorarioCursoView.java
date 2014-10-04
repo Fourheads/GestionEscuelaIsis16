@@ -2,6 +2,8 @@ package dom.horario;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import javax.jdo.annotations.Column;
 import javax.jdo.annotations.Element;
@@ -93,6 +95,26 @@ public class HorarioCursoView extends AbstractViewModel{
 	// }}
 
 
+	// {{ CollectionName (Collection Property)
+	// //////////////////////////////////////////
+	
+	@Join
+	@Element(dependent = "true")
+	private SortedSet<HorarioHoraSemanaView> horarioHoraSemanaViewList = new TreeSet<HorarioHoraSemanaView>();
+
+	@Render(Type.EAGERLY)
+	@MemberOrder(sequence = "1")
+	public SortedSet<HorarioHoraSemanaView> getCollectionName() {
+		return horarioHoraSemanaViewList;
+	}
+
+	public void setCollectionName(final SortedSet<HorarioHoraSemanaView> horarioHoraSemanaViewList) {
+		this.horarioHoraSemanaViewList = horarioHoraSemanaViewList;
+	}
+
+	// }} (end region)
+	// //////////////////////////////////////
+	
 
 	@javax.inject.Inject
 	MementoService mementoService;
