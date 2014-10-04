@@ -40,6 +40,8 @@ public class HorarioCursoView extends AbstractViewModel{
 		setAnio(anio);
 		String division = memento.get("division", String.class);  
 		setDivision(division);
+		List<HorarioHoraSemanaView> viewList = horarioHoraSemanaService.crearHorarioHoraSemanaViewList();
+		setHorarioHoraSemanaViewList(viewList);
 		
 		
 	}
@@ -95,20 +97,20 @@ public class HorarioCursoView extends AbstractViewModel{
 	// }}
 
 
-	// {{ CollectionName (Collection Property)
+	// {{ HorarioHoraSemanaViewList (Collection Property)
 	// //////////////////////////////////////////
 	
 	@Join
 	@Element(dependent = "true")
-	private SortedSet<HorarioHoraSemanaView> horarioHoraSemanaViewList = new TreeSet<HorarioHoraSemanaView>();
+	private List<HorarioHoraSemanaView> horarioHoraSemanaViewList = new ArrayList<HorarioHoraSemanaView>();
 
 	@Render(Type.EAGERLY)
 	@MemberOrder(sequence = "1")
-	public SortedSet<HorarioHoraSemanaView> getCollectionName() {
+	public List<HorarioHoraSemanaView> getHorarioHoraSemanaViewList() {
 		return horarioHoraSemanaViewList;
 	}
 
-	public void setCollectionName(final SortedSet<HorarioHoraSemanaView> horarioHoraSemanaViewList) {
+	public void setHorarioHoraSemanaViewList(final List<HorarioHoraSemanaView> horarioHoraSemanaViewList) {
 		this.horarioHoraSemanaViewList = horarioHoraSemanaViewList;
 	}
 
@@ -118,6 +120,8 @@ public class HorarioCursoView extends AbstractViewModel{
 
 	@javax.inject.Inject
 	MementoService mementoService;
+	@javax.inject.Inject
+	HorarioHoraSemanaService horarioHoraSemanaService;
 
 	
 }
