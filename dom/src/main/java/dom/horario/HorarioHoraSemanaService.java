@@ -7,22 +7,45 @@ import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.Hidden;
 import org.apache.isis.applib.services.memento.MementoService;
+import org.apache.isis.applib.services.memento.MementoService.Memento;
 
 @DomainService
 @Hidden
 public class HorarioHoraSemanaService {
 
-	public HorarioHoraSemanaView crearHorarioHoraSemanaView(int i) {
-		return container.newViewModelInstance(HorarioHoraSemanaView.class, String.valueOf(i));
+	public HorarioHoraSemanaView crearHorarioHoraSemanaView(String inicioFin,
+			String lunes, String martes, String miercoles, String jueves,
+			String viernes) {
+
+		Memento memento = mementoService.create();
+
+		memento.set("inicioFin", inicioFin);
+		memento.set("lunes", lunes);
+		memento.set("martes", martes);
+		memento.set("miercoles", miercoles);
+		memento.set("jueves", jueves);
+		memento.set("viernes", viernes);
+
+		return container.newViewModelInstance(HorarioHoraSemanaView.class,
+				memento.asString());
 
 	}
 
-	public List<HorarioHoraSemanaView> crearHorarioHoraSemanaViewList() {
+	public List<HorarioHoraSemanaView> crearHorarioHoraSemanaViewList(
+			String plan, int anio, String division) {
 
 		List<HorarioHoraSemanaView> viewList = new ArrayList<HorarioHoraSemanaView>();
 
+		String inicioFin = "8:00 a 8:40";
+		String lunes = "";
+		String martes = "";
+		String miercoles = "";
+		String jueves = "";
+		String viernes = "";
+
 		for (int i = 0; i < 10; i++) {
-			viewList.add(crearHorarioHoraSemanaView(i));
+			viewList.add(crearHorarioHoraSemanaView(inicioFin, lunes, martes,
+					miercoles, jueves, viernes));
 		}
 
 		return viewList;

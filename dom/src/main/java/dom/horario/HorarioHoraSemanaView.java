@@ -4,6 +4,8 @@ import javax.jdo.annotations.Column;
 
 import org.apache.isis.applib.AbstractViewModel;
 import org.apache.isis.applib.annotation.MemberOrder;
+import org.apache.isis.applib.services.memento.MementoService;
+import org.apache.isis.applib.services.memento.MementoService.Memento;
 import org.w3c.dom.views.AbstractView;
 
 public class HorarioHoraSemanaView extends AbstractViewModel{
@@ -16,8 +18,18 @@ public class HorarioHoraSemanaView extends AbstractViewModel{
 	}
 
 	@Override
-	public void viewModelInit(String memento) {
-		this.memento = memento;
+	public void viewModelInit(String mementoString) {
+		this.memento = mementoString;
+		
+		Memento memento = mementoService.parse(mementoString);
+		
+		setInicioFin(memento.get("inicioFin", String.class));
+		setLunes(memento.get("lunes", String.class));
+		setMartes(memento.get("martes", String.class));
+		setMiercoles(memento.get("miercoles", String.class));
+		setJueves(memento.get("jueves", String.class));
+		setViernes(memento.get("viernes", String.class));
+		
 	}
 
 	
@@ -105,6 +117,7 @@ public class HorarioHoraSemanaView extends AbstractViewModel{
 	}
 	// }}
 
-
+	@javax.inject.Inject
+	MementoService mementoService;
 	
 }

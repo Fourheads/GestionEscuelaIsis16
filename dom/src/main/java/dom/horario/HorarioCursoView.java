@@ -40,7 +40,7 @@ public class HorarioCursoView extends AbstractViewModel{
 		setAnio(anio);
 		String division = memento.get("division", String.class);  
 		setDivision(division);
-		List<HorarioHoraSemanaView> viewList = horarioHoraSemanaService.crearHorarioHoraSemanaViewList();
+		List<HorarioHoraSemanaView> viewList = horarioHoraSemanaService.crearHorarioHoraSemanaViewList(plan, anio, division);
 		setHorarioHoraSemanaViewList(viewList);
 		
 		
