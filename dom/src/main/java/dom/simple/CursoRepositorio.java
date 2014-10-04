@@ -66,12 +66,13 @@ public class CursoRepositorio {
 
 		List<Curso> listadoCursos = container
 				.allMatches(new QueryDefault<Curso>(Curso.class,
-						"listarCursosDeUnAnio", "plan", plan.getDescripcion(),
-						"anio", anio.getAnioNumero()));
+						"listarCursosDeUnAnio", "plan", plan.getDescripcion(), 
+						"anio",	anio.getAnioNumero()
+						));
 
 		for (Curso curso : listadoCursos) {
-			if (curso.getDivision() == division) {
-				return "Ya existe un curso con esa división";
+			if (curso.getDivision().equals(division)) {
+				return "Ya existe un curso con esa división en ese año";
 			}
 		}
 
