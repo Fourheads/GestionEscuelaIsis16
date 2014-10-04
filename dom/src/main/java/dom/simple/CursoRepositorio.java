@@ -56,9 +56,26 @@ public class CursoRepositorio {
 
 		return choices0CrearCurso().get(0);
 	}
-	
+
 	public List<Anio> choices1CrearCurso(Plan plan) {
 		return anioRepositorio.listarAniosDeUnPlan(plan);
+	}
+
+	public String validateCrearCurso(Plan plan, Anio anio,
+			@Named("División") String division, @Named("Turno") Turno turno) {
+
+		List<Curso> listadoCursos = container
+				.allMatches(new QueryDefault<Curso>(Curso.class,
+						"listarCursosDeUnAnio", "plan", plan.getDescripcion(),
+						"anio", anio.getAnioNumero()));
+
+		for (Curso curso : listadoCursos) {
+			if (curso.getDivision() == division) {
+				return "Ya existe un curso con esa división";
+			}
+		}
+
+		return null;
 	}
 
 	// {{ listarCursosDeUnPlan (action)
@@ -132,7 +149,7 @@ public class CursoRepositorio {
 		return container.allMatches(new QueryDefault<Curso>(Curso.class,
 				"listarCursosDeUnPlan", "plan", plan.getDescripcion()));
 	}
-		
+
 	// }}
 
 	// region > Asignar profesor a materia (accion)
@@ -220,7 +237,6 @@ public class CursoRepositorio {
 
 	// endregion
 
-	
 	// {{ verHorarioDelCurso (action)
 	@MemberOrder(sequence = "10")
 	public HorarioCursoView verHorarioDelCurso(Plan plan, Curso curso) {
@@ -244,11 +260,9 @@ public class CursoRepositorio {
 		return container.allMatches(new QueryDefault<Curso>(Curso.class,
 				"listarCursosDeUnPlan", "plan", plan.getDescripcion()));
 	}
+
 	// }}
 
-
-	
-	
 	// region > injected services
 	// //////////////////////////////////////
 
