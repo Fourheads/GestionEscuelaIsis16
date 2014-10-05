@@ -142,11 +142,6 @@ public class HorarioCursoView extends AbstractViewModel {
 			final @Named("Día") HorarioDia dia) {
 		if (dia != null) {
 			List<HorarioHora> listaHoras = dia.getHorarioHoraList();
-			for (HorarioHora horarioHora : listaHoras) {
-				if (horarioHora.getHorarioHoraTipo() != E_HorarioHoraTipo.HORA_CATEDRA) {
-					listaHoras.remove(horarioHora);
-				}
-			}
 			return listaHoras;
 		}
 		return null;
@@ -185,11 +180,7 @@ public class HorarioCursoView extends AbstractViewModel {
 			final @Named("Día") HorarioDia dia) {
 		if (dia != null) {
 			List<HorarioHora> listaHoras = dia.getHorarioHoraList();
-			for (HorarioHora horarioHora : listaHoras) {
-				if (horarioHora.getHorarioHoraTipo() != E_HorarioHoraTipo.HORA_CATEDRA) {
-					listaHoras.remove(horarioHora);
-				}
-			}
+			
 			return listaHoras;
 		}
 		return null;
