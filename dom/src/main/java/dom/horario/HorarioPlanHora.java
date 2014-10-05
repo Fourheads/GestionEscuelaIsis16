@@ -17,7 +17,8 @@ import org.apache.isis.applib.annotation.ObjectType;
 	@javax.jdo.annotations.Query(name = "listarHorasDeUnPlan", language = "JDOQL", value = "SELECT "
 			+ "FROM dom.horario.HorarioPlanHora "
 			+ "WHERE this.horarioPlan.plan.descripcion == :plan "
-			+ "&& this.tipoHoraPlan == 'HORA_CATEDRA'") })
+			+ "&& this.tipoHoraPlan == 'HORA_CATEDRA' "
+			+ "ORDER BY this.horaInicio.hora asc, this.horaFin.hora asc") })
 @ObjectType("HORARIO_PLAN_HORA")
 @Bookmarkable
 @Bounded
