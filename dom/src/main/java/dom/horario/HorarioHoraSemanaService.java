@@ -6,8 +6,11 @@ import java.util.List;
 import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.Hidden;
+import org.apache.isis.applib.query.QueryDefault;
 import org.apache.isis.applib.services.memento.MementoService;
 import org.apache.isis.applib.services.memento.MementoService.Memento;
+
+import dom.simple.Curso;
 
 @DomainService
 @Hidden
@@ -25,7 +28,7 @@ public class HorarioHoraSemanaService {
 		memento.set("miercoles", miercoles);
 		memento.set("jueves", jueves);
 		memento.set("viernes", viernes);
-
+				
 		return container.newViewModelInstance(HorarioHoraSemanaView.class,
 				memento.asString());
 
@@ -36,8 +39,14 @@ public class HorarioHoraSemanaService {
 
 		List<HorarioHoraSemanaView> viewList = new ArrayList<HorarioHoraSemanaView>();
 
+		Curso curso = container.firstMatch(new QueryDefault<Curso>(Curso.class, "buscarUnCurso",
+												"plan",plan,
+												"anio",anio,
+												"division",division));
+		
+		
 		String inicioFin = "8:00 a 8:40";
-		String lunes = "";
+		String lunes = curso.getDivision();
 		String martes = "";
 		String miercoles = "";
 		String jueves = "";
@@ -48,6 +57,8 @@ public class HorarioHoraSemanaService {
 					miercoles, jueves, viernes));
 		}
 
+		
+		
 		return viewList;
 	}
 

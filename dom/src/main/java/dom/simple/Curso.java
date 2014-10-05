@@ -58,7 +58,13 @@ import dom.simple.Funcion.E_funciones;
 				+ "FROM dom.simple.Curso "
 				+ "WHERE this.anio.plan.descripcion == :plan "
 				+ "&& this.anio.anioNumero == :anio " 
-				+ "ORDER BY this.division asc") })
+				+ "ORDER BY this.division asc"),
+		@javax.jdo.annotations.Query(name = "buscarUnCurso", language = "JDOQL", value = "SELECT "
+				+ "FROM dom.simple.Curso "
+				+ "WHERE this.anio.plan.descripcion == :plan "
+				+ "&& this.anio.anioNumero == :anio " 
+				+ "&& this.division == :division")
+		})
 @Bounded
 @PersistenceCapable
 public class Curso {
