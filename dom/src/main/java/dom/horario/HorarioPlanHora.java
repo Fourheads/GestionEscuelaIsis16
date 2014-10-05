@@ -13,10 +13,11 @@ import org.apache.isis.applib.annotation.ObjectType;
 @javax.jdo.annotations.PersistenceCapable(identityType = IdentityType.DATASTORE)
 @javax.jdo.annotations.DatastoreIdentity(strategy = javax.jdo.annotations.IdGeneratorStrategy.IDENTITY, column = "id")
 @javax.jdo.annotations.Version(strategy = VersionStrategy.VERSION_NUMBER, column = "version")
-// @javax.jdo.annotations.Queries({ @javax.jdo.annotations.Query(name =
-// "listarAniosDeUnPlan", language = "JDOQL", value = "SELECT "
-// + "FROM dom.planEstudio.Anio "
-// + "WHERE this.plan.descripcion == :descripcion") })
+@javax.jdo.annotations.Queries({ 
+	@javax.jdo.annotations.Query(name = "listarHorasDeUnPlan", language = "JDOQL", value = "SELECT "
+			+ "FROM dom.horario.HorarioPlanHora "
+			+ "WHERE this.plan.horarioPlan.plan.descripcion == :descripcion "
+			+ " ") })
 @ObjectType("HORARIO_PLAN_HORA")
 @Bookmarkable
 @Bounded

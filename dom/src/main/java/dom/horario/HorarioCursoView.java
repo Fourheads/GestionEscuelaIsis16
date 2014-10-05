@@ -11,17 +11,19 @@ import javax.jdo.annotations.Join;
 
 import org.apache.isis.applib.AbstractViewModel;
 import org.apache.isis.applib.annotation.MemberOrder;
+import org.apache.isis.applib.annotation.Named;
 import org.apache.isis.applib.annotation.Render;
 import org.apache.isis.applib.annotation.Render.Type;
 import org.apache.isis.applib.services.memento.MementoService;
 import org.apache.isis.applib.services.memento.MementoService.Memento;
 
 import dom.simple.Curso;
+import dom.simple.MateriaDelCurso;
 
-public class HorarioCursoView extends AbstractViewModel{
+public class HorarioCursoView extends AbstractViewModel {
 
 	String memento;
-	
+
 	@Override
 	public String viewModelMemento() {
 		// TODO Auto-generated method stub
@@ -31,27 +33,24 @@ public class HorarioCursoView extends AbstractViewModel{
 	@Override
 	public void viewModelInit(String mementoAsString) {
 		this.memento = mementoAsString;
-		
+
 		Memento memento = mementoService.parse(mementoAsString);
-		
-		String plan = memento.get("plan", String.class);  
+
+		String plan = memento.get("plan", String.class);
 		setPlan(plan);
-		Integer anio = memento.get("anio", Integer.class);  
+		Integer anio = memento.get("anio", Integer.class);
 		setAnio(anio);
-		String division = memento.get("division", String.class);  
+		String division = memento.get("division", String.class);
 		setDivision(division);
-		List<HorarioHoraSemanaView> viewList = horarioHoraSemanaService.crearHorarioHoraSemanaViewList(plan, anio, division);
+		List<HorarioHoraSemanaView> viewList = horarioHoraSemanaService
+				.crearHorarioHoraSemanaViewList(plan, anio, division);
 		setHorarioHoraSemanaViewList(viewList);
-		
-		
+
 	}
 
-	
-	
 	// Propiedades del ModelView
-	/////////////////////////////////////////////////////////////////////////
-	
-	
+	// ///////////////////////////////////////////////////////////////////////
+
 	// {{ Plan (property)
 	private String plan;
 
@@ -64,8 +63,8 @@ public class HorarioCursoView extends AbstractViewModel{
 	public void setPlan(final String plan) {
 		this.plan = plan;
 	}
-	// }}
 
+	// }}
 
 	// {{ Anio (property)
 	private Integer anio;
@@ -79,8 +78,8 @@ public class HorarioCursoView extends AbstractViewModel{
 	public void setAnio(final Integer anio) {
 		this.anio = anio;
 	}
-	// }}
 
+	// }}
 
 	// {{ Division (property)
 	private String division;
@@ -94,12 +93,12 @@ public class HorarioCursoView extends AbstractViewModel{
 	public void setDivision(final String division) {
 		this.division = division;
 	}
-	// }}
 
+	// }}
 
 	// {{ HorarioHoraSemanaViewList (Collection Property)
 	// //////////////////////////////////////////
-	
+
 	@Join
 	@Element(dependent = "true")
 	private List<HorarioHoraSemanaView> horarioHoraSemanaViewList = new ArrayList<HorarioHoraSemanaView>();
@@ -110,18 +109,32 @@ public class HorarioCursoView extends AbstractViewModel{
 		return horarioHoraSemanaViewList;
 	}
 
-	public void setHorarioHoraSemanaViewList(final List<HorarioHoraSemanaView> horarioHoraSemanaViewList) {
+	public void setHorarioHoraSemanaViewList(
+			final List<HorarioHoraSemanaView> horarioHoraSemanaViewList) {
 		this.horarioHoraSemanaViewList = horarioHoraSemanaViewList;
 	}
 
+	// {{ asignarMateria (action)
+	@MemberOrder(sequence = "1")
+	public HorarioCursoView asignarMateria(final E_HorarioDiaSemana dia, @Named("Hora") HorarioPlanHora hora, MateriaDelCurso materia) {
+		return null; 
+	}
+	
+	public List<HorarioPlanHora> choices1AsignarMateria(){
+		
+		return null;
+	}
+	
+	// }}
+
+
+	
 	// }} (end region)
 	// //////////////////////////////////////
-	
 
 	@javax.inject.Inject
 	MementoService mementoService;
 	@javax.inject.Inject
 	HorarioHoraSemanaService horarioHoraSemanaService;
 
-	
 }
