@@ -10,13 +10,16 @@ import javax.jdo.annotations.Element;
 import javax.jdo.annotations.Join;
 
 import org.apache.isis.applib.AbstractViewModel;
+import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Named;
 import org.apache.isis.applib.annotation.Render;
 import org.apache.isis.applib.annotation.Render.Type;
+import org.apache.isis.applib.query.QueryDefault;
 import org.apache.isis.applib.services.memento.MementoService;
 import org.apache.isis.applib.services.memento.MementoService.Memento;
 
+import dom.simple.Alumno;
 import dom.simple.Curso;
 import dom.simple.MateriaDelCurso;
 
@@ -116,14 +119,25 @@ public class HorarioCursoView extends AbstractViewModel {
 
 	// {{ asignarMateria (action)
 	@MemberOrder(sequence = "1")
-	public HorarioCursoView asignarMateria(final E_HorarioDiaSemana dia, @Named("Hora") HorarioPlanHora hora, MateriaDelCurso materia) {
-		return null; 
+	public HorarioCursoView asignarMateria(	final @Named("Día")E_HorarioDiaSemana dia, 
+											final @Named("Hora") HorarioPlanHora hora, 
+											final @Named("Materia")MateriaDelCurso materia) {
+		return this; 
 	}
 	
 	public List<HorarioPlanHora> choices1AsignarMateria(){
 		
-		return null;
+		return container.allMatches(new QueryDefault<HorarioPlanHora>(HorarioPlanHora.class,
+				"listarHorasDeUnPlan", "plan", getPlan()));
 	}
+	
+	public List<MateriaDelCurso> choices2AsignarMateria(){
+		return container.allMatches(new QueryDefault<MateriaDelCurso>(MateriaDelCurso.class, "MateriaDelCursoDeUnCurso", 
+				"plan", getPlan(),
+				"anio", getAnio(),
+				"division", getDivision()));
+	}
+	
 	
 	// }}
 
@@ -136,5 +150,7 @@ public class HorarioCursoView extends AbstractViewModel {
 	MementoService mementoService;
 	@javax.inject.Inject
 	HorarioHoraSemanaService horarioHoraSemanaService;
+	@javax.inject.Inject
+	DomainObjectContainer container;
 
 }
