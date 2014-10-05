@@ -47,46 +47,44 @@ public class HorarioHoraSemanaService {
 		List<HorarioPlanHora> listadoHoras = curso.getAnio().getPlan()
 				.getHorarioPlan().getHorarioPlanHoraList();
 
-		SortedSet<HorarioDia> listadoDias = curso.getHorarioCurso()
-				.getHorarioDiaList();
-
 		for (HorarioPlanHora horarioPlanHora : listadoHoras) {
-
-			int index = listadoHoras.indexOf(horarioPlanHora);
 
 			String inicioFin = horarioPlanHora.title();
 
-			String lunes = "";
+			String[] dia = new String[5];
+			E_HorarioDiaSemana[] diaNombre = { E_HorarioDiaSemana.LUNES,
+					E_HorarioDiaSemana.MARTES, E_HorarioDiaSemana.MIERCOLES,
+					E_HorarioDiaSemana.JUEVES, E_HorarioDiaSemana.VIERNES };
 
 			SortedSet<HorarioDia> listadoHorasDia = curso.getHorarioCurso()
 					.getHorarioDiaList();
 
-			for (HorarioDia horarioDia : listadoHorasDia) {
-				if (horarioDia.getDiaDeLaSemana().equals(
-						E_HorarioDiaSemana.LUNES)) {
-					List<HorarioHora> horarioHoraList = horarioDia
-							.getHorarioHoraList();
-					for (HorarioHora horarioHora : horarioHoraList) {
-						HorarioPlanHora planHora = horarioHora
-								.getHorarioPlanHora(); // esta pertenece al
-														// listado de horas del
-														// Dia
-						if (horarioPlanHora == planHora
-								&& horarioHora.getMateriaDelCurso() != null) {
-							lunes = horarioHora.getMateriaDelCurso()
-									.getMateria().getNombre();
+			for (int diaNumero = 0; diaNumero < 5; diaNumero++) {
+				for (HorarioDia horarioDia : listadoHorasDia) {
+					if (horarioDia.getDiaDeLaSemana().equals(
+							diaNombre[diaNumero])) {
+						List<HorarioHora> horarioHoraList = horarioDia
+								.getHorarioHoraList();
+						for (HorarioHora horarioHora : horarioHoraList) {
+							HorarioPlanHora planHora = horarioHora
+									.getHorarioPlanHora(); // esta pertenece al
+															// listado de horas
+															// del
+															// Dia
+							if (horarioPlanHora == planHora
+									&& horarioHora.getMateriaDelCurso() != null) {
+								dia[diaNumero] = horarioHora
+										.getMateriaDelCurso().getMateria()
+										.getNombre();
+							}
 						}
 					}
 				}
+
 			}
 
-			String martes = "";
-			String miercoles = "";
-			String jueves = "";
-			String viernes = "";
-
-			viewList.add(crearHorarioHoraSemanaView(inicioFin, lunes, martes,
-					miercoles, jueves, viernes));
+			viewList.add(crearHorarioHoraSemanaView(inicioFin, dia[0], dia[1],
+					dia[2], dia[3], dia[4]));
 		}
 
 		return viewList;
