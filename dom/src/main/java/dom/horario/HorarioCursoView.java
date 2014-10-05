@@ -118,11 +118,14 @@ public class HorarioCursoView extends AbstractViewModel {
 	}
 
 	// {{ asignarMateria (action)
+	// ////////////////////////////////////////////
+
 	@MemberOrder(sequence = "1")
 	public HorarioCursoView asignarMateria(final @Named("Día") HorarioDia dia,
 			final @Named("Hora") HorarioHora hora,
 			final @Named("Materia") MateriaDelCurso materia) {
 
+		hora.setMateriaDelCurso(materia);
 		return this;
 	}
 
@@ -138,19 +141,61 @@ public class HorarioCursoView extends AbstractViewModel {
 	public List<HorarioHora> choices1AsignarMateria(
 			final @Named("Día") HorarioDia dia) {
 		if (dia != null) {
-			return dia.getHorarioHoraList();
+			List<HorarioHora> listaHoras = dia.getHorarioHoraList();
+			for (HorarioHora horarioHora : listaHoras) {
+				if (horarioHora.getHorarioHoraTipo() != E_HorarioHoraTipo.HORA_CATEDRA) {
+					listaHoras.remove(horarioHora);
+				}
+			}
+			return listaHoras;
 		}
 		return null;
 	}
 
 	public List<MateriaDelCurso> choices2AsignarMateria() {
+
 		return container.allMatches(new QueryDefault<MateriaDelCurso>(
 				MateriaDelCurso.class, "MateriaDelCursoDeUnCurso", "plan",
 				getPlan(), "anio", getAnio(), "division", getDivision()));
 	}
 
-	// }}
+	// }} endregion> asignarMateria
 
+	// {{ quitarMateria (action)
+	// ////////////////////////////////////////////
+
+	@MemberOrder(sequence = "1")
+	public HorarioCursoView quitarMateria(final @Named("Día") HorarioDia dia,
+			final @Named("Hora") HorarioHora hora) {
+
+		hora.setMateriaDelCurso(null);
+		return this;
+	}
+
+	public SortedSet<HorarioDia> choices0QuitarMateria() {
+
+		Curso curso = container.firstMatch(new QueryDefault<Curso>(Curso.class,
+				"buscarUnCurso", "plan", plan, "anio", anio, "division",
+				division));
+
+		return curso.getHorarioCurso().getHorarioDiaList();
+	}
+
+	public List<HorarioHora> choices1QuitarMateria(
+			final @Named("Día") HorarioDia dia) {
+		if (dia != null) {
+			List<HorarioHora> listaHoras = dia.getHorarioHoraList();
+			for (HorarioHora horarioHora : listaHoras) {
+				if (horarioHora.getHorarioHoraTipo() != E_HorarioHoraTipo.HORA_CATEDRA) {
+					listaHoras.remove(horarioHora);
+				}
+			}
+			return listaHoras;
+		}
+		return null;
+	}
+	
+	
 	// }} (end region)
 	// //////////////////////////////////////
 
