@@ -86,4 +86,10 @@ public class HorarioPlanHora {
 		return getHoraInicio().title() + " a " + getHoraFin().title();
 	}
 
+	@Override
+	public String toString() {
+		return horaInicio + " a " + horaFin ;
+	}
+
+	
 }
