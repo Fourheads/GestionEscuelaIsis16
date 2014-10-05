@@ -119,45 +119,38 @@ public class HorarioCursoView extends AbstractViewModel {
 
 	// {{ asignarMateria (action)
 	@MemberOrder(sequence = "1")
-	public HorarioCursoView asignarMateria(	final @Named("Día")HorarioDia dia, 
-											final @Named("Hora") HorarioHora hora, 
-											final @Named("Materia")MateriaDelCurso materia) {
-		
-		
-		
-		return this; 
+	public HorarioCursoView asignarMateria(final @Named("Día") HorarioDia dia,
+			final @Named("Hora") HorarioHora hora,
+			final @Named("Materia") MateriaDelCurso materia) {
+
+		return this;
 	}
-	
-	public SortedSet<HorarioDia> choices0AsignarMateria(){
-		
+
+	public SortedSet<HorarioDia> choices0AsignarMateria() {
+
 		Curso curso = container.firstMatch(new QueryDefault<Curso>(Curso.class,
 				"buscarUnCurso", "plan", plan, "anio", anio, "division",
 				division));
-		
+
 		return curso.getHorarioCurso().getHorarioDiaList();
 	}
-	
-	
-	
-	
-	
-	public List<HorarioHora> choices1AsignarMateria(){
-		
+
+	public List<HorarioHora> choices1AsignarMateria(
+			final @Named("Día") HorarioDia dia) {
+		if (dia != null) {
+			return dia.getHorarioHoraList();
+		}
 		return null;
 	}
-	
-	public List<MateriaDelCurso> choices2AsignarMateria(){
-		return container.allMatches(new QueryDefault<MateriaDelCurso>(MateriaDelCurso.class, "MateriaDelCursoDeUnCurso", 
-				"plan", getPlan(),
-				"anio", getAnio(),
-				"division", getDivision()));
+
+	public List<MateriaDelCurso> choices2AsignarMateria() {
+		return container.allMatches(new QueryDefault<MateriaDelCurso>(
+				MateriaDelCurso.class, "MateriaDelCursoDeUnCurso", "plan",
+				getPlan(), "anio", getAnio(), "division", getDivision()));
 	}
-	
-	
+
 	// }}
 
-
-	
 	// }} (end region)
 	// //////////////////////////////////////
 

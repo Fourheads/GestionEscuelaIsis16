@@ -91,7 +91,7 @@ public class HorarioHora {
 	// }}
 	
 	public String title(){
-		return getHorarioHoraTipo().toString();
+		return getHorarioPlanHora().title();
 	}
 
 
