@@ -110,7 +110,7 @@ public class HorarioDia implements Comparable<HorarioDia>{
 	}
 
 	public String title(){
-		return "Horario del " + getDiaDeLaSemana()+ " " + getHorarioCurso().getCurso().title();
+		return getDiaDeLaSemana()+ " [" + getHorarioCurso().getCurso().title()+ "]";
 	}
 
 }

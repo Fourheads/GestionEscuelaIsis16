@@ -86,7 +86,7 @@ public class Curso {
 	// }}
 	public String title() {
 		String titulo = getAnio().getAnioNumero() + "° " + getDivision() 
-				+ " (" + getAnio().getPlan().getDescripcion() + ") Turno " + getTurno();
+				+ " - " + getAnio().getPlan().getDescripcion() + " T." + getTurno().toString().substring(0, 1) + ".";
 		return titulo;
 	}
 
