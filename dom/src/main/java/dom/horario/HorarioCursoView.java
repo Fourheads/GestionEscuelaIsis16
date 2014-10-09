@@ -142,18 +142,15 @@ public class HorarioCursoView extends AbstractViewModel {
 			final @Named("Día") HorarioDia dia) {
 		if (dia != null) {
 			List<HorarioHora> listaHoras = dia.getHorarioHoraList();
-			
+
 			List<HorarioHora> listaHorasFiltrada = new ArrayList<HorarioHora>();
-			for (HorarioHora horarioHora : listaHoras){
-				if (horarioHora.getHorarioHoraTipo() == E_HorarioHoraTipo.HORA_CATEDRA 
-						&& horarioHora.getMateriaDelCurso() == null ){
+			for (HorarioHora horarioHora : listaHoras) {
+				if (horarioHora.getHorarioHoraTipo() == E_HorarioHoraTipo.HORA_CATEDRA
+						&& horarioHora.getMateriaDelCurso() == null) {
 					listaHorasFiltrada.add(horarioHora);
 				}
 			}
-			
-			
-			
-			
+
 			return listaHorasFiltrada;
 		}
 		return null;
@@ -192,13 +189,19 @@ public class HorarioCursoView extends AbstractViewModel {
 			final @Named("Día") HorarioDia dia) {
 		if (dia != null) {
 			List<HorarioHora> listaHoras = dia.getHorarioHoraList();
-			
-			return listaHoras;
+
+			List<HorarioHora> listaHorasFiltrada = new ArrayList<HorarioHora>();
+			for (HorarioHora horarioHora : listaHoras) {
+				if (horarioHora.getHorarioHoraTipo() == E_HorarioHoraTipo.HORA_CATEDRA
+						&& horarioHora.getMateriaDelCurso() != null) {
+					listaHorasFiltrada.add(horarioHora);
+				}
+			}
+			return listaHorasFiltrada;
 		}
 		return null;
 	}
-	
-	
+
 	// }} (end region)
 	// //////////////////////////////////////
 
