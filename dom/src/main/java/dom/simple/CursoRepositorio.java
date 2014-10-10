@@ -17,6 +17,7 @@ import dom.horario.HorarioCurso;
 import dom.horario.HorarioCursoRepositorio;
 import dom.horario.HorarioCursoService;
 import dom.horario.HorarioCursoView;
+import dom.libroDiario.LibroDiarioRepositorio;
 import dom.planEstudio.Anio;
 import dom.planEstudio.AnioRepositorio;
 import dom.planEstudio.Materia;
@@ -42,8 +43,11 @@ public class CursoRepositorio {
 			materiaDelCursoRepositorio.crearMateriaDelCurso(curso, materia);
 		}
 		curso.setHorarioCurso(horarioCursoRepositorio.crearHorarioCurso(curso));
-
+				
 		container.persistIfNotAlready(curso);
+		
+		libroDiarioRepositorio.crearLibroDiario(curso);
+		
 		return curso;
 	}
 
@@ -325,6 +329,8 @@ public class CursoRepositorio {
 	AnioRepositorio anioRepositorio;
 	@javax.inject.Inject
 	HorarioCursoService horarioCursoService;
+	@javax.inject.Inject
+	LibroDiarioRepositorio libroDiarioRepositorio;
 	// endregion
 
 }
