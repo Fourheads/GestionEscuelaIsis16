@@ -160,6 +160,7 @@ public class CursoRepositorio {
 	// //////////////////////////////////////
 
 	@MemberOrder(sequence = "3")
+	@NotContributed
 	public Curso asignarPreceptorAlCurso(@Named("Plan") final Plan plan,
 			@Named("Curso") final Curso curso,
 			@Named("Profesor") final Personal preceptor) {

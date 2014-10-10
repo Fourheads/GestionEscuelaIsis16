@@ -219,8 +219,36 @@ public class Curso {
 	public void setPreceptor(Personal Preceptor) {
 		this.preceptor = Preceptor;
 	}
+	
+	// {{ asignarPreceptor (action) Desde un curso
+	@MemberOrder(sequence = "1", name = "preceptor")
+	public Curso asignarPreceptor(final Personal preceptor) {
+		this.setPreceptor(preceptor);
+		return this;
+	}
+	
+	public List<Personal> choices0AsignarPreceptor() {
+		return personalRepositorio
+				.listarPersonalSegunFuncion(E_funciones.PRECEPTOR);
+	}
+	
+	// }} 
+
+	// {{ quitarPreceptor (action)
+	@MemberOrder(sequence = "2", name = "preceptor")
+	public Curso quitarPreceptor(@Named("¿Está seguro?") Boolean seguro) {
+		this.setPreceptor(null);
+		return this; 
+	}
+	// }}
+
+
+	
 
 	@javax.inject.Inject
 	DomainObjectContainer container;
-
+	@javax.inject.Inject
+	CursoRepositorio cursoRepositorio;
+	@javax.inject.Inject
+	PersonalRepositorio personalRepositorio;
 }
