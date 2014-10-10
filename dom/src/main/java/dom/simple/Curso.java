@@ -36,6 +36,7 @@ import javax.jdo.annotations.Persistent;
 import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.annotation.Bounded;
 import org.apache.isis.applib.annotation.Hidden;
+import org.apache.isis.applib.annotation.MemberGroupLayout;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Named;
 import org.apache.isis.applib.annotation.Render;
@@ -57,16 +58,16 @@ import dom.simple.Funcion.E_funciones;
 		@javax.jdo.annotations.Query(name = "listarCursosDeUnAnio", language = "JDOQL", value = "SELECT "
 				+ "FROM dom.simple.Curso "
 				+ "WHERE this.anio.plan.descripcion == :plan "
-				+ "&& this.anio.anioNumero == :anio " 
+				+ "&& this.anio.anioNumero == :anio "
 				+ "ORDER BY this.division asc"),
 		@javax.jdo.annotations.Query(name = "buscarUnCurso", language = "JDOQL", value = "SELECT "
 				+ "FROM dom.simple.Curso "
 				+ "WHERE this.anio.plan.descripcion == :plan "
-				+ "&& this.anio.anioNumero == :anio " 
-				+ "&& this.division == :division")
-		})
+				+ "&& this.anio.anioNumero == :anio "
+				+ "&& this.division == :division") })
 @Bounded
 @PersistenceCapable
+@MemberGroupLayout(columnSpans = { 4, 0, 0, 8 }, left = "Datos Del Curso")
 public class Curso {
 
 	// {{ Division (property)
@@ -74,7 +75,7 @@ public class Curso {
 
 	@Persistent
 	@Column(allowsNull = "true")
-	@MemberOrder(sequence = "1.2")
+	@MemberOrder(sequence = "1.2", name = "Datos Del Curso")
 	public String getDivision() {
 		return division;
 	}
@@ -85,8 +86,9 @@ public class Curso {
 
 	// }}
 	public String title() {
-		String titulo = getAnio().getAnioNumero() + "° " + getDivision() 
-				+ " - " + getAnio().getPlan().getDescripcion() + " T." + getTurno().toString().substring(0, 1) + ".";
+		String titulo = getAnio().getAnioNumero() + "° " + getDivision()
+				+ " - " + getAnio().getPlan().getDescripcion() + " T."
+				+ getTurno().toString().substring(0, 1) + ".";
 		return titulo;
 	}
 
@@ -96,7 +98,7 @@ public class Curso {
 	@Persistent
 	// @Title
 	@Column(allowsNull = "true")
-	@MemberOrder(sequence = "1.3")
+	@MemberOrder(sequence = "1.3", name = "Datos Del Curso")
 	public Turno getTurno() {
 		return turno;
 	}
@@ -110,7 +112,7 @@ public class Curso {
 	// {{ Anio (property)
 	private Anio anio;
 
-	@MemberOrder(sequence = "1")
+	@MemberOrder(sequence = "1", name = "Datos Del Curso")
 	@Column(allowsNull = "true")
 	public Anio getAnio() {
 		return anio;
@@ -133,9 +135,8 @@ public class Curso {
 	public void setHorarioCurso(final HorarioCurso horarioCurso) {
 		this.horarioCurso = horarioCurso;
 	}
+
 	// }}
-
-
 
 	// {{ Alumnos (Property)
 	@Join
@@ -144,12 +145,13 @@ public class Curso {
 
 	@Render(Type.EAGERLY)
 	@MemberOrder(sequence = "1.5")
+	@Named("Listado de Alumnos")
 	public SortedSet<Alumno> getAlumnos() {
 		return ListaAlumno;
 	}
 
-	public void setAlumnos(final SortedSet<Alumno> listaalumno) {
-		this.ListaAlumno = listaalumno;
+	public void setAlumnos(final SortedSet<Alumno> listaAlumno) {
+		this.ListaAlumno = listaAlumno;
 	}
 
 	// MateriaDelCursoList (Collection)
@@ -159,8 +161,9 @@ public class Curso {
 	@Join
 	private List<MateriaDelCurso> materiaDelCursoList = new ArrayList<MateriaDelCurso>();
 
-	@MemberOrder(sequence = "1")
+	@MemberOrder(sequence = "2")
 	@Render(Type.EAGERLY)
+	@Named("Listado de Materias y Profesores")
 	public List<MateriaDelCurso> getMateriaDelCursoList() {
 		return materiaDelCursoList;
 	}
@@ -172,8 +175,8 @@ public class Curso {
 
 	// end region MateriaDelCursoList (Collection)
 
-	@MemberOrder(sequence = "3")
-	@Named("Asignar alumnos")
+	@MemberOrder(sequence = "3", name = "Listado de Alumnos")
+	@Named("Asignar alumnos al Curso")
 	public Curso asignarAlumnos(@Named("Alumno") Alumno alumno) {
 		this.ListaAlumno.add(alumno);
 		return this;
@@ -185,13 +188,13 @@ public class Curso {
 	}
 
 	public Alumno default0AsignarAlumnos() {
-		if (!choices0AsignarAlumnos().isEmpty()){
-		return choices0AsignarAlumnos().get(0);
+		if (!choices0AsignarAlumnos().isEmpty()) {
+			return choices0AsignarAlumnos().get(0);
 		}
 		return null;
 	}
 
-	@MemberOrder(sequence = "3.4")
+	@MemberOrder(sequence = "3.4", name = "Listado de Alumnos")
 	@Named("Quitar alumnos del curso")
 	public Curso removeAlumno(final @Named("Alumno") Alumno alumno) {
 
@@ -202,13 +205,13 @@ public class Curso {
 	public SortedSet<Alumno> choices0RemoveAlumno() {
 		return getAlumnos();
 	}
-	
+
 	// {{ Preceptor (property)
 	private Personal preceptor;
 
 	@Persistent
 	@Column(allowsNull = "true")
-	@MemberOrder(sequence = "1.6")
+	@MemberOrder(sequence = "1.6", name = "Datos Del Curso")
 	public Personal getPreceptor() {
 		return preceptor;
 	}
@@ -217,8 +220,6 @@ public class Curso {
 		this.preceptor = Preceptor;
 	}
 
-	
-	
 	@javax.inject.Inject
 	DomainObjectContainer container;
 
