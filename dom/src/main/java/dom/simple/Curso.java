@@ -67,6 +67,7 @@ import dom.simple.Funcion.E_funciones;
 				+ "WHERE this.anio.plan.descripcion == :plan "
 				+ "&& this.anio.anioNumero == :anio "
 				+ "&& this.division == :division") })
+
 @Bounded
 @PersistenceCapable
 @MemberGroupLayout(columnSpans = { 4, 0, 0, 8 }, left = { "Datos Del Curso",
