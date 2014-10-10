@@ -172,7 +172,7 @@ public class Curso {
 	// end region MateriaDelCursoList (Collection)
 
 	@MemberOrder(sequence = "3")
-	@Named("Asinganar alumnos")
+	@Named("Asignar alumnos")
 	public Curso asignarAlumnos(@Named("Alumno") Alumno alumno) {
 		this.ListaAlumno.add(alumno);
 		return this;
@@ -216,18 +216,6 @@ public class Curso {
 		this.preceptor = Preceptor;
 	}
 
-	@MemberOrder(sequence = "1.7")
-	@Named("Asinganar preceptor")
-	public void asignarPreceptor(final @Named("Preceptor") Personal prece) {
-		this.preceptor = prece;
-	}
-
-	public List<Personal> choices0AsignarPreceptor() {
-		return container.allMatches(new QueryDefault<Personal>(Personal.class,
-				"findByFuncion", "nombre", E_funciones.PRECEPTOR.toString()));
-	}
-
-	
 	
 	
 	@javax.inject.Inject

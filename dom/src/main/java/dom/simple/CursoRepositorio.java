@@ -8,6 +8,8 @@ import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.Hidden;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Named;
+import org.apache.isis.applib.annotation.NotContributed;
+import org.apache.isis.applib.annotation.NotContributed.As;
 import org.apache.isis.applib.query.QueryDefault;
 
 import dom.horario.HorarioCurso;
@@ -129,6 +131,7 @@ public class CursoRepositorio {
 
 	// {{ SeleccionarUnCurso (action)
 	@MemberOrder(sequence = "1")
+	@NotContributed
 	public Curso seleccionarUnCurso(Plan plan, Curso curso) {
 		return curso;
 	}
@@ -153,10 +156,11 @@ public class CursoRepositorio {
 
 	// }}
 
-	// region > Asignar profesor a materia (accion)
+	// region > Asignar Preceptor a Curso (accion)
 	// //////////////////////////////////////
-	@Named("Asignar Preceptor a Curso")
+	
 	@MemberOrder(sequence = "3")
+	
 	public Curso asignarPreceptorAlCurso(@Named("Plan") final Plan plan,
 			@Named("Curso") final Curso curso,
 			@Named("Profesor") final Personal preceptor) {
