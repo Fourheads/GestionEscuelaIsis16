@@ -69,9 +69,8 @@ public class CursoRepositorio {
 
 		List<Curso> listadoCursos = container
 				.allMatches(new QueryDefault<Curso>(Curso.class,
-						"listarCursosDeUnAnio", "plan", plan.getDescripcion(), 
-						"anio",	anio.getAnioNumero()
-						));
+						"listarCursosDeUnAnio", "plan", plan.getDescripcion(),
+						"anio", anio.getAnioNumero()));
 
 		for (Curso curso : listadoCursos) {
 			if (curso.getDivision().equals(division)) {
@@ -159,9 +158,8 @@ public class CursoRepositorio {
 
 	// region > Asignar Preceptor a Curso (accion)
 	// //////////////////////////////////////
-	
+
 	@MemberOrder(sequence = "3")
-	
 	public Curso asignarPreceptorAlCurso(@Named("Plan") final Plan plan,
 			@Named("Curso") final Curso curso,
 			@Named("Profesor") final Personal preceptor) {
@@ -268,42 +266,43 @@ public class CursoRepositorio {
 	}
 
 	// }}
-	
-	
 
 	// {{ eliminarCurso (action)
-		@MemberOrder(sequence = "1")
-		public String eliminarCurso(Plan plan, Curso curso, @Named("¿Esta Seguro?") Boolean seguro) {
-			
-			curso.setAlumnos(null);
-			curso.getHorarioCurso().setCurso(null);
-			for (MateriaDelCurso materiaDelCurso : curso.getMateriaDelCursoList()) {
-				materiaDelCurso.setProfesor(null);
-			}
-			
-			container.remove(curso);
-			return "El curso ha sido eliminado";
+	@MemberOrder(sequence = "1")
+	public String eliminarCurso(Plan plan, Curso curso,
+			@Named("¿Esta Seguro?") Boolean seguro) {
+
+		curso.setAlumnos(null);
+		curso.getHorarioCurso().setCurso(null);
+		for (MateriaDelCurso materiaDelCurso : curso.getMateriaDelCursoList()) {
+			materiaDelCurso.setProfesor(null);
 		}
 
-		public List<Plan> choices0EliminarCurso() {
+		container.remove(curso);
+		String anio = String.valueOf(curso.getAnio().getAnioNumero());
+		String division = curso.getDivision();
+		return "El curso " + anio + "° '" + division + "' ha sido eliminado";
+	}
 
-			return planRepositorio.queryListarPlanesAlfabeticamente();
+	public List<Plan> choices0EliminarCurso() {
+
+		return planRepositorio.queryListarPlanesAlfabeticamente();
+	}
+
+	public Plan default0EliminarCurso() {
+		if (choices0EliminarCurso().isEmpty()) {
+			return null;
 		}
 
-		public Plan default0EliminarCurso() {
-			if (choices0EliminarCurso().isEmpty()) {
-				return null;
-			}
+		return choices0EliminarCurso().get(0);
+	}
 
-			return choices0EliminarCurso().get(0);
-		}
+	public List<Curso> choices1EliminarCurso(Plan plan, Curso curso) {
+		return container.allMatches(new QueryDefault<Curso>(Curso.class,
+				"listarCursosDeUnPlan", "plan", plan.getDescripcion()));
+	}
 
-		public List<Curso> choices1EliminarCurso(Plan plan, Curso curso) {
-			return container.allMatches(new QueryDefault<Curso>(Curso.class,
-					"listarCursosDeUnPlan", "plan", plan.getDescripcion()));
-		}
-
-		// }}
+	// }}
 
 	// region > injected services
 	// //////////////////////////////////////
