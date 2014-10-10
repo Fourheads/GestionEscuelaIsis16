@@ -198,6 +198,7 @@ public class CursoRepositorio {
 	// //////////////////////////////////////
 	@Named("Asignar Profesor a Materia")
 	@MemberOrder(sequence = "4")
+	@NotContributed
 	public Curso asignarProfesorAMateriaDelCurso(
 			@Named("Plan") final Plan plan, @Named("Curso") final Curso curso,
 			@Named("Materia") final MateriaDelCurso materia,

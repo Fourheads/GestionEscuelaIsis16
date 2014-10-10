@@ -246,6 +246,47 @@ public class Curso {
 
 	// }}
 
+	// {{ asignarProfesorAMateria (action)
+	@MemberOrder(sequence = "1", name = "Listado de Materias y Profesores")
+	public Curso asignarProfesorAMateria(
+			@Named("Materia") final MateriaDelCurso materia,
+			@Named("Profesor") final Personal profesor) {
+		materia.setProfesor(profesor);
+		return this;
+	}
+
+	public List<MateriaDelCurso> choices0AsignarProfesorAMateria() {
+		return this.getMateriaDelCursoList();
+	}
+
+	public List<Personal> choices1AsignarProfesorAMateria() {
+
+		return personalRepositorio
+				.listarPersonalSegunFuncion(E_funciones.PROFESOR);
+	}
+
+	public String validateAsignarProfesorAMateria(
+			@Named("Materia") final MateriaDelCurso materia,
+			@Named("Profesor") final Personal profesor) {
+		if (materia.getProfesor() != null) {
+			return "La materia " + materia.getMateria().getNombre()
+					+ " ya tiene asignado un profesor";
+		}
+		return null;
+	}
+
+	// }}
+
+	// {{ asignarProfesorAMateria (action)
+	@MemberOrder(sequence = "2", name = "Listado de Materias y Profesores")
+	public Curso quitarProfesorDeMateria(
+			@Named("Materia") final MateriaDelCurso materia,
+			@Named("¿Está seguro?") final Boolean seguro) {
+		
+		materia.setProfesor(null);
+		return this;
+	}
+
 	@javax.inject.Inject
 	DomainObjectContainer container;
 	@javax.inject.Inject
