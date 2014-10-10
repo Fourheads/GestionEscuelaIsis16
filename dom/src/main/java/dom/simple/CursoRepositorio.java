@@ -1,5 +1,6 @@
 package dom.simple;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.SortedSet;
 
@@ -267,6 +268,42 @@ public class CursoRepositorio {
 	}
 
 	// }}
+	
+	
+
+	// {{ eliminarCurso (action)
+		@MemberOrder(sequence = "1")
+		public String eliminarCurso(Plan plan, Curso curso, @Named("¿Esta Seguro?") Boolean seguro) {
+			
+			curso.setAlumnos(null);
+			curso.getHorarioCurso().setCurso(null);
+			for (MateriaDelCurso materiaDelCurso : curso.getMateriaDelCursoList()) {
+				materiaDelCurso.setProfesor(null);
+			}
+			
+			container.remove(curso);
+			return "El curso ha sido eliminado";
+		}
+
+		public List<Plan> choices0EliminarCurso() {
+
+			return planRepositorio.queryListarPlanesAlfabeticamente();
+		}
+
+		public Plan default0EliminarCurso() {
+			if (choices0EliminarCurso().isEmpty()) {
+				return null;
+			}
+
+			return choices0EliminarCurso().get(0);
+		}
+
+		public List<Curso> choices1EliminarCurso(Plan plan, Curso curso) {
+			return container.allMatches(new QueryDefault<Curso>(Curso.class,
+					"listarCursosDeUnPlan", "plan", plan.getDescripcion()));
+		}
+
+		// }}
 
 	// region > injected services
 	// //////////////////////////////////////
