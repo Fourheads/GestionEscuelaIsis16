@@ -42,7 +42,9 @@ import org.apache.isis.applib.annotation.Named;
 import org.apache.isis.applib.annotation.Render;
 import org.apache.isis.applib.annotation.Render.Type;
 import org.apache.isis.applib.query.QueryDefault;
+import org.joda.time.LocalDate;
 
+import dom.asistencia.TomarAsistenciaService;
 import dom.horario.HorarioCurso;
 import dom.planEstudio.Anio;
 import dom.simple.Funcion.E_funciones;
@@ -67,7 +69,8 @@ import dom.simple.Funcion.E_funciones;
 				+ "&& this.division == :division") })
 @Bounded
 @PersistenceCapable
-@MemberGroupLayout(columnSpans = { 4, 0, 0, 8 }, left = "Datos Del Curso")
+@MemberGroupLayout(columnSpans = { 4, 0, 0, 8 }, left = { "Datos Del Curso",
+		"Asistencia" })
 public class Curso {
 
 	// {{ Division (property)
@@ -219,31 +222,29 @@ public class Curso {
 	public void setPreceptor(Personal Preceptor) {
 		this.preceptor = Preceptor;
 	}
-	
+
 	// {{ asignarPreceptor (action) Desde un curso
 	@MemberOrder(sequence = "1", name = "preceptor")
 	public Curso asignarPreceptor(final Personal preceptor) {
 		this.setPreceptor(preceptor);
 		return this;
 	}
-	
+
 	public List<Personal> choices0AsignarPreceptor() {
 		return personalRepositorio
 				.listarPersonalSegunFuncion(E_funciones.PRECEPTOR);
 	}
-	
-	// }} 
+
+	// }}
 
 	// {{ quitarPreceptor (action)
 	@MemberOrder(sequence = "2", name = "preceptor")
 	public Curso quitarPreceptor(@Named("¿Está seguro?") Boolean seguro) {
 		this.setPreceptor(null);
-		return this; 
+		return this;
 	}
+
 	// }}
-
-
-	
 
 	@javax.inject.Inject
 	DomainObjectContainer container;
@@ -251,4 +252,5 @@ public class Curso {
 	CursoRepositorio cursoRepositorio;
 	@javax.inject.Inject
 	PersonalRepositorio personalRepositorio;
+
 }
