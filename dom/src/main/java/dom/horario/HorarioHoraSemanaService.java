@@ -67,10 +67,7 @@ public class HorarioHoraSemanaService {
 								.getHorarioHoraList();
 						for (HorarioHora horarioHora : horarioHoraList) {
 							HorarioPlanHora planHora = horarioHora
-									.getHorarioPlanHora(); // esta pertenece al
-															// listado de horas
-															// del
-															// Dia
+									.getHorarioPlanHora(); // esta pertenece al listado de horas del Dia
 							if (horarioPlanHora == planHora
 									&& horarioHora.getMateriaDelCurso() != null) {
 								dia[diaNumero] = horarioHora
