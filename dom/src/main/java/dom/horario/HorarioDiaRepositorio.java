@@ -10,13 +10,15 @@ import javax.inject.Inject;
 
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.Hidden;
+import org.apache.isis.applib.annotation.NotContributed;
 
 import dom.simple.Curso;
 
 @Hidden
 @DomainService
 public class HorarioDiaRepositorio {
-
+	
+	@NotContributed
 	public SortedSet<HorarioDia> crearHorarioDiaList(Curso curso) {
 
 		SortedSet<HorarioDia> horarioDiaList = new TreeSet<HorarioDia>();
@@ -29,7 +31,8 @@ public class HorarioDiaRepositorio {
 		
 		return horarioDiaList;
 	}
-
+	
+	@NotContributed
 	private HorarioDia crearUnDia(int ordenDia, E_HorarioDiaSemana dia, Curso curso){
 		HorarioDia horarioDia = new HorarioDia();
 		horarioDia.setOrdenDias(ordenDia);
