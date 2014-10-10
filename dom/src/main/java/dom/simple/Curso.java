@@ -125,6 +125,7 @@ public class Curso {
 
 	@MemberOrder(sequence = "1")
 	@Column(allowsNull = "true")
+	@Hidden
 	public HorarioCurso getHorarioCurso() {
 		return horarioCurso;
 	}
