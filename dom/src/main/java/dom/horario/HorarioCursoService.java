@@ -4,6 +4,7 @@ import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.Hidden;
 import org.apache.isis.applib.annotation.MemberOrder;
+import org.apache.isis.applib.annotation.NotContributed;
 import org.apache.isis.applib.services.memento.MementoService;
 import org.apache.isis.applib.services.memento.MementoService.Memento;
 
@@ -15,6 +16,7 @@ public class HorarioCursoService {
 	
 	// {{ verHorarioDeCurso (action)
 	@MemberOrder(sequence = "1")
+	@NotContributed
 	public HorarioCursoView verHorarioDeCurso(final Curso curso) {
 		
 		String plan = curso.getAnio().getPlan().getDescripcion();
