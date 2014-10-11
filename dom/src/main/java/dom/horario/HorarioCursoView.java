@@ -15,6 +15,7 @@ import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Named;
 import org.apache.isis.applib.annotation.Render;
 import org.apache.isis.applib.annotation.Render.Type;
+import org.apache.isis.applib.annotation.TypicalLength;
 import org.apache.isis.applib.query.QueryDefault;
 import org.apache.isis.applib.services.memento.MementoService;
 import org.apache.isis.applib.services.memento.MementoService.Memento;
@@ -56,7 +57,7 @@ public class HorarioCursoView extends AbstractViewModel {
 	// {{ Plan (property)
 	private String plan;
 
-	@MemberOrder(sequence = "1")
+	@MemberOrder(sequence = "1", name = "Detalles del Horario")
 	@Column(allowsNull = "true")
 	public String getPlan() {
 		return plan;
@@ -71,8 +72,9 @@ public class HorarioCursoView extends AbstractViewModel {
 	// {{ Anio (property)
 	private Integer anio;
 
-	@MemberOrder(sequence = "1")
+	@MemberOrder(sequence = "2", name = "Detalles del Horario")
 	@Column(allowsNull = "true")
+	@TypicalLength(value = 2)
 	public Integer getAnio() {
 		return anio;
 	}
@@ -86,7 +88,8 @@ public class HorarioCursoView extends AbstractViewModel {
 	// {{ Division (property)
 	private String division;
 
-	@MemberOrder(sequence = "1")
+	@TypicalLength(value = 2)
+	@MemberOrder(sequence = "3", name = "Detalles del Horario")
 	@Column(allowsNull = "true")
 	public String getDivision() {
 		return division;
