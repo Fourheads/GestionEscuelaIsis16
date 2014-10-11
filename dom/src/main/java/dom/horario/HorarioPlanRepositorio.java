@@ -2,6 +2,7 @@ package dom.horario;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.SortedSet;
 
 import javax.inject.Inject;
 
@@ -11,8 +12,11 @@ import org.apache.isis.applib.annotation.Hidden;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Named;
 import org.apache.isis.applib.annotation.NotInServiceMenu;
+import org.apache.isis.applib.annotation.Programmatic;
 
 import dom.planEstudio.Plan;
+import dom.simple.Curso;
+import dom.simple.CursoRepositorio;
 
 @DomainService
 @Hidden
@@ -69,7 +73,25 @@ public class HorarioPlanRepositorio {
 		horarioPlanHora.setHoraFin(fin);
 		horarioPlanHora.setTipoHoraPlan(e_HorarioHoraTipo);
 		horarioPlan.getHorarioPlanHoraList().add(horarioPlanHora);
+		
+		agregarHoraACursosYaCreados(horarioPlan, horarioPlanHora);
+		
 		return horarioPlan;
+	}
+
+	@Programmatic
+	private void agregarHoraACursosYaCreados(HorarioPlan horarioPlan,
+			HorarioPlanHora horarioPlanHora) {
+		List<Curso> cursoList = cursoRepositorio.listarCursosDeUnPlan(horarioPlan.getPlan());
+		
+		for (Curso curso : cursoList){
+			SortedSet<HorarioDia> horarioDiaList = curso.getHorarioCurso().getHorarioDiaList();
+			for (HorarioDia horarioDia : horarioDiaList){
+							
+				horarioDia.getHorarioHoraList().add(horarioHoraRepositorio.crearHorarioHora(horarioDia, horarioPlanHora));
+			}
+		}
+		
 	}
 
 	public List<Integer> choices2CrearHorarioPlanHora(HorarioPlan horarioPlan,
@@ -153,5 +175,8 @@ public class HorarioPlanRepositorio {
 	DomainObjectContainer container;
 	@Inject
 	HorarioPlanHoraRepositorio horarioPlanHoraRepositorio;
-
+	@Inject
+	CursoRepositorio cursoRepositorio;
+	@Inject
+	HorarioHoraRepositorio horarioHoraRepositorio;
 }
