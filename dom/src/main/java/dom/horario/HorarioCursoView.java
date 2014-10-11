@@ -3,7 +3,6 @@ package dom.horario;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
-import java.util.TreeSet;
 
 import javax.jdo.annotations.Column;
 import javax.jdo.annotations.Element;
@@ -11,6 +10,7 @@ import javax.jdo.annotations.Join;
 
 import org.apache.isis.applib.AbstractViewModel;
 import org.apache.isis.applib.DomainObjectContainer;
+import org.apache.isis.applib.annotation.MemberGroupLayout;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Named;
 import org.apache.isis.applib.annotation.Render;
@@ -19,17 +19,16 @@ import org.apache.isis.applib.query.QueryDefault;
 import org.apache.isis.applib.services.memento.MementoService;
 import org.apache.isis.applib.services.memento.MementoService.Memento;
 
-import dom.simple.Alumno;
 import dom.simple.Curso;
 import dom.simple.MateriaDelCurso;
 
+@MemberGroupLayout(columnSpans = {4,0,0,8}, left = "Detalles del Horario")
 public class HorarioCursoView extends AbstractViewModel {
 
 	String memento;
 
 	@Override
 	public String viewModelMemento() {
-		// TODO Auto-generated method stub
 		return memento;
 	}
 
@@ -106,6 +105,7 @@ public class HorarioCursoView extends AbstractViewModel {
 	@Element(dependent = "true")
 	private List<HorarioHoraSemanaView> horarioHoraSemanaViewList = new ArrayList<HorarioHoraSemanaView>();
 
+	@Named("Horario")
 	@Render(Type.EAGERLY)
 	@MemberOrder(sequence = "1")
 	public List<HorarioHoraSemanaView> getHorarioHoraSemanaViewList() {
@@ -120,7 +120,8 @@ public class HorarioCursoView extends AbstractViewModel {
 	// {{ asignarMateria (action)
 	// ////////////////////////////////////////////
 
-	@MemberOrder(sequence = "1")
+	@MemberOrder(sequence = "1", name = "Horario")
+	@Named("Asignar Materia a Hora Cátedra")
 	public HorarioCursoView asignarMateria(final @Named("Día") HorarioDia dia,
 			final @Named("Hora") HorarioHora hora,
 			final @Named("Materia") MateriaDelCurso materia) {
@@ -168,7 +169,8 @@ public class HorarioCursoView extends AbstractViewModel {
 	// {{ quitarMateria (action)
 	// ////////////////////////////////////////////
 
-	@MemberOrder(sequence = "1")
+	@MemberOrder(sequence = "2", name = "Horario")
+	@Named("Quitar Materia de Hora Cátedra")
 	public HorarioCursoView quitarMateria(final @Named("Día") HorarioDia dia,
 			final @Named("Hora") HorarioHora hora) {
 

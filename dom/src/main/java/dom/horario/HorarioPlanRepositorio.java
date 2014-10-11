@@ -164,12 +164,27 @@ public class HorarioPlanRepositorio {
 					.size();
 			horarioPlan.getHorarioPlanHoraList()
 					.remove(ultimaHoraIngresada - 1);
+			eliminarUltimaHoraDeCursosYaCreados(horarioPlan.getPlan());
 		}
 
 		return horarioPlan;
 	}
 
 	// }}
+
+	@Programmatic
+	private void eliminarUltimaHoraDeCursosYaCreados(Plan plan) {
+		List<Curso> cursoList = cursoRepositorio.listarCursosDeUnPlan(plan);
+		
+		for (Curso curso : cursoList){
+			SortedSet<HorarioDia> horarioDiaList = curso.getHorarioCurso().getHorarioDiaList();
+			for (HorarioDia horarioDia : horarioDiaList){
+							
+				horarioHoraRepositorio.eliminarUltimaHorarioHora(horarioDia);
+			}
+		}
+		
+	}
 
 	@Inject
 	DomainObjectContainer container;
