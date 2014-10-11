@@ -7,13 +7,15 @@ import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Named;
+import org.apache.isis.applib.query.QueryDefault;
 import org.joda.time.LocalDate;
 
 import dom.simple.Curso;
 import dom.simple.MateriaDelCurso;
 
+
 @DomainService
-public class MateriaDelLibroDiarioRepositorio {
+public class MateriaDelLibroDiarioRepositorio {/*
 
 	public List<MateriaDelLibroDiario> crearListaMateriaDelLibroDiario(Curso curso) {
 		
@@ -32,23 +34,39 @@ public class MateriaDelLibroDiarioRepositorio {
 
 	
 	@Named("Nueva entrada libro diario")
-	@MemberOrder(sequence = "1")
-	public EntradaLibroDiario NuevaEntradalibrodiario(@Named("Fecha") LocalDate  fecha, @Named("Numero de hora") int horas, @Named("Unidad") int unidad, @Named("Actividad") String actividad, @Named("Observaciones") String Observaciones){
+	@MemberOrder(sequence = "1")//@Named("Libro Diario") final LibroDiario librodiario, @Named("Materias del libro diario") final MateriaDelLibroDiario materialiDelLibroDiario,
+	public EntradaLibroDiario nuevaEntradalibrodiario(@Named("Fecha") LocalDate  fecha, @Named("Numero de hora") int horas, @Named("Unidad") int unidad, @Named("Actividad") String actividad, @Named("Observaciones") String Observaciones){
 
-		MateriaDelLibroDiario materiaslibrodiario= container.newTransientInstance(MateriaDelLibroDiario.class);
+		MateriaDelLibroDiario materialiDelLibroDiario=container.newTransientInstance(MateriaDelLibroDiario.class);
+ 
+		EntradaLibroDiario entradadario=entradalibrodiariorepositiorio.crearEntradadeLibroDiario(fecha, horas, unidad, actividad, Observaciones
+				);
 		
-
+		materialiDelLibroDiario.AsignarEntradaLibroDiario(entradadario);
 		
-		EntradaLibroDiario entradadario=entradalibrodiariorepositiorio.crearEntradadeLibroDiario(fecha, horas, unidad, actividad, Observaciones);
-		
-		materiaslibrodiario.AsignarEntradaLibroDiario(entradadario);
-		
-		container.persistIfNotAlready(materiaslibrodiario);
+		container.persistIfNotAlready(materialiDelLibroDiario);
 		
 		return entradadario;
 	}
+	/*
+	public LibroDiario choices0NuevaEntradalibrodiario(final Curso curso)
+	{
+		return libroDiarioRepositorio.mostrarLibroDiarioDelCurso(curso);
+	}
 	
-	public List<Integer> choices1NuevaEntradalibrodiario() {//Hojo ver cantidad de horas
+	public List<MateriaDelLibroDiario> choices1NuevaEntradalibrodiario(final LibroDiario librodairio)
+	{
+		return listarmateriasdellibrodiario(librodairio);
+	}
+	
+	public List<MateriaDelLibroDiario> listarmateriasdellibrodiario(final LibroDiario librodairio)
+	{
+		return container.allMatches(new QueryDefault<MateriaDelLibroDiario>(MateriaDelLibroDiario.class,
+				"MateriadelLibroDiarioList", 
+				"LibroDiario", librodairio.getMateriaDelLibroDiarioList()));
+	}
+	
+	public List<Integer> choices3NuevaEntradalibrodiario() {//ojo ver cantidad de horas
 
 		List<Integer> Horas = new ArrayList<Integer>();
 
@@ -59,11 +77,11 @@ public class MateriaDelLibroDiarioRepositorio {
 		return Horas;
 	}
 
-	public int default1NuevaEntradalibrodiario() {
-		return choices1NuevaEntradalibrodiario().get(0);
+	public int default3NuevaEntradalibrodiario() {
+		return choices3NuevaEntradalibrodiario().get(0);
 	}
 	
-	public List<Integer> choices2NuevaEntradalibrodiario() {//Ver tema unidades
+	public List<Integer> choices4NuevaEntradalibrodiario() {//Ver tema unidades
 
 		List<Integer> Unidades = new ArrayList<Integer>();
 
@@ -74,12 +92,14 @@ public class MateriaDelLibroDiarioRepositorio {
 		return Unidades;
 	}
 
-	public int default2NuevaEntradalibrodiario() {
-		return choices2NuevaEntradalibrodiario().get(0);
+	public int default4NuevaEntradalibrodiario() {
+		return choices4NuevaEntradalibrodiario().get(0);
 	}
 	
 	@javax.inject.Inject
 	DomainObjectContainer container;
 	@javax.inject.Inject
 	EntradadeLibroDiarioRepositorio entradalibrodiariorepositiorio;
+	@javax.inject.Inject
+	LibroDiarioRepositorio libroDiarioRepositorio;*/
 }

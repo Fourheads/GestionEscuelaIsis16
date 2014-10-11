@@ -1,8 +1,12 @@
 package dom.libroDiario;
 
 import org.apache.isis.applib.DomainObjectContainer;
+import org.apache.isis.applib.annotation.DomainService;
+import org.apache.isis.applib.annotation.Named;
 import org.joda.time.LocalDate;
 
+@Named("Entrada libro diario")
+@DomainService(repositoryFor = EntradaLibroDiario.class)
 public class EntradadeLibroDiarioRepositorio {
 
 	public EntradaLibroDiario crearEntradadeLibroDiario(LocalDate fecha,
@@ -10,10 +14,13 @@ public class EntradadeLibroDiarioRepositorio {
 		
 		EntradaLibroDiario entradalibrodiario = container.newTransientInstance(EntradaLibroDiario.class);
 		
-		
+
 		entradalibrodiario.setFecha(fecha);
+		
 		HoraCatedra horacate= horacatedra.crearhoracatedra(horas, unidad, actividad, observaciones);
+		
 		entradalibrodiario.asignarHoracatedra(horacate);
+		
 		
 		container.persistIfNotAlready(entradalibrodiario);
 		return entradalibrodiario;

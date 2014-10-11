@@ -85,6 +85,21 @@ public class HoraCatedra {
 	public void setObservaciones(String observaciones) {
 		this.observaciones = observaciones;
 	}
+	
+	// {{ entradaLibroDiario (property)
+	private EntradaLibroDiario entradaLibroDiario;
+
+	@MemberOrder(sequence = "1")
+	public EntradaLibroDiario getentradaLibroDiario() {
+		return entradaLibroDiario;
+	}
+
+	public void setentradaLibroDiario(final EntradaLibroDiario entradaLibroDiario) {
+		this.entradaLibroDiario = entradaLibroDiario;
+	}
+	// }}
+
+
 
 	public String title() {
 		return "Hora catedra";
