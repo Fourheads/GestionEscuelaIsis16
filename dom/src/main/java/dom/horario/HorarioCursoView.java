@@ -210,6 +210,19 @@ public class HorarioCursoView extends AbstractViewModel {
 	// }} (end region)
 	// //////////////////////////////////////
 
+	// Title (GUI)
+	// //////////////////////////////////////////
+
+	public String title() {
+		return "Horario de Clases " + getAnio() + "° '" + getDivision() + "'";
+	}
+
+	// end region Title (GUI)
+	// //////////////////////////////////////////
+	
+	
+	
+	
 	@javax.inject.Inject
 	MementoService mementoService;
 	@javax.inject.Inject
