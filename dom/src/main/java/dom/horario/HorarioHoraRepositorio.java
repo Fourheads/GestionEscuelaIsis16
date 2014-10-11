@@ -6,15 +6,23 @@ import org.apache.isis.applib.annotation.Hidden;
 @DomainService
 @Hidden
 public class HorarioHoraRepositorio {
-	
-	public HorarioHora crearHorarioHora(HorarioDia horarioDia, HorarioPlanHora horarioPlanHora){
-		
+
+	public HorarioHora crearHorarioHora(HorarioDia horarioDia,
+			HorarioPlanHora horarioPlanHora) {
+
 		HorarioHora horarioHora = new HorarioHora();
 		horarioHora.setHorarioDia(horarioDia);
 		horarioHora.setHorarioPlanHora(horarioPlanHora);
 		horarioHora.setHorarioHoraTipo(horarioPlanHora.getTipoHoraPlan());
-		
+
 		return horarioHora;
+	}
+
+	public void eliminarUltimaHorarioHora(HorarioDia horarioDia) {
+
+		int ultimaHoraIngresada = horarioDia.getHorarioHoraList().size();
+		horarioDia.getHorarioHoraList().remove(ultimaHoraIngresada - 1);
+		
 	}
 
 }
