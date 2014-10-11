@@ -15,8 +15,7 @@ import dom.simple.MateriaDelCurso;
 
 
 @DomainService
-public class MateriaDelLibroDiarioRepositorio {/*
-
+public class MateriaDelLibroDiarioRepositorio {
 	public List<MateriaDelLibroDiario> crearListaMateriaDelLibroDiario(Curso curso) {
 		
 		List<MateriaDelCurso> materiaDelCursoList = curso.getMateriaDelCursoList();
@@ -95,11 +94,11 @@ public class MateriaDelLibroDiarioRepositorio {/*
 	public int default4NuevaEntradalibrodiario() {
 		return choices4NuevaEntradalibrodiario().get(0);
 	}
-	
+	*/
 	@javax.inject.Inject
 	DomainObjectContainer container;
 	@javax.inject.Inject
 	EntradadeLibroDiarioRepositorio entradalibrodiariorepositiorio;
 	@javax.inject.Inject
-	LibroDiarioRepositorio libroDiarioRepositorio;*/
+	LibroDiarioRepositorio libroDiarioRepositorio;
 }
