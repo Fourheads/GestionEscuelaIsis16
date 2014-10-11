@@ -54,7 +54,7 @@ public class MateriaRepositorio {
 
 	// region > agregarMateria
 	// //////////////////////////////////////
-	@NotInServiceMenu
+	@Hidden
 	@MemberOrder(sequence = "3")
 	public Anio agregarMateria(final @Named("Año") Anio anio,
 			final @Named("Nombre") String nombre) {
@@ -73,6 +73,7 @@ public class MateriaRepositorio {
 	// region > eliminarMateria
 	// //////////////////////////////////////
 	@NotInServiceMenu
+	@NotContributed
 	@MemberOrder(sequence = "3")
 	@DescribedAs(value = "Eliminar una Materia de este Año. Esto se aplica a todos los Cursos ya creados")
 	public Anio eliminarMateria(final @Named("Año") Anio anio,

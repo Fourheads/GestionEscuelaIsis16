@@ -31,6 +31,7 @@ import dom.simple.Funcion.E_funciones;
 public class CursoRepositorio {
 
 	@MemberOrder(sequence = "1")
+	@NotContributed
 	public Curso crearCurso(Plan plan, Anio anio,
 			@Named("División") String division, @Named("Turno") Turno turno) {
 
@@ -109,6 +110,7 @@ public class CursoRepositorio {
 
 	// {{ listarCursosDeUnAnio (action)
 	@MemberOrder(sequence = "2.5")
+	@NotContributed
 	public List<Curso> listarCursosDeUnAnio(@Named("Plan") final Plan plan,
 			@Named("Año") final Anio anio) {
 
