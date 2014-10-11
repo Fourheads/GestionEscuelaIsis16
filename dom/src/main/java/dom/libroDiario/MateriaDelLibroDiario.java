@@ -9,6 +9,8 @@ import org.apache.isis.applib.annotation.Bounded;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.ObjectType;
 
+import dom.simple.MateriaDelCurso;
+
 @javax.jdo.annotations.PersistenceCapable(identityType = IdentityType.DATASTORE)
 @javax.jdo.annotations.DatastoreIdentity(strategy = javax.jdo.annotations.IdGeneratorStrategy.IDENTITY, column = "id")
 @javax.jdo.annotations.Version(strategy = VersionStrategy.VERSION_NUMBER, column = "version")
@@ -31,6 +33,21 @@ public class MateriaDelLibroDiario {
 		this.libroDiario = libroDiario;
 	}
 	// }}
+	
+	// {{ MateriaDelCurso (property)
+	private MateriaDelCurso materiaDelCurso;
+
+	@MemberOrder(sequence = "1")
+	@Column(allowsNull = "true")
+	public MateriaDelCurso getMateriaDelCurso() {
+		return materiaDelCurso;
+	}
+
+	public void setMateriaDelCurso(final MateriaDelCurso materiaDelCurso) {
+		this.materiaDelCurso = materiaDelCurso;
+	}
+	// }}
+
 
 
 

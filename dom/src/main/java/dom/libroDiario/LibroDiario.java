@@ -18,6 +18,12 @@ import org.apache.isis.applib.annotation.Render;
 import org.apache.isis.applib.annotation.Render.Type;
 
 import dom.simple.Curso;
+
+@javax.jdo.annotations.Queries({
+	@javax.jdo.annotations.Query(name = "LibroDiarioDeUnCurso", language = "JDOQL", value = "SELECT FROM dom.libroDiario.LibroDiario "
+			+ "WHERE this.curso.anio.plan.descripcion == :plan "
+			+ "&& this.curso.anio.anioNumero == :anio"
+			+ "&& this.curso.division == :division")})
 @javax.jdo.annotations.PersistenceCapable(identityType = IdentityType.DATASTORE)
 @javax.jdo.annotations.DatastoreIdentity(strategy = javax.jdo.annotations.IdGeneratorStrategy.IDENTITY, column = "id")
 @javax.jdo.annotations.Version(strategy = VersionStrategy.VERSION_NUMBER, column = "version")

@@ -17,6 +17,7 @@ import dom.horario.HorarioCurso;
 import dom.horario.HorarioCursoRepositorio;
 import dom.horario.HorarioCursoService;
 import dom.horario.HorarioCursoView;
+import dom.libroDiario.LibroDiario;
 import dom.libroDiario.LibroDiarioRepositorio;
 import dom.planEstudio.Anio;
 import dom.planEstudio.AnioRepositorio;
@@ -43,11 +44,11 @@ public class CursoRepositorio {
 			materiaDelCursoRepositorio.crearMateriaDelCurso(curso, materia);
 		}
 		curso.setHorarioCurso(horarioCursoRepositorio.crearHorarioCurso(curso));
-				
+
 		container.persistIfNotAlready(curso);
-		
+
 		libroDiarioRepositorio.crearLibroDiario(curso);
-		
+
 		return curso;
 	}
 
@@ -280,6 +281,16 @@ public class CursoRepositorio {
 
 		curso.setAlumnos(null);
 		curso.getHorarioCurso().setCurso(null);
+		
+		LibroDiario libroDiario = container.firstMatch(new QueryDefault<LibroDiario>(LibroDiario.class,
+				"LibroDiarioDeUnCurso", 
+				"plan", curso.getAnio().getPlan().getDescripcion(), 
+				"anio", curso.getAnio().getAnioNumero(),
+				"division", curso.getDivision()));
+		libroDiario.setMateriaDelLibroDiarioList(null);
+		libroDiario.setCurso(null);
+		
+		
 		for (MateriaDelCurso materiaDelCurso : curso.getMateriaDelCursoList()) {
 			materiaDelCurso.setProfesor(null);
 		}
