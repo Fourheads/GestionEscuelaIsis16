@@ -278,21 +278,22 @@ public class CursoRepositorio {
 
 	// {{ eliminarCurso (action)
 	@MemberOrder(sequence = "1")
+	@NotContributed
 	public String eliminarCurso(Plan plan, Curso curso,
 			@Named("¿Esta Seguro?") Boolean seguro) {
 
 		curso.setAlumnos(null);
 		curso.getHorarioCurso().setCurso(null);
-		
-		LibroDiario libroDiario = container.firstMatch(new QueryDefault<LibroDiario>(LibroDiario.class,
-				"LibroDiarioDeUnCurso", 
-				"plan", curso.getAnio().getPlan().getDescripcion(), 
-				"anio", curso.getAnio().getAnioNumero(),
-				"division", curso.getDivision()));
+
+		LibroDiario libroDiario = container
+				.firstMatch(new QueryDefault<LibroDiario>(LibroDiario.class,
+						"LibroDiarioDeUnCurso", "plan", curso.getAnio()
+								.getPlan().getDescripcion(), "anio", curso
+								.getAnio().getAnioNumero(), "division", curso
+								.getDivision()));
 		libroDiario.setMateriaDelLibroDiarioList(null);
 		libroDiario.setCurso(null);
-		
-		
+
 		for (MateriaDelCurso materiaDelCurso : curso.getMateriaDelCursoList()) {
 			materiaDelCurso.setProfesor(null);
 		}
