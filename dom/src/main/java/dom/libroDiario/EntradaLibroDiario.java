@@ -3,9 +3,12 @@ package dom.libroDiario;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import javax.jdo.annotations.Column;
+import javax.jdo.annotations.Columns;
 import javax.jdo.annotations.Element;
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.Join;
+import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.VersionStrategy;
 
 import org.apache.isis.applib.annotation.Bookmarkable;
@@ -29,6 +32,7 @@ public class EntradaLibroDiario {
 	private LocalDate Fecha;
 
 	@MemberOrder(sequence = "1")
+	@Column(allowsNull="true")
 	public LocalDate getFecha() {
 		return Fecha;
 	}
@@ -40,7 +44,7 @@ public class EntradaLibroDiario {
 
 	// {{ HoraCatedra (Collection)
 	@Join
-	@Element(dependent = "true")
+	@Persistent(mappedBy = "entradaLibroDiario", dependentElement = "true")
 	private SortedSet<HoraCatedra> horacatedra = new TreeSet<HoraCatedra>();
 
 	@MemberOrder(sequence = "1")
@@ -57,7 +61,19 @@ public class EntradaLibroDiario {
 		
 	}
 	
-	
+	// }}
+
+	// {{ materiaDelLibroDiario (property)
+	private MateriaDelLibroDiario materiaDelLibroDiario;
+
+	@MemberOrder(sequence = "1")
+	public MateriaDelLibroDiario getmateriaDelLibroDiario() {
+		return materiaDelLibroDiario;
+	}
+
+	public void setmateriaDelLibroDiario(final MateriaDelLibroDiario materiaDelLibroDiario) {
+		this.materiaDelLibroDiario = materiaDelLibroDiario;
+	}
 	// }}
 
 
