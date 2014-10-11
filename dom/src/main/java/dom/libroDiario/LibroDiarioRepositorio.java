@@ -7,7 +7,6 @@ import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.query.QueryDefault;
 
 import dom.simple.Curso;
-import dom.simple.MateriaDelCurso;
 
 @DomainService(menuOrder = "100")
 public class LibroDiarioRepositorio {
