@@ -252,6 +252,7 @@ public class CursoRepositorio {
 
 	// {{ verHorarioDelCurso (action)
 	@MemberOrder(sequence = "10")
+	@NotContributed
 	public HorarioCursoView verHorarioDelCurso(Plan plan, Curso curso) {
 		return horarioCursoService.verHorarioDeCurso(curso);
 	}
