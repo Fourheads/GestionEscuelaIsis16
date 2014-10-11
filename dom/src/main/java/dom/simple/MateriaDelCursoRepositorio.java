@@ -33,7 +33,7 @@ public class MateriaDelCursoRepositorio {
 				"plan", curso.getAnio().getPlan().getDescripcion(), 
 				"anio", curso.getAnio().getAnioNumero(),
 				"division", curso.getDivision()));
-	}
+	}	
 
 	@javax.inject.Inject
 	DomainObjectContainer container;
