@@ -73,6 +73,7 @@ public class PlanRepositorio {
 
 	// {{ EliminarPlan (action)
 	@MemberOrder(sequence = "1.1")
+	@NotContributed
 	public String eliminarPlan(final @Named("Plan a eliminar") Plan plan,
 			final @Named("Esta seguro?") Boolean seguro) {
 		String descripcion = plan.getDescripcion();

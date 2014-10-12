@@ -44,8 +44,13 @@ import org.apache.isis.applib.annotation.Render.Type;
 import org.apache.isis.applib.query.QueryDefault;
 import org.joda.time.LocalDate;
 
+import dom.asistencia.AnalisisAsistenciaView;
+import dom.asistencia.Asistencia;
 import dom.asistencia.TomarAsistenciaService;
+import dom.asistencia.TomarAsistenciaView;
 import dom.horario.HorarioCurso;
+import dom.horario.HorarioCursoService;
+import dom.horario.HorarioCursoView;
 import dom.planEstudio.Anio;
 import dom.simple.Funcion.E_funciones;
 
@@ -67,11 +72,9 @@ import dom.simple.Funcion.E_funciones;
 				+ "WHERE this.anio.plan.descripcion == :plan "
 				+ "&& this.anio.anioNumero == :anio "
 				+ "&& this.division == :division") })
-
 @Bounded
 @PersistenceCapable
-@MemberGroupLayout(columnSpans = { 4, 0, 0, 8 }, left = { "Datos Del Curso",
-		"Asistencia" })
+@MemberGroupLayout(columnSpans = { 4, 0, 0, 8 }, left = {"Datos Del Curso", "Asistencia"} )
 public class Curso {
 
 	// {{ Division (property)
@@ -129,9 +132,9 @@ public class Curso {
 	// {{ HorarioCurso (property)
 	private HorarioCurso horarioCurso;
 
-	@MemberOrder(sequence = "1")
-	@Column(allowsNull = "true")
 	@Hidden
+	@MemberOrder(sequence = "1", name = "Asistencia")
+	@Column(allowsNull = "true")
 	public HorarioCurso getHorarioCurso() {
 		return horarioCurso;
 	}
@@ -283,16 +286,23 @@ public class Curso {
 	public Curso quitarProfesorDeMateria(
 			@Named("Materia") final MateriaDelCurso materia,
 			@Named("¿Está seguro?") final Boolean seguro) {
-		
+
 		materia.setProfesor(null);
 		return this;
 	}
 
+	@MemberOrder(sequence = "5", name = "Datos Del Curso")
+	public HorarioCursoView verHorarioDeCurso() {
+		return horarioCursoService.verHorarioDeCurso(this);
+	}
+	
 	@javax.inject.Inject
 	DomainObjectContainer container;
 	@javax.inject.Inject
 	CursoRepositorio cursoRepositorio;
 	@javax.inject.Inject
 	PersonalRepositorio personalRepositorio;
+	@javax.inject.Inject
+	HorarioCursoService horarioCursoService;
 
 }

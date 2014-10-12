@@ -22,6 +22,7 @@ import dom.planEstudio.Materia;
 			+ "WHERE this.curso.anio.plan.descripcion == :plan "
 			+ "&& this.curso.anio.anioNumero == :anio"
 			+ "&& this.curso.division == :division")})
+		
 
 @Bookmarkable
 @Bounded

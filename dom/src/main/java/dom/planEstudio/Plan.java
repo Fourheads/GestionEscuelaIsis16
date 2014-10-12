@@ -16,6 +16,7 @@ import org.apache.isis.applib.annotation.Bookmarkable;
 import org.apache.isis.applib.annotation.Bounded;
 import org.apache.isis.applib.annotation.Disabled;
 import org.apache.isis.applib.annotation.MemberOrder;
+import org.apache.isis.applib.annotation.Named;
 import org.apache.isis.applib.annotation.ObjectType;
 import org.apache.isis.applib.annotation.Render;
 import org.apache.isis.applib.annotation.Render.Type;
@@ -56,7 +57,7 @@ public class Plan implements Comparable<Plan>{
 	@Persistent(mappedBy = "plan", dependentElement = "true")
 	@Join
 	private SortedSet<Anio> aniolist = new TreeSet<Anio>();
-
+	@Named("Listado de Años del Plan")
 	@MemberOrder(sequence = "1")
 	@Render(Type.EAGERLY)
 	public SortedSet<Anio> getAnioList() {

@@ -11,6 +11,7 @@ import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.Hidden;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Named;
+import org.apache.isis.applib.annotation.NotContributed;
 import org.apache.isis.applib.annotation.NotInServiceMenu;
 import org.apache.isis.applib.query.QueryDefault;
 
@@ -21,7 +22,8 @@ public class AnioRepositorio {
 	// region > agregarAnio
 	// //////////////////////////////////////
 	@NotInServiceMenu
-	@MemberOrder(sequence = "3")
+	@Named("Agregar Año al Plan")
+	@MemberOrder(sequence = "1", name = "Listado de Años del Plan")
 	public Plan agregarAnio(final @Named("Plan") Plan plan,
 			final @Named("") int anioNumero) {
 
@@ -33,21 +35,26 @@ public class AnioRepositorio {
 		return plan;
 	}
 
-	public List<Integer> choices1AgregarAnio() {
+	public List<Integer> choices1AgregarAnio(final @Named("Plan") Plan plan) {
 
 		List<Integer> aniosDisponibles = new ArrayList<Integer>();
-
+		List<Integer> aniosCreados = new ArrayList<Integer>();
+		List<Anio> anioList = listarAniosDeUnPlan(plan);
+		
+		
+		for (Anio anio : anioList) {
+			aniosCreados.add(anio.getAnioNumero());
+		}
+		
 		for (int i = 1; i < 9; i++) {
 			aniosDisponibles.add(i);
 		}
 
+		aniosDisponibles.removeAll(aniosCreados);
+		
 		return aniosDisponibles;
 	}
-
-	public int default1AgregarAnio() {
-		return choices1AgregarAnio().get(0);
-	}
-
+	
 	public String validateAgregarAnio(Plan plan, int anioNumero) {
 		SortedSet<Anio> aniosList = plan.getAnioList();
 		for (Anio anio : aniosList) {
@@ -58,13 +65,30 @@ public class AnioRepositorio {
 
 		return null;
 	}
+
 	// endRegion > agregarAnio
 
-	public List<Anio> listarAniosDeUnPlan(Plan plan){
+	// {{ eliminarAnio (action)
+	@Named("Eliminar Año del Plan")
+	@MemberOrder(sequence = "2", name = "Listado de Años del Plan")
+	public Plan eliminarAnio(final Plan plan, @Named("Año") Anio anio,
+			@Named("¿Esta Seguro?") Boolean seguro) {
+		container.remove(anio);
+		return plan;
+	}
+
+	public SortedSet<Anio> choices1EliminarAnio(final Plan plan) {
+		return plan.getAnioList();
+	}
+
+	// }}
+
+	@NotContributed
+	public List<Anio> listarAniosDeUnPlan(Plan plan) {
 		return container.allMatches(new QueryDefault<Anio>(Anio.class,
 				"listarAniosDeUnPlan", "plan", plan.getDescripcion()));
 	}
-	
+
 	@Inject
 	DomainObjectContainer container;
 }
