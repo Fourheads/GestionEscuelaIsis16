@@ -25,16 +25,23 @@ package dom.libroDiario;
 
 import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.annotation.DomainService;
+import org.apache.isis.applib.annotation.Hidden;
+import org.apache.isis.applib.annotation.MaxLength;
 import org.apache.isis.applib.annotation.MemberOrder;
+import org.apache.isis.applib.annotation.MultiLine;
 import org.apache.isis.applib.annotation.Named;
 
-@Named("Hora catedra")
+//@Named("Hora catedra")
+@Hidden
 @DomainService(repositoryFor = HoraCatedra.class)
 public class HoraCatedraRepositorio {
 
 	//@Named("Crear hora")
 	//@MemberOrder(sequence = "1")
-	public HoraCatedra crearhoracatedra(@Named("Numero de hora") int horas, @Named("Unidad") int unidad, @Named("Actividad") String actividad, @Named("Observaciones") String Observaciones ){
+	public HoraCatedra crearhoracatedra(@Named("Numero de hora") int horas, @Named("Unidad") int unidad,final @MaxLength(2048)
+	  @MultiLine @Named("Actividad") String actividad,
+	  final @MaxLength(2048)
+  	  @MultiLine@Named("Observaciones") String Observaciones ){
 		
 		HoraCatedra horacatedra=container.newTransientInstance(HoraCatedra.class);
 		
