@@ -11,6 +11,7 @@ import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.Hidden;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Named;
+import org.apache.isis.applib.annotation.NotContributed;
 import org.apache.isis.applib.annotation.NotInServiceMenu;
 import org.apache.isis.applib.query.QueryDefault;
 
@@ -21,7 +22,7 @@ public class AnioRepositorio {
 	// region > agregarAnio
 	// //////////////////////////////////////
 	@NotInServiceMenu
-	@MemberOrder(sequence = "3")
+	@MemberOrder(sequence = "1", name = "Listado de Años del Plan")
 	public Plan agregarAnio(final @Named("Plan") Plan plan,
 			final @Named("") int anioNumero) {
 
@@ -58,8 +59,28 @@ public class AnioRepositorio {
 
 		return null;
 	}
+	
 	// endRegion > agregarAnio
+	
+	// {{ eliminarAnio (action)
+	@MemberOrder(sequence = "2", name = "Listado de Años del Plan")
+	public Plan eliminarAnio(final Plan plan, @Named("Año") Anio anio, @Named("¿Esta Seguro?") Boolean seguro) {
+		container.remove(anio);
+		return plan;
+	}
+	
+	public SortedSet<Anio> choices1EliminarAnio(final Plan plan){
+		return plan.getAnioList();
+	}
+	
+	
+	// }}
 
+
+	
+	
+	
+	@NotContributed
 	public List<Anio> listarAniosDeUnPlan(Plan plan){
 		return container.allMatches(new QueryDefault<Anio>(Anio.class,
 				"listarAniosDeUnPlan", "plan", plan.getDescripcion()));
