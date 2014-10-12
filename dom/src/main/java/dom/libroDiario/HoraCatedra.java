@@ -30,8 +30,11 @@ import javax.jdo.annotations.VersionStrategy;
 
 import org.apache.isis.applib.annotation.Bookmarkable;
 import org.apache.isis.applib.annotation.Bounded;
+import org.apache.isis.applib.annotation.MaxLength;
 import org.apache.isis.applib.annotation.MemberOrder;
+import org.apache.isis.applib.annotation.MultiLine;
 import org.apache.isis.applib.annotation.ObjectType;
+import org.apache.isis.applib.annotation.Optional;
 
 @javax.jdo.annotations.PersistenceCapable(identityType = IdentityType.DATASTORE)
 @javax.jdo.annotations.DatastoreIdentity(strategy = javax.jdo.annotations.IdGeneratorStrategy.IDENTITY, column = "id")
@@ -67,6 +70,8 @@ public class HoraCatedra {
 	}
 	
 	@Persistent
+	@MultiLine
+	final @MaxLength(2048)
 	@Column(allowsNull = "true")
 	@MemberOrder(sequence = "1.2")
 	public String getActividad() {
@@ -77,6 +82,9 @@ public class HoraCatedra {
 	}
 	
 	@Persistent
+	@MultiLine
+	@Optional
+	final @MaxLength(2048)
 	@Column(allowsNull = "true")
 	@MemberOrder(sequence = "1.3")
 	public String getObservaciones() {
