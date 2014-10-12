@@ -1,3 +1,25 @@
+/*
+ * This is a software made for highschool management 
+ * 
+ * Copyright (C) 2014, Fourheads
+ * 
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * 
+ * 
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ */
+
 package dom.libroDiario;
 
 import java.util.ArrayList;
@@ -5,17 +27,23 @@ import java.util.List;
 
 import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.annotation.DomainService;
+import org.apache.isis.applib.annotation.Hidden;
+import org.apache.isis.applib.annotation.MaxLength;
 import org.apache.isis.applib.annotation.MemberOrder;
+import org.apache.isis.applib.annotation.MultiLine;
 import org.apache.isis.applib.annotation.Named;
 import org.apache.isis.applib.query.QueryDefault;
 import org.joda.time.LocalDate;
 
 import dom.simple.Curso;
 import dom.simple.MateriaDelCurso;
+import dom.simple.MateriaDelCursoRepositorio;
 
 
 @DomainService
 public class MateriaDelLibroDiarioRepositorio {
+	
+	@Hidden
 	public List<MateriaDelLibroDiario> crearListaMateriaDelLibroDiario(Curso curso) {
 		
 		List<MateriaDelCurso> materiaDelCursoList = curso.getMateriaDelCursoList();
@@ -24,7 +52,7 @@ public class MateriaDelLibroDiarioRepositorio {
 		for (MateriaDelCurso materiaDelCurso : materiaDelCursoList){
 			MateriaDelLibroDiario materiaDelLibroDiario = new MateriaDelLibroDiario();
 			materiaDelLibroDiario.setMateriaDelCurso(materiaDelCurso);
-			
+			materiaDelLibroDiario.settiutulo(materiaDelCurso.getMateria().getNombre());
 			materiaDelLibroDiarioList.add(materiaDelLibroDiario);
 		}
 		
@@ -34,10 +62,16 @@ public class MateriaDelLibroDiarioRepositorio {
 	
 	@Named("Nueva entrada libro diario")
 	@MemberOrder(sequence = "1")//@Named("Libro Diario") final LibroDiario librodiario, @Named("Materias del libro diario") final MateriaDelLibroDiario materialiDelLibroDiario,
-	public EntradaLibroDiario nuevaEntradalibrodiario(@Named("Fecha") LocalDate  fecha, @Named("Numero de hora") int horas, @Named("Unidad") int unidad, @Named("Actividad") String actividad, @Named("Observaciones") String Observaciones){
-
-		MateriaDelLibroDiario materialiDelLibroDiario=container.newTransientInstance(MateriaDelLibroDiario.class);
- 
+	public EntradaLibroDiario nuevaEntradalibrodiario(@Named("Libro Diario") LibroDiario LibroDiario, 
+			@Named("Materias del libro diario") MateriaDelLibroDiario materialiDelLibroDiario,
+			@Named("Fecha") LocalDate  fecha, @Named("Numero de hora") int horas, @Named("Unidad") int unidad,
+			final @MaxLength(2048)
+	  		@MultiLine @Named("Actividad") String actividad,
+	  		final @MaxLength(2048)
+			@MultiLine@Named("Observaciones") String Observaciones){
+		
+		//MateriaDelLibroDiario materialiDelLibroDiario=container.newTransientInstance(MateriaDelLibroDiario.class);
+		
 		EntradaLibroDiario entradadario=entradalibrodiariorepositiorio.crearEntradadeLibroDiario(fecha, horas, unidad, actividad, Observaciones
 				);
 		
@@ -47,23 +81,14 @@ public class MateriaDelLibroDiarioRepositorio {
 		
 		return entradadario;
 	}
-	/*
-	public LibroDiario choices0NuevaEntradalibrodiario(final Curso curso)
-	{
-		return libroDiarioRepositorio.mostrarLibroDiarioDelCurso(curso);
-	}
 	
-	public List<MateriaDelLibroDiario> choices1NuevaEntradalibrodiario(final LibroDiario librodairio)
-	{
-		return listarmateriasdellibrodiario(librodairio);
-	}
 	
-	public List<MateriaDelLibroDiario> listarmateriasdellibrodiario(final LibroDiario librodairio)
+	
+	public List<MateriaDelLibroDiario> choices1NuevaEntradalibrodiario(@Named("Libro Diario") LibroDiario LibroDiario)
 	{
-		return container.allMatches(new QueryDefault<MateriaDelLibroDiario>(MateriaDelLibroDiario.class,
-				"MateriadelLibroDiarioList", 
-				"LibroDiario", librodairio.getMateriaDelLibroDiarioList()));
+		return listarmateriaslibrodiario(LibroDiario);
 	}
+
 	
 	public List<Integer> choices3NuevaEntradalibrodiario() {//ojo ver cantidad de horas
 
@@ -94,11 +119,61 @@ public class MateriaDelLibroDiarioRepositorio {
 	public int default4NuevaEntradalibrodiario() {
 		return choices4NuevaEntradalibrodiario().get(0);
 	}
-	*/
+	
+	
+	@MemberOrder(sequence = "1")
+	public List<MateriaDelLibroDiario> mostrarmateriaLibroDiario(final Curso curso) {
+		return listarmateriaslibrodiario(libroDiarioRepositorio.mostrarLibroDiarioDelCurso(curso));
+	}
+	
+	@Named("Entradas por fecha")
+	@MemberOrder(sequence = "2")
+	public List<EntradaLibroDiario> listarEntradasporFecha(@Named("Curso") final Curso curso, @Named("Materia") final MateriaDelCurso materiadelcurso, @Named("Fecha") final LocalDate fecha)
+	{
+		return entradalibrodiariorepositiorio.entradasporfecha(curso, materiadelcurso, fecha);
+	}
+	
+	
+	public List<MateriaDelCurso> choices1ListarEntradasporFecha(@Named("Curso") final Curso curso)
+	{
+		if(curso != null)
+			return materiaDelCursoRepositorio.listarMateriaDelCursoParaUnCurso(curso);
+		else
+			return null;
+	}
+	
+	@Hidden
+	public List<MateriaDelLibroDiario> listarmateriaslibrodiario(final LibroDiario libroDiario)
+	{
+		return container.allMatches(new QueryDefault<MateriaDelLibroDiario>(MateriaDelLibroDiario.class,
+				"LibroDiarioMateriadelLibroDiarioList","libroDiario", libroDiario));
+	}
+	
+	@Hidden
+	//@MemberOrder(sequence = "2")
+	public MateriaDelLibroDiario traerMateriaLibroDiario(@Named("Curso") final Curso curso, @Named("Materia") final MateriaDelCurso materiadelcurso)
+	{
+		return container.firstMatch(new QueryDefault<MateriaDelLibroDiario>(MateriaDelLibroDiario.class,
+				"MateriadelLibroDiario","materiacurso", materiadelcurso));
+	}
+	
+	public List<MateriaDelCurso> choices1TraerMateriaLibroDiario(@Named("Curso") final Curso curso)
+	{
+		if(curso != null)
+			return materiaDelCursoRepositorio.listarMateriaDelCursoParaUnCurso(curso);
+		else
+			return null;
+	}
+	
+	
+
+	
 	@javax.inject.Inject
 	DomainObjectContainer container;
 	@javax.inject.Inject
 	EntradadeLibroDiarioRepositorio entradalibrodiariorepositiorio;
 	@javax.inject.Inject
 	LibroDiarioRepositorio libroDiarioRepositorio;
+	@javax.inject.Inject
+	MateriaDelCursoRepositorio materiaDelCursoRepositorio;
 }

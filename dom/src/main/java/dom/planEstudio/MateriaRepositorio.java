@@ -17,6 +17,8 @@ import org.apache.isis.applib.annotation.PublishedAction;
 import org.apache.isis.applib.query.QueryDefault;
 import org.datanucleus.store.query.Query;
 
+import dom.libroDiario.LibroDiarioRepositorio;
+import dom.libroDiario.MateriaDelLibroDiario;
 import dom.simple.Curso;
 import dom.simple.CursoRepositorio;
 import dom.simple.MateriaDelCurso;
@@ -116,9 +118,15 @@ public class MateriaRepositorio {
 		
 		for (Curso curso : cursoList){
 			List<MateriaDelCurso> materiaDelCursoList = curso.getMateriaDelCursoList();
+			List<MateriaDelLibroDiario> materiadellibrodiarioList=librodiariorepositorio.mostrarLibroDiarioDelCurso(curso).getMateriaDelLibroDiarioList();
 			for (MateriaDelCurso materiaDelCurso : materiaDelCursoList){
 				if (materiaDelCurso.getMateria() == materia){
 					container.remove(materiaDelCurso);
+				}
+			}
+			for (MateriaDelLibroDiario materialibrodiario : materiadellibrodiarioList){
+				if (materialibrodiario.getMateriaDelCurso().getMateria() == materia){
+					container.remove(materialibrodiario);
 				}
 			}
 		}
@@ -129,6 +137,7 @@ public class MateriaRepositorio {
 		List<Curso> cursoList = cursoRepositorio.listarCursosDeUnAnio(anio.getPlan(), anio);
 		for (Curso curso : cursoList){
 			materiaDelCursoRepositorio.crearMateriaDelCurso(curso, materia);
+			librodiariorepositorio.ModificarLibroDiario(curso, librodiariorepositorio.mostrarLibroDiarioDelCurso(curso));
 		}
 		
 	}
@@ -141,6 +150,8 @@ public class MateriaRepositorio {
 	CursoRepositorio cursoRepositorio;
 	@javax.inject.Inject
 	MateriaDelCursoRepositorio materiaDelCursoRepositorio;
+	@javax.inject.Inject
+	LibroDiarioRepositorio librodiariorepositorio;
 	// endregion
 
 }
