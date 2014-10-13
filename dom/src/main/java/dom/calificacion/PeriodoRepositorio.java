@@ -47,7 +47,7 @@ public class PeriodoRepositorio {
 					MateriaCalificacion unaMateriaCalificacion  = new MateriaCalificacion();
 					
 					unaMateriaCalificacion.setAlumno(a);
-					unaMateriaCalificacion.setMateria(mdc);
+					unaMateriaCalificacion.setMateriaDelCurso(mdc);
 					
 					materiasCalificacion.add(unaMateriaCalificacion);
 				}

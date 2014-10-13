@@ -31,11 +31,13 @@ import dom.simple.MateriaDelCurso;
 					+" WHERE this.alumno.dni == :dni "),
 	@javax.jdo.annotations.Query(name = "findMateriaCalificacionPorCursoPorMateria", 
 			language = "JDOQL", 
-			value = "SELECT FROM dom.calificacion.MateriaCalificacion " +
-					"WHERE this.materia.curso.anio.anionumero == :anio && " +
-					"this.materia.curso.anio.plan.descripcion == :plan && " +
-					"this.materia.curso.division == :division && " +
-					"this.materia.materia.nombre == :materia"),
+			value = "SELECT FROM dom.calificacion.MateriaCalificacion " 
+					+ "WHERE "
+					+ "this.materiaDelCurso.curso.anio.anioNumero == :anio " 
+					+ "&& this.materiaDelCurso.curso.anio.plan.descripcion == :plan " 
+					+ "&& this.materiaDelCurso.curso.division == :division " 
+					+ "&& this.materiaDelCurso.materia.nombre == :materia"
+					),
 	@javax.jdo.annotations.Query(name = "findMateriaCalificacionPorMateria", 
 			language = "JDOQL", 
 			value = "SELECT FROM dom.simple.MateriaCalificacion" +
@@ -50,17 +52,17 @@ public class MateriaCalificacion implements Comparable<MateriaCalificacion>{
 	
 	
 	// {{ Materia (property)
-	private MateriaDelCurso materia;
+	private MateriaDelCurso materiaDelCurso;
 	
 	@Named("Materia")	
 	@Column(allowsNull = "true")
 	@MemberOrder(sequence = "1")
-	public MateriaDelCurso getMateria() {
-		return materia;
+	public MateriaDelCurso getMateriaDelCurso() {
+		return materiaDelCurso;
 	}
 
-	public void setMateria(final MateriaDelCurso materia) {
-		this.materia = materia;		
+	public void setMateriaDelCurso(final MateriaDelCurso materia) {
+		this.materiaDelCurso = materia;		
 	}
 	// }}
 	
@@ -111,7 +113,7 @@ public class MateriaCalificacion implements Comparable<MateriaCalificacion>{
 
 
 	public String title(){
-		return alumno.title() + "- Materia: " + materia.getMateria().getNombre() + "- Nota: " + String.valueOf(nota);
+		return alumno.title() + "- Materia: " + materiaDelCurso.getMateria().getNombre() + "- Nota: " + String.valueOf(nota);
 	}
 
 	@Override
