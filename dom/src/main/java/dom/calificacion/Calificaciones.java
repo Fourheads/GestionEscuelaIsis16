@@ -41,25 +41,6 @@ import org.joda.time.LocalDate;
 @Bounded
 public class Calificaciones {
 	
-	//Crear Período
-//	@MemberOrder(sequence = "1")
-//	@Named("Nueva instancia de Calificacion")
-//	public Calificaciones createPeriodo(final @Named("Nombre: ") String inNombre,
-//								 final @Named("Inicio: ") LocalDate inFechaI,
-//								 final @Named("Cierre: ") LocalDate inFechaF){
-//				
-//		final Periodo newPeriodo = new Periodo();
-//		List<AlumnoCalificacion> alumnosCalificacion = new ArrayList<AlumnoCalificacion>();
-//		
-//		newPeriodo.setNombre(inNombre.toUpperCase());
-//		newPeriodo.setFechaInicio(inFechaI);
-//		newPeriodo.setFechaFinal(inFechaF);
-//		newPeriodo.setListAlumnoCalificacion(alumnosCalificacion);
-//		
-//		this.getPeriodos().add(newPeriodo);
-//		//agregarPeriodo(newPeriodo);		
-//		return this;
-//	}
 
 	// Periodos (Collection)
 	// //////////////////////////////////////////
