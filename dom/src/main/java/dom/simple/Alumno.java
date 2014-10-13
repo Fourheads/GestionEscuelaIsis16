@@ -91,7 +91,7 @@ public class Alumno extends Persona implements Comparable<Alumno> {
 	@Override
 	public int compareTo(Alumno alumno) {
 
-		return ObjectContracts.compare(this, alumno, "dni");
+		return ObjectContracts.compare(this, alumno, "apellido, nombre");
 	}
 
 	public String title() {
