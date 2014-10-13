@@ -62,7 +62,8 @@ public class AlumnoRepositorio {
     @MemberOrder(sequence = "1")
     @Named ("Listar Alumnos")
     public List<Alumno> listAll() {
-        return container.allInstances(Alumno.class);
+        return container.allMatches(new QueryDefault<Alumno>(Alumno.class,
+				"ListarAlumnos"));
     }
 
 
@@ -173,6 +174,11 @@ public class AlumnoRepositorio {
 			container.removeIfNotAlready(delAlumno);			
 			return  remAlumno + " fue eliminado";
 			
+	}
+	
+	public List<Alumno> choices0RemoveAlumno(){
+		return container.allMatches(new QueryDefault<Alumno>(Alumno.class,
+				"ListarAlumnos"));
 	}
 	
     // //////////////////////////////////////

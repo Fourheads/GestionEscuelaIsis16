@@ -39,6 +39,8 @@ import org.apache.isis.applib.util.ObjectContracts;
 @javax.jdo.annotations.DatastoreIdentity(strategy = javax.jdo.annotations.IdGeneratorStrategy.IDENTITY, column = "id")
 @javax.jdo.annotations.Version(strategy = VersionStrategy.VERSION_NUMBER, column = "version")
 @javax.jdo.annotations.Queries({
+		@javax.jdo.annotations.Query(name = "ListarAlumnos", language = "JDOQL", value = "SELECT FROM dom.simple.Alumno "
+				+ "order by this.apellido asc, this.nombre asc"),
 		@javax.jdo.annotations.Query(name = "findByDni", language = "JDOQL", value = "SELECT "
 				+ "FROM dom.simple.Alumno " + "WHERE dni == :dni"),
 		@javax.jdo.annotations.Query(name = "alumnosSinCurso", language = "JDOQL", value = "SELECT FROM dom.simple.Alumno"
