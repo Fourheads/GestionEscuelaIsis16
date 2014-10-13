@@ -37,25 +37,26 @@ public class PeriodoRepositorio {
 		newPeriodo.setCalificaciones(inCalificaciones);
 				
 		for(Alumno a: alumnosTodos){
-			
-			AlumnoCalificacion newAlumnoCal = new AlumnoCalificacion();			
-			List<MateriaCalificacion> materiasCalificacion = new ArrayList<MateriaCalificacion>();
-			
-			List<MateriaDelCurso> materiasDelAlumno = matDelCursoRepositorio.listarMateriaDelCursoParaUnCurso(a.getCurso());
-			
-			for(MateriaDelCurso mdc: materiasDelAlumno){
-				MateriaCalificacion unaMateriaCalificacion  = new MateriaCalificacion();
+			if(!(a.getCurso() == null)){
+				AlumnoCalificacion newAlumnoCal = new AlumnoCalificacion();			
+				List<MateriaCalificacion> materiasCalificacion = new ArrayList<MateriaCalificacion>();
 				
-				unaMateriaCalificacion.setAlumno(a);
-				unaMateriaCalificacion.setMateria(mdc);
+				List<MateriaDelCurso> materiasDelAlumno = matDelCursoRepositorio.listarMateriaDelCursoParaUnCurso(a.getCurso());
 				
-				materiasCalificacion.add(unaMateriaCalificacion);
+				for(MateriaDelCurso mdc: materiasDelAlumno){
+					MateriaCalificacion unaMateriaCalificacion  = new MateriaCalificacion();
+					
+					unaMateriaCalificacion.setAlumno(a);
+					unaMateriaCalificacion.setMateria(mdc);
+					
+					materiasCalificacion.add(unaMateriaCalificacion);
+				}
+				newAlumnoCal.setAlumno(a);
+				newAlumnoCal.setListMateriaCalificacion(materiasCalificacion);
+				newAlumnoCal.setPeriodo(newPeriodo);
+				
+				alumnosCalificacion.add(newAlumnoCal);
 			}
-			newAlumnoCal.setAlumno(a);
-			newAlumnoCal.setListMateriaCalificacion(materiasCalificacion);
-			newAlumnoCal.setPeriodo(newPeriodo);
-			
-			alumnosCalificacion.add(newAlumnoCal);						
 		}
 		
 		//newPeriodo.setAlumnoCalificaciones(alumnosCalificacion);		
