@@ -92,16 +92,16 @@ public class Anio implements Comparable<Anio> {
 		materiaRepositorio.agregarMateria(this, nombreMateria);
 		return this;
 	}
-	
-	public String validateAgregarMateriaAlAnio(final String nombreMateria){
+
+	public String validateAgregarMateriaAlAnio(final String nombreMateria) {
 		List<Materia> listadoMaterias = this.getMateriaList();
-		
-		for (Materia materia : listadoMaterias){
-			if (materia.getNombre().equals(nombreMateria)){
+
+		for (Materia materia : listadoMaterias) {
+			if (materia.getNombre().equals(nombreMateria)) {
 				return "La materia " + nombreMateria + " ya fué creada";
 			}
 		}
-		
+
 		return null;
 	}
 
@@ -116,9 +116,10 @@ public class Anio implements Comparable<Anio> {
 		return this;
 	}
 
-	public List<Materia> choices0QuitarMateriaDelAño(){
+	public List<Materia> choices0QuitarMateriaDelAño() {
 		return this.getMateriaList();
 	}
+
 	// }}
 
 	// Title (GUI)
