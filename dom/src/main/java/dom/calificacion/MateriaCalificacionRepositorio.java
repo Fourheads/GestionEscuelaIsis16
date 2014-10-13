@@ -18,6 +18,17 @@ public class MateriaCalificacionRepositorio {
 		return container.allInstances(MateriaCalificacion.class);
 	}
 	
+	public List<MateriaCalificacion> listMateriaCalificacionPorCursoPorMateria(int inAnio, 
+										String inDivision, String inPlan, String inMateria){
+		return container.allMatches(new QueryDefault<MateriaCalificacion>(MateriaCalificacion.class, "findMateriaCalificacionPorCursoPorMateria",
+				"anio", inAnio, "plan", inPlan, "division", inDivision, "materia", inMateria));
+	}
+	
+	public List<MateriaCalificacion> listMateriCalificacionPorMateria(String materia){
+		return container.allMatches(new QueryDefault<MateriaCalificacion>(MateriaCalificacion.class, "findMateriaCalificacionPorMateria",
+				"materia", materia));
+	}
+	
 	@javax.inject.Inject
 	private DomainObjectContainer container;
 }

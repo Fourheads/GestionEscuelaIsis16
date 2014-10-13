@@ -21,6 +21,8 @@ import org.apache.isis.applib.annotation.Render;
 import org.apache.isis.applib.annotation.Where;
 import org.apache.isis.applib.annotation.Render.Type;
 import org.apache.isis.applib.query.QueryDefault;
+import org.apache.isis.applib.services.memento.MementoService;
+import org.apache.isis.applib.services.memento.MementoService.Memento;
 
 import dom.simple.Alumno;
 import dom.simple.AlumnoRepositorio;
@@ -58,15 +60,17 @@ public class CargarNotaView extends AbstractViewModel{
 	public void viewModelInit(String memento) {
 		this.memento = memento;
 		
+		Memento newMemento = mementoService.parse(memento);
+				
 		String[] parametros = memento.split(",");
-		////titulo, periodo, anio, division, materia, alumnoIndex
-		this.title = parametros[0];
-		setPeriodo(parametros[1]);
-		setAnio(parametros[2]);
-		setDivision(parametros[3]);
-		setMateria(parametros[4]);
-		setPlanCurso(parametros[5]);
-		setAlumnoIndice(Integer.valueOf(parametros[6]));
+		////titulo, periodo, anio, division, materia, plan, alumnoIndex
+		this.title = newMemento.get("titulo", String.class);
+		setPeriodo(newMemento.get("periodo", String.class));
+		setAnio(newMemento.get("anio", Integer.class));
+		setDivision(newMemento.get("division", String.class));
+		setMateria(newMemento.get("materia", String.class));
+		setPlanCurso(newMemento.get("plan", String.class));
+		setAlumnoIndice(newMemento.get("indiceAlumno", Integer.class));
 		
 		try{
 			inicializarListAlumnos();
@@ -84,22 +88,9 @@ public class CargarNotaView extends AbstractViewModel{
 	
 	@Programmatic
 	public void inicializarListAlumnos(){
-		
-		List<Alumno> listAlumno = alumnoRepositorio.queryListarAlumnosDeUnCurso(Integer.valueOf(anio), division);
-		
-		//AGREGAR PLAN A MEMENTO
-		
-		
-		/*for(Alumno a: listAlumno){
-			MateriaCalificacion newMatCalificacion = new MateriaCalificacion();
-						
-			newMatCalificacion.setAlumno(a);
-			newMatCalificacion.setMateria(newMatCurso);
-			setAlumnoActivo(newMatCalificacion);
-			getMateriasCalificacion().add(newMatCalificacion);
-			//SEGUIR ACÁ ********************************************************************
-		}*/
-		
+		setMateriasCalificacion(matCalificacion.listMateriaCalificacionPorCursoPorMateria(anio, division, plan, materia));
+		//setMateriasCalificacion(matCalificacion.listMateriCalificacionPorMateria(materia));
+		//setMateriasCalificacion(container.allInstances(MateriaCalificacion.class));
 	}
 	
 	@Programmatic
@@ -137,16 +128,16 @@ public class CargarNotaView extends AbstractViewModel{
 	// }}
 
 	// {{ Anio (property)
-	private String anio;
+	private int anio;
 
 	@MemberOrder(sequence = "1.2")
 	@Column(allowsNull = "true")
 	@Named("Año")
-	public String getAnio() {
+	public int getAnio() {
 		return anio;
 	}
 
-	public void setAnio(final String anio) {
+	public void setAnio(final int anio) {
 		this.anio = anio;
 	}
 	// }}
@@ -229,13 +220,10 @@ public class CargarNotaView extends AbstractViewModel{
 
 	@javax.inject.Inject
 	private DomainObjectContainer container;
-	
-	@javax.inject.Inject
-	private AlumnoRepositorio alumnoRepositorio;
-	
-	@javax.inject.Inject
-	private MateriaDelCursoRepositorio matCursoRepositorio;
-	
+		
 	@javax.inject.Inject
 	private dom.calificacion.MateriaCalificacionRepositorio matCalificacion;
+	
+	@javax.inject.Inject
+    MementoService mementoService;
 }
