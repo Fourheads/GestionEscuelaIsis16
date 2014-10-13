@@ -40,21 +40,20 @@ public class AnioRepositorio {
 		List<Integer> aniosDisponibles = new ArrayList<Integer>();
 		List<Integer> aniosCreados = new ArrayList<Integer>();
 		List<Anio> anioList = listarAniosDeUnPlan(plan);
-		
-		
+
 		for (Anio anio : anioList) {
 			aniosCreados.add(anio.getAnioNumero());
 		}
-		
+
 		for (int i = 1; i < 9; i++) {
 			aniosDisponibles.add(i);
 		}
 
 		aniosDisponibles.removeAll(aniosCreados);
-		
+
 		return aniosDisponibles;
 	}
-	
+
 	public String validateAgregarAnio(Plan plan, int anioNumero) {
 		SortedSet<Anio> aniosList = plan.getAnioList();
 		for (Anio anio : aniosList) {
@@ -69,6 +68,7 @@ public class AnioRepositorio {
 	// endRegion > agregarAnio
 
 	// {{ eliminarAnio (action)
+	@NotInServiceMenu
 	@Named("Eliminar Año del Plan")
 	@MemberOrder(sequence = "2", name = "Listado de Años del Plan")
 	public Plan eliminarAnio(final Plan plan, @Named("Año") Anio anio,
