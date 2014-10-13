@@ -2,6 +2,7 @@ package dom.planEstudio;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.SortedSet;
 
 import javax.jdo.annotations.Column;
 import javax.jdo.annotations.IdentityType;
@@ -85,10 +86,23 @@ public class Anio implements Comparable<Anio> {
 
 	// {{ agregarMateriaAlPlan (action)
 	@MemberOrder(sequence = "1", name = "Listado de Materias del Año")
+	@Named("Agregar materia al Año")
 	public Anio agregarMateriaAlAnio(
-			@Named("Nombre de la materia") final String materia) {
-		materiaRepositorio.agregarMateria(this, materia);
+			@Named("Nombre de la materia") final String nombreMateria) {
+		materiaRepositorio.agregarMateria(this, nombreMateria);
 		return this;
+	}
+	
+	public String validateAgregarMateriaAlAnio(final String nombreMateria){
+		List<Materia> listadoMaterias = this.getMateriaList();
+		
+		for (Materia materia : listadoMaterias){
+			if (materia.getNombre().equals(nombreMateria)){
+				return "La materia " + nombreMateria + " ya fué creada";
+			}
+		}
+		
+		return null;
 	}
 
 	// }}
