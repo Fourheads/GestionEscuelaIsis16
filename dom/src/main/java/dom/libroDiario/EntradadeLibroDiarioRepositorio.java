@@ -32,6 +32,7 @@ import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.MultiLine;
 import org.apache.isis.applib.annotation.Named;
 import org.apache.isis.applib.annotation.Render;
+import org.apache.isis.applib.annotation.Render.Type;
 import org.apache.isis.applib.query.QueryDefault;
 import org.joda.time.LocalDate;
 
@@ -45,7 +46,6 @@ import dom.simple.MateriaDelCursoRepositorio;
 public class EntradadeLibroDiarioRepositorio {
 
 	@Hidden
-	@Render
 	public EntradaLibroDiario crearEntradadeLibroDiario(LocalDate fecha,
 			int horas, int unidad, final @MaxLength(2048)
 	  @MultiLine @Named("Actividad") String actividad,
@@ -82,9 +82,10 @@ public class EntradadeLibroDiarioRepositorio {
 				"TodasEntradaLibroDiarioList"));
 	}
 	
-	@Render
+	
 	@Named("Entradas por fecha")
 	@MemberOrder(sequence = "2")
+	@Render(Type.EAGERLY)
 	public List<EntradaLibroDiario> entradasporfecha(@Named("Curso") final Curso curso, @Named("Materia") final MateriaDelCurso materiadelcurso, @Named("Fecha") final LocalDate fecha)
 	{
 		return container.allMatches(new QueryDefault<EntradaLibroDiario>(EntradaLibroDiario.class,
