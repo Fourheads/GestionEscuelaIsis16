@@ -32,6 +32,7 @@ import org.apache.isis.applib.annotation.MaxLength;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.MultiLine;
 import org.apache.isis.applib.annotation.Named;
+import org.apache.isis.applib.annotation.Render;
 import org.apache.isis.applib.query.QueryDefault;
 import org.joda.time.LocalDate;
 
@@ -120,12 +121,14 @@ public class MateriaDelLibroDiarioRepositorio {
 		return choices4NuevaEntradalibrodiario().get(0);
 	}
 	
-	
+	@Render
+	@Named("Mostrar materia libro diario")
 	@MemberOrder(sequence = "1")
 	public List<MateriaDelLibroDiario> mostrarmateriaLibroDiario(final Curso curso) {
 		return listarmateriaslibrodiario(libroDiarioRepositorio.mostrarLibroDiarioDelCurso(curso));
 	}
 	
+	@Render
 	@Named("Entradas por fecha")
 	@MemberOrder(sequence = "2")
 	public List<EntradaLibroDiario> listarEntradasporFecha(@Named("Curso") final Curso curso, @Named("Materia") final MateriaDelCurso materiadelcurso, @Named("Fecha") final LocalDate fecha)
