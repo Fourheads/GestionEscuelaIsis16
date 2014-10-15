@@ -28,6 +28,8 @@ import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.Hidden;
 import org.apache.isis.applib.annotation.MemberOrder;
+import org.apache.isis.applib.annotation.Named;
+import org.apache.isis.applib.annotation.Render;
 import org.apache.isis.applib.query.QueryDefault;
 
 import java.util.List;
@@ -61,6 +63,8 @@ public class LibroDiarioRepositorio {
 	}
 
 	// {{ mostrarLibroDiarioDelCurso (action)
+	@Render 
+	@Named("Mostrar libro diario del curso")
 	@MemberOrder(sequence = "1")
 	public LibroDiario mostrarLibroDiarioDelCurso(final Curso curso) {
 		
@@ -73,7 +77,7 @@ public class LibroDiarioRepositorio {
 	// }}
 
 	@Hidden
-	@MemberOrder(sequence = "2")
+	//@MemberOrder(sequence = "2")
 	public List<LibroDiario> listaLibroDiarioDelCurso() {
 		
 		return container.allMatches(new QueryDefault<LibroDiario>(LibroDiario.class, "MateriasDeUnLibroDiario"));
