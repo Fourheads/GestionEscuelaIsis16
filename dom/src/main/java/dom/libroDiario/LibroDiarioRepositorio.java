@@ -67,7 +67,6 @@ public class LibroDiarioRepositorio {
 	
 	@Named("Mostrar libro diario del curso")
 	@MemberOrder(sequence = "1")
-	@Render(Type.EAGERLY)
 	public LibroDiario mostrarLibroDiarioDelCurso(final Curso curso) {
 		
 		return container.firstMatch(new QueryDefault<LibroDiario>(LibroDiario.class,
@@ -79,7 +78,6 @@ public class LibroDiarioRepositorio {
 	// }}
 
 	@Hidden
-	@Render(Type.EAGERLY)
 	//@MemberOrder(sequence = "2")
 	public List<LibroDiario> listaLibroDiarioDelCurso() {
 		

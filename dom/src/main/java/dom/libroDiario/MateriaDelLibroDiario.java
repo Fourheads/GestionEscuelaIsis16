@@ -40,6 +40,8 @@ import org.apache.isis.applib.annotation.Bookmarkable;
 import org.apache.isis.applib.annotation.Bounded;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.ObjectType;
+import org.apache.isis.applib.annotation.Render;
+import org.apache.isis.applib.annotation.Render.Type;
 
 import dom.simple.MateriaDelCurso;
 
@@ -93,6 +95,7 @@ public class MateriaDelLibroDiario {
 	private List<EntradaLibroDiario> entradalibrodiario = new ArrayList<EntradaLibroDiario>();
 
 	@MemberOrder(sequence = "1")
+	@Render(Type.EAGERLY)
 	public List<EntradaLibroDiario> getEntradaLibroDiario() {
 		return entradalibrodiario;
 	}

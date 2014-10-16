@@ -35,6 +35,8 @@ import org.apache.isis.applib.annotation.Bookmarkable;
 import org.apache.isis.applib.annotation.Bounded;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.ObjectType;
+import org.apache.isis.applib.annotation.Render;
+import org.apache.isis.applib.annotation.Render.Type;
 import org.joda.time.LocalDate;
 
 import dom.libroDiario.HoraCatedra;
@@ -75,6 +77,7 @@ public class EntradaLibroDiario {
 	@Persistent(mappedBy = "entradaLibroDiario", dependentElement = "true")
 	private List<HoraCatedra> horacatedra = new ArrayList<HoraCatedra>();
 
+	@Render(Type.EAGERLY)
 	@MemberOrder(sequence = "1")
 	public List<HoraCatedra> getHoraCatedra() {
 		return horacatedra;

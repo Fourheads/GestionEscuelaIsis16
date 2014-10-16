@@ -122,7 +122,6 @@ public class MateriaDelLibroDiarioRepositorio {
 		return choices4NuevaEntradalibrodiario().get(0);
 	}
 	
-	@Render(Type.EAGERLY)
 	@Named("Mostrar materia libro diario")
 	@MemberOrder(sequence = "1")
 	public List<MateriaDelLibroDiario> mostrarmateriaLibroDiario(final Curso curso) {
@@ -132,7 +131,6 @@ public class MateriaDelLibroDiarioRepositorio {
 	
 	@Named("Entradas por fecha")
 	@MemberOrder(sequence = "2")
-	@Render(Type.EAGERLY)
 	public List<EntradaLibroDiario> listarEntradasporFecha(@Named("Curso") final Curso curso, @Named("Materia") final MateriaDelCurso materiadelcurso, @Named("Fecha") final LocalDate fecha)
 	{
 		return entradalibrodiariorepositiorio.entradasporfecha(curso, materiadelcurso, fecha);

@@ -85,7 +85,6 @@ public class EntradadeLibroDiarioRepositorio {
 	
 	@Named("Entradas por fecha")
 	@MemberOrder(sequence = "2")
-	@Render(Type.EAGERLY)
 	public List<EntradaLibroDiario> entradasporfecha(@Named("Curso") final Curso curso, @Named("Materia") final MateriaDelCurso materiadelcurso, @Named("Fecha") final LocalDate fecha)
 	{
 		return container.allMatches(new QueryDefault<EntradaLibroDiario>(EntradaLibroDiario.class,
