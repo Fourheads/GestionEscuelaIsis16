@@ -37,7 +37,7 @@ import java.util.List;
 
 import dom.simple.Curso;
 
-
+@Named("Libro diario")
 @DomainService(menuOrder = "100")
 public class LibroDiarioRepositorio {
 	

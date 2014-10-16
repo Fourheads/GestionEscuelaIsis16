@@ -63,7 +63,7 @@ public class MateriaDelLibroDiarioRepositorio {
 
 	
 	@Named("Nueva entrada libro diario")
-	@MemberOrder(sequence = "1")//@Named("Libro Diario") final LibroDiario librodiario, @Named("Materias del libro diario") final MateriaDelLibroDiario materialiDelLibroDiario,
+	@MemberOrder(name="Libro diario",sequence = "2")//@Named("Libro Diario") final LibroDiario librodiario, @Named("Materias del libro diario") final MateriaDelLibroDiario materialiDelLibroDiario,
 	public EntradaLibroDiario nuevaEntradalibrodiario(@Named("Libro Diario") LibroDiario LibroDiario, 
 			@Named("Materias del libro diario") MateriaDelLibroDiario materialiDelLibroDiario,
 			@Named("Fecha") LocalDate  fecha, @Named("Numero de hora") int horas, @Named("Unidad") int unidad,
@@ -123,14 +123,14 @@ public class MateriaDelLibroDiarioRepositorio {
 	}
 	
 	@Named("Mostrar materia libro diario")
-	@MemberOrder(sequence = "1")
+	@MemberOrder(name="Libro diario",sequence = "3")
 	public List<MateriaDelLibroDiario> mostrarmateriaLibroDiario(final Curso curso) {
 		return listarmateriaslibrodiario(libroDiarioRepositorio.mostrarLibroDiarioDelCurso(curso));
 	}
 	
 	
 	@Named("Entradas por fecha")
-	@MemberOrder(sequence = "2")
+	@MemberOrder(name="Libro diario",sequence = "4")
 	public List<EntradaLibroDiario> listarEntradasporFecha(@Named("Curso") final Curso curso, @Named("Materia") final MateriaDelCurso materiadelcurso, @Named("Fecha") final LocalDate fecha)
 	{
 		return entradalibrodiariorepositiorio.entradasporfecha(curso, materiadelcurso, fecha);
