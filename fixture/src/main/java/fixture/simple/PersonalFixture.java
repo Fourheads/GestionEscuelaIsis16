@@ -19,6 +19,9 @@
 
 package fixture.simple;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import dom.simple.*;
 
 import org.apache.isis.applib.fixturescripts.FixtureScript;
@@ -36,14 +39,25 @@ public class PersonalFixture extends FixtureScript {
 
         // prereqs
         execute(new GenericTearDownFixture("Personal"), executionContext);
-
+        
+        List<Personal> listPersonal=new ArrayList<Personal>();
+        Funcion.E_funciones[] Funciones=Funcion.E_funciones.values();
+        
         int Cantidad=20;
         
         // create
         for(int x=0; x<=Cantidad;x++)
         {
-        	create(GenericData.ObtenerNombre(),GenericData.ObtenerApellido() ,Persona.E_sexo.MASCULINO,GenericData.Random(10000000, 88888888),LocalDate.now(),Persona.E_nacionalidad.ARGENTINA, Localidad.E_localidades.NEUQUEN,GenericData.ObtenerCalle(), GenericData.Random(1, 9999),null,null,String.valueOf(GenericData.Random(10000000, 88888888)), executionContext);
+        	listPersonal.add(create(GenericData.ObtenerNombre(),GenericData.ObtenerApellido() ,Persona.E_sexo.MASCULINO,GenericData.Random(15000000, 50000000),LocalDate.now(),Persona.E_nacionalidad.ARGENTINA, Localidad.E_localidades.NEUQUEN,GenericData.ObtenerCalle(), GenericData.Random(1, 9999),null,null,String.valueOf(GenericData.Random(10000000, 88888888)), executionContext));
         }
+        
+        for(Personal personal : listPersonal)
+        	{
+        		Funcion newfuncion=new Funcion();
+        		newfuncion.setNombre(Funciones[GenericData.Random(0, Funciones.length)]);
+        		String concate=personal.getNombre()+" "+personal.getApellido()+" desempeña la labor de "+newfuncion.getNombre().toString();	
+        		personal.createFuncion(newfuncion.getNombre(), concate);
+        	}
     }
     // //////////////////////////////////////
 
