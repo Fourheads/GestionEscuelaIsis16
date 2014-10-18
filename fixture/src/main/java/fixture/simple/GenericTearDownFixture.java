@@ -25,8 +25,8 @@ import org.apache.isis.objectstore.jdo.applib.service.support.IsisJdoSupport;
 
 public class GenericTearDownFixture extends FixtureScript {
 
-	String Clase;
-	
+	private String Clase;
+		
 	GenericTearDownFixture(String clase)
 	{
 		Clase=clase;
@@ -34,7 +34,7 @@ public class GenericTearDownFixture extends FixtureScript {
 	
     @Override
     protected void execute(ExecutionContext executionContext) {
-        isisJdoSupport.executeUpdate("delete from \""+Clase+"\"");
+    		isisJdoSupport.executeUpdate("delete from \""+Clase+"\"");
     }
 
 
