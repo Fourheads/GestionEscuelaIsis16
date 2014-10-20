@@ -107,7 +107,11 @@ public class CursoRepositorio {
 
 		return choices0ListarCursosDeUnPlan().get(0);
 	}
-
+	
+	public List<Curso> listarCursoConAlumnos(){
+		return container.allMatches(new QueryDefault<Curso>(Curso.class, "buscarCursoConAlumnos"));
+	}
+	
 	// {{ listarCursosDeUnAnio (action)
 	@MemberOrder(sequence = "2.5")
 	@NotContributed

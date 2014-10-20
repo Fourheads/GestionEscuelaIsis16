@@ -71,7 +71,11 @@ import dom.simple.Funcion.E_funciones;
 				+ "FROM dom.simple.Curso "
 				+ "WHERE this.anio.plan.descripcion == :plan "
 				+ "&& this.anio.anioNumero == :anio "
-				+ "&& this.division == :division") })
+				+ "&& this.division == :division"),
+		@javax.jdo.annotations.Query(name = "buscarCursoConAlumnos", language = "JDOQL", value = "SELECT " +
+				"FROM dom.simple.Curso " +
+				"WHERE this.ListaAlumno != null")
+})
 @Bounded
 @PersistenceCapable
 @MemberGroupLayout(columnSpans = { 4, 0, 0, 8 }, left = {"Datos Del Curso", "Asistencia"} )
