@@ -8,6 +8,7 @@ import java.util.TreeSet;
 import javax.jdo.annotations.Column;
 import javax.jdo.annotations.Element;
 import javax.jdo.annotations.IdentityType;
+import javax.jdo.annotations.Join;
 import javax.jdo.annotations.VersionStrategy;
 
 import org.apache.isis.applib.annotation.Bookmarkable;
@@ -22,10 +23,27 @@ import dom.calificacion.Periodo;
 @javax.jdo.annotations.DatastoreIdentity(strategy = javax.jdo.annotations.IdGeneratorStrategy.IDENTITY, column = "id")
 @javax.jdo.annotations.Version(strategy = VersionStrategy.VERSION_NUMBER, column = "version")
 @javax.jdo.annotations.Queries({ 
-	@javax.jdo.annotations.Query(name = "findAlumnoCalificacionPorAlumno", 
+	@javax.jdo.annotations.Query(name = "findAlumnoCalificacionPorAlumnoPorPeriodo", 
 			language = "JDOQL", 
 			value = "SELECT FROM dom.simple.AlumnoCalificacion"
-					+" WHERE this.alumno.dni == :dni ")})
+					+" WHERE this.alumno.dni == :dni &&" +
+					" this.periodo.nombre == :periodo"),
+	@javax.jdo.annotations.Query(name = "findAlumnoCalificacionPorPeriodoPorCursoPorMateria", 
+			language = "JDOQL", 
+			value = "SELECT FROM dom.simple.AlumnoCalificacion"
+							+" WHERE this.periodo.nombre == :periodo &&" +
+							" this.alumno.curso.anio.plan.descripcion == :plan &&" +
+							" this.alumno.curso.anio.anioNumero == :anio &&" +
+							" this.alumno.curso.division == :division &&" +								
+							" this.listMateriaCalificacion.contains(matCal) &&" +
+							" matCal.materiaDelCurso.materia.nombre == :materia)"),
+	@javax.jdo.annotations.Query(name = "findAlumnoCalificacionPorPeriodoPorCurso", 
+			language = "JDOQL", 
+			value = "SELECT FROM dom.simple.AlumnoCalificacion"
+							+" WHERE this.periodo.nombre == :periodo &&" +							
+							" this.alumno.curso.anio.anioNumero == :anio &&" +
+							" this.alumno.curso.division == :division")
+})
 @Bookmarkable
 public class AlumnoCalificacion {
 	
@@ -43,9 +61,10 @@ public class AlumnoCalificacion {
 		this.alumno = alumno;
 	}
 	// }}
-
+	
 	// {{ ListMateriaCalificacion (property)
-	@Element(column = "id_alumnoCalificacion", dependent = "true")
+	@Join
+	@Element(mappedBy = "alumnoCalificacion", dependent = "true")
 	private List<MateriaCalificacion> listMateriaCalificacion = new ArrayList<MateriaCalificacion>();
 
 	@Named("Materias")	       
