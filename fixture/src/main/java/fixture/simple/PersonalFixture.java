@@ -41,12 +41,11 @@ public class PersonalFixture extends FixtureScript {
     protected void execute(ExecutionContext executionContext) {
 
         // prereqs
-    	execute(new GenericTearDownFixture("Funcion"), executionContext);
-        execute(new GenericTearDownFixture("Personal"), executionContext);
+    	BorrarDBPersonal(executionContext);
         
         List<Personal> listPersonal=new ArrayList<Personal>();
         
-        int Cantidad=50;
+        int Cantidad=GenericData.ObtenerCantidad();
         proporciones(Cantidad);
         
         // create
@@ -99,6 +98,13 @@ public class PersonalFixture extends FixtureScript {
     	return newfuncion;
     }
 
+    
+    public void BorrarDBPersonal(ExecutionContext executionContext)
+    {
+    	execute(new GenericTearDownFixture("Funcion"), executionContext);
+        execute(new GenericTearDownFixture("Personal"), executionContext);
+        return;
+    }
     
     private Personal create(final String nombre, String apellido,Persona.E_sexo sexo, int dni, LocalDate nacimiento,Persona.E_nacionalidad nacionalidad, Localidad.E_localidades localidad, String calle, int numero, String piso,String departamento,String telefono, ExecutionContext executionContext) {
         return executionContext.add(this, personal.createPersonal(nombre, apellido, sexo, dni, nacimiento, nacionalidad, localidad, calle, numero, piso, departamento, telefono));

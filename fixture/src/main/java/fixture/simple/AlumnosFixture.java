@@ -34,14 +34,9 @@ public class AlumnosFixture extends FixtureScript {
     protected void execute(ExecutionContext executionContext) {
 
         // prereqs
-    	execute(new GenericTearDownFixture("AlumnoCalificacion"), executionContext);
-    	execute(new GenericTearDownFixture("Curso_listAlumno"), executionContext);
-    	execute(new GenericTearDownFixture("AsistenciaAlumno"), executionContext);
-    	execute(new GenericTearDownFixture("AsistenciaDia_asistenciaAlumnoList"), executionContext);
-        execute(new GenericTearDownFixture("AlumnoCalificacion"), executionContext);
-        execute(new GenericTearDownFixture("Alumno"), executionContext);
+    	BorrarDBAlumnos(executionContext);
         
-        int Cantidad=20;
+        int Cantidad=GenericData.ObtenerCantidad();
         
         // create
         for(int x=0; x<=Cantidad;x++)
@@ -58,6 +53,17 @@ public class AlumnosFixture extends FixtureScript {
 
     // //////////////////////////////////////
 
+    public void BorrarDBAlumnos(ExecutionContext executionContext)
+    {
+    	execute(new GenericTearDownFixture("AlumnoCalificacion"), executionContext);
+    	execute(new GenericTearDownFixture("Curso_listAlumno"), executionContext);
+    	execute(new GenericTearDownFixture("AsistenciaAlumno"), executionContext);
+    	execute(new GenericTearDownFixture("AsistenciaDia_asistenciaAlumnoList"), executionContext);
+        execute(new GenericTearDownFixture("AlumnoCalificacion"), executionContext);
+        execute(new GenericTearDownFixture("Alumno"), executionContext);
+        return;
+    }
+    
     @javax.inject.Inject
     private AlumnoRepositorio alumnos;
 
