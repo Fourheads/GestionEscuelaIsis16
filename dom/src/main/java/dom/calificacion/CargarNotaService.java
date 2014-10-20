@@ -1,5 +1,6 @@
 package dom.calificacion;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.isis.applib.DomainObjectContainer;
@@ -12,6 +13,7 @@ import org.apache.isis.applib.services.memento.MementoService.Memento;
 
 import dom.planEstudio.Materia;
 import dom.simple.Curso;
+import dom.simple.CursoRepositorio;
 import dom.simple.MateriaDelCurso;
 
 @Named("Cargar Notas")
@@ -31,10 +33,10 @@ public class CargarNotaService {
 	        return "SimpleObject";
 	    }
 	    @Named("Por Curso")
-	    public CargarNotaView calificarPorCurso(@Named("Periodo: ") Periodo inPeriodo,
-	    										@Named("Ciclo: ") Calificaciones inCalificacion,												 
-	    										@Named("Curso: ") Curso inCurso,
-	    										@Named("Materia: ") MateriaDelCurso inMateria){
+	    public CargarNotaView calificarPorCurso(final @Named("Ciclo: ") Calificaciones inCalificacion,
+	    										final @Named("Periodo: ") Periodo inPeriodo,	    																						 
+	    										final @Named("Curso: ") Curso inCurso,
+	    										final @Named("Materia: ") MateriaDelCurso inMateria){
 	    	
 	    	Memento newMemento = mementoService.create();
 	    	//titulo, periodo, anio, division, materia, plan, alumnoIndex
@@ -54,16 +56,78 @@ public class CargarNotaService {
 	    	
 	    }
 	    
-	    public List<MateriaCalificacion> listMatCal(){
-	    	return container.allInstances(MateriaCalificacion.class);
+	    public List<Calificaciones> choices0CalificarPorCurso() {
+	    	List<Calificaciones> listCalificaciones = container.allMatches(new QueryDefault<Calificaciones>(Calificaciones.class,
+					"findAll"));
+	    	if(listCalificaciones.isEmpty()){
+	    		container.warnUser("Debe crear al menos un ciclo lectivo con sus períodos de evaluación");
+	    		return listCalificaciones;
+	    	}
+	    	return listCalificaciones;
+		}
+	    
+	    public Calificaciones default0CalificarPorCurso() {
+			if (choices0CalificarPorCurso().isEmpty()) {
+				return null;
+			}
+			return choices0CalificarPorCurso().get(0);
+		}
+	    
+	    public List<Periodo> choices1CalificarPorCurso(final @Named("Ciclo: ") Calificaciones inCalificacion){
+	    	return inCalificacion.getPeriodos();
+	    }
+	    
+	    /*public Periodo default1CalificarPorCurso(Calificaciones calificacion) {
+			if (choices1CalificarPorCurso(calificacion).isEmpty()) {
+				return null;
+			}
+			return choices1CalificarPorCurso(calificacion).get(0);
+		}*/
+	    
+	    public List<Curso> choices2CalificarPorCurso(){
+	    	return cursoRepositorio.listarCursoConAlumnos();
+	    }
+	    
+	    public Curso default2CalificarPorCurso(){
+	    	if(choices2CalificarPorCurso().isEmpty()){
+	    		return null;
+	    	}
+	    	return choices2CalificarPorCurso().get(0);
+	    }
+	    
+	   /*public List<MateriaDelCurso> choices3CalificarPorCurso(final @Named("Curso: ") Curso inCurso){		   
+		   if(!inCurso.getMateriaDelCursoList().isEmpty()){
+			   return inCurso.getMateriaDelCursoList();   
+		   }
+		   return null;	    	
+	    }*/
+	    
+	    /*public MateriaDelCurso default3CalificarPorCurso(Curso curso){
+	    	if(choices3CalificarPorCurso(curso).isEmpty()){
+	    		return null;
+	    	}
+	    	return choices3CalificarPorCurso(curso).get(0);
+	    }*/
+	    
+	    
+	    public List<MateriaCalificacion> listMatCal(@Named("Ciclo: ") Calificaciones inCalificacion,
+				@Named("Periodo: ") Periodo inPeriodo,	    																						 
+				@Named("Curso: ") Curso inCurso,
+				@Named("Materia: ") MateriaDelCurso inMateria){
+	    	return mcRepositorio.listPorCursoPorMateriaPorPeriodo(inCurso.getAnio().getAnioNumero(), inCurso.getAnio().getPlan().getDescripcion(),
+	    								inCurso.getDivision(), inMateria.getMateria().getNombre(), inPeriodo.getNombre());
 	    }
 	    
 	    
 	    @javax.inject.Inject
 		DomainObjectContainer container;
-	    
+	    	    
 	    @javax.inject.Inject
+	    CursoRepositorio cursoRepositorio;
 	    MateriaCalificacionRepositorio mcRepositorio;
 	    @javax.inject.Inject
 	    MementoService mementoService;
+	    
+	    @javax.inject.Inject
+		AlumnoCalificacionRepositorio aluCalRepositorio;
 }

@@ -34,7 +34,11 @@ import org.joda.time.LocalDate;
 	@javax.jdo.annotations.Query(name = "findByCiclo", 
 			language = "JDOQL", 
 			value = "SELECT FROM dom.simple.Calificaciones"
-					+" WHERE this.cicloCalificacion == :ciclo ")				
+					+" WHERE this.cicloCalificacion == :ciclo "),
+	@javax.jdo.annotations.Query(name = "findAll", 
+			language = "JDOQL", 
+			value = "SELECT FROM dom.simple.Calificaciones"
+					+" ORDER BY cicloCalificacion asc ")
 })
 
 @Bookmarkable

@@ -15,8 +15,11 @@ import org.apache.isis.applib.annotation.Disabled;
 import org.apache.isis.applib.annotation.Hidden;
 import org.apache.isis.applib.annotation.MemberGroupLayout;
 import org.apache.isis.applib.annotation.MemberOrder;
+import org.apache.isis.applib.annotation.MultiLine;
 import org.apache.isis.applib.annotation.Named;
+import org.apache.isis.applib.annotation.Optional;
 import org.apache.isis.applib.annotation.Programmatic;
+import org.apache.isis.applib.annotation.PublishedAction;
 import org.apache.isis.applib.annotation.Render;
 import org.apache.isis.applib.annotation.Where;
 import org.apache.isis.applib.annotation.Render.Type;
@@ -24,6 +27,7 @@ import org.apache.isis.applib.query.QueryDefault;
 import org.apache.isis.applib.services.memento.MementoService;
 import org.apache.isis.applib.services.memento.MementoService.Memento;
 
+import dom.asistencia.TomarAsistenciaView;
 import dom.simple.Alumno;
 import dom.simple.AlumnoRepositorio;
 import dom.simple.MateriaDelCurso;
@@ -61,8 +65,7 @@ public class CargarNotaView extends AbstractViewModel{
 		this.memento = memento;
 		
 		Memento newMemento = mementoService.parse(memento);
-				
-		String[] parametros = memento.split(",");
+		
 		////titulo, periodo, anio, division, materia, plan, alumnoIndex
 		this.title = newMemento.get("titulo", String.class);
 		setPeriodo(newMemento.get("periodo", String.class));
@@ -78,7 +81,8 @@ public class CargarNotaView extends AbstractViewModel{
 			e.getMessage();
 		}
 		
-		//inicializarAlumnoActivo();
+		inicializarAlumnoActivo();
+		
 	}
 
 	@Override
@@ -88,9 +92,9 @@ public class CargarNotaView extends AbstractViewModel{
 	
 	@Programmatic
 	public void inicializarListAlumnos(){
-		setMateriasCalificacion(matCalificacion.listMateriaCalificacionPorCursoPorMateria(anio, division, plan, materia));
-		//setMateriasCalificacion(matCalificacion.listMateriCalificacionPorMateria(materia));
-		//setMateriasCalificacion(container.allInstances(MateriaCalificacion.class));
+		//setMateriasCalificacion(matCalificacion.listMateriaCalificacionPorCursoPorMateria(anio, division, plan, materia));
+		
+		setMateriasCalificacion(matCalificacion.listPorCursoPorMateriaPorPeriodo(anio, plan, division, materia, periodo));
 	}
 	
 	@Programmatic
@@ -187,7 +191,7 @@ public class CargarNotaView extends AbstractViewModel{
 	
 	// {{ AlumnoActivo (property)
 	private MateriaCalificacion alumnoActivo;
-
+		
 	@Disabled
 	@MemberOrder(sequence = "1.6")
 	@Column(allowsNull = "false")
@@ -215,9 +219,94 @@ public class CargarNotaView extends AbstractViewModel{
 	public void setMateriasCalificacion(final List<MateriaCalificacion> materiasCalificacion) {
 		this.materiasCalificacion = materiasCalificacion;
 	}
+	///////////////////////////////////////////////////////////// }}
+	
+	// {{ Nota (property)
+	private int nota;
+	
+	@Hidden
+	@Column(allowsNull = "false")
+	@MemberOrder(sequence = "1.8")
+	public int getNota() {
+		return nota;
+	}
+
+	public void setNota(final int nota) {
+		this.nota = nota;
+	}
 	// }}
 
+	// {{ Observacion (property)
+	private String observacion;
+	@Hidden
+	@Column(allowsNull = "false")
+	@MemberOrder(sequence = "1.9")
+	public String getObservacion() {
+		return observacion;
+	}
 
+	public void setObservacion(final String observacion) {
+		this.observacion = observacion;
+	}
+	///////////////////////////////////////////////////////////// }}
+
+	@Named("Alumno Anterior")
+	@MemberOrder(sequence = "2", name = "alumnoActivo")
+	//@PublishedAction
+	public CargarNotaView pasarAlAlumnoAnterior() {
+					
+		return generarNuevoViewModel(alumnoIndiceAnterior());
+	}
+	
+	@MemberOrder(sequence = "5", name = "alumnoActivo")
+	@Named("Calificar")
+	public CargarNotaView calificar(final @Named("Nota: ") int inNota, final @MultiLine @Optional @Named("Observacion: ") String inObservacion){
+		this.setNota(inNota);
+		this.setObservacion(inObservacion);
+		
+		
+		getAlumnoActivo().setNota(inNota);
+		getAlumnoActivo().setObservacion(inObservacion.toUpperCase());
+		
+		return generarNuevoViewModel(alumnoIndiceSiguiente());
+	}
+	
+	@Programmatic
+	private CargarNotaView generarNuevoViewModel(int nuevoIndice) {
+		
+		Memento memento = mementoService.create();
+
+		memento.set("titulo", "Cargar Notas");
+		memento.set("periodo", getPeriodo());
+		memento.set("anio", getAnio());
+		memento.set("division", getDivision());
+		memento.set("materia", getMateria());
+		memento.set("plan", getPlanCurso());
+		memento.set("indiceAlumno", nuevoIndice);
+
+		return container.newViewModelInstance(CargarNotaView.class,
+				memento.asString());
+	}
+	
+	@Programmatic
+	public int alumnoIndiceSiguiente() {
+		int nuevoIndice = getAlumnoIndice() + 1;
+
+		if (nuevoIndice == getMateriasCalificacion().size()) {
+			nuevoIndice = 0;
+		}
+		return nuevoIndice;
+	}
+	@Programmatic
+	public int alumnoIndiceAnterior() {
+		int nuevoIndice = getAlumnoIndice() - 1;
+
+		if (nuevoIndice == -1) {
+			nuevoIndice = getMateriasCalificacion().size() -1;
+		}
+		return nuevoIndice;
+	}
+	
 	@javax.inject.Inject
 	private DomainObjectContainer container;
 		
@@ -226,4 +315,7 @@ public class CargarNotaView extends AbstractViewModel{
 	
 	@javax.inject.Inject
     MementoService mementoService;
+	
+	@javax.inject.Inject
+	AlumnoCalificacionRepositorio aluCalRepositorio;
 }
