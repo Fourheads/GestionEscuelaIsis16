@@ -34,8 +34,9 @@ public class AlumnosFixture extends FixtureScript {
     protected void execute(ExecutionContext executionContext) {
 
         // prereqs
+        execute(new GenericTearDownFixture("AlumnoCalificacion"), executionContext);
         execute(new GenericTearDownFixture("Alumno"), executionContext);
-
+        
         int Cantidad=20;
         
         // create

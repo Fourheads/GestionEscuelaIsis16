@@ -22,8 +22,10 @@ package fixture.simple;
 import dom.simple.SimpleObject;
 import dom.simple.SimpleObjects;
 
+import org.apache.isis.applib.annotation.Hidden;
 import org.apache.isis.applib.fixturescripts.FixtureScript;
 
+@Hidden
 public class SimpleObjectsFixture extends FixtureScript {
 
     public SimpleObjectsFixture() {
