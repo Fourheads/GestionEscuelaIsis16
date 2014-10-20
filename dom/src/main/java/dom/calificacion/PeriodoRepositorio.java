@@ -37,25 +37,29 @@ public class PeriodoRepositorio {
 		newPeriodo.setCalificaciones(inCalificaciones);
 				
 		for(Alumno a: alumnosTodos){
-			if(!(a.getCurso() == null)){
-				AlumnoCalificacion newAlumnoCal = new AlumnoCalificacion();			
-				List<MateriaCalificacion> materiasCalificacion = new ArrayList<MateriaCalificacion>();
-				
-				List<MateriaDelCurso> materiasDelAlumno = matDelCursoRepositorio.listarMateriaDelCursoParaUnCurso(a.getCurso());
-				
-				for(MateriaDelCurso mdc: materiasDelAlumno){
-					MateriaCalificacion unaMateriaCalificacion  = new MateriaCalificacion();
+			if(!(a.getCurso() == null)){				
+				//if(aluCalRepositorio.alumnoCalificacionPorAlumnoPorPeriodo(a.getDni(), newPeriodo.getNombre()).isEmpty()){
 					
-					unaMateriaCalificacion.setAlumno(a);
-					unaMateriaCalificacion.setMateriaDelCurso(mdc);
+					AlumnoCalificacion newAlumnoCal = new AlumnoCalificacion();			
+					List<MateriaCalificacion> materiasCalificacion = new ArrayList<MateriaCalificacion>();
 					
-					materiasCalificacion.add(unaMateriaCalificacion);
+					List<MateriaDelCurso> materiasDelAlumno = matDelCursoRepositorio.listarMateriaDelCursoParaUnCurso(a.getCurso());
+					
+					for(MateriaDelCurso mdc: materiasDelAlumno){
+						MateriaCalificacion unaMateriaCalificacion  = new MateriaCalificacion();
+						
+						unaMateriaCalificacion.setAlumno(a);
+						unaMateriaCalificacion.setMateriaDelCurso(mdc);
+						unaMateriaCalificacion.setAlumnoCalificacion(newAlumnoCal);
+						
+						materiasCalificacion.add(unaMateriaCalificacion);
+					//}
+					newAlumnoCal.setAlumno(a);
+					newAlumnoCal.setListMateriaCalificacion(materiasCalificacion);
+					newAlumnoCal.setPeriodo(newPeriodo);
+					
+					alumnosCalificacion.add(newAlumnoCal);
 				}
-				newAlumnoCal.setAlumno(a);
-				newAlumnoCal.setListMateriaCalificacion(materiasCalificacion);
-				newAlumnoCal.setPeriodo(newPeriodo);
-				
-				alumnosCalificacion.add(newAlumnoCal);
 			}
 		}
 		
@@ -64,10 +68,11 @@ public class PeriodoRepositorio {
 		
 		container.persistIfNotAlready(newPeriodo);
 		
-		for(AlumnoCalificacion ac: alumnosCalificacion){
-			container.persistIfNotAlready(ac);
+		if(!alumnosCalificacion.isEmpty()){
+			for(AlumnoCalificacion ac: alumnosCalificacion){
+				container.persistIfNotAlready(ac);
+			}
 		}
-		
 		return inCalificaciones;
 	}
 	
@@ -82,5 +87,8 @@ public class PeriodoRepositorio {
 	 
 	 @javax.inject.Inject
 	 MateriaDelCursoRepositorio matDelCursoRepositorio;
+	 
+	 @javax.inject.Inject
+	 AlumnoCalificacionRepositorio aluCalRepositorio;
 	
 }
