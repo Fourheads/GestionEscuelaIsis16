@@ -11,9 +11,11 @@ import javax.jdo.annotations.VersionStrategy;
 
 import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.annotation.Bookmarkable;
+import org.apache.isis.applib.annotation.Hidden;
 import org.apache.isis.applib.annotation.MemberGroupLayout;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Named;
+import org.apache.isis.applib.annotation.Where;
 import org.apache.isis.applib.util.ObjectContracts;
 
 import dom.planEstudio.Materia;
@@ -41,8 +43,16 @@ import dom.simple.MateriaDelCurso;
 	@javax.jdo.annotations.Query(name = "findMateriaCalificacionPorMateria", 
 			language = "JDOQL", 
 			value = "SELECT FROM dom.simple.MateriaCalificacion" +
-					" WHERE this.materia.materia.nombre == :materia ")
-					
+					" WHERE this.materia.materia.nombre == :materia "),
+	@javax.jdo.annotations.Query(name = "findMateriaCalificacionPorCursoPorMateriaPorPeriodo", 
+			language = "JDOQL", 
+			value = "SELECT FROM dom.calificacion.MateriaCalificacion " 
+					+ "WHERE "
+					+ "this.materiaDelCurso.curso.anio.anioNumero == :anio " 
+					+ "&& this.materiaDelCurso.curso.anio.plan.descripcion == :plan " 
+					+ "&& this.materiaDelCurso.curso.division == :division " 
+					+ "&& this.materiaDelCurso.materia.nombre == :materia " 
+					+ "&& this.alumnoCalificacion.periodo.nombre == :periodo"),
 				
 })
 
@@ -51,9 +61,26 @@ import dom.simple.MateriaDelCurso;
 public class MateriaCalificacion implements Comparable<MateriaCalificacion>{
 	
 	
+	// {{ AlumnoCalificacion (property)
+	private AlumnoCalificacion alumnoCalificacion;
+	
+	@Column(allowsNull = "true")
+	@MemberOrder(sequence = "1")
+	public AlumnoCalificacion getAlumnoCalificacion() {
+		return alumnoCalificacion;
+	}
+
+	public void setAlumnoCalificacion(final AlumnoCalificacion alumnoCalificacion) {
+		this.alumnoCalificacion = alumnoCalificacion;
+	}
+	// }}
+
+
+	
 	// {{ Materia (property)
 	private MateriaDelCurso materiaDelCurso;
 	
+	//@Hidden(where = Where.ALL_EXCEPT_STANDALONE_TABLES)
 	@Named("Materia")	
 	@Column(allowsNull = "true")
 	@MemberOrder(sequence = "1")
@@ -85,7 +112,7 @@ public class MateriaCalificacion implements Comparable<MateriaCalificacion>{
 	private Alumno alumno;
 
 	@Named("Alumno")
-	@MemberOrder(sequence = "3")
+	@MemberOrder(sequence = "1")
 	@Column(allowsNull = "true")
 	public Alumno getAlumno() {
 		return alumno;
@@ -111,9 +138,10 @@ public class MateriaCalificacion implements Comparable<MateriaCalificacion>{
 	}
 	// }}
 
-
+	
 	public String title(){
-		return alumno.title() + "- Materia: " + materiaDelCurso.getMateria().getNombre() + "- Nota: " + String.valueOf(nota);
+		//return alumno.title() + "- Materia: " + materiaDelCurso.getMateria().getNombre() + "- Nota: " + String.valueOf(nota);
+		return getAlumno().title();
 	}
 
 	@Override

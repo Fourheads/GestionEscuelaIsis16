@@ -31,6 +31,12 @@ public class MateriaCalificacionRepositorio {
 				"materia", materia));
 	}
 	
+	public List<MateriaCalificacion> listPorCursoPorMateriaPorPeriodo(int inAnio, String inPlan, String inDivision, String inMateria, 
+											String inPeriodo){
+		return container.allMatches(new QueryDefault<MateriaCalificacion>(MateriaCalificacion.class, "findMateriaCalificacionPorCursoPorMateriaPorPeriodo",
+							"anio", inAnio, "plan", inPlan, "division", inDivision, "materia", inMateria, "periodo", inPeriodo));		
+	}
+	
 	@javax.inject.Inject
 	private DomainObjectContainer container;
 }
