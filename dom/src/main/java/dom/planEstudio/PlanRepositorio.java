@@ -77,6 +77,10 @@ public class PlanRepositorio {
 	public String eliminarPlan(final @Named("Plan a eliminar") Plan plan,
 			final @Named("Esta seguro?") Boolean seguro) {
 		String descripcion = plan.getDescripcion();
+		plan.getHorarioPlan().setPlan(null);
+		plan.setHorarioPlan(null);
+		plan.getAnioList().clear();
+		plan.setAnioList(null);
 		container.remove(plan);
 		return "El plan de estudio '" + descripcion + "' ha sido Eliminado";
 	}
