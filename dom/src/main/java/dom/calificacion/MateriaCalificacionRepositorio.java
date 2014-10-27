@@ -6,7 +6,7 @@ import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.query.QueryDefault;
 
-@DomainService
+//@DomainService
 public class MateriaCalificacionRepositorio {
 	
 	//Hacer query de materias por curso

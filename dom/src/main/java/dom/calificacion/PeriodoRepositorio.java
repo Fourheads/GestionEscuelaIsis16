@@ -53,13 +53,13 @@ public class PeriodoRepositorio {
 						unaMateriaCalificacion.setAlumnoCalificacion(newAlumnoCal);
 						
 						materiasCalificacion.add(unaMateriaCalificacion);
-					//}
+					}
 					newAlumnoCal.setAlumno(a);
 					newAlumnoCal.setListMateriaCalificacion(materiasCalificacion);
 					newAlumnoCal.setPeriodo(newPeriodo);
 					
 					alumnosCalificacion.add(newAlumnoCal);
-				}
+				//}
 			}
 		}
 		
@@ -74,6 +74,46 @@ public class PeriodoRepositorio {
 			}
 		}
 		return inCalificaciones;
+	}
+	
+	public AlumnoCalificacion agregarAlumno(final @Named("Alumno: ") Alumno inAlumno,
+											final @Named("Ciclo: ") Calificaciones inCalificacion,
+											final @Named("Periodo: ") Periodo inPeriodo){
+		final AlumnoCalificacion newAlCalificacion= new AlumnoCalificacion();
+		List<MateriaCalificacion> listMC = new ArrayList<MateriaCalificacion>();
+		
+		newAlCalificacion.setAlumno(inAlumno);
+		newAlCalificacion.setPeriodo(inPeriodo);
+		
+		for(MateriaDelCurso mc: inAlumno.getCurso().getMateriaDelCursoList()){
+			MateriaCalificacion newMateriaCalificacion = new MateriaCalificacion();
+			
+			newMateriaCalificacion.setAlumno(inAlumno);
+			newMateriaCalificacion.setAlumnoCalificacion(newAlCalificacion);
+			newMateriaCalificacion.setMateriaDelCurso(mc);
+			
+			listMC.add(newMateriaCalificacion);
+		}
+		
+		newAlCalificacion.setListMateriaCalificacion(listMC);
+		
+		container.persistIfNotAlready(newAlCalificacion);
+		return newAlCalificacion;
+		
+	}
+	
+	public String validateAgregarAlumno(final @Named("Alumno: ") Alumno inAlumno,
+										final @Named("Ciclo: ") Calificaciones inCalificacion,
+										final @Named("Periodo: ") Periodo inPeriodo){
+		
+		if(inAlumno.getCurso() == null){
+			return "Debe asociar el alumno a un curso con materias.";			
+		}
+		if(!(aluCalRepositorio.alumnoCalificacionPorAlumnoPorPeriodo(inAlumno.getDni(), inPeriodo.getNombre()).isEmpty())){
+			return "El alumno ya se encuentra registrado en este periodo.";
+		}
+		 
+		return null;
 	}
 	
 	 @javax.inject.Inject

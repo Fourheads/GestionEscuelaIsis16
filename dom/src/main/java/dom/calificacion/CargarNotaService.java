@@ -84,16 +84,16 @@ public class CargarNotaService {
 			return choices1CalificarPorCurso(calificacion).get(0);
 		}*/
 	    
-	    public List<Curso> choices2CalificarPorCurso(){
-	    	return cursoRepositorio.listarCursoConAlumnos();
+	    /*public List<Curso> choices2CalificarPorCurso(final @Named("Periodo: ") Periodo inPeriodo){
+	    	return aluCalRepositorio.listCursoPorPeriodo(inPeriodo);
 	    }
 	    
-	    public Curso default2CalificarPorCurso(){
-	    	if(choices2CalificarPorCurso().isEmpty()){
+	    public Curso default2CalificarPorCurso(final @Named("Periodo: ") Periodo inPeriodo){
+	    	if(choices2CalificarPorCurso(inPeriodo).isEmpty()){
 	    		return null;
 	    	}
-	    	return choices2CalificarPorCurso().get(0);
-	    }
+	    	return choices2CalificarPorCurso(inPeriodo).get(0);
+	    }*/
 	    
 	   /*public List<MateriaDelCurso> choices3CalificarPorCurso(final @Named("Curso: ") Curso inCurso){		   
 		   if(!inCurso.getMateriaDelCursoList().isEmpty()){
@@ -108,15 +108,6 @@ public class CargarNotaService {
 	    	}
 	    	return choices3CalificarPorCurso(curso).get(0);
 	    }*/
-	    
-	    
-	    public List<MateriaCalificacion> listMatCal(@Named("Ciclo: ") Calificaciones inCalificacion,
-				@Named("Periodo: ") Periodo inPeriodo,	    																						 
-				@Named("Curso: ") Curso inCurso,
-				@Named("Materia: ") MateriaDelCurso inMateria){
-	    	return mcRepositorio.listPorCursoPorMateriaPorPeriodo(inCurso.getAnio().getAnioNumero(), inCurso.getAnio().getPlan().getDescripcion(),
-	    								inCurso.getDivision(), inMateria.getMateria().getNombre(), inPeriodo.getNombre());
-	    }
 	    
 	    
 	    @javax.inject.Inject

@@ -56,33 +56,4 @@ public class CargarNotas {
 	}
 	// }}
 
-	public CargarNotas calificar(){
-	
-		cambiarAlSiguienteAlumno();
-		return this;
-	}
-	
-	public List<Integer> choices0Calificar(){
-		List<Integer> choicesNota = new ArrayList<Integer>();
-		
-		for(int i = 1; i < 11; i++ ){
-			choicesNota.add(i);
-		}
-		
-		return choicesNota;
-	}
-
-	@Programmatic
-	public void cambiarAlSiguienteAlumno() {
-		
-		int activo = this.getListMateriaCalificacion().indexOf(this.getAlumnoActivo());
-		System.out.println(activo);
-		int siguiente = activo + 1;
-		if (siguiente == this.getListMateriaCalificacion().size()) {
-			siguiente = 0;
-		}
-		System.out.println(siguiente);
-		this.setAlumnoActivo(this.getListMateriaCalificacion().get(siguiente));
-	}
-
 }

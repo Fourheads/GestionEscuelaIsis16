@@ -12,6 +12,7 @@ import javax.jdo.annotations.Join;
 import javax.jdo.annotations.VersionStrategy;
 
 import org.apache.isis.applib.annotation.Bookmarkable;
+import org.apache.isis.applib.annotation.Bounded;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Named;
 
@@ -26,8 +27,16 @@ import dom.calificacion.Periodo;
 	@javax.jdo.annotations.Query(name = "findAlumnoCalificacionPorAlumnoPorPeriodo", 
 			language = "JDOQL", 
 			value = "SELECT FROM dom.simple.AlumnoCalificacion"
-					+" WHERE this.alumno.dni == :dni &&" +
-					" this.periodo.nombre == :periodo"),
+					+" WHERE this.periodo.nombre == :periodo &&" +
+					" this.alumno.dni == :dni"),
+	@javax.jdo.annotations.Query(name = "findAlumnoCalificacionPorPeriodo", 
+			language = "JDOQL", 
+			value = "SELECT FROM dom.simple.AlumnoCalificacion"
+					+" WHERE this.periodo.nombre == :periodo"),
+	@javax.jdo.annotations.Query(name = "findAlumnoCalificacionPorAlumno", 
+			language = "JDOQL", 
+			value = "SELECT FROM dom.simple.AlumnoCalificacion"
+					+" WHERE this.alumno.dni == :dni"),
 	@javax.jdo.annotations.Query(name = "findAlumnoCalificacionPorPeriodoPorCursoPorMateria", 
 			language = "JDOQL", 
 			value = "SELECT FROM dom.simple.AlumnoCalificacion"
@@ -45,6 +54,7 @@ import dom.calificacion.Periodo;
 							" this.alumno.curso.division == :division")
 })
 @Bookmarkable
+@Bounded
 public class AlumnoCalificacion {
 	
 	// {{ Alumno (property)
@@ -94,5 +104,7 @@ public class AlumnoCalificacion {
 	}
 	// }}
 	
-	
+	public String title(){
+		return getAlumno().title();
+	}
 }

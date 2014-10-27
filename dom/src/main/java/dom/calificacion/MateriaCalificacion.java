@@ -64,6 +64,7 @@ public class MateriaCalificacion implements Comparable<MateriaCalificacion>{
 	// {{ AlumnoCalificacion (property)
 	private AlumnoCalificacion alumnoCalificacion;
 	
+	@Hidden(where = Where.ALL_TABLES)
 	@Column(allowsNull = "true")
 	@MemberOrder(sequence = "1")
 	public AlumnoCalificacion getAlumnoCalificacion() {

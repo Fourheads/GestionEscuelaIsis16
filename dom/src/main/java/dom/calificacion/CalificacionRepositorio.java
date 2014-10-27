@@ -29,14 +29,15 @@ public class CalificacionRepositorio {
 		return newCalificacion;
 	}	
 	
-	@Named("Buscar por Ciclo")
-	public List<Calificaciones> listByCiclo(@Named("Ciclo: ")int ciclo){
+	@Hidden
+	@Named("Seleccionar Ciclo")
+	public List<Calificaciones> listByCiclo(final @Named("Ciclo: ")int ciclo){
 		return container.allMatches(
 				new QueryDefault<Calificaciones>(Calificaciones.class, "findByCiclo","ciclo", ciclo));
 	}
 	
-	@Hidden
-	@Named("Ciclo lectivo")
+	
+	@Named("Listar Ciclos")
 	public List<Calificaciones> listCalificaciones(){
 		return container.allInstances(Calificaciones.class);
 	}
