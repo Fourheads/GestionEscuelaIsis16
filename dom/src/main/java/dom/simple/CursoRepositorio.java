@@ -289,6 +289,7 @@ public class CursoRepositorio {
 
 		curso.setAlumnos(null);
 		curso.getHorarioCurso().setCurso(null);
+		curso.setAnio(null);
 
 		LibroDiario libroDiario = container
 				.firstMatch(new QueryDefault<LibroDiario>(LibroDiario.class,
