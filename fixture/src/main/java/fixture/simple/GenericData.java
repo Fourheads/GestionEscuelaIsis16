@@ -29,7 +29,7 @@ public class GenericData {
 	private static String Materias="Lengua,Historia,Fisica,Matematica,Civica,Biologia,Geografia,Quimica,Analisis Matematico,Contabilidad,Musica,Plastica,Lengua y literatura,Dibujo,Educacion fisica";
 	private static String Calle="Jujuy,La Rioja,Salta,Pampa,Misiones,Buenos Ahires,Bahia Blanca,Mendoza,Santafe,Boedo,San Martin,Belgrano,Aconcagua,Domene,Chile,España,Godoy,Perito Moreno";
 	private static String Letras="A,B,C,D,E,F,G,H";
-	private static String Plan="Bachillerato,Tecnico,Musica,Agricola,Artistica,Polimodal,Tecnico Industrial,Tecnico Auxiliar,Tecnico Mecanico,Tecnico Quimico,Tecnico Electromecanico,Bachillerato Perito Mercantil,Bachillerato Contable";
+	private static String Plan="Bachillerato,Tecnico Maestro mayor de obra,Musica,Agricola,Artistica,Polimodal,Tecnico Industrial,Tecnico Auxiliar,Tecnico Mecanico,Tecnico Quimico,Tecnico Electromecanico,Bachillerato Perito Mercantil,Bachillerato Contable";
 	
 	public static int ObtenerCantidad()
 	{
