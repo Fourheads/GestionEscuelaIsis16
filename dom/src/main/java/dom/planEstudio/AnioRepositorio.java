@@ -13,7 +13,11 @@ import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Named;
 import org.apache.isis.applib.annotation.NotContributed;
 import org.apache.isis.applib.annotation.NotInServiceMenu;
+import org.apache.isis.applib.fixturescripts.FixtureScript.ExecutionContext;
 import org.apache.isis.applib.query.QueryDefault;
+
+import dom.simple.Curso;
+import dom.simple.CursoRepositorio;
 
 @Hidden
 @DomainService(repositoryFor = Anio.class)
@@ -73,6 +77,16 @@ public class AnioRepositorio {
 	@MemberOrder(sequence = "2", name = "Listado de Años del Plan")
 	public Plan eliminarAnio(final Plan plan, @Named("Año") Anio anio,
 			@Named("¿Esta Seguro?") Boolean seguro) {
+		plan.getAnioList().clear();
+		anio.setPlan(null);
+		anio.getMateriaList().clear();
+		List<Curso> CursoList=curso.listarCursosDeUnAnio(plan, anio);
+		
+		for(int x=0; x<=CursoList.size();x++)
+		{			
+			curso.eliminarCurso(plan,CursoList.get(x), true);
+		}
+		
 		container.remove(anio);
 		return plan;
 	}
@@ -88,7 +102,11 @@ public class AnioRepositorio {
 		return container.allMatches(new QueryDefault<Anio>(Anio.class,
 				"listarAniosDeUnPlan", "plan", plan.getDescripcion()));
 	}
+	
+
 
 	@Inject
 	DomainObjectContainer container;
+    @javax.inject.Inject
+    private CursoRepositorio curso;
 }
