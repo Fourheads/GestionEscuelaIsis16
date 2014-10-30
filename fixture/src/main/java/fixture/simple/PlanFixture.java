@@ -21,17 +21,18 @@
 package fixture.simple;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import dom.planEstudio.*;
-import dom.simple.Localidad;
-import dom.simple.Persona;
 
 import org.apache.isis.applib.fixturescripts.FixtureScript;
 import org.apache.isis.applib.fixturescripts.FixtureScript.ExecutionContext;
-import org.joda.time.LocalDate;
-
+import org.apache.isis.objectstore.jdo.applib.service.support.IsisJdoSupport;
 
 public class PlanFixture extends FixtureScript{
 
+	private List<Plan> listaPlanes=new ArrayList<Plan>();
 	
 	public PlanFixture() {
         withDiscoverability(Discoverability.DISCOVERABLE);
@@ -42,26 +43,47 @@ public class PlanFixture extends FixtureScript{
 		
 		BorrarDBPlan(executionContext);
 		
-		int Cantidad=(int) ((GenericData.ObtenerCantidad()*6)/100);//La cantidad de planes es proporcional.
+		//int Cantidad=(int) ((GenericData.ObtenerCantidad()*6)/100);//La cantidad de planes es proporcional.
+		
+		int Cantidad=50;
 		
         for(int x=0; x<Cantidad;x++)
         {
-        	create(GenericData.ObtenerPlan(), executionContext);
+        	listaPlanes.add(createPlan(GenericData.ObtenerPlan(), executionContext));
         }
-		
+        
+        
+        int anios=9;
+        
+		for(Plan planes:listaPlanes)
+    	{
+			if(planes.getDescripcion().contains("Tecnico"))
+				anios=6;
+			else
+				anios=5;
+			
+			for(int x=1;x<=anios;x++)
+			{
+				createAnio(planes, x, executionContext);
+			}
+    	}
+
 	}
 	
-    private Plan create(final String descripcion, ExecutionContext executionContext) {
+    private Plan createPlan(final String descripcion, ExecutionContext executionContext) {
         return executionContext.add(this, plan.crearPlan(descripcion));
     }
     
+    public Plan createAnio(Plan plan, int anioNumero, ExecutionContext executionContext) {
+        return executionContext.add(this, Anio.agregarAnio(plan, anioNumero));
+    }
     
     public void BorrarDBPlan(ExecutionContext executionContext)
     {
-    	for(Plan planes:this.plan.listarPlanes())
-    	{
-    		this.plan.eliminarPlan(planes, true);
-    	}
+    		//this.plan.eliminarPlan(planes, true);
+    		isisJdoSupport.executeUpdate("TRUNCATE \"Plan\" CASCADE");
+    		isisJdoSupport.executeUpdate("TRUNCATE \"Anio\" CASCADE");
+    		//isisJdoSupport.executeUpdate("DROP TABLE \"Plan\" CASCADE");
 		return;
     }
     
@@ -69,5 +91,8 @@ public class PlanFixture extends FixtureScript{
 
     @javax.inject.Inject
     private PlanRepositorio plan;
-
+    @javax.inject.Inject
+    private AnioRepositorio Anio;
+    @javax.inject.Inject
+    private IsisJdoSupport isisJdoSupport; 
 }
