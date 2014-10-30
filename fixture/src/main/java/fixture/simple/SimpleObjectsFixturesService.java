@@ -30,6 +30,9 @@ import org.apache.isis.applib.fixturescripts.FixtureScript;
 import org.apache.isis.applib.fixturescripts.FixtureScripts;
 import org.apache.isis.applib.fixturescripts.SimpleFixtureScript;
 
+import dom.planEstudio.Anio;
+import dom.planEstudio.Plan;
+
 /**
  * Enables fixtures to be installed from the application.
  */
@@ -90,7 +93,8 @@ public class SimpleObjectsFixturesService extends FixtureScripts {
     @MemberOrder(sequence="30")
     public Object instalarFixturesPlan() {
         final List<FixtureResult> planes = findFixtureScriptFor(PlanFixture.class).run(null);
-        final List<FixtureResult> anios = findFixtureScriptFor(AnioFixture.class).run(null);
+        //final List<FixtureResult> anios = findFixtureScriptFor(AnioFixture.class).run(null);
         return planes.get(0).getObject();
     }
+    
 }
