@@ -77,15 +77,23 @@ public class AnioRepositorio {
 	@MemberOrder(sequence = "2", name = "Listado de Años del Plan")
 	public Plan eliminarAnio(final Plan plan, @Named("Año") Anio anio,
 			@Named("¿Esta Seguro?") Boolean seguro) {
-		plan.getAnioList().clear();
-		anio.setPlan(null);
-		anio.getMateriaList().clear();
+		
 		List<Curso> CursoList=curso.listarCursosDeUnAnio(plan, anio);
 		
 		for(int x=0; x<=CursoList.size();x++)
 		{			
 			curso.eliminarCurso(plan,CursoList.get(x), true);
 		}
+		
+		for(Materia mate:anio.getMateriaList())
+		{			
+			materia.eliminarMateria(anio, mate, true);
+		}
+		
+		plan.getAnioList().clear();
+		anio.setPlan(null);
+		anio.getMateriaList().clear();
+
 		
 		container.remove(anio);
 		return plan;
@@ -109,4 +117,6 @@ public class AnioRepositorio {
 	DomainObjectContainer container;
     @javax.inject.Inject
     private CursoRepositorio curso;
+    @javax.inject.Inject
+    private MateriaRepositorio materia;
 }
