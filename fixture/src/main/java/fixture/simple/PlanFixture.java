@@ -43,9 +43,7 @@ public class PlanFixture extends FixtureScript{
 		
 		BorrarDBPlan(executionContext);
 		
-		//int Cantidad=(int) ((GenericData.ObtenerCantidad()*6)/100);//La cantidad de planes es proporcional.
-		
-		int Cantidad=50;
+		int Cantidad=(int) ((GenericData.ObtenerCantidad()*6)/100);//La cantidad de planes es proporcional.
 		
         for(int x=0; x<Cantidad;x++)
         {
