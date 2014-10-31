@@ -97,4 +97,12 @@ public class SimpleObjectsFixturesService extends FixtureScripts {
         return planes.get(0).getObject();
     }
     
+    @Prototype
+    @MemberOrder(sequence="40")
+    public Object instalarFixturesMaterias() {
+        final List<FixtureResult> Materias = findFixtureScriptFor(MateriaFixture.class).run(null);
+        //final List<FixtureResult> anios = findFixtureScriptFor(AnioFixture.class).run(null);
+        return Materias.get(0).getObject();
+    }
+    
 }
