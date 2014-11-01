@@ -43,7 +43,10 @@ public class PlanFixture extends FixtureScript{
 		
 		BorrarDBPlan(executionContext);
 		
-		int Cantidad=(int) ((GenericData.ObtenerCantidad()*6)/100);//La cantidad de planes es proporcional.
+		int Cantidad=(int) Math.ceil((GenericData.ObtenerCantidad()*6)/100);//La cantidad de planes es proporcional.
+		
+		if(Cantidad<1)
+			Cantidad=1;
 		
         for(int x=0; x<Cantidad;x++)
         {
@@ -78,10 +81,9 @@ public class PlanFixture extends FixtureScript{
     
     public void BorrarDBPlan(ExecutionContext executionContext)
     {
-    		//this.plan.eliminarPlan(planes, true);
-    		isisJdoSupport.executeUpdate("TRUNCATE \"Plan\" CASCADE");
-    		isisJdoSupport.executeUpdate("TRUNCATE \"Anio\" CASCADE");
-    		//isisJdoSupport.executeUpdate("DROP TABLE \"Plan\" CASCADE");
+    		execute(new GenericTearDownFixture("Plan"), executionContext);
+    		execute(new GenericTearDownFixture("Anio"), executionContext);
+    		
 		return;
     }
     
