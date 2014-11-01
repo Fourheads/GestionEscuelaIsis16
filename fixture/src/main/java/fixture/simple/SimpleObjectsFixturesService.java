@@ -36,7 +36,8 @@ import dom.planEstudio.Plan;
 /**
  * Enables fixtures to be installed from the application.
  */
-@Named("Test")
+@Hidden
+//@Named("Test")
 @DomainService(menuOrder = "200")
 public class SimpleObjectsFixturesService extends FixtureScripts {
 
