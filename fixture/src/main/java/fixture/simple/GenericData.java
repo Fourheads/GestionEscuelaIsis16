@@ -24,6 +24,7 @@ import java.util.Random;
 public class GenericData {
 	
 	private static int	Cantidad=20;
+	
 	private static String Nombre="Adrian,Manuel,Jose,Gogo,Pedro,Mariano,Leandro,Gonzalo,Roberto,Daniel,Fernando,Damian,Oscar,Lautaro,Miguel,Diego,Pablo,Raul,Ricardo,Matias,Hector,Juan,Emiliano,Cesar,Gerardo,Emiliano,Francisco,Martin,Leonardo";
 	private static String Apellido="Garcia,Perez,Torres,Torrez,Sanchez,Zanchez,Rubilar,Abelen,Cosme,Cornillo,Cara,Rubio,Lalala,Gonzalez,Rodriguez,Gomez,Lopez,Sosa,Alvarez,Diaz,Godoy,Villalva,Ponce,Vera,Navarro,Soto,Campos,Cola,Bravo,Valdez,Yong Wong";
 	private static String Materias="Lengua,Historia,Fisica,Matematica,Civica,Biologia,Geografia,Quimica,Analisis Matematico,Contabilidad,Musica,Plastica,Lengua y literatura,Dibujo,Educacion fisica";
