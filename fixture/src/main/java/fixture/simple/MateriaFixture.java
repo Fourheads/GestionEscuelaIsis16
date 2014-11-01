@@ -36,7 +36,9 @@ public class MateriaFixture extends FixtureScript{
 	
 	@Override
 	protected void execute(ExecutionContext executionContext) {
+		
 		BorrarDBMaterias(executionContext);
+		
 		
 		for(Plan plan:this.Plan.listarPlanes())
 		{
@@ -54,7 +56,6 @@ public class MateriaFixture extends FixtureScript{
 				}
 			}
 		}
-		
 	}
 	
     public void BorrarDBMaterias(ExecutionContext executionContext)
@@ -71,8 +72,6 @@ public class MateriaFixture extends FixtureScript{
 
     @javax.inject.Inject
     private PlanRepositorio Plan;
-    @javax.inject.Inject
-    private AnioRepositorio Anio;
     @javax.inject.Inject
     private IsisJdoSupport isisJdoSupport; 
 }

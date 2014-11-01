@@ -93,7 +93,6 @@ public class SimpleObjectsFixturesService extends FixtureScripts {
     @MemberOrder(sequence="30")
     public Object instalarFixturesPlan() {
         final List<FixtureResult> planes = findFixtureScriptFor(PlanFixture.class).run(null);
-        //final List<FixtureResult> anios = findFixtureScriptFor(AnioFixture.class).run(null);
         return planes.get(0).getObject();
     }
     
@@ -101,8 +100,14 @@ public class SimpleObjectsFixturesService extends FixtureScripts {
     @MemberOrder(sequence="40")
     public Object instalarFixturesMaterias() {
         final List<FixtureResult> Materias = findFixtureScriptFor(MateriaFixture.class).run(null);
-        //final List<FixtureResult> anios = findFixtureScriptFor(AnioFixture.class).run(null);
         return Materias.get(0).getObject();
+    }
+    
+    @Prototype
+    @MemberOrder(sequence="50")
+    public Object instalarFixturesCurso() {
+        final List<FixtureResult> Curso = findFixtureScriptFor(CursoFixture.class).run(null);
+        return Curso.get(0).getObject();
     }
     
 }
