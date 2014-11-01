@@ -24,8 +24,10 @@ import org.apache.isis.applib.fixturescripts.FixtureScript;
 import org.apache.isis.applib.fixturescripts.FixtureScript.Discoverability;
 import org.apache.isis.applib.fixturescripts.FixtureScript.ExecutionContext;
 import org.apache.isis.objectstore.jdo.applib.service.support.IsisJdoSupport;
+import org.joda.time.LocalDate;
 
 import dom.planEstudio.*;
+
 
 public class MateriaFixture extends FixtureScript{
 
@@ -40,31 +42,31 @@ public class MateriaFixture extends FixtureScript{
 		BorrarDBMaterias(executionContext);
 		
 		
-		for(Plan plan:this.Plan.listarPlanes())
+		for(Plan plan:Plan.listarPlanes())
 		{
 			for(Anio anio:plan.getAnioList())
 			{
 				int fin=GenericData.Random(10, 15);
 				for(int x=0;x<=fin;x++)
 				{
-					Materia materia=new Materia();
-					materia.setAnio(anio);
-					materia.setNombre(GenericData.ObtenerCiencia()+" "+anio.getAnioNumero()+"°");
-					materia.setPrograma("Test Materia Fixture: "+materia.getNombre());
-					
-					anio.getMateriaList().add(materia);
+					createMate(GenericData.ObtenerCiencia()+" "+anio.getAnioNumero()+"°", anio, executionContext);
 				}
 			}
 		}
 	}
 	
+    private Anio createMate(final String nombre, Anio anio, ExecutionContext executionContext) {
+        return executionContext.add(this, materia.agregarMateria(anio, nombre));
+    }
+	
     public void BorrarDBMaterias(ExecutionContext executionContext)
     {
-    	isisJdoSupport.executeUpdate("TRUNCATE \"Materia\" CASCADE");
-    	isisJdoSupport.executeUpdate("TRUNCATE \"MateriaCalificacion\" CASCADE");
-    	isisJdoSupport.executeUpdate("TRUNCATE \"MateriaDelCurso\" CASCADE");
-    	isisJdoSupport.executeUpdate("TRUNCATE \"MateriaDelLibroDiario\" CASCADE");
-    	isisJdoSupport.executeUpdate("TRUNCATE \"MateriaDelLibroDiario_entradalibrodiario\" CASCADE");
+    	execute(new GenericTearDownFixture("Materia"),executionContext);
+    	execute(new GenericTearDownFixture("MateriaCalificacion"),executionContext);
+    	execute(new GenericTearDownFixture("MateriaDelCurso"),executionContext);
+    	execute(new GenericTearDownFixture("MateriaDelLibroDiario"),executionContext);
+    	execute(new GenericTearDownFixture("MateriaDelLibroDiario_entradalibrodiario"),executionContext);
+    	
     	return;
     }
 
@@ -72,6 +74,8 @@ public class MateriaFixture extends FixtureScript{
 
     @javax.inject.Inject
     private PlanRepositorio Plan;
+    @javax.inject.Inject
+    private MateriaRepositorio materia;
     @javax.inject.Inject
     private IsisJdoSupport isisJdoSupport; 
 }
