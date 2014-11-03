@@ -19,9 +19,14 @@
 
 package fixture.simple;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import dom.simple.*;
 
 import org.apache.isis.applib.fixturescripts.FixtureScript;
+import org.apache.isis.applib.fixturescripts.FixtureScript.ExecutionContext;
+import org.apache.isis.objectstore.jdo.applib.service.support.IsisJdoSupport;
 import org.joda.time.LocalDate;
 
 public class AlumnosFixture extends FixtureScript {
@@ -36,7 +41,7 @@ public class AlumnosFixture extends FixtureScript {
         // prereqs
     	BorrarDBAlumnos(executionContext);
         
-        int Cantidad=GenericData.ObtenerCantidad();
+        int Cantidad=GenericData.ObtenerCantidad()*5;
         
         // create
         for(int x=0; x<=Cantidad;x++)
@@ -55,16 +60,15 @@ public class AlumnosFixture extends FixtureScript {
 
     public void BorrarDBAlumnos(ExecutionContext executionContext)
     {
-    	execute(new GenericTearDownFixture("AlumnoCalificacion"), executionContext);
-    	execute(new GenericTearDownFixture("Curso_listAlumno"), executionContext);
-    	execute(new GenericTearDownFixture("AsistenciaAlumno"), executionContext);
-    	execute(new GenericTearDownFixture("AsistenciaDia_asistenciaAlumnoList"), executionContext);
-        execute(new GenericTearDownFixture("AlumnoCalificacion"), executionContext);
         execute(new GenericTearDownFixture("Alumno"), executionContext);
-        return;
+    	
+       return;
     }
+    
     
     @javax.inject.Inject
     private AlumnoRepositorio alumnos;
+    @javax.inject.Inject
+    private IsisJdoSupport isisJdoSupport; 
 
 }
