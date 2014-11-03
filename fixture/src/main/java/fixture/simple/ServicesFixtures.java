@@ -87,7 +87,7 @@ public class ServicesFixtures extends FixtureScripts {
     
     
     @MemberOrder(sequence="99")
-    public String IntstalarTodos()
+    public String IntstalarTodosLosFixtures()
     {
     	this.instalarFixturesPersonal();
     	
