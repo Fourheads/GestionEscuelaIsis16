@@ -105,6 +105,7 @@ public class GenericTearDownFixture extends FixtureScript {
     	{
     		DeleteAndTruncateTable(tabla);
     		DeleteTable(tabla);
+    		RestarTable(tabla);
     	}
     	
     	isisJdoSupport.executeSql("SELECT pg_stat_reset()");
@@ -127,14 +128,31 @@ public class GenericTearDownFixture extends FixtureScript {
     
     protected void RestarTable(String table)
     {
+    	boolean ok=false;
+    	String tables="Funcion,Curso,Legajo,Localidad,Periodo,Tarjeta,Direccion";
+    	String[] partes = tables.split(",");
+    	    	
     	if(!table.contains("_"))
-    		if(!table.contains("Funcion"))//Funcion,Curso,Legajo,Localidad,Periodo,Terjeta
-    		{
-    			table= table+"_id_seq";
-    			isisJdoSupport.executeUpdate("ALTER SEQUENCE \""+table+"\" RESTART WITH 1");
+    	{
+        	for(int x=0;x<partes.length;x++)
+        	{
+        		if(table.length()==partes[x].length())
+        			if(table.contains(partes[x]))
+        			{
+        				table= table+"_"+table+"_ID_seq";
+        				ok=true;
+        				x=partes.length;
+        			}
+        	}
+        	
+    	if(ok==false)
+    		table= table+"_id_seq";
+    	
+    	isisJdoSupport.executeUpdate("ALTER SEQUENCE \""+table+"\" RESTART WITH 1");
+    	}
     			//ALTER SEQUENCE "Alumno_id_seq" RESTART WITH 1_seq
-    			//ALTER SEQUENCE '"Funcion_ID"_seq' RESTART WITH 1_seq
-    		}
+    			//table= table+"_"+table+"_ID_seq";
+    			//ALTER SEQUENCE "Funcion_Funcion_ID_seq" RESTART WITH 1		
     }
     
     @javax.inject.Inject
