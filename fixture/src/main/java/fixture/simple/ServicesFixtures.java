@@ -76,36 +76,19 @@ public class ServicesFixtures extends FixtureScripts {
         return Curso.get(0).getObject();
     }
     
-    /*
+    
 	@MemberOrder(sequence="100")
     public String BorrarBD()
     {
-    	ExecutionContext ec=newExecutionContext(null);
-    	
-    	PersonalFixture PF =  new PersonalFixture();
-    	PF.BorrarDBPersonal(ec);
-    	
-
-    	AlumnosFixture AF=new AlumnosFixture();
-    	AF.BorrarDBAlumnos(ec);
-    	
-    	PlanFixture PlF=new PlanFixture();
-    	PlF.BorrarDBPlan(ec);
-    	
-    	MateriaFixture MF=new MateriaFixture();
-    	MF.BorrarDBMaterias(ec);
-    	
-    	CursoFixture CF=new CursoFixture();
-    	CF.BorrarDBCurso(ec);
-    	
-    	return "Se ha completado la operacion";
+		final List<FixtureResult> Borrar=findFixtureScriptFor(GenericTearDownFixture.class).run(null);
+		
+		return "Se ha completado la operacion. Toda la DB ah sido borrada.";
     }
-    */
+    
     
     @MemberOrder(sequence="99")
     public String IntstalarTodos()
     {
-    	
     	this.instalarFixturesPersonal();
     	
     	this.instalarFixturesAlumnos();
@@ -118,5 +101,5 @@ public class ServicesFixtures extends FixtureScripts {
     	
     	return "Todos los fixtures intastalados";
     }
-    
+
 }
