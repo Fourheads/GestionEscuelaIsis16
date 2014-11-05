@@ -25,6 +25,7 @@ import java.util.List;
 import dom.simple.*;
 
 import org.apache.isis.applib.fixturescripts.FixtureScript;
+import org.apache.isis.objectstore.jdo.applib.service.support.IsisJdoSupport;
 import org.joda.time.LocalDate;
 
 public class PersonalFixture extends FixtureScript {
@@ -103,6 +104,7 @@ public class PersonalFixture extends FixtureScript {
     {
     	execute(new GenericTearDownFixture("Funcion"), executionContext);
         execute(new GenericTearDownFixture("Personal"), executionContext);
+
         return;
     }
     
@@ -114,5 +116,6 @@ public class PersonalFixture extends FixtureScript {
 
     @javax.inject.Inject
     private PersonalRepositorio personal;
-
+    @javax.inject.Inject
+    private IsisJdoSupport isisJdoSupport; 
 }

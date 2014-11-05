@@ -1,5 +1,5 @@
 /*
- *  Licensed to the Apache Software Foundation (ASF) under one
+ * This is a software made for highschool management 
  *  or more contributor license agreements.  See the NOTICE file
  *  distributed with this work for additional information
  *  regarding copyright ownership.  The ASF licenses this file
@@ -16,65 +16,30 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
+
 package fixture.simple;
+
 
 import java.util.List;
 
 import org.apache.isis.applib.annotation.DomainService;
-import org.apache.isis.applib.annotation.Hidden;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Named;
 import org.apache.isis.applib.annotation.Prototype;
 import org.apache.isis.applib.fixturescripts.FixtureResult;
-import org.apache.isis.applib.fixturescripts.FixtureScript;
+import org.apache.isis.applib.fixturescripts.FixtureScript.ExecutionContext;
 import org.apache.isis.applib.fixturescripts.FixtureScripts;
-import org.apache.isis.applib.fixturescripts.SimpleFixtureScript;
 
-import dom.planEstudio.Anio;
-import dom.planEstudio.Plan;
 
-/**
- * Enables fixtures to be installed from the application.
- */
-@Hidden
-//@Named("Test")
+@Named("Test")
 @DomainService(menuOrder = "200")
-public class SimpleObjectsFixturesService extends FixtureScripts {
+public class ServicesFixtures extends FixtureScripts {
 
-    public SimpleObjectsFixturesService() {
-        super("fixture.simple");
-    }
+    public ServicesFixtures() {
+    	super("fixture.simple");
+	}
 
-   
-    @Override // compatibility with core 1.5.0
-    public FixtureScript default0RunFixtureScript() {
-        return findFixtureScriptFor(SimpleFixtureScript.class);
-    }
-
-    /**
-     * Raising visibility to <tt>public</tt> so that choices are available for first param
-     * of {@link #runFixtureScript(FixtureScript, String)}.
-     */
-  
-    
-    @Override
-    public List<FixtureScript> choices0RunFixtureScript() {
-        return super.choices0RunFixtureScript();
-    }
-    	
-
-    // //////////////////////////////////////
-
-    @Hidden
-    @Prototype
-    @MemberOrder(sequence="20")
-    public Object installFixturesAndReturnFirst() {
-        final List<FixtureResult> run = findFixtureScriptFor(SimpleObjectsFixture.class).run(null);
-        return run.get(0).getObject();
-    }
-
-
-    @Prototype
+	@Prototype
     @MemberOrder(sequence="10")
     public Object instalarFixturesAlumnos() {
         final List<FixtureResult> alumnos = findFixtureScriptFor(AlumnosFixture.class).run(null);
@@ -111,4 +76,30 @@ public class SimpleObjectsFixturesService extends FixtureScripts {
         return Curso.get(0).getObject();
     }
     
+    
+	@MemberOrder(sequence="100")
+    public String BorrarBD()
+    {
+		final List<FixtureResult> Borrar=findFixtureScriptFor(GenericTearDownFixture.class).run(null);
+		
+		return "Se ha completado la operacion. Toda la DB ah sido borrada.";
+    }
+    
+    
+    @MemberOrder(sequence="99")
+    public String IntstalarTodosLosFixtures()
+    {
+    	this.instalarFixturesPersonal();
+    	
+    	this.instalarFixturesAlumnos();
+
+    	this.instalarFixturesPlan();
+    	
+    	this.instalarFixturesMaterias();
+    	
+    	this.instalarFixturesCurso();
+    	
+    	return "Todos los fixtures intastalados";
+    }
+
 }
