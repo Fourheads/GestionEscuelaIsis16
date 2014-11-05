@@ -19,6 +19,13 @@ import org.joda.time.LocalDate;
 import dom.simple.Alumno;
 import dom.simple.Curso;
 
+@javax.jdo.annotations.Queries({ 
+	@javax.jdo.annotations.Query(name = "PeriodosPorCiclo", 
+			language = "JDOQL", 
+			value = "SELECT FROM dom.calificacion.Periodo"
+					+" WHERE this.calificaciones.cicloCalificacion == :ciclo ")
+})
+
 @PersistenceCapable
 @Bounded
 public class Periodo {	

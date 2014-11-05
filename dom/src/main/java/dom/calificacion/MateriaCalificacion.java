@@ -112,6 +112,7 @@ public class MateriaCalificacion implements Comparable<MateriaCalificacion>{
 	// {{ Alumno (property)
 	private Alumno alumno;
 
+	//@Hidden()
 	@Named("Alumno")
 	@MemberOrder(sequence = "1")
 	@Column(allowsNull = "true")

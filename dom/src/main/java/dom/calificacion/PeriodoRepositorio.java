@@ -8,7 +8,9 @@ import java.util.TreeSet;
 import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.Hidden;
+import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Named;
+import org.apache.isis.applib.query.QueryDefault;
 import org.joda.time.LocalDate;
 
 import dom.simple.Alumno;
@@ -16,7 +18,7 @@ import dom.simple.AlumnoRepositorio;
 import dom.simple.MateriaDelCurso;
 import dom.simple.MateriaDelCursoRepositorio;
 
-@Hidden
+//@Hidden
 @DomainService
 public class PeriodoRepositorio {
 
@@ -76,6 +78,33 @@ public class PeriodoRepositorio {
 		return inCalificaciones;
 	}
 	
+	@Named("Eliminar Periodo")
+	public Calificaciones eliminarPeriodo(final @Named("Periodo") Periodo inPeriodo){
+		
+		//List<AlumnoCalificacion> listalumno = aluCalRepositorio.listPorPeriodo(inPeriodo);
+		final Calificaciones calif = inPeriodo.getCalificaciones();
+		
+		if(aluCalRepositorio.listPorPeriodo(inPeriodo).isEmpty()){
+			calif.getPeriodos().remove(inPeriodo);
+			container.removeIfNotAlready(inPeriodo);
+			return calif;
+		}
+		
+		for(AlumnoCalificacion ac: aluCalRepositorio.listPorPeriodo(inPeriodo)){
+			for(MateriaCalificacion m: ac.getListMateriaCalificacion()){
+				ac.getListMateriaCalificacion().remove(m);
+				container.removeIfNotAlready(m);
+			}
+			container.removeIfNotAlready(ac);
+		}
+		
+		calif.getPeriodos().remove(inPeriodo);
+		container.removeIfNotAlready(inPeriodo);		
+		
+		return calif;		
+	}
+	
+	@Named("Agregar Alumno")	
 	public AlumnoCalificacion agregarAlumno(final @Named("Alumno: ") Alumno inAlumno,
 											final @Named("Ciclo: ") Calificaciones inCalificacion,
 											final @Named("Periodo: ") Periodo inPeriodo){
@@ -114,6 +143,10 @@ public class PeriodoRepositorio {
 		}
 		 
 		return null;
+	}
+	
+	public List<Periodo> periodoPorCiclo(final int ciclo){
+		return container.allMatches(new QueryDefault<Periodo>(Periodo.class, "PeriodosPorCiclo", "ciclo", ciclo));
 	}
 	
 	 @javax.inject.Inject

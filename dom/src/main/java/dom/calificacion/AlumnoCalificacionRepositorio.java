@@ -9,12 +9,17 @@ import org.apache.isis.applib.query.QueryDefault;
 
 import dom.simple.Curso;
 
-//@DomainService
+@DomainService
 public class AlumnoCalificacionRepositorio {
 
 	public List<AlumnoCalificacion> alumnoCalificacionPorAlumnoPorPeriodo(final int inDni, final String periodo){
 		return container.allMatches(new QueryDefault<AlumnoCalificacion>(AlumnoCalificacion.class, "findAlumnoCalificacionPorAlumnoPorPeriodo",
 				"dni", inDni, "periodo", periodo));
+	}
+	
+	public AlumnoCalificacion porAlumnoPorPeriodo(final int dni, final String periodo){
+		return container.firstMatch(new QueryDefault<AlumnoCalificacion>(AlumnoCalificacion.class, "findAlumnoCalificacionPorAlumnoPorPeriodo",
+				"dni", dni, "periodo", periodo));
 	}
 	
 	public List<AlumnoCalificacion> listPorPeriodoPorCursoPorMateria(final String inPeriodo, final String inPlan, final String inDivision,
@@ -32,8 +37,8 @@ public class AlumnoCalificacionRepositorio {
 		return container.allInstances(AlumnoCalificacion.class);
 	}
 	
-	public List<AlumnoCalificacion> listPorAlumno(int dni){
-		return container.allMatches(new QueryDefault<AlumnoCalificacion>(AlumnoCalificacion.class, "findAlumnoCalificacionPorAlumno", "dni", dni));
+	public AlumnoCalificacion listPorAlumno(int dni){
+		return container.firstMatch(new QueryDefault<AlumnoCalificacion>(AlumnoCalificacion.class, "findAlumnoCalificacionPorAlumno", "dni", dni));
 	}
 	
 	public List<AlumnoCalificacion> listPorPeriodo(Periodo inPeriodo){

@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.Hidden;
+import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Named;
 import org.apache.isis.applib.query.QueryDefault;
 import org.apache.isis.applib.services.memento.MementoService;
@@ -33,6 +34,8 @@ public class CargarNotaService {
 	        return "SimpleObject";
 	    }
 	    @Named("Por Curso")
+	    @MemberOrder(name = "Cargar Notas" , sequence = "1")
+	    //@Hidden(where = Where.)
 	    public CargarNotaView calificarPorCurso(final @Named("Ciclo: ") Calificaciones inCalificacion,
 	    										final @Named("Periodo: ") Periodo inPeriodo,	    																						 
 	    										final @Named("Curso: ") Curso inCurso,
@@ -56,9 +59,9 @@ public class CargarNotaService {
 	    	
 	    }
 	    
-	    public List<Calificaciones> choices0CalificarPorCurso() {
-	    	List<Calificaciones> listCalificaciones = container.allMatches(new QueryDefault<Calificaciones>(Calificaciones.class,
-					"findAll"));
+	    public List<Calificaciones> choices0CalificarPorCurso(final @Named("Ciclo: ") Calificaciones inCalificacion) {
+	    	
+	    	List<Calificaciones> listCalificaciones = califRepositorio.ciclosConPeriodo();
 	    	if(listCalificaciones.isEmpty()){
 	    		container.warnUser("Debe crear al menos un ciclo lectivo con sus períodos de evaluación");
 	    		return listCalificaciones;
@@ -66,29 +69,46 @@ public class CargarNotaService {
 	    	return listCalificaciones;
 		}
 	    
-	    public Calificaciones default0CalificarPorCurso() {
-			if (choices0CalificarPorCurso().isEmpty()) {
+	    public Calificaciones default0CalificarPorCurso(final @Named("Ciclo: ") Calificaciones inCalificacion) {
+			if (choices0CalificarPorCurso(inCalificacion).isEmpty()) {
 				return null;
 			}
-			return choices0CalificarPorCurso().get(0);
+			return choices0CalificarPorCurso(inCalificacion).get(0);
 		}
 	    
-	    public List<Periodo> choices1CalificarPorCurso(final @Named("Ciclo: ") Calificaciones inCalificacion){
-	    	return inCalificacion.getPeriodos();
+	    public List<Periodo> choices1CalificarPorCurso(final @Named("Ciclo: ") Calificaciones inCalificacion
+														/*final @Named("Periodo: ") Periodo inPeriodo*/){
+	    	
+	    	List<Periodo> periodos = perRepo.periodoPorCiclo(inCalificacion.getCicloCalificacion());
+	    	if(periodos.isEmpty()){
+	    		container.warnUser("Debe crear al menos un ciclo lectivo con sus períodos de evaluación");
+	    		return null;
+	    	}
+	    	return periodos;
 	    }
 	    
-	    /*public Periodo default1CalificarPorCurso(Calificaciones calificacion) {
-			if (choices1CalificarPorCurso(calificacion).isEmpty()) {
+	    /*public Periodo default1CalificarPorCurso(final @Named("Ciclo: ") Calificaciones inCalificacion,
+												final @Named("Periodo: ") Periodo inPeriodo) {
+			if (choices1CalificarPorCurso(inCalificacion, inPeriodo).isEmpty()) {
 				return null;
 			}
-			return choices1CalificarPorCurso(calificacion).get(0);
+			return choices1CalificarPorCurso(inCalificacion, inPeriodo).get(0);
 		}*/
 	    
-	    /*public List<Curso> choices2CalificarPorCurso(final @Named("Periodo: ") Periodo inPeriodo){
-	    	return aluCalRepositorio.listCursoPorPeriodo(inPeriodo);
-	    }
 	    
-	    public Curso default2CalificarPorCurso(final @Named("Periodo: ") Periodo inPeriodo){
+	    //VERIFICAR FUNCIONAMIENTO DE CHOICES
+	    /*public List<Curso> choices2CalificarPorCurso(final @Named("Ciclo: ") Calificaciones inCalificacion,
+													final @Named("Periodo: ") Periodo inPeriodo	    																						 
+													final @Named("Curso: ") Curso inCurso){
+	    	List<Curso> cursos = aluCalRepositorio.listCursoPorPeriodo(inPeriodo);	    	
+	    	if(cursos.isEmpty()){
+	    		return null;
+	    	}
+	    	
+	    	return cursos;
+	    }*/
+	    
+	    /*public Curso default2CalificarPorCurso(final @Named("Periodo: ") Periodo inPeriodo){
 	    	if(choices2CalificarPorCurso(inPeriodo).isEmpty()){
 	    		return null;
 	    	}
@@ -121,4 +141,10 @@ public class CargarNotaService {
 	    
 	    @javax.inject.Inject
 		AlumnoCalificacionRepositorio aluCalRepositorio;
+	    
+	    @javax.inject.Inject
+	    CalificacionRepositorio califRepositorio;
+	    
+	    @javax.inject.Inject
+	    PeriodoRepositorio perRepo;
 }

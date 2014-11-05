@@ -10,6 +10,8 @@ import javax.jdo.annotations.Column;
 import javax.jdo.annotations.Element;
 import javax.jdo.annotations.Join;
 
+import net.sf.jasperreports.engine.JRException;
+
 import org.apache.isis.applib.AbstractViewModel;
 import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.annotation.Bookmarkable;
@@ -28,6 +30,9 @@ import org.apache.isis.applib.annotation.TypicalLength;
 import org.apache.isis.applib.services.memento.MementoService;
 import org.apache.isis.applib.services.memento.MementoService.Memento;
 import org.joda.time.LocalDate;
+
+import reportes.AsistenciaPorCurso;
+import reportes.GenerarReporte;
 
 @Named("Contabilizar Asistencias View")
 @Bookmarkable
@@ -52,7 +57,7 @@ public class ContabilizarAsistenciasView extends AbstractViewModel {
 		
 		Memento memento = mementoService.parse(mementoString);
 
-		title = memento.get("titulo", String.class);
+		title = memento.get("titulo", String.class); //Intervalo de fechas
 		setAsistencia(memento.get("asistencia", String.class));
 		setDesde(memento.get("desde", LocalDate.class));
 		setHasta(memento.get("hasta", LocalDate.class));
@@ -165,9 +170,37 @@ public class ContabilizarAsistenciasView extends AbstractViewModel {
 
 	// }} (end region)
 	// //////////////////////////////////////
-
+	
+	@Named("Imprimir Reporte")	
+	public String imprimirReporte() throws JRException{
+		List<Object> objectsReport = new ArrayList<Object>();
+		
+		for(AnalisisAsistenciaView a: getAnalisisAsistenciaViewList()){
+			AsistenciaPorCurso asistencia = new AsistenciaPorCurso();
+			
+			asistencia.setAlumno(a.getNombre() + " " + a.getApellido());
+			asistencia.setAusente(a.getAusente());
+			asistencia.setCurso(String.valueOf(getAnio()) + "-" + "'" + getDivision() + "'");
+			asistencia.setPresente(a.getPresente());
+			asistencia.setPorcausente(a.getPorcentaje_ausente() + "%");
+			asistencia.setPorctarde(a.getPorcentajeTarde() + "%");
+			asistencia.setRegistros(a.getAsistenciasRegistradas());
+			asistencia.setTarde(a.getTarde());
+			asistencia.setTitulo(getDesde().toString() + "/" + getHasta().toString());
+			asistencia.setTotalfaltas(a.getTotalFaltas());
+			
+			objectsReport.add(asistencia);
+		}
+		
+		GenerarReporte.generarReporte("asistenciaCurso.jrxml", objectsReport);
+		return "Reporte Generado.";
+	}
+	
+	
 	@javax.inject.Inject
 	MementoService mementoService;
 	@javax.inject.Inject
 	AnalisisAsistenciaService analisisAsistenciaService;
+	@javax.inject.Inject
+	GenerarReporte reporte;
 }

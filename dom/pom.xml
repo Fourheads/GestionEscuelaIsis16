@@ -100,7 +100,12 @@
 			<groupId>org.apache.isis.core</groupId>
 			<artifactId>isis-core-applib</artifactId>
 		</dependency>
-
+		
+		<dependency>
+			<groupId>net.sf.jasperreports</groupId>
+			<artifactId>jasperreports</artifactId>
+			<version>5.6.1</version>
+		</dependency>
         <!--
         uncomment to use the AppSettings or UserSettings services
         (also uncomment corresponding dependency in webapp module)
