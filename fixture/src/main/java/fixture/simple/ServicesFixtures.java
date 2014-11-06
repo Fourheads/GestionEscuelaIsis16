@@ -76,6 +76,29 @@ public class ServicesFixtures extends FixtureScripts {
         return Curso.get(0).getObject();
     }
     
+    /*
+    @Prototype
+    @MemberOrder(sequence="60")
+    public Object instalarFixturesHorario() {
+        final List<FixtureResult> "" = findFixtureScriptFor(""Fixture.class).run(null);
+        return "".get(0).getObject();
+    }
+    
+    @Prototype
+    @MemberOrder(sequence="70")
+    public Object instalarFixturesCalificaciones() {
+        final List<FixtureResult> "" = findFixtureScriptFor(""Fixture.class).run(null);
+        return "".get(0).getObject();
+    }
+    
+    @Prototype
+    @MemberOrder(sequence="70")
+    public Object instalarFixturesAsistencia() {
+        final List<FixtureResult> "" = findFixtureScriptFor(""Fixture.class).run(null);
+        return "".get(0).getObject();
+    }
+     */
+    
     
 	@MemberOrder(sequence="100")
     public String BorrarBD()

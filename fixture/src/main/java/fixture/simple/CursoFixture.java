@@ -156,8 +156,6 @@ public class CursoFixture extends FixtureScript{
     private PlanRepositorio Plan;
     @javax.inject.Inject
     private CursoRepositorio Curso;
-    @javax.inject.Inject
-    private IsisJdoSupport isisJdoSupport; 
 }
 
 
