@@ -30,20 +30,20 @@ import dom.planEstudio.Plan;
 import dom.simple.Curso;
 import dom.simple.Personal;
 
-public class HorarioFixture extends FixtureScript {
+public class AsistenciaFixture extends FixtureScript {
 
-	public HorarioFixture() {
+	public AsistenciaFixture() {
         withDiscoverability(Discoverability.DISCOVERABLE);
     }
 	
 	@Override
 	protected void execute(ExecutionContext executionContext) {
 		
-		BorrarDBHorario(executionContext);
+		BorrarDBAsistencia(executionContext);
 		
 	}
 	
-    private void BorrarDBHorario(ExecutionContext executionContext) {
+    private void BorrarDBAsistencia(ExecutionContext executionContext) {
     	execute(new GenericTearDownFixture(""),executionContext);
 
     	return;	
