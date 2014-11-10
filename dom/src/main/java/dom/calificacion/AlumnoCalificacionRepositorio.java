@@ -31,7 +31,7 @@ import org.apache.isis.applib.query.QueryDefault;
 
 import dom.simple.Curso;
 
-@DomainService
+//@DomainService
 public class AlumnoCalificacionRepositorio {
 
 	public List<AlumnoCalificacion> alumnoCalificacionPorAlumnoPorPeriodo(final int inDni, final String periodo){

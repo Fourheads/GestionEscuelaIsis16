@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import javax.activation.MimeType;
+import javax.inject.Named;
 import javax.swing.JFrame;
 
 import net.sf.jasperreports.engine.JRException;
@@ -33,6 +34,8 @@ import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.value.Blob;
 
 
+@Named("Reportes")
+@DomainService
 public class GenerarReporte {
 	
 	public static void generarReporte(String jrxml, List<Object> parametros)  throws JRException{

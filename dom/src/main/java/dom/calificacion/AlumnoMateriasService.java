@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.Hidden;
+import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Named;
 import org.apache.isis.applib.query.QueryDefault;
 import org.apache.isis.applib.services.memento.MementoService;
@@ -28,6 +29,7 @@ public class AlumnoMateriasService {
 	    }
 	    
 	    @Named("Calificaciones Por Alumno")
+	    //@MemberOrder(name = "Alumnos", sequence = "7")
 	    public AlumnoMateriasView seleccionarAlumno(final @Named("Ciclo") Calificaciones ciclo,
 	    											final @Named("Periodo") Periodo periodo,
 	    											final @Named("Alumno") AlumnoCalificacion alumno){
@@ -50,44 +52,41 @@ public class AlumnoMateriasService {
 	    }
 	    
 	    //Choices CICLO
-	    public List<Calificaciones> choices0SeleccionarAlumno() {
-	    	List<Calificaciones> listCalificaciones = container.allInstances(Calificaciones.class);
-	    	if(listCalificaciones.isEmpty()){
-	    		container.warnUser("Debe crear al menos un ciclo lectivo con sus períodos de evaluación");
-	    		return listCalificaciones;
-	    	}
-	    	return listCalificaciones;
-		}
-	    
-	   /* public Calificaciones default0SeleccionarAlumno() {
-			if (choices0SeleccionarAlumno().isEmpty()) {
+	    public List<Calificaciones> choices0SeleccionarAlumno(final @Named("Ciclo") Calificaciones ciclo) {
+
+			List<Calificaciones> listCalificaciones = califRepositorio.ciclosConPeriodo();
+			if (listCalificaciones.isEmpty()) {
+				
 				return null;
 			}
-			return choices0SeleccionarAlumno().get(0);
-		}*/
+			return listCalificaciones;
+		}  
+	   
 	    
 	    //Choices PERIODO
-	    /*public List<Periodo> choices1SeleccionarAlumno(final @Named("Ciclo") Calificaciones ciclo){
-	    	if(ciclo.getPeriodos().isEmpty()){
-	    		return null;
-	    	}
-	    	return ciclo.getPeriodos();
-	    }*/
-	    
-	   /* public Periodo default1SeleccionarAlumno(final @Named("Ciclo") Calificaciones ciclo,
+	    public List<Periodo> choices1SeleccionarAlumno(final @Named("Ciclo") Calificaciones ciclo,
 				final @Named("Periodo") Periodo periodo,
-				final @Named(" ") AlumnoCalificacion alumno) {
-			if (choices1SeleccionarAlumno(ciclo, periodo, alumno).isEmpty()) {
-				container.warnUser("En periodo");
-				return null;
-			}
-			return choices1SeleccionarAlumno(ciclo, periodo, alumno).get(0);
-		}*/
+				final @Named("Alumno") AlumnoCalificacion alumno){
+	    	if(ciclo != null){	    		
+	    		if(!ciclo.getPeriodos().isEmpty()){
+		    		return ciclo.getPeriodos();
+		    	}
+	    	}
+	    	return null;   	
+	    	
+	    }	   
 	    
 	    //Choices ALUMNOCALIFICACION
-	   /* public List<AlumnoCalificacion> choices2SeleccionarAlumno(final @Named("Periodo") Periodo periodo){
-	    	return aluCal.listPorPeriodo(periodo);
-	    }*/
+	    public List<AlumnoCalificacion> choices2SeleccionarAlumno(final @Named("Ciclo") Calificaciones ciclo,
+				final @Named("Periodo") Periodo periodo,
+				final @Named("Alumno") AlumnoCalificacion alumno){
+	    	if(periodo != null){
+	    		if(!aluCal.listPorPeriodo(periodo).isEmpty()){
+	    			return aluCal.listPorPeriodo(periodo);	
+	    		}
+	    	}
+	    	return null;
+	    }
 	    
 	    
 	    
@@ -99,4 +98,7 @@ public class AlumnoMateriasService {
 	    
 	    @javax.inject.Inject
 	    AlumnoCalificacionRepositorio	aluCal;
+	    
+	    @javax.inject.Inject
+	    CalificacionRepositorio califRepositorio;
 }

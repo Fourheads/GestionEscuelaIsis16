@@ -83,16 +83,27 @@ public class CargarNotaService {
 		return newView;
 
 	}
-
+	
+	public String validateCalificarPorCurso(
+			final @Named("Ciclo: ") Calificaciones inCalificacion,
+			final @Named("Periodo: ") Periodo inPeriodo,
+			final @Named("Curso: ") Curso inCurso,
+			final @Named("Materia: ") MateriaDelCurso inMateria){
+		List<Calificaciones> listCalificaciones = califRepositorio.ciclosConPeriodo();
+		if(listCalificaciones.isEmpty()){
+			return "Debe crear al menos un ciclo lectivo con sus períodos de evaluación";
+		}
+		return null;
+	}
+	
 	public List<Calificaciones> choices0CalificarPorCurso(
 			final @Named("Ciclo: ") Calificaciones inCalificacion) {
 
 		List<Calificaciones> listCalificaciones = califRepositorio
 				.ciclosConPeriodo();
 		if (listCalificaciones.isEmpty()) {
-			container
-					.warnUser("Debe crear al menos un ciclo lectivo con sus períodos de evaluación");
-			return listCalificaciones;
+			
+			return null;
 		}
 		return listCalificaciones;
 	}
@@ -108,15 +119,16 @@ public class CargarNotaService {
 	public List<Periodo> choices1CalificarPorCurso(
 			final @Named("Ciclo: ") Calificaciones inCalificacion
 	/* final @Named("Periodo: ") Periodo inPeriodo */) {
-
-		List<Periodo> periodos = perRepo.periodoPorCiclo(inCalificacion
-				.getCicloCalificacion());
-		if (periodos.isEmpty()) {
-			container
-					.warnUser("Debe crear al menos un ciclo lectivo con sus períodos de evaluación");
-			return null;
-		}
-		return periodos;
+		List<Periodo> periodos = new ArrayList<Periodo>();
+		
+		if(inCalificacion != null){
+			periodos = perRepo.periodoPorCiclo(inCalificacion.getCicloCalificacion());
+			if (!periodos.isEmpty()) {
+				return periodos;	
+			}	
+		}		
+		return null;
+		
 	}
 
 	/*
