@@ -22,6 +22,7 @@
 
 package dom.simple;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.SortedSet;
@@ -61,6 +62,7 @@ public class CursoRepositorio {
 		curso.setAnio(anio);
 		curso.setDivision(division);
 		curso.setTurno(turno);
+		curso.setHabilitado('S');
 
 		for (Materia materia : anio.getMateriaList()) {
 
@@ -110,11 +112,11 @@ public class CursoRepositorio {
 	}
 
 	// {{ listarCursosDeUnPlan (action)
-	@MemberOrder(sequence = "2")
+	@MemberOrder(sequence = "7")
 	public List<Curso> listarCursosDeUnPlan(@Named("Plan") final Plan plan) {
 
-		return container.allMatches(new QueryDefault<Curso>(Curso.class,
-				"listarCursosDeUnPlan", "plan", plan.getDescripcion()));
+		return filtroCu(container.allMatches(new QueryDefault<Curso>(Curso.class,
+				"listarCursosDeUnPlan", "plan", plan.getDescripcion())),'S');
 	}
 
 	public List<Plan> choices0ListarCursosDeUnPlan() {
@@ -131,18 +133,18 @@ public class CursoRepositorio {
 	}
 	
 	public List<Curso> listarCursoConAlumnos(){
-		return container.allMatches(new QueryDefault<Curso>(Curso.class, "buscarCursoConAlumnos"));
+		return filtroCu(container.allMatches(new QueryDefault<Curso>(Curso.class, "buscarCursoConAlumnos")),'S');
 	}
 	
 	// {{ listarCursosDeUnAnio (action)
-	@MemberOrder(sequence = "2.5")
+	@MemberOrder(sequence = "6")
 	@NotContributed
 	public List<Curso> listarCursosDeUnAnio(@Named("Plan") final Plan plan,
 			@Named("Año") final Anio anio) {
 
-		return container.allMatches(new QueryDefault<Curso>(Curso.class,
+		return filtroCu(container.allMatches(new QueryDefault<Curso>(Curso.class,
 				"listarCursosDeUnAnio", "plan", plan.getDescripcion(), "anio",
-				anio.getAnioNumero()));
+				anio.getAnioNumero())),'S');
 	}
 
 	public List<Plan> choices0ListarCursosDeUnAnio() {
@@ -163,7 +165,7 @@ public class CursoRepositorio {
 	}
 
 	// {{ SeleccionarUnCurso (action)
-	@MemberOrder(sequence = "1")
+	@MemberOrder(sequence = "5")
 	@NotContributed
 	public Curso seleccionarUnCurso(Plan plan, Curso curso) {
 		return curso;
@@ -183,8 +185,8 @@ public class CursoRepositorio {
 	}
 
 	public List<Curso> choices1SeleccionarUnCurso(Plan plan, Curso curso) {
-		return container.allMatches(new QueryDefault<Curso>(Curso.class,
-				"listarCursosDeUnPlan", "plan", plan.getDescripcion()));
+		return filtroCu(container.allMatches(new QueryDefault<Curso>(Curso.class,
+				"listarCursosDeUnPlan", "plan", plan.getDescripcion())),'S');
 	}
 
 	// }}
@@ -196,7 +198,7 @@ public class CursoRepositorio {
 	@NotContributed
 	public Curso asignarPreceptorAlCurso(@Named("Plan") final Plan plan,
 			@Named("Curso") final Curso curso,
-			@Named("Profesor") final Personal preceptor) {
+			@Named("Preceptor") final Personal preceptor) {
 
 		curso.setPreceptor(preceptor);
 
@@ -230,7 +232,7 @@ public class CursoRepositorio {
 	// region > Asignar profesor a materia (accion)
 	// //////////////////////////////////////
 	@Named("Asignar Profesor a Materia")
-	@MemberOrder(sequence = "4")
+	@MemberOrder(sequence = "2")
 	@NotContributed
 	public Curso asignarProfesorAMateriaDelCurso(
 			@Named("Plan") final Plan plan, @Named("Curso") final Curso curso,
@@ -257,7 +259,7 @@ public class CursoRepositorio {
 
 	public List<Curso> choices1AsignarProfesorAMateriaDelCurso(final Plan plan) {
 
-		return cursoRepositorio.listarCursosDeUnPlan(plan);
+		return filtroCu(cursoRepositorio.listarCursosDeUnPlan(plan),'S');
 	}
 
 	public List<MateriaDelCurso> choices2AsignarProfesorAMateriaDelCurso(
@@ -277,7 +279,7 @@ public class CursoRepositorio {
 	// endregion
 
 	// {{ verHorarioDelCurso (action)
-	@MemberOrder(sequence = "10")
+	@MemberOrder(sequence = "1.1")
 	@NotContributed
 	public HorarioCursoView verHorarioDelCurso(Plan plan, Curso curso) {
 		return horarioCursoService.verHorarioDeCurso(curso);
@@ -297,36 +299,56 @@ public class CursoRepositorio {
 	}
 
 	public List<Curso> choices1VerHorarioDelCurso(Plan plan, Curso curso) {
-		return container.allMatches(new QueryDefault<Curso>(Curso.class,
-				"listarCursosDeUnPlan", "plan", plan.getDescripcion()));
+		return filtroCu(container.allMatches(new QueryDefault<Curso>(Curso.class,
+				"listarCursosDeUnPlan", "plan", plan.getDescripcion())),'S');
 	}
 
 	// }}
 
+	@MemberOrder(sequence = "4")
+	@NotContributed
+	public String recuperarCurso(Plan plan, Curso curso)
+	{
+		curso.setHabilitado('S');
+				
+		String anio = String.valueOf(curso.getAnio().getAnioNumero());
+		String division = curso.getDivision();
+		return "El curso " + anio + "° '" + division + "' ha sido recuperado exitosamente";
+	}
+	
+	/*
+	public List<Curso> choices1RecuperarCurso(Plan plan) {
+
+		return filtroCu(container.allMatches(new QueryDefault<Curso>(Curso.class,
+				"listarCursosDeUnPlan", "plan", plan.getDescripcion())),'N');
+	}
+	*/
+	
 	// {{ eliminarCurso (action)
-	@MemberOrder(sequence = "1")
+	@MemberOrder(sequence = "4.5")
 	@NotContributed
 	public String eliminarCurso(Plan plan, Curso curso,
 			@Named("¿Esta Seguro?") Boolean seguro) {
 
-		curso.setAlumnos(null);
-		curso.getHorarioCurso().setCurso(null);
-		curso.setAnio(null);
-
-		LibroDiario libroDiario = container
-				.firstMatch(new QueryDefault<LibroDiario>(LibroDiario.class,
-						"LibroDiarioDeUnCurso", "plan", curso.getAnio()
-								.getPlan().getDescripcion(), "anio", curso
-								.getAnio().getAnioNumero(), "division", curso
-								.getDivision()));
-		libroDiario.setMateriaDelLibroDiarioList(null);
-		libroDiario.setCurso(null);
-
-		for (MateriaDelCurso materiaDelCurso : curso.getMateriaDelCursoList()) {
-			materiaDelCurso.setProfesor(null);
+		curso.setHabilitado('N');
+		
+		curso.setPreceptor(null);
+		curso.setHorarioCurso(null);
+		
+		for(Alumno al:curso.getAlumnos())
+		{
+			al.setCurso(null);
 		}
+		
+		for(MateriaDelCurso matecurso:curso.getMateriaDelCursoList())
+		{
+			matecurso.setProfesor(null);
+			//matecurso.setCurso(null);
+		}
+		
+		curso.setAlumnos(null);
 
-		container.remove(curso);
+		
 		String anio = String.valueOf(curso.getAnio().getAnioNumero());
 		String division = curso.getDivision();
 		return "El curso " + anio + "° '" + division + "' ha sido eliminado";
@@ -337,6 +359,8 @@ public class CursoRepositorio {
 		return planRepositorio.queryListarPlanesAlfabeticamente();
 	}
 
+	
+	
 	public Plan default0EliminarCurso() {
 		if (choices0EliminarCurso().isEmpty()) {
 			return null;
@@ -346,10 +370,23 @@ public class CursoRepositorio {
 	}
 
 	public List<Curso> choices1EliminarCurso(Plan plan, Curso curso) {
-		return container.allMatches(new QueryDefault<Curso>(Curso.class,
-				"listarCursosDeUnPlan", "plan", plan.getDescripcion()));
+		return filtroCu(container.allMatches(new QueryDefault<Curso>(Curso.class,
+				"listarCursosDeUnPlan", "plan", plan.getDescripcion())),'S');
 	}
 
+	private List<Curso> filtroCu(List<Curso> Cursos, char A)
+	{
+		List<Curso> filtroCu=new ArrayList<Curso>();
+		
+		for(Curso cu:Cursos)
+		{
+			if(cu.getHabilitado()==A)
+				filtroCu.add(cu);
+		}
+		
+		return filtroCu;
+	}
+	
 	// }}
 
 	// region > injected services
