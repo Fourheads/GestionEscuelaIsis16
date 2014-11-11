@@ -273,6 +273,21 @@ public class Curso {
 				.listarPersonalSegunFuncion(E_funciones.PROFESOR);
 	}
 
+	
+	private char habilitado;
+	
+	@Persistent
+	@javax.jdo.annotations.Column(allowsNull = "true")
+	@Hidden
+	public char getHabilitado() {
+		return habilitado;
+	}
+
+	public void setHabilitado(char habilitado) {
+		this.habilitado = habilitado;
+	}
+
+	
 	public String validateAsignarProfesorAMateria(
 			@Named("Materia") final MateriaDelCurso materia,
 			@Named("Profesor") final Personal profesor) {
