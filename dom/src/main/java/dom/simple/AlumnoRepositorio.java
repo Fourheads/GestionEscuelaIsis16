@@ -22,6 +22,7 @@
 
 package dom.simple;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.isis.applib.DomainObjectContainer;
@@ -29,6 +30,7 @@ import org.apache.isis.applib.query.QueryDefault;
 import org.joda.time.LocalDate;
 import org.apache.isis.applib.annotation.*;
 import org.apache.isis.applib.annotation.ActionSemantics.Of;
+
 import dom.simple.Localidad.E_localidades;
 import dom.simple.Persona.E_nacionalidad;
 import dom.simple.Persona.E_sexo;
@@ -36,7 +38,7 @@ import dom.simple.Persona.E_sexo;
 
 ///GestionEscuela
 
-@DomainService(menuOrder = "30", repositoryFor = Alumno.class)
+@DomainService(menuOrder = "30")
 @Named("Alumnos")
 public class AlumnoRepositorio {
 
@@ -59,7 +61,7 @@ public class AlumnoRepositorio {
     
     @Bookmarkable
     @ActionSemantics(Of.SAFE)
-    @MemberOrder(sequence = "1")
+    @MemberOrder(sequence = "5")
     @Named ("Listar Alumnos")
     public List<Alumno> listAll() {
         return container.allMatches(new QueryDefault<Alumno>(Alumno.class,
@@ -72,7 +74,7 @@ public class AlumnoRepositorio {
     // //////////////////////////////////////
       
     
-    @MemberOrder(sequence = "2")
+    @MemberOrder(sequence = "1")
     @Named ("Crear Alumno")
     public Alumno create(
             final @RegEx(validation = "[A-Za-z]+") @Named("Nombre") String nombre,
@@ -113,7 +115,7 @@ public class AlumnoRepositorio {
         obj.setDireccion(dire);
         obj.setLegajo(legajo);
         obj.setTelefono(telefono);
-        
+        obj.setHabilitado('S');
         
         container.persistIfNotAlready(obj);
         return obj;
@@ -139,12 +141,12 @@ public class AlumnoRepositorio {
     // FindByDni (action)
     // //////////////////////////////////////
 	
-	@MemberOrder(sequence = "2")
+	@MemberOrder(sequence = "4")
     @Named ("Buscar por DNI")
     public List<Alumno> ListByDni(
             final @Named("DNI") int dni){
 		
-		return listByDni(dni);
+		return filtroAL(listByDni(dni),'S');
 		
 	}
 	
@@ -160,26 +162,58 @@ public class AlumnoRepositorio {
 		
 	@Programmatic
 	public List<Alumno> queryListarAlumnosDeUnCurso(final int anio, final String division) {
-		return container.allMatches(new QueryDefault<Alumno>(Alumno.class,
-				"alumnosDeUnCurso", "anio", anio, "division", division));
+		return filtroAL(container.allMatches(new QueryDefault<Alumno>(Alumno.class,
+				"alumnosDeUnCurso", "anio", anio, "division", division)),'S');
+		
 	}
 	
+	@Hidden(where = Where.OBJECT_FORMS)    
+    @ActionSemantics(Of.NON_IDEMPOTENT)
+    @MemberOrder(sequence = "2")
+    @Named("Recuperar") 
+	public String recoverAlumno(@Named("Recupuerar: ") Alumno delAlumno) {
+		delAlumno.setHabilitado('S');
+		delAlumno.setCurso(null);
+		String remAlumno = delAlumno.title();						
+		return  remAlumno + " fue recuperado exitosamente";
+	}
+	
+	public List<Alumno> choices0RecoverAlumno(){
+		return filtroAL(container.allMatches(new QueryDefault<Alumno>(Alumno.class,
+				"ListarAlumnos")),'N');
+	}
 
 	@Hidden(where = Where.OBJECT_FORMS)    
     @ActionSemantics(Of.NON_IDEMPOTENT)
     @MemberOrder(sequence = "3")
     @Named("Eliminar")    
     public String removeAlumno(@Named("Eliminar: ") Alumno delAlumno) {
-    		String remAlumno = delAlumno.title();			
-			container.removeIfNotAlready(delAlumno);			
-			return  remAlumno + " fue eliminado";
+    		
+		delAlumno.setHabilitado('N');
+		String remAlumno = delAlumno.title();						
+		return  remAlumno + " fue eliminado";
 			
 	}
 	
 	public List<Alumno> choices0RemoveAlumno(){
-		return container.allMatches(new QueryDefault<Alumno>(Alumno.class,
-				"ListarAlumnos"));
+		return filtroAL(container.allMatches(new QueryDefault<Alumno>(Alumno.class,
+				"ListarAlumnos")),'S');
 	}
+	
+	
+	private List<Alumno> filtroAL(List<Alumno> Alumnos, char A)
+	{
+		List<Alumno> filtroAL=new ArrayList<Alumno>();
+		
+		for(Alumno al:Alumnos)
+		{
+			if(al.getHabilitado()==A)
+				filtroAL.add(al);
+		}
+		
+		return filtroAL;
+	}
+	
 	
     // //////////////////////////////////////
     // Injected services
