@@ -22,13 +22,17 @@
 
 package fixture.simple;
 
+import java.util.List;
+
+import javax.inject.Inject;
+
+import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.fixturescripts.FixtureScript;
 import org.apache.isis.applib.fixturescripts.FixtureScript.Discoverability;
 import org.apache.isis.applib.fixturescripts.FixtureScript.ExecutionContext;
 
-import dom.planEstudio.Plan;
-import dom.simple.Curso;
-import dom.simple.Personal;
+import dom.planEstudio.*;
+import dom.horario.*;
 
 public class HorarioFixture extends FixtureScript {
 
@@ -41,7 +45,14 @@ public class HorarioFixture extends FixtureScript {
 		
 		BorrarDBHorario(executionContext);
 		
+		List<Plan> lplan=PlanRepo.listarPlanes();
+		
+		Hora inicio=new Hora();
+		inicio.setHora(8);
+		inicio.setMinutos(0);
+
 	}
+	
 	
     private void BorrarDBHorario(ExecutionContext executionContext) {
     	execute(new GenericTearDownFixture(""),executionContext);
@@ -52,5 +63,9 @@ public class HorarioFixture extends FixtureScript {
 	//private Curso createPreceptorCurso(Plan plan, Curso curso, Personal preceptor, ExecutionContext executionContext) {
        // return executionContext.add());
     //}
-
+    
+	@Inject
+	DomainObjectContainer container;
+    @javax.inject.Inject
+    private PlanRepositorio PlanRepo;
 }
