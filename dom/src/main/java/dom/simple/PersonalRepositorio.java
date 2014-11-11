@@ -42,6 +42,8 @@ import org.apache.isis.applib.query.QueryDefault;
 import org.apache.isis.applib.value.DateTime;
 import org.joda.time.LocalDate;
 
+import dom.planEstudio.Plan;
+import dom.planEstudio.PlanRepositorio;
 import dom.simple.Funcion.E_funciones;
 import dom.simple.Localidad.E_localidades;
 import dom.simple.Persona.E_nacionalidad;
@@ -97,6 +99,7 @@ public class PersonalRepositorio {
         newPersonal.setNombre(nombre.toUpperCase());
         newPersonal.setSexo(sexo);
         newPersonal.setTelefono(telefono);
+        newPersonal.setHabilitado('S');
         
         container.persistIfNotAlready(newPersonal);        
     	return newPersonal;
@@ -122,10 +125,10 @@ public class PersonalRepositorio {
     //Todo
     @Bookmarkable
     @ActionSemantics(Of.SAFE)
-    @MemberOrder(sequence = "3.5")
+    @MemberOrder(sequence = "5")
     @Named ("Todos")
     public List<Personal> listAll(){    	
-    	return container.allInstances(Personal.class);
+    	return filtroPe(container.allInstances(Personal.class),'S');
     }
     
     
@@ -162,11 +165,11 @@ public class PersonalRepositorio {
 //    			new QueryDefault<Personal>(Personal.class, "findByFuncion", "nombre", E_funciones.SECRETARIO.toString()));
 //    }    
 //    
-    @MemberOrder(sequence = "5")
+    @MemberOrder(sequence = "4")
     @Named ("Listar Por funcion")
     public List<Personal> listarPersonalSegunFuncion(@Named("Funcion")E_funciones funcion){
-    	return container.allMatches(
-    			new QueryDefault<Personal>(Personal.class, "findByFuncion", "nombre", funcion.toString()));
+    	return filtroPe(container.allMatches(
+    			new QueryDefault<Personal>(Personal.class, "findByFuncion", "nombre", funcion.toString())),'S');
     }    
     
     public E_funciones default0ListarPersonalSegunFuncion(){
@@ -176,20 +179,67 @@ public class PersonalRepositorio {
     }
     
     
+	private List<Personal> filtroPe(List<Personal> personal, char A)
+	{
+		List<Personal> filtroPe=new ArrayList<Personal>();
+		
+		for(Personal Pe:personal)
+		{
+			if(Pe.getHabilitado()==A)
+				filtroPe.add(Pe);
+		}
+		
+		return filtroPe;
+	}
+    
     //  Fin Listados  ////////////////////
     
     
+    @Hidden(where = Where.OBJECT_FORMS)    
+    @ActionSemantics(Of.NON_IDEMPOTENT)
+    @MemberOrder(sequence = "2")
+    @Named("Recuperar")    
+    public String recoverPersonal(@Named("Personal") Personal delPersonal) {
+    		
+    		delPersonal.setHabilitado('S');
+    	
+    		String remPersonal = delPersonal.title();			
+			container.removeIfNotAlready(delPersonal);			
+			return  remPersonal + " fue recuperado exitoramente";		
+	}
     
-    
+    public List<Personal> choices0RecoverPersonal()
+    {
+    	return filtroPe(container.allInstances(Personal.class),'N');
+    }
     
     // Eliminar Personal    
     @Hidden(where = Where.OBJECT_FORMS)    
     @ActionSemantics(Of.NON_IDEMPOTENT)
-    @MemberOrder(sequence = "2")
+    @MemberOrder(sequence = "3")
     @Named("Eliminar")    
     public String removePersonal(@Named("Personal") Personal delPersonal) {
+    		
+    		delPersonal.setHabilitado('N');
+    	
+    		for(Plan planes:planrepositorio.listarPlanes())
+    		{
+    			for(Curso curso:cursorepositorio.listarCursosDeUnPlan(planes))
+    			{
+    				for(MateriaDelCurso matecurso:curso.getMateriaDelCursoList())
+    				{
+    					if(matecurso.getProfesor()==delPersonal)
+    						matecurso.setProfesor(null);
+    				}
+    				
+    				if(curso.getPreceptor()==delPersonal)
+    					curso.setPreceptor(null);
+    					
+    			}
+    		}
+    		
     		String remPersonal = delPersonal.title();			
-			container.removeIfNotAlready(delPersonal);			
+					
 			return  remPersonal + " fue eliminado";
 			
 	}
@@ -197,4 +247,8 @@ public class PersonalRepositorio {
     
     @javax.inject.Inject 
     DomainObjectContainer container;
+    @javax.inject.Inject 
+    PlanRepositorio planrepositorio;
+    @javax.inject.Inject 
+    CursoRepositorio cursorepositorio;
 }
