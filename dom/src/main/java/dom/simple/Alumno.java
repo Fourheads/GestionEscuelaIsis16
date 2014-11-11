@@ -88,7 +88,14 @@ public class Alumno extends Persona implements Comparable<Alumno> {
 		this.curso = curso;
 	}
 
-	// }}
+	
+	public DomainObjectContainer getContainer() {
+		return container;
+	}
+
+	public void setContainer(DomainObjectContainer container) {
+		this.container = container;
+	}
 
 	@Override
 	public int compareTo(Alumno alumno) {
