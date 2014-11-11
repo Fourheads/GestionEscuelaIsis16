@@ -22,13 +22,17 @@
 
 package fixture.simple;
 
+
+import java.util.List;
+
+import javax.inject.Inject;
+
+import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.fixturescripts.FixtureScript;
 import org.apache.isis.applib.fixturescripts.FixtureScript.Discoverability;
 import org.apache.isis.applib.fixturescripts.FixtureScript.ExecutionContext;
 
-import dom.planEstudio.Plan;
-import dom.simple.Curso;
-import dom.simple.Personal;
+import dom.planEstudio.*;
 
 public class AsistenciaFixture extends FixtureScript {
 
@@ -40,9 +44,8 @@ public class AsistenciaFixture extends FixtureScript {
 	protected void execute(ExecutionContext executionContext) {
 		
 		BorrarDBAsistencia(executionContext);
-		
 	}
-	
+
     private void BorrarDBAsistencia(ExecutionContext executionContext) {
     	execute(new GenericTearDownFixture(""),executionContext);
 
