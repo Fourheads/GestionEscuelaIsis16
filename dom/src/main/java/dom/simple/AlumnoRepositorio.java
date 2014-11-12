@@ -31,6 +31,7 @@ import org.joda.time.LocalDate;
 import org.apache.isis.applib.annotation.*;
 import org.apache.isis.applib.annotation.ActionSemantics.Of;
 
+import dom.planEstudio.Plan;
 import dom.simple.Localidad.E_localidades;
 import dom.simple.Persona.E_nacionalidad;
 import dom.simple.Persona.E_sexo;
@@ -187,7 +188,7 @@ public class AlumnoRepositorio {
     @ActionSemantics(Of.NON_IDEMPOTENT)
     @MemberOrder(sequence = "3")
     @Named("Eliminar")    
-    public String removeAlumno(@Named("Eliminar: ") Alumno delAlumno) {
+    public String removeAlumno(@Named("Eliminar: ") Alumno delAlumno, @Named("¿Está seguro?") Boolean seguro) {
     		
 		delAlumno.setHabilitado('N');
 		String remAlumno = delAlumno.title();						
@@ -200,6 +201,13 @@ public class AlumnoRepositorio {
 				"ListarAlumnos")),'S');
 	}
 	
+	public String validateRemoveAlumno(Alumno delAlumno, Boolean seguro) {
+		if (!seguro) {
+			return "Marque en la opcion si está seguro!!! Si no lo está cancele esta opción";
+		}
+
+		return null;
+	} 
 	
 	private List<Alumno> filtroAL(List<Alumno> Alumnos, char A)
 	{
