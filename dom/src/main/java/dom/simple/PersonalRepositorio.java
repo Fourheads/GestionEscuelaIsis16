@@ -204,7 +204,7 @@ public class PersonalRepositorio {
     		delPersonal.setHabilitado('S');
     	
     		String remPersonal = delPersonal.title();			
-			container.removeIfNotAlready(delPersonal);			
+			//container.removeIfNotAlready(delPersonal);			
 			return  remPersonal + " fue recuperado exitoramente";		
 	}
     
@@ -218,7 +218,7 @@ public class PersonalRepositorio {
     @ActionSemantics(Of.NON_IDEMPOTENT)
     @MemberOrder(sequence = "3")
     @Named("Eliminar")    
-    public String removePersonal(@Named("Personal") Personal delPersonal) {
+    public String removePersonal(@Named("Personal") Personal delPersonal, @Named("¿Está seguro?") Boolean seguro) {
     		
     		delPersonal.setHabilitado('N');
     	
@@ -243,7 +243,14 @@ public class PersonalRepositorio {
 			return  remPersonal + " fue eliminado";
 			
 	}
-        
+   
+	public String validateRemovePersonal(Personal delPersonal, Boolean seguro) {
+		if (!seguro) {
+			return "Marque en la opcion si está seguro!!! Si no lo está cancele esta opción";
+		}
+
+		return null;
+	}
     
     @javax.inject.Inject 
     DomainObjectContainer container;
