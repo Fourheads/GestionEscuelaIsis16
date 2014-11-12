@@ -37,6 +37,7 @@ import org.apache.isis.applib.annotation.Render.Type;
 import org.apache.isis.applib.query.QueryDefault;
 import org.joda.time.LocalDate;
 
+import dom.planEstudio.Anio;
 import dom.simple.Curso;
 import dom.simple.MateriaDelCurso;
 import dom.simple.MateriaDelCursoRepositorio;
@@ -93,7 +94,24 @@ public class MateriaDelLibroDiarioRepositorio {
 
 	
 	public List<Integer> choices3NuevaEntradalibrodiario() {//ojo ver cantidad de horas
+		/*
+		 * 		List<Integer> aniosDisponibles = new ArrayList<Integer>();
+		List<Integer> aniosCreados = new ArrayList<Integer>();
+		List<Anio> anioList = listarAniosDeUnPlan(plan);
 
+		for (Anio anio : anioList) {
+			aniosCreados.add(anio.getAnioNumero());
+		}
+
+		for (int i = 1; i < 9; i++) {
+			aniosDisponibles.add(i);
+		}
+
+		aniosDisponibles.removeAll(aniosCreados);
+
+		return aniosDisponibles;
+		 * 
+		 */
 		List<Integer> Horas = new ArrayList<Integer>();
 
 		for (int i = 1; i <= 12; i++) {
