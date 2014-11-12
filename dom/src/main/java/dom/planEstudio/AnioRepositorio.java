@@ -55,7 +55,7 @@ public class AnioRepositorio {
 
 		Anio nuevoAnio = new Anio();
 		nuevoAnio.setAnioNumero(anioNumero);
-
+		nuevoAnio.setHabilitado('S');
 		plan.getAnioList().add(nuevoAnio);
 
 		return plan;
@@ -99,25 +99,31 @@ public class AnioRepositorio {
 	@MemberOrder(sequence = "2", name = "Listado de Años del Plan")
 	public Plan eliminarAnio(final Plan plan, @Named("Año") Anio anio,
 			@Named("¿Esta Seguro?") Boolean seguro) {
-		
-		List<Curso> CursoList=curso.listarCursosDeUnAnio(plan, anio);
-		
-		for(int x=0; x<=CursoList.size();x++)
-		{			
-			curso.eliminarCurso(plan,CursoList.get(x), true);
+		if(anio.getMateriaList()!=null)
+		{
+			anio.setHabilitado('N');		
+			
+			/*
+			for(Curso cur:curso.listarCursosDeUnAnio(plan, anio))
+			{			
+				if(cur.getAnio()==anio)
+					cur.setAnio(null);
+			}
+			
+			for(Materia mate:anio.getMateriaList())
+			{			
+				materia.eliminarMateria(anio, mate, true);
+			}
+			*/
+			
+			plan.getAnioList().remove(anio);
+			//anio.setPlan(null);
+		}
+		else
+		{
+			container.raiseError("El año esta vinculado y no pude ser borrado");
 		}
 		
-		for(Materia mate:anio.getMateriaList())
-		{			
-			materia.eliminarMateria(anio, mate, true);
-		}
-		
-		plan.getAnioList().clear();
-		anio.setPlan(null);
-		anio.getMateriaList().clear();
-
-		
-		container.remove(anio);
 		return plan;
 	}
 
@@ -129,10 +135,23 @@ public class AnioRepositorio {
 
 	@NotContributed
 	public List<Anio> listarAniosDeUnPlan(Plan plan) {
-		return container.allMatches(new QueryDefault<Anio>(Anio.class,
-				"listarAniosDeUnPlan", "plan", plan.getDescripcion()));
+		return filtroAn(container.allMatches(new QueryDefault<Anio>(Anio.class,
+				"listarAniosDeUnPlan", "plan", plan.getDescripcion())),'S');
 	}
 	
+	
+	private List<Anio> filtroAn(List<Anio> Anios, char A)
+	{
+		List<Anio> filtroAn=new ArrayList<Anio>();
+		
+		for(Anio An:Anios)
+		{
+			if(An.getHabilitado()==A)
+				filtroAn.add(An);
+		}
+		
+		return filtroAn;
+	}
 
 
 	@Inject
