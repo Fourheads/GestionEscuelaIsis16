@@ -24,9 +24,11 @@ package dom.planEstudio;
 
 import javax.jdo.annotations.Column;
 import javax.jdo.annotations.IdentityType;
+import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.VersionStrategy;
 
 import org.apache.isis.applib.annotation.Bookmarkable;
+import org.apache.isis.applib.annotation.Hidden;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.ObjectType;
 import org.apache.isis.applib.annotation.Title;
@@ -86,6 +88,20 @@ public class Materia {
 	public void setPrograma(final String programa) {
 		this.programa = programa;
 	}
+	
+	private char habilitado;
+	
+	@Persistent
+	@javax.jdo.annotations.Column(allowsNull = "true")
+	@Hidden
+	public char getHabilitado() {
+		return habilitado;
+	}
+
+	public void setHabilitado(char habilitado) {
+		this.habilitado = habilitado;
+	}
+
 	// }}
 
 
