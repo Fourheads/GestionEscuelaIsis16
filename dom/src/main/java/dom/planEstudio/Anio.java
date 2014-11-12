@@ -34,8 +34,11 @@ import javax.jdo.annotations.VersionStrategy;
 
 import org.apache.isis.applib.annotation.Bookmarkable;
 import org.apache.isis.applib.annotation.Bounded;
+import org.apache.isis.applib.annotation.Hidden;
+import org.apache.isis.applib.annotation.MaxLength;
 import org.apache.isis.applib.annotation.MemberGroupLayout;
 import org.apache.isis.applib.annotation.MemberOrder;
+import org.apache.isis.applib.annotation.MultiLine;
 import org.apache.isis.applib.annotation.Named;
 import org.apache.isis.applib.annotation.ObjectType;
 import org.apache.isis.applib.annotation.Render;
@@ -110,12 +113,13 @@ public class Anio implements Comparable<Anio> {
 	@MemberOrder(sequence = "1", name = "Listado de Materias del Año")
 	@Named("Agregar materia al Año")
 	public Anio agregarMateriaAlAnio(
-			@Named("Nombre de la materia") final String nombreMateria) {
-		materiaRepositorio.agregarMateria(this, nombreMateria);
+			@Named("Nombre de la materia") final String nombreMateria, final @MaxLength(2048)
+	  		@MultiLine @Named("Programa") String programa ) {
+		materiaRepositorio.agregarMateria(this, nombreMateria, programa);
 		return this;
 	}
 
-	public String validateAgregarMateriaAlAnio(final String nombreMateria) {
+	public String validateAgregarMateriaAlAnio(final String nombreMateria, final String programa) {
 		List<Materia> listadoMaterias = this.getMateriaList();
 
 		for (Materia materia : listadoMaterias) {
@@ -142,6 +146,21 @@ public class Anio implements Comparable<Anio> {
 		return this.getMateriaList();
 	}
 
+	
+	private char habilitado;
+	
+	@Persistent
+	@javax.jdo.annotations.Column(allowsNull = "true")
+	@Hidden
+	public char getHabilitado() {
+		return habilitado;
+	}
+
+	public void setHabilitado(char habilitado) {
+		this.habilitado = habilitado;
+	}
+
+	
 	// }}
 
 	// Title (GUI)
