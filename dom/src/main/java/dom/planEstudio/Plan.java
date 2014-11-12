@@ -37,6 +37,7 @@ import javax.jdo.annotations.VersionStrategy;
 import org.apache.isis.applib.annotation.Bookmarkable;
 import org.apache.isis.applib.annotation.Bounded;
 import org.apache.isis.applib.annotation.Disabled;
+import org.apache.isis.applib.annotation.Hidden;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Named;
 import org.apache.isis.applib.annotation.ObjectType;
@@ -90,6 +91,22 @@ public class Plan implements Comparable<Plan>{
 		this.aniolist = aniolist;
 	}
 
+	
+	private char habilitado;
+	
+	@Persistent
+	@javax.jdo.annotations.Column(allowsNull = "true")
+	@Hidden
+	public char getHabilitado() {
+		return habilitado;
+	}
+
+	public void setHabilitado(char habilitado) {
+		this.habilitado = habilitado;
+	}
+
+	
+	
 	// end region AnioList (Collection)
 	// //////////////////////////////////////////
 	
