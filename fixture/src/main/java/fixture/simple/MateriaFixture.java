@@ -55,7 +55,7 @@ public class MateriaFixture extends FixtureScript{
 	}
 	
     private Anio createMate(final String nombre, Anio anio, ExecutionContext executionContext) {
-        return executionContext.add(this, materia.agregarMateria(anio, nombre));
+        return executionContext.add(this, materia.agregarMateria(anio, nombre,"bla bla bla bla bla 123456 pof!!"));
     }
 	
     public void BorrarDBMaterias(ExecutionContext executionContext)
