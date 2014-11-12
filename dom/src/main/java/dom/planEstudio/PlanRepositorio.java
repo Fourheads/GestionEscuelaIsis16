@@ -48,6 +48,7 @@ public class PlanRepositorio {
 
 		plan.setDescripcion(descripcion);
 		plan.setHorarioPlan(horarioPlanRepositorio.crearHorarioPlan(plan));
+		plan.setHabilitado('S');
 
 		container.persistIfNotAlready(plan);
 
@@ -59,13 +60,13 @@ public class PlanRepositorio {
 	// {{ listarPlanes (action)
 	@MemberOrder(sequence = "1.2")
 	public List<Plan> listarPlanes() {
-		return queryListarPlanesAlfabeticamente();
+		return filtroPL(queryListarPlanesAlfabeticamente(),'S');
 	}
 	@Programmatic
 	public List<Plan> queryListarPlanesAlfabeticamente() {
-		return container.allMatches(new QueryDefault<Plan>(Plan.class,
+		return filtroPL(container.allMatches(new QueryDefault<Plan>(Plan.class,
 				"listarPlanes" 
-				));
+				)),'S');
 	}
 
 	// }}
@@ -78,7 +79,7 @@ public class PlanRepositorio {
 	}
 	
 	public List<Plan> choices0SeleccionarUnPlan(){
-		return queryListarPlanesAlfabeticamente();
+		return filtroPL(queryListarPlanesAlfabeticamente(),'S');
 	}
 	
 	public Plan default0SeleccionarUnPlan(){
@@ -94,16 +95,36 @@ public class PlanRepositorio {
 	
 
 	// {{ EliminarPlan (action)
+	@MemberOrder(sequence = "1.01")
+	@NotContributed
+	public String RecuperarPlan(final @Named("Plan a recuperar") Plan plan) {
+		
+		String descripcion = plan.getDescripcion();
+		plan.setHabilitado('S');
+		
+		//plan.getHorarioPlan().setPlan(null);
+		///plan.setHorarioPlan(null);
+		//plan.getAnioList().clear();
+		//plan.setAnioList(null);
+		
+		//container.remove(plan);
+		return "El plan de estudio '" + descripcion + "' ha sido recuperado exitosamente";
+	}
+	
 	@MemberOrder(sequence = "1.1")
 	@NotContributed
 	public String eliminarPlan(final @Named("Plan a eliminar") Plan plan,
 			final @Named("Esta seguro?") Boolean seguro) {
+		
 		String descripcion = plan.getDescripcion();
-		plan.getHorarioPlan().setPlan(null);
-		plan.setHorarioPlan(null);
-		plan.getAnioList().clear();
-		plan.setAnioList(null);
-		container.remove(plan);
+		plan.setHabilitado('N');
+		
+		//plan.getHorarioPlan().setPlan(null);
+		///plan.setHorarioPlan(null);
+		//plan.getAnioList().clear();
+		//plan.setAnioList(null);
+		
+		//container.remove(plan);
 		return "El plan de estudio '" + descripcion + "' ha sido Eliminado";
 	}
 
@@ -115,6 +136,19 @@ public class PlanRepositorio {
 		return null;
 	}
 
+	private List<Plan> filtroPL(List<Plan> Plans, char A)
+	{
+		List<Plan> filtroPL=new ArrayList<Plan>();
+		
+		for(Plan PL:Plans)
+		{
+			if(PL.getHabilitado()==A)
+				filtroPL.add(PL);
+		}
+		
+		return filtroPL;
+	}
+	
 	// region > injected services
 	// //////////////////////////////////////
 
