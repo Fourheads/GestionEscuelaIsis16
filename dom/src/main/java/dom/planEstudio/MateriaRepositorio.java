@@ -22,6 +22,7 @@
 
 package dom.planEstudio;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
 
@@ -29,7 +30,9 @@ import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.annotation.DescribedAs;
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.Hidden;
+import org.apache.isis.applib.annotation.MaxLength;
 import org.apache.isis.applib.annotation.MemberOrder;
+import org.apache.isis.applib.annotation.MultiLine;
 import org.apache.isis.applib.annotation.Named;
 import org.apache.isis.applib.annotation.NotContributed;
 import org.apache.isis.applib.annotation.NotInServiceMenu;
@@ -56,9 +59,9 @@ public class MateriaRepositorio {
 	@NotInServiceMenu
 	public List<Materia> listarMateriasDeUnAnio(final @Named("Plan") Plan plan,
 			final @Named("Año") Anio anio) {
-		return container.allMatches(new QueryDefault<Materia>(Materia.class,
+		return filtroMa(container.allMatches(new QueryDefault<Materia>(Materia.class,
 				"listarMateriasDeUnAnio", "anio", anio.getAnioNumero(), "plan",
-				plan.getDescripcion()));
+				plan.getDescripcion())),'S');
 	}
 
 	public Plan default0ListarMateriasDeUnAnio() {
@@ -81,10 +84,13 @@ public class MateriaRepositorio {
 	@Hidden
 	@MemberOrder(sequence = "3")
 	public Anio agregarMateria(final @Named("Año") Anio anio,
-			final @Named("Nombre") String nombre) {
+			final @Named("Nombre") String nombre, final @MaxLength(2048)
+	  		@MultiLine @Named("Programa") String programa) {
 
 		Materia materia = new Materia();
 		materia.setNombre(nombre);
+		materia.setPrograma(programa);
+		materia.setHabilitado('S');
 		anio.getMateriaList().add(materia);
 
 		agregarMateriaCursosYaCreados(anio, materia);
@@ -106,13 +112,14 @@ public class MateriaRepositorio {
 		
 		eliminarMateriaCursosYaCreados(anio, materia);
 		
+		materia.setHabilitado('N');
 		container.remove(materia);
 		return anio;
 	}
 
 	public List<Materia> choices1EliminarMateria(final Anio anio) {
 
-		return anio.getMateriaList();
+		return filtroMa(anio.getMateriaList(),'S');
 	}
 
 	public Materia default1EliminarMateria(final Anio anio) {
@@ -163,6 +170,21 @@ public class MateriaRepositorio {
 		}
 		
 	}
+	
+	
+	private List<Materia> filtroMa(List<Materia> Materias, char A)
+	{
+		List<Materia> filtroMa=new ArrayList<Materia>();
+		
+		for(Materia Ma:Materias)
+		{
+			if(Ma.getHabilitado()==A)
+				filtroMa.add(Ma);
+		}
+		
+		return filtroMa;
+	}
+
 	// region > injected services
 	// //////////////////////////////////////
 
