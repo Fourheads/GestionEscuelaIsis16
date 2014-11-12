@@ -354,6 +354,7 @@ public class CursoRepositorio {
 		return "El curso " + anio + "° '" + division + "' ha sido eliminado";
 	}
 
+
 	public List<Plan> choices0EliminarCurso() {
 
 		return planRepositorio.queryListarPlanesAlfabeticamente();
@@ -374,6 +375,16 @@ public class CursoRepositorio {
 				"listarCursosDeUnPlan", "plan", plan.getDescripcion())),'S');
 	}
 
+	/*
+	public String validateEliminarCurso(Plan plan, Curso curso, Boolean seguro) {
+		if (!seguro) {
+			return "Marque en la opcion si está seguro!!! Si no lo está cancele esta opción";
+		}
+
+		return null;
+	} 
+	*/
+	
 	private List<Curso> filtroCu(List<Curso> Cursos, char A)
 	{
 		List<Curso> filtroCu=new ArrayList<Curso>();
