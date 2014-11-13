@@ -61,7 +61,13 @@ public class LibroDiarioRepositorio {
 		
 	}
 
-	// {{ mostrarLibroDiarioDelCurso (action)
+	@Named("blablabla")
+	@MemberOrder(sequence = "99")
+	public void mostrarhojalibrodiario(final Curso curso)
+	{
+		
+		this.hojalibrodiariosevice.Crearview(this.mostrarLibroDiarioDelCurso(curso) ,null);
+	}
 	
 	@Named("Mostrar libro diario del curso")
 	@MemberOrder(sequence = "1")
@@ -73,8 +79,7 @@ public class LibroDiarioRepositorio {
 				"anio", curso.getAnio().getAnioNumero(),
 				"division", curso.getDivision()));
 	}
-	// }}
-
+	
 	@Hidden
 	//@MemberOrder(sequence = "2")
 	public List<LibroDiario> listaLibroDiarioDelCurso() {
@@ -86,5 +91,7 @@ public class LibroDiarioRepositorio {
 	DomainObjectContainer container;
 	@javax.inject.Inject
 	MateriaDelLibroDiarioRepositorio materiaDelLibroDiarioRepositorio;
+	@javax.inject.Inject
+	HojaLibroDiarioSevice hojalibrodiariosevice;
 
 }

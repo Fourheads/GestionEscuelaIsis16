@@ -197,4 +197,5 @@ public class MateriaDelLibroDiarioRepositorio {
 	LibroDiarioRepositorio libroDiarioRepositorio;
 	@javax.inject.Inject
 	MateriaDelCursoRepositorio materiaDelCursoRepositorio;
+
 }

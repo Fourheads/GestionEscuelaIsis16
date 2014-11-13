@@ -115,13 +115,17 @@ public class CargarNotaView extends AbstractViewModel{
 	@Programmatic
 	public void inicializarListAlumnos(){
 		//setMateriasCalificacion(matCalificacion.listMateriaCalificacionPorCursoPorMateria(anio, division, plan, materia));
-		
+		System.out.println("");
+		System.out.println(anio + plan + division + materia+ periodo);
+		System.out.println("");
 		setMateriasCalificacion(matCalificacion.listPorCursoPorMateriaPorPeriodo(anio, plan, division, materia, periodo));
 	}
 	
 	@Programmatic
 	public void inicializarAlumnoActivo(){
-		setAlumnoActivo(getMateriasCalificacion().get(getAlumnoIndice()));		
+		if(!getMateriasCalificacion().isEmpty()){
+			setAlumnoActivo(getMateriasCalificacion().get(getAlumnoIndice()));
+		}				
 	}
 	
 	// {{ PlanCurso (property)
@@ -280,6 +284,14 @@ public class CargarNotaView extends AbstractViewModel{
 		return generarNuevoViewModel(alumnoIndiceAnterior());
 	}
 	
+	@Named("Siguiente Alumno")
+	@MemberOrder(sequence = "4", name = "alumnoActivo")
+	@PublishedAction
+	public CargarNotaView pasarAlSiguienteAlumno() {
+
+		return generarNuevoViewModel(alumnoIndiceSiguiente());
+	}
+	
 	@MemberOrder(sequence = "5", name = "alumnoActivo")
 	@Named("Calificar")
 	public CargarNotaView calificar(final @Named("Nota: ") int inNota, final @MultiLine @Optional @Named("Observacion: ") String inObservacion){
@@ -288,7 +300,13 @@ public class CargarNotaView extends AbstractViewModel{
 		
 		
 		getAlumnoActivo().setNota(inNota);
-		getAlumnoActivo().setObservacion(inObservacion.toUpperCase());
+		if(inObservacion != null){
+			getAlumnoActivo().setObservacion(inObservacion);
+		}else{
+			getAlumnoActivo().setObservacion("-");
+		}
+			
+		
 		
 		return generarNuevoViewModel(alumnoIndiceSiguiente());
 	}

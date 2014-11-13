@@ -23,6 +23,7 @@
 package dom.libroDiario;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import javax.jdo.annotations.Column;
 
@@ -38,7 +39,8 @@ import org.joda.time.LocalDate;
 
 @Named("Hoja del libro diario")
 @Bookmarkable
-@MemberGroupLayout(columnSpans = { 5, 0, 0, 7 })
+@MemberGroupLayout(columnSpans = { 6, 0, 6, 12 })
+
 public class HojaLibroDiarioView extends AbstractViewModel {
 
 	@Hidden
@@ -46,7 +48,7 @@ public class HojaLibroDiarioView extends AbstractViewModel {
 		return viewModelMemento();
 	}
 
-	private String title;
+	private String title="Fecha: ";
 
 	// region > identification in the UI
 	public String title() {
@@ -71,110 +73,47 @@ public class HojaLibroDiarioView extends AbstractViewModel {
 
 		Memento memento = mementoService.parse(mementoString);
 		
+		title = title+memento.get("Titulo", String.class);
+		setLibrodiario(memento.get("Librodiario", LibroDiario.class));
 		
-		title = memento.get("Titulo", String.class);
+		setListahojadellibro(this.hojalibrodiarioservice.returnListhojadellibro(this.getLibrodiario()));
 		
-		setHora(memento.get("Hora", Integer.class).toString());
-		setMateria(memento.get("Materia", MateriaDelLibroDiario.class).toString());
-		setUnidad(memento.get("Unidad", Integer.class).toString());
-		setActividades(memento.get("Actividad", String.class));
-		setObservaciones(memento.get("Observaciones", String.class));
-		setFecha(memento.get("Fecha", LocalDate.class).toString());
-
-		System.out.println(" ");
-		System.out.println(" ");
-		System.out.println(" ");
-		System.out.println(getFecha());
 	}
 
+// {{ Listahojadellibro (property)
+private List<Hojadellibro> hojadellibro;
 
-	// {{ Hora (property)
-	private String Hora;
+@MemberOrder(sequence = "1")
+public List<Hojadellibro> getListahojadellibro() {
+	return hojadellibro;
+}
 
-	@MemberOrder(sequence = "1")
-	@Column(allowsNull = "false")
-	public String getHora() {
-		return Hora;
-	}
+public void setListahojadellibro(final List<Hojadellibro> hojadellibro) {
+	this.hojadellibro = hojadellibro;
+}
 
-	public void setHora(final String Hora) {
-		this.Hora = Hora;
-	}
-	// }}
+// {{ Librodiario (property)
+private LibroDiario librodiarioe;
 
-	// {{ Materia (property)
-	private String Materia;
+@MemberOrder(sequence = "1")
+public LibroDiario getLibrodiario() {
+	return librodiarioe;
+}
 
-	@Column(allowsNull = "true")
-	@MemberOrder(sequence = "2")
-	public String getMateria() {
-		return Materia;
-	}
-
-	public void setMateria(final String Materia) {
-		this.Materia = Materia;
-	}
-	// }}
+public void setLibrodiario(final LibroDiario librodiarioe) {
+	this.librodiarioe = librodiarioe;
+}
+// }}
 
 
-	// {{ Unidad (property)
-	private String Unidad;
 
-	@Column(allowsNull = "true")
-	@MemberOrder(sequence = "3")
-	public String getUnidad() {
-		return Unidad;
-	}
+// }}
 
-	public void setUnidad(final String Unidad) {
-		this.Unidad = Unidad;
-	}
-	// }}
 
-	// {{ Actividades (property)
-	private String Actividades;
-
-	@Column(allowsNull = "true")
-	@MemberOrder(sequence = "4")
-	public String getActividades() {
-		return Actividades;
-	}
-
-	public void setActividades(final String Actividades) {
-		this.Actividades = Actividades;
-	}
-	// }}
-
-	// {{ Observaciones (property)
-	private String Observacion;
-	@Column(allowsNull = "false")
-	@MemberOrder(sequence = "5")
-	public String getObservaciones() {
-		return Observacion;
-	}
-
-	public void setObservaciones(final String Observacion) {
-		this.Observacion = Observacion;
-	}
-	// }}
 	
-	// {{ Fehca (property)
-	private String Fecha;
-
-	@MemberOrder(sequence = "9")
-	public String getFecha() {
-		return Fecha;
-	}
-
-	public void setFecha(final String Fecha) {
-		this.Fecha = Fecha;
-	}
-	// }}
-
-
-
-
 	
 	@javax.inject.Inject
 	MementoService mementoService;
+	@javax.inject.Inject
+	HojaLibroDiarioSevice hojalibrodiarioservice;
 }
