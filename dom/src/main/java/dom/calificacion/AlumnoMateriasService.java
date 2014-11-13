@@ -59,22 +59,23 @@ public class AlumnoMateriasService {
 	    	return listCalificaciones;
 		}
 	    
-	   /* public Calificaciones default0SeleccionarAlumno() {
+	    public Calificaciones default0SeleccionarAlumno() {
 			if (choices0SeleccionarAlumno().isEmpty()) {
 				return null;
 			}
 			return choices0SeleccionarAlumno().get(0);
-		}*/
+		}
 	    
 	    //Choices PERIODO
-	    /*public List<Periodo> choices1SeleccionarAlumno(final @Named("Ciclo") Calificaciones ciclo){
+	    public List<Periodo> choices1SeleccionarAlumno(final @Named("Ciclo") Calificaciones ciclo){
+	    
 	    	if(ciclo.getPeriodos().isEmpty()){
 	    		return null;
 	    	}
 	    	return ciclo.getPeriodos();
-	    }*/
-	    
-	   /* public Periodo default1SeleccionarAlumno(final @Named("Ciclo") Calificaciones ciclo,
+	    }
+	    /*
+	   public Periodo default1SeleccionarAlumno(final @Named("Ciclo") Calificaciones ciclo,
 				final @Named("Periodo") Periodo periodo,
 				final @Named(" ") AlumnoCalificacion alumno) {
 			if (choices1SeleccionarAlumno(ciclo, periodo, alumno).isEmpty()) {
@@ -83,12 +84,13 @@ public class AlumnoMateriasService {
 			}
 			return choices1SeleccionarAlumno(ciclo, periodo, alumno).get(0);
 		}*/
-	    
+	    /*
 	    //Choices ALUMNOCALIFICACION
-	   /* public List<AlumnoCalificacion> choices2SeleccionarAlumno(final @Named("Periodo") Periodo periodo){
+	    public List<AlumnoCalificacion> choices2SeleccionarAlumno(final @Named("Ciclo") Calificaciones ciclo,
+				final @Named("Periodo") Periodo periodo){
 	    	return aluCal.listPorPeriodo(periodo);
-	    }*/
-	    
+	    }
+	    */
 	    
 	    
 	    @javax.inject.Inject
