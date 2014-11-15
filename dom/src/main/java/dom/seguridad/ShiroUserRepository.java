@@ -40,15 +40,16 @@ import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.annotation.ActionSemantics.Of;
 import org.apache.isis.applib.annotation.Where;
 
+@Hidden
 @DomainService(menuOrder = "25", repositoryFor = ShiroUser.class)
-@Named("Shiro User")
+@Named("Usuarios")
 public class ShiroUserRepository {
 
 	// region > identification in the UI
 	// //////////////////////////////////////
 
 	public String getId() {
-		return "shirouser";
+		return "Usuarios";
 	}
 
 	public String iconName() {
@@ -63,7 +64,7 @@ public class ShiroUserRepository {
 	@Bookmarkable
 	@ActionSemantics(Of.SAFE)
 	@MemberOrder(sequence = "1")
-	@Named("List All Users")
+	@Named("Listar todos los usuarios")
 	public List<ShiroUser> listAll() {
 		return container.allInstances(ShiroUser.class);
 	}
@@ -74,11 +75,11 @@ public class ShiroUserRepository {
 	// //////////////////////////////////////
 
 	@MemberOrder(sequence = "2")
-	@Named("Create new User")
-	@Hidden(where = Where.OBJECT_FORMS)
-	public ShiroUser create(final @Named("Name") String userName,
-			final @Named("Password") String password,
-			final @Named("Role") Role role) {
+	@Named("Crear un nuevo usuario")
+	//@Hidden(where = Where.OBJECT_FORMS)
+	public ShiroUser create(final @Named("Nombre") String userName,
+			final @Named("Contraseña") String password,
+			final @Named("Rol") Role role) {
 		final ShiroUser obj = container.newTransientInstance(ShiroUser.class);
 
 		final SortedSet<Role> rolesList = new TreeSet<Role>();
@@ -97,7 +98,7 @@ public class ShiroUserRepository {
 
 	@ActionSemantics(Of.NON_IDEMPOTENT)
 	@MemberOrder(sequence = "4")
-	@Named("Remove User")
+	@Named("Borrar usuario")
 	public String removeUser(@Named("User") ShiroUser shiroUser) {
 		String userName = shiroUser.getUserName();
 		container.remove(shiroUser);

@@ -37,7 +37,7 @@ import org.apache.isis.applib.annotation.Named;
 import org.apache.isis.applib.annotation.Where;
 import org.apache.isis.applib.annotation.ActionSemantics.Of;
 
-
+@Hidden
 @DomainService(menuOrder = "35", repositoryFor = Role.class)
 @Named("Roles")
 public class RoleRepository {
@@ -46,7 +46,7 @@ public class RoleRepository {
     // //////////////////////////////////////
 
     public String getId() {
-        return "role";
+        return "Roles";
     }
 
     public String iconName() {
@@ -61,7 +61,7 @@ public class RoleRepository {
     @Bookmarkable
     @ActionSemantics(Of.SAFE)
     @MemberOrder(sequence = "1")
-    @Named("List Roles")
+    @Named("Listar roles")
     public List<Role> listAll() {
         return container.allInstances(Role.class);
     }
@@ -72,11 +72,11 @@ public class RoleRepository {
     // //////////////////////////////////////
     
     @MemberOrder(sequence = "2")
-    @Named("Create New Role")
-    @Hidden(where = Where.OBJECT_FORMS)
+    @Named("Crear un nuevo rol")
+    //@Hidden(where = Where.OBJECT_FORMS)
     public Role create(
-            final @Named("Name") String roleName,
-            final @Named("Permission") Permission permission) {
+            final @Named("Nombre") String roleName,
+            final @Named("Permiso") Permission permission) {
         final Role obj = container.newTransientInstance(Role.class);
         final SortedSet<Permission> permissionsList = new TreeSet<Permission>();
         
@@ -94,7 +94,7 @@ public class RoleRepository {
     
     @ActionSemantics(Of.NON_IDEMPOTENT)
     @MemberOrder(sequence = "4")
-    @Named("Remove Role")
+    @Named("Eliminar un rol")
     public String removeRole(@Named("Role") Role role) {
     	String roleName = role.getRoleName();
     	container.remove(role);

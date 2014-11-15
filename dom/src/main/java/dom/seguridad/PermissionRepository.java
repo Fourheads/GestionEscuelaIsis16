@@ -31,20 +31,21 @@ import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.annotation.ActionSemantics;
 import org.apache.isis.applib.annotation.Bookmarkable;
 import org.apache.isis.applib.annotation.DomainService;
+import org.apache.isis.applib.annotation.Hidden;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Named;
 import org.apache.isis.applib.annotation.ActionSemantics.Of;
 
-
+@Hidden
 @DomainService(menuOrder = "45", repositoryFor = Permission.class)
-@Named("Permission")
+@Named("Permisos")
 public class PermissionRepository {
 	
 	 //region > identification in the UI
     // //////////////////////////////////////
 
     public String getId() {
-        return "Permission";
+        return "Permisos";
     }
 
     public String iconName() {
@@ -59,7 +60,7 @@ public class PermissionRepository {
     @Bookmarkable
     @ActionSemantics(Of.SAFE)
     @MemberOrder(sequence = "1")
-    @Named("List Permissions")
+    @Named("Listar permisos")
     public List<Permission> listAll() {
         return container.allInstances(Permission.class);
     }
@@ -70,10 +71,10 @@ public class PermissionRepository {
     // //////////////////////////////////////
     
     @MemberOrder(sequence = "2")
-    @Named("Create New Permission")
+    @Named("Crear un nuevo permiso")
     public Permission create(
-            final @Named("Description") String permissionDescription,
-            final @Named("Permission") String permissionText) {
+            final @Named("Descripcion") String permissionDescription,
+            final @Named("Permiso") String permissionText) {
         final Permission obj = container.newTransientInstance(Permission.class);
         
         
@@ -93,7 +94,7 @@ public class PermissionRepository {
     
     @ActionSemantics(Of.NON_IDEMPOTENT)
     @MemberOrder(sequence = "4")
-    @Named("Remove Permission")
+    @Named("Eliminar permiso")
     public String removePermission(@Named("Permission") Permission permission) {
     		String permissionDescription = permission.getPermissionDescription();
 			container.remove(permission);
