@@ -22,10 +22,8 @@
 
 package dom.libroDiario;
 
-import java.math.BigDecimal;
-import java.util.List;
 
-import javax.jdo.annotations.Column;
+import java.util.List;
 
 import org.apache.isis.applib.AbstractViewModel;
 import org.apache.isis.applib.DomainObjectContainer;
@@ -41,9 +39,6 @@ import org.apache.isis.applib.annotation.Render.Type;
 import org.apache.isis.applib.services.memento.MementoService;
 import org.apache.isis.applib.services.memento.MementoService.Memento;
 import org.joda.time.LocalDate;
-
-import dom.asistencia.TomarAsistenciaView;
-import dom.simple.Curso;
 
 @Named("Hoja del libro diario")
 @Bookmarkable
@@ -62,10 +57,6 @@ public class HojaLibroDiarioView extends AbstractViewModel {
 		return title;
 	}
 
-	public String iconName() {
-		return "SimpleObject";
-	}
-	
 	String memento;
 
 	@Override
