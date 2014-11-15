@@ -40,7 +40,7 @@ import dom.simple.AlumnoRepositorio;
 import dom.simple.MateriaDelCurso;
 import dom.simple.MateriaDelCursoRepositorio;
 
-//@Hidden
+@Hidden
 @DomainService
 public class PeriodoRepositorio {
 

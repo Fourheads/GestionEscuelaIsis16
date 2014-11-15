@@ -27,11 +27,12 @@ import java.util.List;
 
 import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.annotation.DomainService;
+import org.apache.isis.applib.annotation.Hidden;
 import org.apache.isis.applib.query.QueryDefault;
 
 import dom.simple.Curso;
-
-//@DomainService
+@Hidden
+@DomainService
 public class AlumnoCalificacionRepositorio {
 
 	public List<AlumnoCalificacion> alumnoCalificacionPorAlumnoPorPeriodo(final int inDni, final String periodo){
