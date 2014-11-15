@@ -30,6 +30,7 @@ import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.Hidden;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Named;
+import org.apache.isis.applib.annotation.NotContributed;
 import org.apache.isis.applib.query.QueryDefault;
 import org.apache.isis.applib.services.memento.MementoService;
 import org.apache.isis.applib.services.memento.MementoService.Memento;
@@ -58,7 +59,7 @@ public class CargarNotaService {
 
 	@Named("Por Curso")
 	@MemberOrder(name = "Cargar Notas", sequence = "1")
-	// @Hidden(where = Where.)
+	@NotContributed
 	public CargarNotaView calificarPorCurso(
 			final @Named("Ciclo: ") Calificaciones inCalificacion,
 			final @Named("Periodo: ") Periodo inPeriodo,
