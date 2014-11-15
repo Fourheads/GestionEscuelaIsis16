@@ -54,7 +54,8 @@ import dom.calificacion.Periodo;
 	@javax.jdo.annotations.Query(name = "findAlumnoCalificacionPorPeriodo", 
 			language = "JDOQL", 
 			value = "SELECT FROM dom.simple.AlumnoCalificacion"
-					+" WHERE this.periodo.nombre == :periodo"),
+					+" WHERE this.periodo.nombre == :periodo" +
+					" order by this.alumno.apellido dsc"),
 	@javax.jdo.annotations.Query(name = "findAlumnoCalificacionPorAlumno", 
 			language = "JDOQL", 
 			value = "SELECT FROM dom.simple.AlumnoCalificacion"
