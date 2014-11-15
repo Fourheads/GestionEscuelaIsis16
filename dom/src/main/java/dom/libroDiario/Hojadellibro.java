@@ -99,17 +99,4 @@ public class Hojadellibro {
 		}
 		// }}
 		
-		// {{ Fehca (property)
-		private LocalDate Fecha;
-
-		@MemberOrder(sequence = "9")
-		public LocalDate getFecha() {
-			return Fecha;
-		}
-
-		public void setFecha(final LocalDate Fecha) {
-			this.Fecha = Fecha;
-		}
-		// }}
-
 }
