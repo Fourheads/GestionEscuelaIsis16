@@ -99,6 +99,13 @@ public class EntradadeLibroDiarioRepositorio {
 		else
 			return null;
 	}*/
+	
+	@Hidden
+	public List<EntradaLibroDiario> listarhorasusadasenfecha(LibroDiario librodiario, LocalDate fecha)
+	{
+		return container.allMatches(new QueryDefault<EntradaLibroDiario>(EntradaLibroDiario.class,
+				"Entradasporfechaporlibrodiario","LibroDiario", librodiario, "Fecha", fecha ));
+	}
 
 	@javax.inject.Inject
 	DomainObjectContainer container;

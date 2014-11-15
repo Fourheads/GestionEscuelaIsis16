@@ -37,17 +37,15 @@ import org.apache.isis.applib.annotation.Render.Type;
 import org.apache.isis.applib.query.QueryDefault;
 import org.joda.time.LocalDate;
 
-import dom.planEstudio.Anio;
 import dom.simple.Curso;
 import dom.simple.MateriaDelCurso;
 import dom.simple.MateriaDelCursoRepositorio;
-
 
 @DomainService
 public class MateriaDelLibroDiarioRepositorio {
 	
 	@Hidden
-	public List<MateriaDelLibroDiario> crearListaMateriaDelLibroDiario(Curso curso) {
+	public List<MateriaDelLibroDiario> crearListaMateriaDelLibroDiario(final Curso curso) {
 		
 		List<MateriaDelCurso> materiaDelCursoList = curso.getMateriaDelCursoList();
 		List<MateriaDelLibroDiario> materiaDelLibroDiarioList = new ArrayList<MateriaDelLibroDiario>();
@@ -63,17 +61,16 @@ public class MateriaDelLibroDiarioRepositorio {
 	}
 
 	
-	@Named("Nueva entrada libro diario")
-	@MemberOrder(name="Libro diario",sequence = "2")//@Named("Libro Diario") final LibroDiario librodiario, @Named("Materias del libro diario") final MateriaDelLibroDiario materialiDelLibroDiario,
-	public EntradaLibroDiario nuevaEntradalibrodiario(@Named("Libro Diario") LibroDiario LibroDiario, 
-			@Named("Materias del libro diario") MateriaDelLibroDiario materialiDelLibroDiario,
-			@Named("Fecha") LocalDate  fecha, @Named("Numero de hora") int horas, @Named("Unidad") int unidad,
+
+	@Hidden
+	public EntradaLibroDiario nuevaEntradalibrodiario(@Named("Curso") final LibroDiario LibroDiario, 
+			@Named("Materia")final MateriaDelLibroDiario materialiDelLibroDiario,
+			@Named("Fecha") final LocalDate  fecha, @Named("Hora") int horas, @Named("Unidad") int unidad,
 			final @MaxLength(2048)
 	  		@MultiLine @Named("Actividad") String actividad,
 	  		final @MaxLength(2048)
 			@MultiLine@Named("Observaciones") String Observaciones){
 		
-		//MateriaDelLibroDiario materialiDelLibroDiario=container.newTransientInstance(MateriaDelLibroDiario.class);
 		
 		EntradaLibroDiario entradadario=entradalibrodiariorepositiorio.crearEntradadeLibroDiario(fecha, horas, unidad, actividad, Observaciones
 				);
@@ -85,42 +82,36 @@ public class MateriaDelLibroDiarioRepositorio {
 		return entradadario;
 	}
 	
+	public List<LibroDiario> choices0NuevaEntradalibrodiario()
+	{
+		List<LibroDiario> listalibro=new ArrayList<LibroDiario>();
+		for(LibroDiario librodia: libroDiarioRepositorio.listaLibroDiarioDelCurso())
+		{
+			if(librodia.getCurso().getHabilitado()=='S')
+				listalibro.add(librodia);
+		}
+		
+		return listalibro;
+	}
 	
-	
-	public List<MateriaDelLibroDiario> choices1NuevaEntradalibrodiario(@Named("Libro Diario") LibroDiario LibroDiario)
+	public List<MateriaDelLibroDiario> choices1NuevaEntradalibrodiario(@Named("Curso") final LibroDiario LibroDiario)
 	{
 		return listarmateriaslibrodiario(LibroDiario);
 	}
 
 	
 	public List<Integer> choices3NuevaEntradalibrodiario() {//ojo ver cantidad de horas
-		/*
-		 * 		List<Integer> aniosDisponibles = new ArrayList<Integer>();
-		List<Integer> aniosCreados = new ArrayList<Integer>();
-		List<Anio> anioList = listarAniosDeUnPlan(plan);
-
-		for (Anio anio : anioList) {
-			aniosCreados.add(anio.getAnioNumero());
-		}
-
-		for (int i = 1; i < 9; i++) {
-			aniosDisponibles.add(i);
-		}
-
-		aniosDisponibles.removeAll(aniosCreados);
-
-		return aniosDisponibles;
-		 * 
-		 */
+		
 		List<Integer> Horas = new ArrayList<Integer>();
-
-		for (int i = 1; i <= 12; i++) {
-			Horas.add(i);
-		}
-
+				
+			for (int i = 1; i <= 6; i++) {
+				Horas.add(i);
+			}
+			
 		return Horas;
 	}
 
+	
 	public int default3NuevaEntradalibrodiario() {
 		return choices3NuevaEntradalibrodiario().get(0);
 	}
@@ -129,7 +120,7 @@ public class MateriaDelLibroDiarioRepositorio {
 
 		List<Integer> Unidades = new ArrayList<Integer>();
 
-		for (int i = 1; i <= 13; i++) {
+		for (int i = 1; i <= 10; i++) {
 			Unidades.add(i);
 		}
 
@@ -140,15 +131,13 @@ public class MateriaDelLibroDiarioRepositorio {
 		return choices4NuevaEntradalibrodiario().get(0);
 	}
 	
-	@Named("Mostrar materia libro diario")
-	@MemberOrder(name="Libro diario",sequence = "3")
+	@Hidden
 	public List<MateriaDelLibroDiario> mostrarmateriaLibroDiario(final Curso curso) {
 		return listarmateriaslibrodiario(libroDiarioRepositorio.mostrarLibroDiarioDelCurso(curso));
 	}
 	
-	
 	@Named("Entradas por fecha")
-	@MemberOrder(name="Libro diario",sequence = "4")
+	@MemberOrder(name="Libro diario",sequence = "3")
 	public List<EntradaLibroDiario> listarEntradasporFecha(@Named("Curso") final Curso curso, @Named("Materia") final MateriaDelCurso materiadelcurso, @Named("Fecha") final LocalDate fecha)
 	{
 		return entradalibrodiariorepositiorio.entradasporfecha(curso, materiadelcurso, fecha);
@@ -185,7 +174,6 @@ public class MateriaDelLibroDiarioRepositorio {
 		else
 			return null;
 	}
-	
 	
 
 	
