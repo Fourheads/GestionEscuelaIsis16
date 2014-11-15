@@ -128,7 +128,7 @@ public class PeriodoRepositorio {
 	
 	@Named("Agregar Alumno")	
 	public AlumnoCalificacion agregarAlumno(final @Named("Alumno: ") Alumno inAlumno,
-											final @Named("Ciclo: ") Calificaciones inCalificacion,
+											
 											final @Named("Periodo: ") Periodo inPeriodo){
 		final AlumnoCalificacion newAlCalificacion= new AlumnoCalificacion();
 		List<MateriaCalificacion> listMC = new ArrayList<MateriaCalificacion>();
@@ -154,7 +154,7 @@ public class PeriodoRepositorio {
 	}
 	
 	public String validateAgregarAlumno(final @Named("Alumno: ") Alumno inAlumno,
-										final @Named("Ciclo: ") Calificaciones inCalificacion,
+										
 										final @Named("Periodo: ") Periodo inPeriodo){
 		
 		if(inAlumno.getCurso() == null){
@@ -167,6 +167,7 @@ public class PeriodoRepositorio {
 		return null;
 	}
 	
+	@Hidden
 	public List<Periodo> periodoPorCiclo(final int ciclo){
 		return container.allMatches(new QueryDefault<Periodo>(Periodo.class, "PeriodosPorCiclo", "ciclo", ciclo));
 	}

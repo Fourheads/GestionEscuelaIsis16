@@ -32,6 +32,7 @@ import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.Hidden;
 import org.apache.isis.applib.annotation.MemberGroupLayout;
 import org.apache.isis.applib.annotation.Named;
+import org.apache.isis.applib.annotation.NotContributed;
 import org.apache.isis.applib.query.QueryDefault;
 import org.joda.time.LocalDate;
 
@@ -53,11 +54,11 @@ public class CalificacionRepositorio {
 		return newCalificacion;
 	}	
 	
-	
-	@Named("Buscar por Año")
-	public List<Calificaciones> listByCiclo(final @Named("Ciclo: ")int ciclo){
+	@NotContributed
+	@Named("Seleccionar ciclo")
+	public List<Calificaciones> listByCiclo(final @Named("Ciclo Lectivo: ")Calificaciones ciclo){
 		return container.allMatches(
-				new QueryDefault<Calificaciones>(Calificaciones.class, "findByCiclo","ciclo", ciclo));
+				new QueryDefault<Calificaciones>(Calificaciones.class, "findByCiclo","ciclo", ciclo.getCicloCalificacion()));
 	}
 	
 	
