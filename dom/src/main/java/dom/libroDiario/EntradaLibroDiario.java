@@ -33,6 +33,7 @@ import javax.jdo.annotations.VersionStrategy;
 
 import org.apache.isis.applib.annotation.Bookmarkable;
 import org.apache.isis.applib.annotation.Bounded;
+import org.apache.isis.applib.annotation.Hidden;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.ObjectType;
 import org.apache.isis.applib.annotation.Render;
@@ -47,7 +48,10 @@ import dom.libroDiario.HoraCatedra;
 			+ "WHERE this.Fecha == :Fecha"
 			+"&& this.materiaDelLibroDiario.materiaDelCurso == :materiacurso"),
 			@javax.jdo.annotations.Query(name = "EntradaLibroDiario", language = "JDOQL", value = "SELECT FROM dom.libroDiario.EntradaLibroDiario "
-					+ "WHERE this.materiaDelCurso == :materiacurso")})
+					+ "WHERE this.materiaDelCurso == :materiacurso"),
+					@javax.jdo.annotations.Query(name = "Entradasporfechaporlibrodiario", language = "JDOQL", value = "SELECT FROM dom.libroDiario.EntradaLibroDiario "
+							+ "WHERE this.Fecha == :Fecha"
+							+"&& this.materiaDelLibroDiario.libroDiario == :LibroDiario")})
 
 @javax.jdo.annotations.PersistenceCapable(identityType = IdentityType.DATASTORE)
 @javax.jdo.annotations.DatastoreIdentity(strategy = javax.jdo.annotations.IdGeneratorStrategy.IDENTITY, column = "id")
@@ -87,6 +91,7 @@ public class EntradaLibroDiario {
 		this.horacatedra = horacatedra;
 	}
 
+	@Hidden
 	public void asignarHoracatedra(HoraCatedra horacate) {
 		this.horacatedra.add(horacate);
 		
