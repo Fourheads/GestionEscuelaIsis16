@@ -36,6 +36,7 @@ import javax.jdo.annotations.VersionStrategy;
 
 import org.apache.isis.applib.annotation.Bookmarkable;
 import org.apache.isis.applib.annotation.Bounded;
+import org.apache.isis.applib.annotation.Hidden;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.ObjectType;
 import org.apache.isis.applib.annotation.Render;
@@ -102,6 +103,7 @@ public class MateriaDelLibroDiario {
 		this.entradalibrodiario = entradalibrodiario;
 	}
 	
+	@Hidden
 	public void AsignarEntradaLibroDiario(EntradaLibroDiario entradalibro)
 	{
 		entradalibrodiario.add(entradalibro);
