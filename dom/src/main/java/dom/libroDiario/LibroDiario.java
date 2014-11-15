@@ -25,6 +25,7 @@ package dom.libroDiario;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Named;
 import javax.jdo.annotations.Column;
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.Join;
@@ -53,6 +54,7 @@ import dom.simple.Curso;
 @javax.jdo.annotations.Version(strategy = VersionStrategy.VERSION_NUMBER, column = "version")
 
 @ObjectType("LIBRO_DIARIO")
+@Named("LIBRO_DIARIO")
 @Bookmarkable
 @Bounded
 public class LibroDiario {
