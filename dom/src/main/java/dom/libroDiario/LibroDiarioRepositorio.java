@@ -23,15 +23,13 @@
 package dom.libroDiario;
 
 import org.apache.isis.applib.DomainObjectContainer;
-import org.apache.isis.applib.annotation.ActionInteraction;
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.Hidden;
 import org.apache.isis.applib.annotation.MaxLength;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.MultiLine;
 import org.apache.isis.applib.annotation.Named;
-import org.apache.isis.applib.annotation.Render;
-import org.apache.isis.applib.annotation.Render.Type;
+
 import org.apache.isis.applib.query.QueryDefault;
 import org.apache.isis.applib.services.memento.MementoService;
 import org.apache.isis.applib.services.memento.MementoService.Memento;
@@ -39,10 +37,12 @@ import org.joda.time.LocalDate;
 
 import java.util.List;
 
-import dom.asistencia.ContabilizarAsistenciasView;
+
 import dom.simple.Curso;
 import dom.simple.CursoRepositorio;
+import dom.simple.MateriaDelCurso;
 
+@Hidden
 @Named("Libro diario")
 @DomainService(menuOrder = "100")
 public class LibroDiarioRepositorio {
@@ -67,7 +67,7 @@ public class LibroDiarioRepositorio {
 		container.persistIfNotAlready(libroDiario);
 		
 	}
-	
+
 	@Named("Nueva entrada libro diario ")
 	@MemberOrder(name="Libro diario",sequence = "1")
 	public EntradaLibroDiario Nuevaentradalibro(@Named("Curso") final LibroDiario LibroDiario, 
@@ -82,7 +82,7 @@ public class LibroDiarioRepositorio {
 	}
 
 	@Named("Hoja del libro por dia")
-	@MemberOrder(name="Libro diario",sequence = "50")
+	@MemberOrder(name="Libro diario",sequence = "4")
 	public HojaLibroDiarioView mostrarhojalibrodiario(final Curso curso,@Named("Fecha") final LocalDate fecha)
 	{
 		Memento memento = mementoService.create();
@@ -102,6 +102,24 @@ public class LibroDiarioRepositorio {
 		return cursorepositorio.listarCursoConAlumnos();
 	}
 	
+	@Named("Entradas por fecha")
+	@MemberOrder(name="Libro diario",sequence = "3")
+	public List<EntradaLibroDiario> entradasporfecha(@Named("Curso") final Curso curso, @Named("Materia") final MateriaDelCurso materiadelcurso, @Named("Fecha") final LocalDate fecha)
+	{
+		return entradalibrodiarepositorio.entradasporfecha(curso, materiadelcurso, fecha);
+	}
+	
+	public List<Curso> choices0Entradasporfecha()
+	{
+		return cursorepositorio.listarCursoConAlumnos();
+	}
+	
+	public List<MateriaDelCurso> choices1Entradasporfecha(final Curso curso)
+	{
+		if(curso!=null)
+			return curso.getMateriaDelCursoList();
+		return null;
+	}
 	
 	@Named("Mostrar libro diario del curso")
 	@MemberOrder(name="Libro diario",sequence = "2")
@@ -133,4 +151,6 @@ public class LibroDiarioRepositorio {
 	MementoService mementoService;
 	@javax.inject.Inject
 	CursoRepositorio cursorepositorio;
+	@javax.inject.Inject
+	EntradadeLibroDiarioRepositorio entradalibrodiarepositorio;
 }

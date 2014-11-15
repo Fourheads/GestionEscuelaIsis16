@@ -316,13 +316,12 @@ public class CursoRepositorio {
 		return "El curso " + anio + "° '" + division + "' ha sido recuperado exitosamente";
 	}
 	
-	/*
-	public List<Curso> choices1RecuperarCurso(Plan plan) {
-
-		return filtroCu(container.allMatches(new QueryDefault<Curso>(Curso.class,
-				"listarCursosDeUnPlan", "plan", plan.getDescripcion())),'N');
+	@Named("Libro Diario")
+	@MemberOrder(sequence = "5")
+	public LibroDiarioRepositorio trarlibrodiariorepo()
+	{
+		return libroDiarioRepositorio;
 	}
-	*/
 	
 	// {{ eliminarCurso (action)
 	@MemberOrder(sequence = "4.5")

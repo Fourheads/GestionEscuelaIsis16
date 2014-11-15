@@ -23,6 +23,7 @@
 
 package dom.seguridad;
 
+
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Named;
@@ -30,7 +31,7 @@ import org.apache.isis.applib.annotation.Named;
 @DomainService(menuOrder = "45")
 @Named("Cuentas")
 public class Cuentas {
-	
+
     @MemberOrder(sequence = "1")
     @Named("Permisos")
 	public PermissionRepository Permisos()
