@@ -30,10 +30,15 @@ import org.apache.isis.applib.annotation.Named;
 import org.apache.isis.applib.annotation.Render;
 import org.apache.isis.applib.annotation.Render.Type;
 import org.apache.isis.applib.query.QueryDefault;
+import org.apache.isis.applib.services.memento.MementoService;
+import org.apache.isis.applib.services.memento.MementoService.Memento;
+import org.joda.time.LocalDate;
 
 import java.util.List;
 
+import dom.asistencia.ContabilizarAsistenciasView;
 import dom.simple.Curso;
+import dom.simple.CursoRepositorio;
 
 @Named("Libro diario")
 @DomainService(menuOrder = "100")
@@ -41,7 +46,6 @@ public class LibroDiarioRepositorio {
 	
 	
 	@Hidden
-	//@MemberOrder(sequence = "1")
 	public void crearLibroDiario(final Curso curso) {
 		
 		LibroDiario libroDiario = container.newTransientInstance(LibroDiario.class);
@@ -61,12 +65,26 @@ public class LibroDiarioRepositorio {
 		
 	}
 
-	@Named("blablabla")
-	@MemberOrder(sequence = "99")
-	public void mostrarhojalibrodiario(final Curso curso)
+	
+	@Named("Hoja del libro por dia")
+	//@MemberOrder(sequence = "5")
+	public HojaLibroDiarioView mostrarhojalibrodiario(final Curso curso,@Named("Fecha") final LocalDate fecha)//agregar choices
 	{
-		
-		this.hojalibrodiariosevice.Crearview(this.mostrarLibroDiarioDelCurso(curso) ,null);
+		Memento memento = mementoService.create();
+
+		memento.set("Anio", curso.getAnio().getAnioNumero());
+		memento.set("Division", curso.getDivision());
+		memento.set("Fecha", fecha);
+		memento.set("Plan", curso.getAnio().getPlan().getDescripcion());
+
+
+		return container.newViewModelInstance(
+				HojaLibroDiarioView.class, memento.asString());
+	}
+	
+	public List<Curso> choices0Mostrarhojalibrodiario()
+	{
+		return cursorepositorio.listarCursoConAlumnos();
 	}
 	
 	@Named("Mostrar libro diario del curso")
@@ -80,11 +98,15 @@ public class LibroDiarioRepositorio {
 				"division", curso.getDivision()));
 	}
 	
+	public List<Curso> choices0MostrarLibroDiarioDelCurso()
+	{
+		return cursorepositorio.listarCursoConAlumnos();
+	}
+	
 	@Hidden
-	//@MemberOrder(sequence = "2")
 	public List<LibroDiario> listaLibroDiarioDelCurso() {
 		
-		return container.allMatches(new QueryDefault<LibroDiario>(LibroDiario.class, "MateriasDeUnLibroDiario"));
+		return container.allMatches(new QueryDefault<LibroDiario>(LibroDiario.class, "TodosLibroDiario"));
 	}
 	
 	@javax.inject.Inject
@@ -92,6 +114,7 @@ public class LibroDiarioRepositorio {
 	@javax.inject.Inject
 	MateriaDelLibroDiarioRepositorio materiaDelLibroDiarioRepositorio;
 	@javax.inject.Inject
-	HojaLibroDiarioSevice hojalibrodiariosevice;
-
+	MementoService mementoService;
+	@javax.inject.Inject
+	CursoRepositorio cursorepositorio;
 }
