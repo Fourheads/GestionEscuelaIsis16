@@ -23,9 +23,12 @@
 package dom.libroDiario;
 
 import org.apache.isis.applib.DomainObjectContainer;
+import org.apache.isis.applib.annotation.ActionInteraction;
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.Hidden;
+import org.apache.isis.applib.annotation.MaxLength;
 import org.apache.isis.applib.annotation.MemberOrder;
+import org.apache.isis.applib.annotation.MultiLine;
 import org.apache.isis.applib.annotation.Named;
 import org.apache.isis.applib.annotation.Render;
 import org.apache.isis.applib.annotation.Render.Type;
@@ -64,11 +67,23 @@ public class LibroDiarioRepositorio {
 		container.persistIfNotAlready(libroDiario);
 		
 	}
-
 	
+	@Named("Nueva entrada libro diario ")
+	@MemberOrder(name="Libro diario",sequence = "1")
+	public EntradaLibroDiario Nuevaentradalibro(@Named("Curso") final LibroDiario LibroDiario, 
+			@Named("Materia")final MateriaDelLibroDiario materialiDelLibroDiario,
+			@Named("Fecha") final LocalDate  fecha, @Named("Hora") int horas, @Named("Unidad") int unidad,
+			final @MaxLength(2048)
+	  		@MultiLine @Named("Actividad") String actividad,
+	  		final @MaxLength(2048)
+			@MultiLine@Named("Observaciones") String Observaciones)
+	{
+		return materiaDelLibroDiarioRepositorio.nuevaEntradalibrodiario(LibroDiario, materialiDelLibroDiario, fecha, horas, unidad, actividad, Observaciones);
+	}
+
 	@Named("Hoja del libro por dia")
-	//@MemberOrder(sequence = "5")
-	public HojaLibroDiarioView mostrarhojalibrodiario(final Curso curso,@Named("Fecha") final LocalDate fecha)//agregar choices
+	@MemberOrder(name="Libro diario",sequence = "50")
+	public HojaLibroDiarioView mostrarhojalibrodiario(final Curso curso,@Named("Fecha") final LocalDate fecha)
 	{
 		Memento memento = mementoService.create();
 
@@ -87,8 +102,9 @@ public class LibroDiarioRepositorio {
 		return cursorepositorio.listarCursoConAlumnos();
 	}
 	
+	
 	@Named("Mostrar libro diario del curso")
-	@MemberOrder(sequence = "1")
+	@MemberOrder(name="Libro diario",sequence = "2")
 	public LibroDiario mostrarLibroDiarioDelCurso(final Curso curso) {
 		
 		return container.firstMatch(new QueryDefault<LibroDiario>(LibroDiario.class,
