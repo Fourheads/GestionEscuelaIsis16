@@ -52,7 +52,8 @@ import dom.simple.MateriaDelCurso;
 	@javax.jdo.annotations.Query(name = "findMateriaCalificacionPorAlumno", 
 			language = "JDOQL", 
 			value = "SELECT FROM dom.simple.MateriaCalificacion"
-					+" WHERE this.alumno.dni == :dni "),
+					+" WHERE this.alumno.dni == :dni &&" +
+					" this.habilitado == 'S'"),
 	@javax.jdo.annotations.Query(name = "findMateriaCalificacionPorCursoPorMateria", 
 			language = "JDOQL", 
 			value = "SELECT FROM dom.calificacion.MateriaCalificacion " 
@@ -60,12 +61,13 @@ import dom.simple.MateriaDelCurso;
 					+ "this.materiaDelCurso.curso.anio.anioNumero == :anio " 
 					+ "&& this.materiaDelCurso.curso.anio.plan.descripcion == :plan " 
 					+ "&& this.materiaDelCurso.curso.division == :division " 
-					+ "&& this.materiaDelCurso.materia.nombre == :materia"
+					+ "&& this.materiaDelCurso.materia.nombre == :materia &&" +
+					" this.habilitado == 'S'"
 					),
 	@javax.jdo.annotations.Query(name = "findMateriaCalificacionPorMateria", 
 			language = "JDOQL", 
 			value = "SELECT FROM dom.simple.MateriaCalificacion" +
-					" WHERE this.materia.materia.nombre == :materia "),
+					" WHERE this.materia.materia.nombre == :materia && this.habilitado == 'S'"),
 	@javax.jdo.annotations.Query(name = "findMateriaCalificacionPorCursoPorMateriaPorPeriodo", 
 			language = "JDOQL", 
 			value = "SELECT FROM dom.calificacion.MateriaCalificacion " 
@@ -74,7 +76,8 @@ import dom.simple.MateriaDelCurso;
 					+ "&& this.materiaDelCurso.curso.anio.plan.descripcion == :plan " 
 					+ "&& this.materiaDelCurso.curso.division == :division " 
 					+ "&& this.materiaDelCurso.materia.nombre == :materia " 
-					+ "&& this.alumnoCalificacion.periodo.nombre == :periodo"),
+					+ "&& this.alumnoCalificacion.periodo.nombre == :periodo" +
+					" && this.habilitado == 'S'"),
 				
 })
 
@@ -82,6 +85,22 @@ import dom.simple.MateriaDelCurso;
 @MemberGroupLayout(columnSpans = {12,0,0,12})
 public class MateriaCalificacion implements Comparable<MateriaCalificacion>{
 	
+	// {{ Habilitado (property)
+	private Character habilitado;
+	
+	@Column(allowsNull = "false")
+	@Hidden
+	@MemberOrder(sequence = "1")
+	public Character getHabilitado() {
+		return habilitado;
+	}
+
+	public void setHabilitado(final Character habilitado) {
+		this.habilitado = habilitado;
+	}
+	// }}
+
+
 	
 	// {{ AlumnoCalificacion (property)
 	private AlumnoCalificacion alumnoCalificacion;

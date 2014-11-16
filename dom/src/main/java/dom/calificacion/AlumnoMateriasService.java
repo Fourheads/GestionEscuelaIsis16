@@ -29,9 +29,9 @@ public class AlumnoMateriasService {
 		return "SimpleObject";
 	}
 	
-	@NotContributed
-	@Named("Calificaciones por alumno")
+	@NotContributed	
 	@MemberOrder(name = "Alumnos", sequence = "8")
+	@Named("Calificaciones por alumno")
 	public AlumnoMateriasView seleccionarAlumno(final @Named("Ciclo") Calificaciones ciclo,
 													  final @Named("Periodo") Periodo periodo,
 													  final @Named("Alumno") AlumnoCalificacion alumno){

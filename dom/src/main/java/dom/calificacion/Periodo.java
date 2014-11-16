@@ -45,13 +45,30 @@ import dom.simple.Curso;
 	@javax.jdo.annotations.Query(name = "PeriodosPorCiclo", 
 			language = "JDOQL", 
 			value = "SELECT FROM dom.calificacion.Periodo"
-					+" WHERE this.calificaciones.cicloCalificacion == :ciclo ")
+					+" WHERE this.calificaciones.cicloCalificacion == :ciclo &&" +
+					" this.habilitado == 'S'")
 })
 
 @PersistenceCapable
 @Bounded
 public class Periodo {	
 	
+	// {{ Habilitado (property)
+	private Character habilitado;
+	
+	@Hidden
+	@Column(allowsNull = "false")
+	@MemberOrder(sequence = "1")
+	public Character getHabilitado() {
+		return habilitado;
+	}
+
+	public void setHabilitado(final Character habilitado) {
+		this.habilitado = habilitado;
+	}
+	// }}
+
+
 	/*		
 	// {{ AlumnoCalificaciones (property)
 	private SortedSet<AlumnoCalificacion> alumnoCalificaciones = new TreeSet<AlumnoCalificacion>();

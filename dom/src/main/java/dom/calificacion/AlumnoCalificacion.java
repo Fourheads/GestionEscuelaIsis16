@@ -35,6 +35,7 @@ import javax.jdo.annotations.VersionStrategy;
 
 import org.apache.isis.applib.annotation.Bookmarkable;
 import org.apache.isis.applib.annotation.Bounded;
+import org.apache.isis.applib.annotation.Hidden;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Named;
 
@@ -50,16 +51,17 @@ import dom.calificacion.Periodo;
 			language = "JDOQL", 
 			value = "SELECT FROM dom.simple.AlumnoCalificacion"
 					+" WHERE this.periodo.nombre == :periodo &&" +
-					" this.alumno.dni == :dni"),
+					" this.alumno.dni == :dni &&" +
+					" this.habilitado == 'S'"),
 	@javax.jdo.annotations.Query(name = "findAlumnoCalificacionPorPeriodo", 
 			language = "JDOQL", 
 			value = "SELECT FROM dom.simple.AlumnoCalificacion"
-					+" WHERE this.periodo.nombre == :periodo" +
+					+" WHERE this.periodo.nombre == :periodo && this.habilitado == 'S'" +
 					" order by this.alumno.apellido dsc"),
 	@javax.jdo.annotations.Query(name = "findAlumnoCalificacionPorAlumno", 
 			language = "JDOQL", 
 			value = "SELECT FROM dom.simple.AlumnoCalificacion"
-					+" WHERE this.alumno.dni == :dni"),
+					+" WHERE this.alumno.dni == :dni && this.habilitado == 'S'"),
 	@javax.jdo.annotations.Query(name = "findAlumnoCalificacionPorPeriodoPorCursoPorMateria", 
 			language = "JDOQL", 
 			value = "SELECT FROM dom.simple.AlumnoCalificacion"
@@ -68,17 +70,32 @@ import dom.calificacion.Periodo;
 							" this.alumno.curso.anio.anioNumero == :anio &&" +
 							" this.alumno.curso.division == :division &&" +								
 							" this.listMateriaCalificacion.contains(matCal) &&" +
-							" matCal.materiaDelCurso.materia.nombre == :materia)"),
+							" matCal.materiaDelCurso.materia.nombre == :materia) && this.habilitado == 'S'"),
 	@javax.jdo.annotations.Query(name = "findAlumnoCalificacionPorPeriodoPorCurso", 
 			language = "JDOQL", 
 			value = "SELECT FROM dom.simple.AlumnoCalificacion"
 							+" WHERE this.periodo.nombre == :periodo &&" +							
 							" this.alumno.curso.anio.anioNumero == :anio &&" +
-							" this.alumno.curso.division == :division")
+							" this.alumno.curso.division == :division && this.habilitado == 'S'")
 })
 @Bookmarkable
 @Bounded
 public class AlumnoCalificacion {
+	
+	// {{ Habilitado (property)
+	private Character habilitado;
+	
+	@Column(allowsNull = "false")
+	@Hidden
+	@MemberOrder(sequence = "1")
+	public Character getHabilitado() {
+		return habilitado;
+	}
+
+	public void setHabilitado(final Character habilitado) {
+		this.habilitado = habilitado;
+	}
+	// }}
 	
 	// {{ Alumno (property)
 	private Alumno alumno;
