@@ -135,22 +135,7 @@ public class MateriaDelLibroDiarioRepositorio {
 	public List<MateriaDelLibroDiario> mostrarmateriaLibroDiario(final Curso curso) {
 		return listarmateriaslibrodiario(libroDiarioRepositorio.mostrarLibroDiarioDelCurso(curso));
 	}
-	
-	@Named("Entradas por fecha")
-	@MemberOrder(name="Libro diario",sequence = "3")
-	public List<EntradaLibroDiario> listarEntradasporFecha(@Named("Curso") final Curso curso, @Named("Materia") final MateriaDelCurso materiadelcurso, @Named("Fecha") final LocalDate fecha)
-	{
-		return entradalibrodiariorepositiorio.entradasporfecha(curso, materiadelcurso, fecha);
-	}
-	
-	
-	public List<MateriaDelCurso> choices1ListarEntradasporFecha(@Named("Curso") final Curso curso)
-	{
-		if(curso != null)
-			return materiaDelCursoRepositorio.listarMateriaDelCursoParaUnCurso(curso);
-		else
-			return null;
-	}
+
 	
 	@Hidden
 	public List<MateriaDelLibroDiario> listarmateriaslibrodiario(final LibroDiario libroDiario)

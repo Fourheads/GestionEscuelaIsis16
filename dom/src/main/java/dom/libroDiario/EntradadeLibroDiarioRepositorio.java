@@ -82,9 +82,7 @@ public class EntradadeLibroDiarioRepositorio {
 				"TodasEntradaLibroDiarioList"));
 	}
 	
-	
-	@Named("Entradas por fecha")
-	@MemberOrder(sequence = "2")
+	@Hidden
 	public List<EntradaLibroDiario> entradasporfecha(@Named("Curso") final Curso curso, @Named("Materia") final MateriaDelCurso materiadelcurso, @Named("Fecha") final LocalDate fecha)
 	{
 		return container.allMatches(new QueryDefault<EntradaLibroDiario>(EntradaLibroDiario.class,
