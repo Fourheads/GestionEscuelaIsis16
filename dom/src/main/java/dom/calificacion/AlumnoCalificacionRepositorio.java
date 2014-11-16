@@ -31,10 +31,11 @@ import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.Hidden;
 import org.apache.isis.applib.annotation.NotContributed;
 import org.apache.isis.applib.query.QueryDefault;
-
 import dom.escuela.Curso;
-//@Hidden
+
+
 @DomainService
+@Hidden
 public class AlumnoCalificacionRepositorio {
 	
 	@NotContributed

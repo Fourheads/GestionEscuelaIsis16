@@ -114,10 +114,6 @@ public class CargarNotaView extends AbstractViewModel{
 	
 	@Programmatic
 	public void inicializarListAlumnos(){
-		//setMateriasCalificacion(matCalificacion.listMateriaCalificacionPorCursoPorMateria(anio, division, plan, materia));
-		System.out.println("");
-		System.out.println(anio + plan + division + materia+ periodo);
-		System.out.println("");
 		setMateriasCalificacion(matCalificacion.listPorCursoPorMateriaPorPeriodo(anio, plan, division, materia, periodo));
 	}
 	
