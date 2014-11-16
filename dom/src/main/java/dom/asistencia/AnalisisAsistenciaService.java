@@ -36,8 +36,8 @@ import org.apache.isis.applib.services.memento.MementoService;
 import org.apache.isis.applib.services.memento.MementoService.Memento;
 import org.joda.time.LocalDate;
 
-import dom.simple.Alumno;
-import dom.simple.AlumnoRepositorio;
+import dom.escuela.Alumno;
+import dom.escuela.AlumnoRepositorio;
 
 @Hidden
 @DomainService

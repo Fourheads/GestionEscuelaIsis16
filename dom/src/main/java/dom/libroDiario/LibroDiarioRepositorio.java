@@ -29,18 +29,20 @@ import org.apache.isis.applib.annotation.MaxLength;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.MultiLine;
 import org.apache.isis.applib.annotation.Named;
-
 import org.apache.isis.applib.query.QueryDefault;
 import org.apache.isis.applib.services.memento.MementoService;
 import org.apache.isis.applib.services.memento.MementoService.Memento;
 import org.joda.time.LocalDate;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
-import dom.simple.Curso;
-import dom.simple.CursoRepositorio;
-import dom.simple.MateriaDelCurso;
+
+
+import dom.escuela.Curso;
+import dom.escuela.CursoRepositorio;
+import dom.escuela.MateriaDelCurso;
 
 @Hidden
 @Named("Libro diario")
@@ -70,7 +72,7 @@ public class LibroDiarioRepositorio {
 
 	@Named("Nueva entrada libro diario ")
 	@MemberOrder(name="Libro diario",sequence = "1")
-	public EntradaLibroDiario Nuevaentradalibro(@Named("Curso") final LibroDiario LibroDiario, 
+	public EntradaLibroDiario nuevaEntradalibrodiario(@Named("Curso") final LibroDiario LibroDiario, 
 			@Named("Materia")final MateriaDelLibroDiario materialiDelLibroDiario,
 			@Named("Fecha") final LocalDate  fecha, @Named("Hora") int horas, @Named("Unidad") int unidad,
 			final @MaxLength(2048)
@@ -79,6 +81,55 @@ public class LibroDiarioRepositorio {
 			@MultiLine@Named("Observaciones") String Observaciones)
 	{
 		return materiaDelLibroDiarioRepositorio.nuevaEntradalibrodiario(LibroDiario, materialiDelLibroDiario, fecha, horas, unidad, actividad, Observaciones);
+	}
+	
+	public List<LibroDiario> choices0NuevaEntradalibrodiario()
+	{
+		List<LibroDiario> listalibro=new ArrayList<LibroDiario>();
+		for(LibroDiario librodia: listaLibroDiarioDelCurso())
+		{
+			if(librodia.getCurso().getHabilitado()=='S')
+				listalibro.add(librodia);
+		}
+		
+		return listalibro;
+	}
+	
+	public List<MateriaDelLibroDiario> choices1NuevaEntradalibrodiario(@Named("Curso") final LibroDiario LibroDiario)
+	{
+		return materiaDelLibroDiarioRepositorio.listarmateriaslibrodiario(LibroDiario);
+	}
+
+	
+	public List<Integer> choices3NuevaEntradalibrodiario() {//ojo ver cantidad de horas
+		
+		List<Integer> Horas = new ArrayList<Integer>();
+				
+			for (int i = 1; i <= 16; i++) {
+				Horas.add(i);
+			}
+			
+		return Horas;
+	}
+
+	
+	public int default3NuevaEntradalibrodiario() {
+		return choices3NuevaEntradalibrodiario().get(0);
+	}
+	
+	public List<Integer> choices4NuevaEntradalibrodiario() {//Ver tema unidades
+
+		List<Integer> Unidades = new ArrayList<Integer>();
+
+		for (int i = 1; i <= 10; i++) {
+			Unidades.add(i);
+		}
+
+		return Unidades;
+	}
+
+	public int default4NuevaEntradalibrodiario() {
+		return choices4NuevaEntradalibrodiario().get(0);
 	}
 
 	@Named("Hoja del libro por dia")

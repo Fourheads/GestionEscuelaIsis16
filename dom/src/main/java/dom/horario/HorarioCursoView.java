@@ -42,8 +42,8 @@ import org.apache.isis.applib.query.QueryDefault;
 import org.apache.isis.applib.services.memento.MementoService;
 import org.apache.isis.applib.services.memento.MementoService.Memento;
 
-import dom.simple.Curso;
-import dom.simple.MateriaDelCurso;
+import dom.escuela.Curso;
+import dom.escuela.MateriaDelCurso;
 
 @MemberGroupLayout(columnSpans = {4,0,0,8}, left = "Detalles del Horario")
 public class HorarioCursoView extends AbstractViewModel {

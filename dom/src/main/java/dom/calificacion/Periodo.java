@@ -38,8 +38,8 @@ import org.apache.isis.applib.annotation.Where;
 import org.apache.isis.applib.query.QueryDefault;
 import org.joda.time.LocalDate;
 
-import dom.simple.Alumno;
-import dom.simple.Curso;
+import dom.escuela.Alumno;
+import dom.escuela.Curso;
 
 @javax.jdo.annotations.Queries({ 
 	@javax.jdo.annotations.Query(name = "PeriodosPorCiclo", 

@@ -78,6 +78,6 @@ public class CalificacionRepositorio {
 	DomainObjectContainer container;
 	
 	@javax.inject.Inject
-	dom.simple.CursoRepositorio cursoRepo;
+	dom.escuela.CursoRepositorio cursoRepo;
 }
 

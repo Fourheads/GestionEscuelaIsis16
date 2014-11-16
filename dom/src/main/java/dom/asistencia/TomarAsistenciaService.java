@@ -45,9 +45,9 @@ import org.apache.isis.applib.services.memento.MementoService;
 import org.apache.isis.applib.services.memento.MementoService.Memento;
 import org.joda.time.LocalDate;
 
-import dom.simple.Alumno;
-import dom.simple.AlumnoRepositorio;
-import dom.simple.Curso;
+import dom.escuela.Alumno;
+import dom.escuela.AlumnoRepositorio;
+import dom.escuela.Curso;
 
 
 @Named("Tomar Asistencia")

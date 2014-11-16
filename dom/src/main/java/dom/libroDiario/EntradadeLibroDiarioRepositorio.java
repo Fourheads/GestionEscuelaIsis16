@@ -36,9 +36,9 @@ import org.apache.isis.applib.annotation.Render.Type;
 import org.apache.isis.applib.query.QueryDefault;
 import org.joda.time.LocalDate;
 
-import dom.simple.Curso;
-import dom.simple.MateriaDelCurso;
-import dom.simple.MateriaDelCursoRepositorio;
+import dom.escuela.Curso;
+import dom.escuela.MateriaDelCurso;
+import dom.escuela.MateriaDelCursoRepositorio;
 
 //@Named("Entrada libro diario")
 @Hidden

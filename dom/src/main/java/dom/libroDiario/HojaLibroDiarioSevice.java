@@ -40,9 +40,10 @@ import org.joda.time.LocalDate;
 
 
 
+
+import dom.escuela.Curso;
+import dom.escuela.CursoRepositorio;
 import dom.planEstudio.Plan;
-import dom.simple.Curso;
-import dom.simple.CursoRepositorio;
 
 @Hidden
 @DomainService()

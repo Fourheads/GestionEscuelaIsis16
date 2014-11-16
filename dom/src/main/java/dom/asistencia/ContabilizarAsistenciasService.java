@@ -40,9 +40,9 @@ import org.apache.isis.applib.services.memento.MementoService;
 import org.apache.isis.applib.services.memento.MementoService.Memento;
 import org.joda.time.LocalDate;
 
-import dom.simple.Alumno;
-import dom.simple.Curso;
-import dom.simple.CursoRepositorio;
+import dom.escuela.Alumno;
+import dom.escuela.Curso;
+import dom.escuela.CursoRepositorio;
 
 @Named("Contabilizar Asistencia")
 @DomainService(menuOrder = "90")

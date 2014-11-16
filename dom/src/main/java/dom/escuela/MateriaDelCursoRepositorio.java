@@ -20,44 +20,43 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-package dom.horario;
+package dom.escuela;
+
+import java.util.List;
 
 import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.Hidden;
-import org.apache.isis.applib.annotation.MemberOrder;
-import org.apache.isis.applib.annotation.NotContributed;
-import org.apache.isis.applib.services.memento.MementoService;
-import org.apache.isis.applib.services.memento.MementoService.Memento;
+import org.apache.isis.applib.annotation.Programmatic;
+import org.apache.isis.applib.query.QueryDefault;
 
-import dom.escuela.Curso;
-
+import dom.planEstudio.Materia;
 @DomainService
-@Hidden
-public class HorarioCursoService {
+public class MateriaDelCursoRepositorio {
 	
-	// {{ verHorarioDeCurso (action)
-	@MemberOrder(sequence = "1")
-	@NotContributed
-	public HorarioCursoView verHorarioDeCurso(final Curso curso) {
+	@Hidden
+	public void crearMateriaDelCurso (Curso curso, Materia materia){
+		MateriaDelCurso materiaDelCurso = new MateriaDelCurso();
+		materiaDelCurso.setMateria(materia);
+		curso.getMateriaDelCursoList().add(materiaDelCurso);
+	}
+	
+	@Hidden
+	public void asignarProfesorAMateriaDelCurso(MateriaDelCurso materia, Personal profesor){
 		
-		String plan = curso.getAnio().getPlan().getDescripcion();
-		int anio = curso.getAnio().getAnioNumero();
-		String division = curso.getDivision();
+		materia.setProfesor(profesor);
+	}
+	
+	@Hidden
+	public List<MateriaDelCurso> listarMateriaDelCursoParaUnCurso(Curso curso){
 		
-		Memento memento = mementoService.create();
-		
-		memento.set("plan", plan);
-		memento.set("anio", anio);
-		memento.set("division", division);
-				
-		return container.newViewModelInstance(HorarioCursoView.class, memento.asString()); 
-		}
-	// }}
+		return container.allMatches(new QueryDefault<MateriaDelCurso>(MateriaDelCurso.class,
+				"MateriaDelCursoDeUnCurso", 
+				"plan", curso.getAnio().getPlan().getDescripcion(), 
+				"anio", curso.getAnio().getAnioNumero(),
+				"division", curso.getDivision()));
+	}	
 
 	@javax.inject.Inject
 	DomainObjectContainer container;
-	@javax.inject.Inject
-	MementoService mementoService;
-
 }

@@ -40,10 +40,10 @@ import org.apache.isis.applib.annotation.Named;
 import org.apache.isis.applib.annotation.Where;
 import org.apache.isis.applib.util.ObjectContracts;
 
+import dom.escuela.Alumno;
+import dom.escuela.Curso;
+import dom.escuela.MateriaDelCurso;
 import dom.planEstudio.Materia;
-import dom.simple.Alumno;
-import dom.simple.Curso;
-import dom.simple.MateriaDelCurso;
 
 @javax.jdo.annotations.PersistenceCapable(identityType = IdentityType.DATASTORE)
 @javax.jdo.annotations.DatastoreIdentity(strategy = javax.jdo.annotations.IdGeneratorStrategy.IDENTITY, column = "id")
