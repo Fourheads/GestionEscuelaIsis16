@@ -121,7 +121,14 @@ public class AlumnoCalificacion {
 	@Column(allowsNull = "true")
 	@MemberOrder(sequence = "2")
 	public List<MateriaCalificacion> getListMateriaCalificacion() {
-		return listMateriaCalificacion;
+		//Probar con un iterador
+		final List<MateriaCalificacion> mat = new ArrayList<MateriaCalificacion>();
+		for(MateriaCalificacion m: listMateriaCalificacion){
+			if(m.getHabilitado() == 'S'){
+				mat.add(m);
+			}
+		}
+		return mat;
 	}
 
 	public void setListMateriaCalificacion(final List<MateriaCalificacion> listMateriaCalificacion) {
@@ -136,6 +143,7 @@ public class AlumnoCalificacion {
 	@Column(allowsNull = "true")
 	@MemberOrder(sequence = "3")
 	public Periodo getPeriodo() {
+		
 		return periodo;
 	}
 

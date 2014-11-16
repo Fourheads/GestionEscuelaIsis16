@@ -33,7 +33,7 @@ import org.apache.isis.applib.annotation.NotContributed;
 import org.apache.isis.applib.query.QueryDefault;
 
 import dom.simple.Curso;
-@Hidden
+//@Hidden
 @DomainService
 public class AlumnoCalificacionRepositorio {
 	
@@ -70,6 +70,11 @@ public class AlumnoCalificacionRepositorio {
 	public List<AlumnoCalificacion> listPorPeriodo(Periodo inPeriodo){
 		return container.allMatches(new QueryDefault<AlumnoCalificacion>(AlumnoCalificacion.class, "findAlumnoCalificacionPorPeriodo", "periodo", inPeriodo.getNombre()));
 	}
+	
+	public List<Periodo> choices0ListPorPeriodo(Periodo inPeriodo){
+		return periodoRepo.listarTodos();
+	}
+	
 	@NotContributed
 	public List<Curso> listCursoPorPeriodo(Periodo inPeriodo){
 		List<Curso> listCurso = new ArrayList<Curso>();
@@ -88,4 +93,7 @@ public class AlumnoCalificacionRepositorio {
 	}
 	@javax.inject.Inject
 	private DomainObjectContainer container;
+	
+	@javax.inject.Inject
+	PeriodoRepositorio periodoRepo;
 }

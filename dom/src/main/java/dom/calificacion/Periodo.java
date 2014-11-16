@@ -46,7 +46,11 @@ import dom.simple.Curso;
 			language = "JDOQL", 
 			value = "SELECT FROM dom.calificacion.Periodo"
 					+" WHERE this.calificaciones.cicloCalificacion == :ciclo &&" +
-					" this.habilitado == 'S'")
+					" this.habilitado == 'S'"),
+	@javax.jdo.annotations.Query(name = "listarTodos", 
+			language = "JDOQL", 
+			value = "SELECT FROM dom.calificacion.Periodo"
+					+" WHERE this.habilitado == 'S'")
 })
 
 @PersistenceCapable
@@ -68,21 +72,6 @@ public class Periodo {
 	}
 	// }}
 
-
-	/*		
-	// {{ AlumnoCalificaciones (property)
-	private SortedSet<AlumnoCalificacion> alumnoCalificaciones = new TreeSet<AlumnoCalificacion>();
-
-	@MemberOrder(sequence = "1")
-	public SortedSet<AlumnoCalificacion> getAlumnoCalificaciones() {
-		return alumnoCalificaciones;
-	}
-
-	public void setAlumnoCalificaciones(final SortedSet<AlumnoCalificacion> alumnoCalificaciones) {
-		this.alumnoCalificaciones = alumnoCalificaciones;
-	}
-	// }}
-	 */
 	
 	// {{ Nombre (property)
 	private String nombre;

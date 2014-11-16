@@ -59,6 +59,7 @@ public class PeriodoRepositorio {
 		newPeriodo.setFechaInicio(inFechaI);
 		newPeriodo.setFechaFinal(inFechaF);
 		newPeriodo.setCalificaciones(inCalificaciones);
+		newPeriodo.setHabilitado('S');
 				
 		for(Alumno a: alumnosTodos){
 			if(!(a.getCurso() == null)){				
@@ -75,12 +76,14 @@ public class PeriodoRepositorio {
 						unaMateriaCalificacion.setAlumno(a);
 						unaMateriaCalificacion.setMateriaDelCurso(mdc);
 						unaMateriaCalificacion.setAlumnoCalificacion(newAlumnoCal);
+						unaMateriaCalificacion.setHabilitado('S');
 						
 						materiasCalificacion.add(unaMateriaCalificacion);
 					}
 					newAlumnoCal.setAlumno(a);
 					newAlumnoCal.setListMateriaCalificacion(materiasCalificacion);
 					newAlumnoCal.setPeriodo(newPeriodo);
+					newAlumnoCal.setHabilitado('S');
 					
 					alumnosCalificacion.add(newAlumnoCal);
 				//}
@@ -107,34 +110,31 @@ public class PeriodoRepositorio {
 		final Calificaciones calif = inPeriodo.getCalificaciones();
 		
 		if(aluCalRepositorio.listPorPeriodo(inPeriodo).isEmpty()){
-			calif.getPeriodos().remove(inPeriodo);
-			container.removeIfNotAlready(inPeriodo);
+			inPeriodo.setHabilitado('N');			
 			return calif;
 		}
 		
 		for(AlumnoCalificacion ac: aluCalRepositorio.listPorPeriodo(inPeriodo)){
 			for(MateriaCalificacion m: ac.getListMateriaCalificacion()){
-				ac.getListMateriaCalificacion().remove(m);
-				container.removeIfNotAlready(m);
+				m.setHabilitado('N');				
 			}
-			container.removeIfNotAlready(ac);
+			ac.setHabilitado('N');
 		}
-		
-		calif.getPeriodos().remove(inPeriodo);
-		container.removeIfNotAlready(inPeriodo);		
+		inPeriodo.setHabilitado('N');		
 		
 		return calif;		
 	}
 	
 	@Named("Agregar Alumno")	
-	public AlumnoCalificacion agregarAlumno(final @Named("Alumno: ") Alumno inAlumno,
-											
+	public AlumnoCalificacion agregarAlumno(final @Named("Alumno: ") Alumno inAlumno,											
 											final @Named("Periodo: ") Periodo inPeriodo){
+		
 		final AlumnoCalificacion newAlCalificacion= new AlumnoCalificacion();
 		List<MateriaCalificacion> listMC = new ArrayList<MateriaCalificacion>();
 		
 		newAlCalificacion.setAlumno(inAlumno);
 		newAlCalificacion.setPeriodo(inPeriodo);
+		newAlCalificacion.setHabilitado('S');
 		
 		for(MateriaDelCurso mc: inAlumno.getCurso().getMateriaDelCursoList()){
 			MateriaCalificacion newMateriaCalificacion = new MateriaCalificacion();
@@ -142,6 +142,7 @@ public class PeriodoRepositorio {
 			newMateriaCalificacion.setAlumno(inAlumno);
 			newMateriaCalificacion.setAlumnoCalificacion(newAlCalificacion);
 			newMateriaCalificacion.setMateriaDelCurso(mc);
+			newMateriaCalificacion.setHabilitado('S');
 			
 			listMC.add(newMateriaCalificacion);
 		}
@@ -153,8 +154,7 @@ public class PeriodoRepositorio {
 		
 	}
 	
-	public String validateAgregarAlumno(final @Named("Alumno: ") Alumno inAlumno,
-										
+	public String validateAgregarAlumno(final @Named("Alumno: ") Alumno inAlumno,										
 										final @Named("Periodo: ") Periodo inPeriodo){
 		
 		if(inAlumno.getCurso() == null){
@@ -165,6 +165,11 @@ public class PeriodoRepositorio {
 		}
 		 
 		return null;
+	}
+	
+	@Hidden
+	public List<Periodo> listarTodos(){
+		return container.allMatches(new QueryDefault<Periodo>(Periodo.class, "listarTodos"));
 	}
 	
 	@Hidden

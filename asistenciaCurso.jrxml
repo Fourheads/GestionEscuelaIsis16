@@ -48,10 +48,6 @@
 					</textElement>
 					<text><![CDATA[Listado de asistencias]]></text>
 				</staticText>
-				<image>
-					<reportElement x="17" y="13" width="47" height="52" uuid="af5751de-a345-4d29-b72c-1a4c5d1f6c7c"/>
-					<imageExpression><![CDATA["C:\\Users\\Sabrina\\Desktop\\logo.png"]]></imageExpression>
-				</image>
 			</frame>
 			<textField>
 				<reportElement x="64" y="75" width="115" height="29" uuid="00d0ec05-49ba-4b6e-a95a-715d5721e0ac"/>
