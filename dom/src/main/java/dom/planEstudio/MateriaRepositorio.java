@@ -42,12 +42,12 @@ import org.apache.isis.applib.annotation.PublishedAction;
 import org.apache.isis.applib.query.QueryDefault;
 import org.datanucleus.store.query.Query;
 
+import dom.escuela.Curso;
+import dom.escuela.CursoRepositorio;
+import dom.escuela.MateriaDelCurso;
+import dom.escuela.MateriaDelCursoRepositorio;
 import dom.libroDiario.LibroDiarioRepositorio;
 import dom.libroDiario.MateriaDelLibroDiario;
-import dom.simple.Curso;
-import dom.simple.CursoRepositorio;
-import dom.simple.MateriaDelCurso;
-import dom.simple.MateriaDelCursoRepositorio;
 
 @Hidden
 @DomainService(repositoryFor = Materia.class)

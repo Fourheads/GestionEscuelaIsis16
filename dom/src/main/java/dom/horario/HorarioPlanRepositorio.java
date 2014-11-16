@@ -37,9 +37,9 @@ import org.apache.isis.applib.annotation.NotContributed;
 import org.apache.isis.applib.annotation.NotInServiceMenu;
 import org.apache.isis.applib.annotation.Programmatic;
 
+import dom.escuela.Curso;
+import dom.escuela.CursoRepositorio;
 import dom.planEstudio.Plan;
-import dom.simple.Curso;
-import dom.simple.CursoRepositorio;
 
 @DomainService
 @Hidden

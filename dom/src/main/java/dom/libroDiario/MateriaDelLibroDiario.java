@@ -42,7 +42,7 @@ import org.apache.isis.applib.annotation.ObjectType;
 import org.apache.isis.applib.annotation.Render;
 import org.apache.isis.applib.annotation.Render.Type;
 
-import dom.simple.MateriaDelCurso;
+import dom.escuela.MateriaDelCurso;
 
 @javax.jdo.annotations.Queries({
 	@javax.jdo.annotations.Query(name = "TodasMateriadelLibroDiarioList", language = "JDOQL", value = "SELECT FROM dom.libroDiario.MateriaDelLibroDiario"),

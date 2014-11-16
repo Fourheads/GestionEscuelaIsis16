@@ -29,7 +29,6 @@ import org.apache.isis.applib.annotation.MaxLength;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.MultiLine;
 import org.apache.isis.applib.annotation.Named;
-
 import org.apache.isis.applib.query.QueryDefault;
 import org.apache.isis.applib.services.memento.MementoService;
 import org.apache.isis.applib.services.memento.MementoService.Memento;
@@ -38,9 +37,10 @@ import org.joda.time.LocalDate;
 import java.util.List;
 
 
-import dom.simple.Curso;
-import dom.simple.CursoRepositorio;
-import dom.simple.MateriaDelCurso;
+
+import dom.escuela.Curso;
+import dom.escuela.CursoRepositorio;
+import dom.escuela.MateriaDelCurso;
 
 @Hidden
 @Named("Libro diario")

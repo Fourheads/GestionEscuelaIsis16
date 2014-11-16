@@ -20,33 +20,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-package dom.horario;
+package dom.escuela;
 
-import org.apache.isis.applib.DomainObjectContainer;
-import org.apache.isis.applib.annotation.DomainService;
-import org.apache.isis.applib.annotation.Hidden;
-import org.apache.isis.applib.annotation.MemberOrder;
-
-import dom.escuela.Curso;
-
-@DomainService(repositoryFor = HorarioCurso.class)
-public class HorarioCursoRepositorio {
-	
-	// {{ actionName (action)
-	@Hidden
-	public HorarioCurso crearHorarioCurso (final Curso curso) {
-		
-		HorarioCurso horarioCurso = new HorarioCurso();
-		horarioCurso.setCurso(curso);
-		horarioCurso.setHorarioDiaList(horarioDiaRepositorio.crearHorarioDiaList(curso));
-				
-		return horarioCurso;
-	}
-	// }}
-
-
-	@javax.inject.Inject
-	DomainObjectContainer container;
-	@javax.inject.Inject
-	HorarioDiaRepositorio horarioDiaRepositorio;
+public enum Turno {
+	Mañana,Tarde,Noche;
 }

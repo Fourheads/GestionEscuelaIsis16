@@ -20,11 +20,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-package dom.horario;
-
-import dom.escuela.MateriaDelCurso;
-
-import java.util.Date;
+package dom.escuela;
 
 import javax.jdo.annotations.Column;
 import javax.jdo.annotations.IdentityType;
@@ -37,85 +33,78 @@ import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.ObjectType;
 import org.apache.isis.applib.annotation.Where;
 
-/**
- * <!-- begin-user-doc --> <!-- end-user-doc -->
- * 
- * @generated
- */
+import dom.planEstudio.Materia;
+
 @SuppressWarnings("unused")
 @javax.jdo.annotations.PersistenceCapable(identityType = IdentityType.DATASTORE)
 @javax.jdo.annotations.DatastoreIdentity(strategy = javax.jdo.annotations.IdGeneratorStrategy.IDENTITY, column = "id")
 @javax.jdo.annotations.Version(strategy = VersionStrategy.VERSION_NUMBER, column = "version")
-// @javax.jdo.annotations.Queries({ @javax.jdo.annotations.Query(name =
-// "listarAniosDeUnPlan", language = "JDOQL", value = "SELECT "
-// + "FROM dom.planEstudio.Anio "
-// + "WHERE this.plan.descripcion == :descripcion") })
-@ObjectType("HORARIO_HORA")
+@javax.jdo.annotations.Queries({
+	@javax.jdo.annotations.Query(name = "MateriaDelCursoDeUnCurso", language = "JDOQL", value = "SELECT FROM dom.simple.MateriaDelCurso "
+			+ "WHERE this.curso.anio.plan.descripcion == :plan "
+			+ "&& this.curso.anio.anioNumero == :anio"
+			+ "&& this.curso.division == :division")})
+		
+
 @Bookmarkable
 @Bounded
-public class HorarioHora {
-	// {{ HorarioDia (property)
-	private HorarioDia horarioDia;
+public class MateriaDelCurso {
+	
+	// {{ Materia (property)
+	private Materia materia;
 
-	@Hidden(where = Where.ALL_TABLES)
 	@MemberOrder(sequence = "1")
 	@Column(allowsNull = "true")
-	public HorarioDia getHorarioDia() {
-		return horarioDia;
+	public Materia getMateria() {
+		return materia;
 	}
 
-	public void setHorarioDia(final HorarioDia horarioDia) {
-		this.horarioDia = horarioDia;
+	public void setMateria(final Materia materia) {
+		this.materia = materia;
 	}
-
 	// }}
 
-	// {{ MateriaDelCurso (property)
-	private MateriaDelCurso materiaDelCurso;
+
+	
+	// {{ Curso (property)
+	private Curso curso;
+	@Hidden(where = Where.ALL_TABLES)
+	@MemberOrder(sequence = "2")
+	@Column(allowsNull = "true")
+	public Curso getCurso() {
+		return curso;
+	}
+
+	public void setCurso(final Curso curso) {
+		this.curso = curso;
+	}
+	// }}
+
+	// {{ Profesor (property)
+	private Personal profesor;
 
 	@MemberOrder(sequence = "3")
 	@Column(allowsNull = "true")
-	public MateriaDelCurso getMateriaDelCurso() {
-		return materiaDelCurso;
+	public Personal getProfesor() {
+		return profesor;
 	}
 
-	public void setMateriaDelCurso(final MateriaDelCurso materiaDelCurso) {
-		this.materiaDelCurso = materiaDelCurso;
-	}
-	// }}
-	
-	// {{ HorarioHoraTipo (property)
-	private E_HorarioHoraTipo horarioHoraTipo;
-
-	@MemberOrder(sequence = "2")
-	@Column(allowsNull = "true")
-	public E_HorarioHoraTipo getHorarioHoraTipo() {
-		return horarioHoraTipo;
-	}
-
-	public void setHorarioHoraTipo(final E_HorarioHoraTipo horarioHoraTipo) {
-		this.horarioHoraTipo = horarioHoraTipo;
+	public void setProfesor(final Personal profesor) {
+		this.profesor = profesor;
 	}
 	// }}
 
-	// {{ HorarioPlanHora (property)
-	private HorarioPlanHora horarioPlanHora;
+	// Title (GUI)
+	// //////////////////////////////////////////
 
-	@MemberOrder(sequence = "1")
-	@Column(allowsNull = "true")
-	public HorarioPlanHora getHorarioPlanHora() {
-		return horarioPlanHora;
+	public String title() {
+		return getMateria().getNombre() + " de " 
+				+ getMateria().getAnio().getAnioNumero() + "° " 
+				+ "'" + getCurso().getDivision() + "' "
+				+ "(" + getMateria().getAnio().getPlan().getDescripcion() + ")";
 	}
 
-	public void setHorarioPlanHora(final HorarioPlanHora horarioPlanHora) {
-		this.horarioPlanHora = horarioPlanHora;
-	}
-	// }}
-	
-	public String title(){
-		return getHorarioPlanHora().title();
-	}
+	// end region Title (GUI)
+	// //////////////////////////////////////////
 
-
-	
 }

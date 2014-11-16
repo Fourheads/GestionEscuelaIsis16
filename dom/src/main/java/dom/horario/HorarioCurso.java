@@ -22,7 +22,7 @@
 
 package dom.horario;
 
-import dom.simple.Curso;
+import dom.escuela.Curso;
 
 import java.util.ArrayList;
 import java.util.List;

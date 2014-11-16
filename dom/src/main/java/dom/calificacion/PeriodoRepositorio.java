@@ -35,10 +35,10 @@ import org.apache.isis.applib.annotation.Named;
 import org.apache.isis.applib.query.QueryDefault;
 import org.joda.time.LocalDate;
 
-import dom.simple.Alumno;
-import dom.simple.AlumnoRepositorio;
-import dom.simple.MateriaDelCurso;
-import dom.simple.MateriaDelCursoRepositorio;
+import dom.escuela.Alumno;
+import dom.escuela.AlumnoRepositorio;
+import dom.escuela.MateriaDelCurso;
+import dom.escuela.MateriaDelCursoRepositorio;
 
 @Hidden
 @DomainService

@@ -50,10 +50,10 @@ import org.apache.isis.applib.services.memento.MementoService;
 import org.apache.isis.applib.services.memento.MementoService.Memento;
 
 import dom.asistencia.TomarAsistenciaView;
-import dom.simple.Alumno;
-import dom.simple.AlumnoRepositorio;
-import dom.simple.MateriaDelCurso;
-import dom.simple.MateriaDelCursoRepositorio;
+import dom.escuela.Alumno;
+import dom.escuela.AlumnoRepositorio;
+import dom.escuela.MateriaDelCurso;
+import dom.escuela.MateriaDelCursoRepositorio;
 
 @Named("Cargar Notas View")
 @Bookmarkable

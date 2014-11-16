@@ -35,10 +35,10 @@ import org.apache.isis.applib.query.QueryDefault;
 import org.apache.isis.applib.services.memento.MementoService;
 import org.apache.isis.applib.services.memento.MementoService.Memento;
 
+import dom.escuela.Curso;
+import dom.escuela.CursoRepositorio;
+import dom.escuela.MateriaDelCurso;
 import dom.planEstudio.Materia;
-import dom.simple.Curso;
-import dom.simple.CursoRepositorio;
-import dom.simple.MateriaDelCurso;
 
 @Named("Cargar Notas")
 @DomainService(menuOrder = "80")

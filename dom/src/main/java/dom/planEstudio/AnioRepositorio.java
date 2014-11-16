@@ -38,8 +38,8 @@ import org.apache.isis.applib.annotation.NotInServiceMenu;
 import org.apache.isis.applib.fixturescripts.FixtureScript.ExecutionContext;
 import org.apache.isis.applib.query.QueryDefault;
 
-import dom.simple.Curso;
-import dom.simple.CursoRepositorio;
+import dom.escuela.Curso;
+import dom.escuela.CursoRepositorio;
 
 @Hidden
 @DomainService(repositoryFor = Anio.class)

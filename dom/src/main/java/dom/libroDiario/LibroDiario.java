@@ -41,7 +41,7 @@ import org.apache.isis.applib.annotation.ObjectType;
 import org.apache.isis.applib.annotation.Render;
 import org.apache.isis.applib.annotation.Render.Type;
 
-import dom.simple.Curso;
+import dom.escuela.Curso;
 
 @javax.jdo.annotations.Queries({
 	@javax.jdo.annotations.Query(name = "TodosLibroDiario", language = "JDOQL", value = "SELECT FROM dom.libroDiario.LibroDiario "),

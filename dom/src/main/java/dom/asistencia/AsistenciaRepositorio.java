@@ -40,7 +40,7 @@ import org.apache.isis.applib.annotation.ActionSemantics.Of;
 import org.apache.isis.applib.query.QueryDefault;
 import org.joda.time.LocalDate;
 
-import dom.simple.Alumno;
+import dom.escuela.Alumno;
 
 @DomainService(menuOrder = "50")
 @Named("Asistencias")
