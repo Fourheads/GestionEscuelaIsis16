@@ -48,6 +48,7 @@ public class CalificacionRepositorio {
 		
 		final Calificaciones newCalificacion = container.newTransientInstance(Calificaciones.class);
 		newCalificacion.setCicloCalificacion(inCiclo);
+		newCalificacion.setHabilitado('S');
 		
 		container.persistIfNotAlready(newCalificacion);
 		
@@ -64,9 +65,10 @@ public class CalificacionRepositorio {
 	
 	@Named("Listar Ciclos")
 	public List<Calificaciones> listCalificaciones(){
-		return container.allInstances(Calificaciones.class);
+		return container.allMatches(new QueryDefault<Calificaciones>(Calificaciones.class, "findAll"));
 	}
 	
+	@Hidden
 	public List<Calificaciones> ciclosConPeriodo(){
 		return container.allMatches(new QueryDefault<Calificaciones>(Calificaciones.class, "findCicloConPeriodos"));
 	}

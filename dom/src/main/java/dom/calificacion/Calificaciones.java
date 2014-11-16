@@ -56,21 +56,40 @@ import org.joda.time.LocalDate;
 	@javax.jdo.annotations.Query(name = "findByCiclo", 
 			language = "JDOQL", 
 			value = "SELECT FROM dom.simple.Calificaciones"
-					+" WHERE this.cicloCalificacion == :ciclo "),
+					+" WHERE this.cicloCalificacion == :ciclo &&" +
+					" this.habilitado == 'S'"),
 	@javax.jdo.annotations.Query(name = "findAll", 
 			language = "JDOQL", 
-			value = "SELECT FROM dom.simple.Calificaciones"
+			value = "SELECT FROM dom.simple.Calificaciones" +
+					" WHERE this.habilitado == 'S'"
 					+" ORDER BY cicloCalificacion asc "),
 	@javax.jdo.annotations.Query(name = "findCicloConPeriodos", 
 			language = "JDOQL", 
 			value = "SELECT FROM dom.simple.Calificaciones"
-					+" WHERE this.periodos != null")
+					+" WHERE this.periodos != null &&" +
+					" this.habilitado == 'S'")
 })
 
 @Bookmarkable
 @Bounded
 public class Calificaciones {
 	
+	// {{ Habilitado (property)
+	private Character habilitado;
+	
+	@Column(allowsNull = "false")
+	@Hidden
+	@MemberOrder(sequence = "1")
+	public Character getHabilitado() {
+		return habilitado;
+	}
+
+	public void setHabilitado(final Character habilitado) {
+		this.habilitado = habilitado;
+	}
+	// }}
+
+
 
 	// Periodos (Collection)
 	// //////////////////////////////////////////
@@ -82,7 +101,14 @@ public class Calificaciones {
 	@MemberOrder(sequence = "1")
 	@Render(Type.EAGERLY)
 	public List<Periodo> getPeriodos() {
-		return periodos;
+		final List<Periodo> per = new ArrayList<Periodo>();
+		
+		for(Periodo p: periodos){
+			if(p.getHabilitado() == 'S'){
+				per.add(p);
+			}
+		}
+		return per;
 	}
 
 	public void setPeriodos(final List<Periodo> periodos) {
