@@ -77,7 +77,8 @@ import dom.simple.MateriaDelCurso;
 					+ "&& this.materiaDelCurso.curso.division == :division " 
 					+ "&& this.materiaDelCurso.materia.nombre == :materia " 
 					+ "&& this.alumnoCalificacion.periodo.nombre == :periodo" +
-					" && this.habilitado == 'S'"),
+					" && this.habilitado == 'S' " +
+					"order by this.alumno.apellido dsc"),
 				
 })
 

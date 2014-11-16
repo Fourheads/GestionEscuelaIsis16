@@ -33,7 +33,7 @@ import org.apache.isis.applib.annotation.NotContributed;
 import org.apache.isis.applib.query.QueryDefault;
 
 import dom.simple.Curso;
-//@Hidden
+@Hidden
 @DomainService
 public class AlumnoCalificacionRepositorio {
 	

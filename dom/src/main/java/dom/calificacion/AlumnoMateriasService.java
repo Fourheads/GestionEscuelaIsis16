@@ -55,7 +55,7 @@ public class AlumnoMateriasService {
 	@NotContributed	
 	@MemberOrder(name = "Alumnos", sequence = "8")
 	@Named("Calificaciones por alumno")
-	public AlumnoMateriasView seleccionarAlumno(final @Named("Ciclo") Calificaciones ciclo,
+	public AlumnoMateriasView calificacionesPorAlumno(final @Named("Ciclo") Calificaciones ciclo,
 													  final @Named("Periodo") Periodo periodo,
 													  final @Named("Alumno") AlumnoCalificacion alumno){
 		//titulo, alumno, ciclo, curso, division, dni, periodo, turno
@@ -76,7 +76,7 @@ public class AlumnoMateriasService {
 	}
 	
 		//Choices CICLO
-	    public List<Calificaciones> choices0SeleccionarAlumno(final @Named("Ciclo") Calificaciones ciclo) {
+	    public List<Calificaciones> choices0CalificacionesPorAlumno(final @Named("Ciclo") Calificaciones ciclo) {
 
 			List<Calificaciones> listCalificaciones = califRepositorio.ciclosConPeriodo();
 			if (listCalificaciones.isEmpty()) {
@@ -88,7 +88,7 @@ public class AlumnoMateriasService {
 	   
 	    
 	    //Choices PERIODO
-	    public List<Periodo> choices1SeleccionarAlumno(final @Named("Ciclo") Calificaciones ciclo,
+	    public List<Periodo> choices1CalificacionesPorAlumno(final @Named("Ciclo") Calificaciones ciclo,
 				final @Named("Periodo") Periodo periodo,
 				final @Named("Alumno") AlumnoCalificacion alumno){
 	    	if(ciclo != null){	    		
@@ -101,7 +101,7 @@ public class AlumnoMateriasService {
 	    }	   
 	    
 	    //Choices ALUMNOCALIFICACION
-	    public List<AlumnoCalificacion> choices2SeleccionarAlumno(final @Named("Ciclo") Calificaciones ciclo,
+	    public List<AlumnoCalificacion> choices2CalificacionesPorAlumno(final @Named("Ciclo") Calificaciones ciclo,
 				final @Named("Periodo") Periodo periodo,
 				final @Named("Alumno") AlumnoCalificacion alumno){
 	    	if(periodo != null){
