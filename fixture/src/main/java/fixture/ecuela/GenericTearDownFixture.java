@@ -86,7 +86,7 @@ public class GenericTearDownFixture extends FixtureScript {
 	{
     	if(table!=null || table!="")
     	{
-    		isisJdoSupport.executeUpdate("TRUNCATE \""+table+"\" CASCADE");
+    			isisJdoSupport.executeUpdate("TRUNCATE \""+table+"\" CASCADE");
     	}
 	}
 

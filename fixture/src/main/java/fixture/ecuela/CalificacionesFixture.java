@@ -22,13 +22,20 @@
 
 package fixture.ecuela;
 
+import org.apache.isis.applib.DomainObjectContainer;
+import org.apache.isis.applib.annotation.Named;
 import org.apache.isis.applib.fixturescripts.FixtureScript;
 import org.apache.isis.applib.fixturescripts.FixtureScript.Discoverability;
 import org.apache.isis.applib.fixturescripts.FixtureScript.ExecutionContext;
+import org.joda.time.LocalDate;
 
-import dom.escuela.Curso;
-import dom.escuela.Personal;
-import dom.planEstudio.Plan;
+import dom.calificacion.AlumnoCalificacion;
+import dom.calificacion.AlumnoCalificacionRepositorio;
+import dom.calificacion.CalificacionRepositorio;
+import dom.calificacion.Calificaciones;
+import dom.calificacion.MateriaCalificacion;
+import dom.calificacion.MateriaCalificacionRepositorio;
+import dom.calificacion.PeriodoRepositorio;
 
 public class CalificacionesFixture extends FixtureScript {
 
@@ -41,16 +48,47 @@ public class CalificacionesFixture extends FixtureScript {
 		
 		BorrarDBCalificaciones(executionContext);
 		
+		LocalDate hoy=new LocalDate();
+		LocalDate hoymassemana=new LocalDate();
+		hoy=hoy.now();
+		hoymassemana=hoy.plusDays(+7);
+		
+		createPeriodo(createCalificacion(hoy.year().get(), executionContext),"POEC",hoy,hoymassemana,executionContext);
+		
+		for(AlumnoCalificacion alucal:aluCalRepositorio.listAll())
+		{
+			for(MateriaCalificacion matecal:alucal.getListMateriaCalificacion())
+			{
+				matecal.setNota(GenericData.Random(1, 10));
+				matecal.setObservacion("Sin observacion");
+			}
+			createAlumnocal(alucal, executionContext);
+		}
+		
 	}
 	
     private void BorrarDBCalificaciones(ExecutionContext executionContext) {
-    	execute(new GenericTearDownFixture(""),executionContext);
+    	execute(new GenericTearDownFixture("Calificaciones"),executionContext);
 
     	return;	
 	}
 
-	//private Curso createPreceptorCurso(Plan plan, Curso curso, Personal preceptor, ExecutionContext executionContext) {
-       // return executionContext.add());
-    //}
+	private Calificaciones createCalificacion(int ciclo, ExecutionContext executionContext) {
+        return executionContext.add(this, calificacionesrepo.createCalificacion(ciclo));
+    }
+	
+	private Calificaciones createPeriodo(Calificaciones inCalificaciones,String inNombre,LocalDate inFechaI,LocalDate inFechaF, ExecutionContext executionContext) {
+        return executionContext.add(this, periodoRepositorio.createPeriodo(inCalificaciones, inNombre, inFechaI, inFechaF));
+    }
 
+	private AlumnoCalificacion createAlumnocal(AlumnoCalificacion al, ExecutionContext executionContext) {
+        return executionContext.add(this, al);
+    }
+
+	@javax.inject.Inject
+	CalificacionRepositorio calificacionesrepo;
+	@javax.inject.Inject
+	PeriodoRepositorio periodoRepositorio;
+	@javax.inject.Inject
+	AlumnoCalificacionRepositorio aluCalRepositorio;
 }
