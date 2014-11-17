@@ -250,8 +250,19 @@ public class AlumnoMateriasView extends AbstractViewModel{
 			matAlumno.setPeriodo(getPeriodo());
 			matAlumno.setTurno(getTurno());
 			matAlumno.setMateria(m.getMateriaDelCurso().getMateria().getNombre());
-			matAlumno.setNota(String.valueOf(m.getNota()));
-			matAlumno.setObservacion(m.getObservacion());
+			
+			if(m.getNota() == 0){
+				matAlumno.setNota("-");
+				
+			}else{
+				matAlumno.setNota(String.valueOf(m.getNota()));
+			}
+			
+			if(m.getObservacion() == null){
+				matAlumno.setObservacion("-");
+			}else{
+				matAlumno.setObservacion(m.getObservacion());
+			}
 			
 			listReport.add(matAlumno);
 		}
