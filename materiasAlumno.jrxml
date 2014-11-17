@@ -43,14 +43,14 @@
 				</textField>
 				<staticText>
 					<reportElement x="433" y="29" width="82" height="20" forecolor="#FFFFFF" uuid="ee8a5bb3-e4b2-4333-8c6e-9632f9a46fdb"/>
-					<textElement verticalAlignment="Middle">
+					<textElement textAlignment="Right" verticalAlignment="Middle">
 						<font fontName="Times New Roman" size="12" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Ciclo Lectivo:]]></text>
 				</staticText>
 				<textField>
 					<reportElement x="515" y="29" width="60" height="20" forecolor="#FFFFFF" uuid="a234b806-f326-42a2-9ee1-2370ebdec84c"/>
-					<textElement verticalAlignment="Middle">
+					<textElement textAlignment="Right" verticalAlignment="Middle">
 						<font fontName="Times New Roman" size="12"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{ciclo}]]></textFieldExpression>

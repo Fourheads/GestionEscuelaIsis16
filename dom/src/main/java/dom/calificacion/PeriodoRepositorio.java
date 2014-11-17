@@ -125,7 +125,7 @@ public class PeriodoRepositorio {
 		return calif;		
 	}
 	
-	@Named("Agregar Alumno")	
+	@Named("Agregar Alumno a Período")	
 	public AlumnoCalificacion agregarAlumno(final @Named("Alumno: ") Alumno inAlumno,											
 											final @Named("Periodo: ") Periodo inPeriodo){
 		
