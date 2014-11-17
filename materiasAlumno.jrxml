@@ -42,16 +42,16 @@
 					<textFieldExpression><![CDATA[$F{dni}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement x="449" y="29" width="82" height="20" forecolor="#FFFFFF" uuid="ee8a5bb3-e4b2-4333-8c6e-9632f9a46fdb"/>
+					<reportElement x="433" y="29" width="82" height="20" forecolor="#FFFFFF" uuid="ee8a5bb3-e4b2-4333-8c6e-9632f9a46fdb"/>
 					<textElement verticalAlignment="Middle">
 						<font fontName="Times New Roman" size="12" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Ciclo Lectivo:]]></text>
 				</staticText>
 				<textField>
-					<reportElement x="531" y="29" width="44" height="20" forecolor="#FFFFFF" uuid="a234b806-f326-42a2-9ee1-2370ebdec84c"/>
+					<reportElement x="515" y="29" width="60" height="20" forecolor="#FFFFFF" uuid="a234b806-f326-42a2-9ee1-2370ebdec84c"/>
 					<textElement verticalAlignment="Middle">
-						<font fontName="Times New Roman"/>
+						<font fontName="Times New Roman" size="12"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{ciclo}]]></textFieldExpression>
 				</textField>
@@ -71,7 +71,7 @@
 				</textField>
 				<textField>
 					<reportElement x="515" y="69" width="60" height="20" forecolor="#FFFFFF" uuid="1b944369-67fa-42e6-94c3-670bc0fcaa61"/>
-					<textElement>
+					<textElement textAlignment="Right">
 						<font fontName="Times New Roman" size="12" isItalic="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{turno}]]></textFieldExpression>
