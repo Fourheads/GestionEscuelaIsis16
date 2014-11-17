@@ -124,6 +124,8 @@ public class ServicesFixtures extends FixtureScripts {
     	
     	this.instalarFixturesCalificaciones();
     	
+    	this.instalarFixturesAsistencia();
+    	
     	return "Todos los fixtures intastalados";
     }
 
