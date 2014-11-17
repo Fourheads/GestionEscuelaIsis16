@@ -82,22 +82,22 @@ public class ServicesFixtures extends FixtureScripts {
     public Object instalarFixturesHorario() {
         final List<FixtureResult> "" = findFixtureScriptFor(""Fixture.class).run(null);
         return "".get(0).getObject();
-    }
+    }*/
     
     @Prototype
     @MemberOrder(sequence="70")
     public Object instalarFixturesCalificaciones() {
-        final List<FixtureResult> "" = findFixtureScriptFor(""Fixture.class).run(null);
-        return "".get(0).getObject();
+        final List<FixtureResult> AlumnoCalificacion = findFixtureScriptFor(CalificacionesFixture.class).run(null);
+        return AlumnoCalificacion.get(0).getObject();
     }
     
     @Prototype
-    @MemberOrder(sequence="70")
+    @MemberOrder(sequence="80")
     public Object instalarFixturesAsistencia() {
-        final List<FixtureResult> "" = findFixtureScriptFor(""Fixture.class).run(null);
-        return "".get(0).getObject();
+        final List<FixtureResult> Asistencia = findFixtureScriptFor(AsistenciaFixture.class).run(null);
+        return Asistencia.get(0).getObject();
     }
-     */
+     
     
     
 	@MemberOrder(sequence="100")
@@ -121,6 +121,8 @@ public class ServicesFixtures extends FixtureScripts {
     	this.instalarFixturesMaterias();
     	
     	this.instalarFixturesCurso();
+    	
+    	this.instalarFixturesCalificaciones();
     	
     	return "Todos los fixtures intastalados";
     }

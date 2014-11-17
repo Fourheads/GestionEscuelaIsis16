@@ -19,6 +19,9 @@
 
 package fixture.ecuela;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.isis.applib.fixturescripts.FixtureScript;
 import org.apache.isis.applib.fixturescripts.FixtureScript.Discoverability;
 import org.apache.isis.applib.fixturescripts.FixtureScript.ExecutionContext;
@@ -40,18 +43,27 @@ public class MateriaFixture extends FixtureScript{
 		
 		BorrarDBMaterias(executionContext);
 		
+		List<Materia> listmateria=new ArrayList<Materia>();
 		
 		for(Plan plan:Plan.listarPlanes())
 		{
 			for(Anio anio:plan.getAnioList())
 			{
-				int fin=GenericData.Random(10, 15);
+				int fin=GenericData.Random(6, 12);
 				for(int x=0;x<=fin;x++)
 				{
-					createMate(GenericData.ObtenerCiencia()+" "+anio.getAnioNumero()+"°", anio, executionContext);
+					Materia mate=new Materia();
+					mate.setHabilitado('S');
+					mate.setAnio(anio);
+					mate.setPrograma("bla bla bla bla bla 123456 pof!!");
+					mate.setNombre(GenericData.ObtenerCiencia()+" "+anio.getAnioNumero()+"°");
+					listmateria.add(mate);
 				}
 			}
 		}
+		
+		for(Materia mate:listmateria)
+			createMate(mate.getNombre(), mate.getAnio(), executionContext);
 	}
 	
     private Anio createMate(final String nombre, Anio anio, ExecutionContext executionContext) {
