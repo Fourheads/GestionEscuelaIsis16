@@ -102,12 +102,8 @@ public class ShiroUserview extends AbstractViewModel{
 	public void viewModelInit(String mementoString) {
 		this.memento = mementoString;
 		List<ShiroUser> ListaShiroUser =new ArrayList<ShiroUser>();
-		ListaShiroUser=shirorepo.listAll();
-		for(ShiroUser User:ListaShiroUser)
-			User.setPassword("************");
-		
-		setListaPremission(ListaShiroUser);
-		
+		ListaShiroUser=shirorepo.listAll();		
+		setListaPremission(ListaShiroUser);		
 	}
 
 	@javax.inject.Inject 
