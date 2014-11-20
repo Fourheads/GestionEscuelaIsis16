@@ -60,19 +60,20 @@ public class Permissionview extends AbstractViewModel{
 	@Named("Crear un nuevo permiso")
 	@MemberOrder(sequence = "1", name = "Menu")
 	@PublishedAction
-	public void crearunnuevopermiso(final @Named("Descripcion") String permissionDescription,
+	public Permission crearunnuevopermiso(final @Named("Descripcion") String permissionDescription,
             final @Named("Permiso") String permissionText) {
 
-		permrepo.create(permissionDescription, permissionText);
+		return permrepo.create(permissionDescription, permissionText);
 	}
 
 
 	@Named("Eliminar un permiso")
 	@MemberOrder(sequence = "2", name = "Menu")
 	@PublishedAction
-	public void eliminarunpermiso(@Named("Permission") Permission permission) {
+	public String eliminarunpermiso(@Named("Permiso") Permission permission) {
 						
-		permrepo.removePermission(permission);
+		return permrepo.removePermission(permission);
+
 	}
 	
 	//private String Menu="Menu";

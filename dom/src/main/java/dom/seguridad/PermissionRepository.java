@@ -32,6 +32,7 @@ import org.apache.isis.applib.annotation.ActionSemantics;
 import org.apache.isis.applib.annotation.Bookmarkable;
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.Hidden;
+import org.apache.isis.applib.annotation.MemberGroupLayout;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Named;
 import org.apache.isis.applib.annotation.ActionSemantics.Of;
@@ -70,7 +71,7 @@ public class PermissionRepository {
     //region > create (action)
     // //////////////////////////////////////
     
-    @MemberOrder(sequence = "2")
+    @MemberOrder(sequence = "1", name = "Menu Permisos")
     @Named("Crear un nuevo permiso")
     public Permission create(
             final @Named("Descripcion") String permissionDescription,
@@ -92,8 +93,8 @@ public class PermissionRepository {
     //region > remove Permission (action)
     // //////////////////////////////////////
     
-    @ActionSemantics(Of.NON_IDEMPOTENT)
-    @MemberOrder(sequence = "4")
+   
+    @MemberOrder(sequence = "2", name = "Menu Permisos")
     @Named("Eliminar permiso")
     public String removePermission(@Named("Permission") Permission permission) {
     		String permissionDescription = permission.getPermissionDescription();

@@ -60,19 +60,19 @@ public class Roleview extends AbstractViewModel{
 	@Named("Crear un nuevo rol")
 	@MemberOrder(sequence = "1", name = "Menu")
 	@PublishedAction
-	public void crearunnuevorol(final @Named("Nombre") String roleName,
+	public Role crearunnuevorol(final @Named("Nombre") String roleName,
             final @Named("Permiso") Permission permission) {
 
-		rolerepo.create(roleName, permission);
+		return rolerepo.create(roleName, permission);
 	}
 
 
 	@Named("Eliminar un rol")
 	@MemberOrder(sequence = "2", name = "Menu")
 	@PublishedAction
-	public void eliminarunrol(@Named("Role") Role Role) {
+	public String eliminarunrol(@Named("Rol") Role Role) {
 						
-		rolerepo.removeRole(Role);
+		return rolerepo.removeRole(Role);
 	}
 	
 	//private String Menu="Menu";

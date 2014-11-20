@@ -102,8 +102,8 @@ public class ShiroUser {
 	// //////////////////////////////////////
 
 	@MemberOrder(sequence = "3")
-	@Named("Add Role for this User")
-	public ShiroUser addRole(final @Named("Role") Role role) {
+	@Named("Agregar un rol a este usuario")
+	public ShiroUser addRole(final @Named("Rol") Role role) {
 
 		rolesList.add(role);
 
@@ -116,8 +116,8 @@ public class ShiroUser {
 	// //////////////////////////////////////
 
 	@MemberOrder(sequence = "5")
-	@Named("Remove Role for this User")
-	public ShiroUser removeRole(final @Named("Role") Role role) {
+	@Named("Quitar un rol a este usuario")
+	public ShiroUser removeRole(final @Named("Rol") Role role) {
 
 		getRolesList().remove(role);
 		return this;

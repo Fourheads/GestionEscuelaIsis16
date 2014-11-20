@@ -82,9 +82,9 @@ public class Role implements Comparable<Role> {
     // //////////////////////////////////////
     
     @MemberOrder(sequence = "4")
-    @Named("Add Permission for this Role")
+    @Named("Agregar un permiso al rol")
     public Role addPermission(
-            final @Named("Permission") Permission permission) {
+            final @Named("Permiso") Permission permission) {
               
         permissionsList.add(permission);
         
@@ -109,9 +109,9 @@ public class Role implements Comparable<Role> {
     
     @MemberOrder(sequence = "5")
     
-    @Named("Remove Permission for this Role")
+    @Named("Quitar un permiso al rol")
     public Role removePermission(
-            final @Named("Permission") Permission permission) {
+            final @Named("Permiso") Permission permission) {
     	
     	getPermissionsList().remove(permission);    	
         return this;

@@ -61,20 +61,20 @@ public class ShiroUserview extends AbstractViewModel{
 	@Named("Crear un nuevo usuario")
 	@MemberOrder(sequence = "1", name = "Menu")
 	@PublishedAction
-	public void crearunnuevousuario(final @Named("Nombre") String userName,
+	public ShiroUser crearunnuevousuario(final @Named("Nombre") String userName,
 			final @Named("Contraseña") String password,
 			final @Named("Rol") Role role) {
 
-		shirorepo.create(userName, password, role);
+		return shirorepo.create(userName, password, role);
 	}
 
 
 	@Named("Eliminar un usuario")
 	@MemberOrder(sequence = "2", name = "Menu")
 	@PublishedAction
-	public void eliminarunusuario(@Named("ShiroUser") ShiroUser ShiroUser) {
+	public String eliminarunusuario(@Named("Usuario") ShiroUser ShiroUser) {
 						
-		shirorepo.removeUser(ShiroUser);
+		return shirorepo.removeUser(ShiroUser);
 	}
 	
 	//private String Menu="Menu";
@@ -102,8 +102,20 @@ public class ShiroUserview extends AbstractViewModel{
 	public void viewModelInit(String mementoString) {
 		this.memento = mementoString;
 		List<ShiroUser> ListaShiroUser =new ArrayList<ShiroUser>();
-		ListaShiroUser=shirorepo.listAll();		
-		setListaPremission(ListaShiroUser);		
+		/*
+		for(ShiroUser User:shirorepo.listAll())
+		{
+			ShiroUser newUser=new ShiroUser();
+			
+			newUser.setUserName(User.getUserName());
+			newUser.setRolesList(User.getRolesList());
+			newUser.setPassword("************");
+			
+			ListaShiroUser.add(newUser);
+		}*/
+		
+		//setListaPremission(ListaShiroUser);
+		setListaPremission(shirorepo.listAll());
 	}
 
 	@javax.inject.Inject 
