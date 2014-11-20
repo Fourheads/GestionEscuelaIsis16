@@ -27,11 +27,13 @@ import java.util.List;
 import javax.inject.Inject;
 
 import org.apache.isis.applib.DomainObjectContainer;
+import org.apache.isis.applib.annotation.Named;
 import org.apache.isis.applib.fixturescripts.FixtureScript;
 import org.apache.isis.applib.fixturescripts.FixtureScript.Discoverability;
 import org.apache.isis.applib.fixturescripts.FixtureScript.ExecutionContext;
 
 import dom.planEstudio.*;
+import dom.escuela.CursoRepositorio;
 import dom.horario.*;
 
 public class HorarioFixture extends FixtureScript {
@@ -45,27 +47,79 @@ public class HorarioFixture extends FixtureScript {
 		
 		BorrarDBHorario(executionContext);
 		
-		List<Plan> lplan=PlanRepo.listarPlanes();
+		E_HorarioHoraTipo horatipo = null;
 		
-		Hora inicio=new Hora();
-		inicio.setHora(8);
-		inicio.setMinutos(0);
+		HorarioPlan horaplan=new HorarioPlan();
+		
+		Hora horaInicio = new Hora();
+		horaInicio.setHora(8);
+		horaInicio.setMinutos(0);
+		
+		for(Plan plan:PlanRepo.listarPlanes())
+		{
+			plan.getHorarioPlan().setInicioClases(horaInicio);			
+			horaplan=plan.getHorarioPlan();
+			
+			for(int y=1;y<=2;y++)
+			{
+				for(int x=1;x<=8;x++)
+				{
+					if(x==3 || x==6)
+					{
+						horaplan=crearHorarioPlanHora(plan.getHorarioPlan(), horatipo.RECREO, 10, executionContext);
+					}
+					else
+					{
+						horaplan=crearHorarioPlanHora(plan.getHorarioPlan(), horatipo.HORA_CATEDRA, 40, executionContext);
+					}
+					plan.setHorarioPlan(horaplan);
+				}
+				
+				if(y==1)
+				{
+					horaplan=crearHorarioPlanHora(plan.getHorarioPlan(), horatipo.ALMUERZO, 70, executionContext);
+				}
+			}
+		}
+		
+		
+		
 
 	}
 	
 	
     private void BorrarDBHorario(ExecutionContext executionContext) {
-    	execute(new GenericTearDownFixture(""),executionContext);
-
+		for(Plan plan:PlanRepo.listarPlanes())
+		{
+			plan.getHorarioPlan().setInicioClases(null);
+			for(HorarioPlanHora hora:plan.getHorarioPlan().getHorarioPlanHoraList())
+			{
+				EliminarUltimaHora(plan.getHorarioPlan(), executionContext);
+			}
+			
+		}
     	return;	
 	}
-
-	//private Curso createPreceptorCurso(Plan plan, Curso curso, Personal preceptor, ExecutionContext executionContext) {
-       // return executionContext.add());
-    //}
     
+    
+	private HorarioPlan EliminarUltimaHora(HorarioPlan horarioPlan, ExecutionContext executionContext)
+	{
+		return executionContext.add(this,horarioPlanRepositorio.eliminarUltimaHora(horarioPlan));
+	}
+	
+	private HorarioPlan crearHorarioPlanHora(HorarioPlan horarioPlan, E_HorarioHoraTipo e_HorarioHoraTipo, Integer duracion, ExecutionContext executionContext)
+	{
+		return executionContext.add(this, horarioPlanRepositorio.crearHorarioPlanHora(horarioPlan, e_HorarioHoraTipo, duracion));
+	}
+	
+	
+	
 	@Inject
 	DomainObjectContainer container;
     @javax.inject.Inject
-    private PlanRepositorio PlanRepo;
+    PlanRepositorio PlanRepo;
+	@Inject
+	HorarioPlanRepositorio horarioPlanRepositorio;
+	@Inject
+	CursoRepositorio cursoRepositorio;
 }
