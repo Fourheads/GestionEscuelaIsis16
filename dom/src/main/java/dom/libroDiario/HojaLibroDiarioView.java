@@ -25,6 +25,8 @@ package dom.libroDiario;
 
 import java.util.List;
 
+import net.sf.jasperreports.engine.JRException;
+
 import org.apache.isis.applib.AbstractViewModel;
 import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.annotation.Bookmarkable;
@@ -245,6 +247,23 @@ public class HojaLibroDiarioView extends AbstractViewModel {
 		
 		return newIndex;
 	}
+	
+/*	
+	@Named("Imprimir Hoja del libro diario")	
+	public String imprimirReporte() throws JRException{
+		List<Object> listReport = new ArrayList<Object>();
+		
+		listReport.addAll(getListahojadellibro());
+		
+		GenerarReporte.generarReporte("HojaLibroDiario.jrxml", listReport);
+		
+		return "Reporte generado.";
+		
+	}
+	*/ 
+	
+	
+	
 	
 	@javax.inject.Inject
 	DomainObjectContainer container;
