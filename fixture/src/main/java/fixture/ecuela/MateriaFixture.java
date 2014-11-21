@@ -49,7 +49,7 @@ public class MateriaFixture extends FixtureScript{
 		{
 			for(Anio anio:plan.getAnioList())
 			{
-				int fin=GenericData.Random(6, 12);
+				int fin=GenericData.Random(10, 18);
 				for(int x=0;x<=fin;x++)
 				{
 					Materia mate=new Materia();
@@ -62,8 +62,29 @@ public class MateriaFixture extends FixtureScript{
 			}
 		}
 		
-		for(Materia mate:listmateria)
+		for(Materia mate:removerrepetidos(listmateria)){
 			createMate(mate.getNombre(), mate.getAnio(), executionContext);
+		}
+			
+	}
+	
+	private List<Materia> removerrepetidos(List<Materia> listamateria)
+	{
+		
+		for(int x=0;x<listamateria.size()-1;x++)
+		{
+				for(int y=x+1;y<listamateria.size();y++)
+				{
+					
+					if(listamateria.get(x).getNombre().equals(listamateria.get(y).getNombre()))
+					{
+						listamateria.remove(y);
+					}
+					
+				}
+		}
+		
+		return listamateria;
 	}
 	
     private Anio createMate(final String nombre, Anio anio, ExecutionContext executionContext) {

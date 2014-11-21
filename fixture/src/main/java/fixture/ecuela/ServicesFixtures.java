@@ -39,6 +39,18 @@ public class ServicesFixtures extends FixtureScripts {
     	super("fixture.ecuela");
 	}
 
+    
+    
+    /*
+   	@Prototype
+    @MemberOrder(sequence="1")
+    public Object instalarFixturesUsers() {
+        final List<FixtureResult> Users = findFixtureScriptFor("".class).run(null);
+        return Users.get(0).getObject();
+    }
+     
+     */
+    
 	@Prototype
     @MemberOrder(sequence="10")
     public Object instalarFixturesAlumnos() {
