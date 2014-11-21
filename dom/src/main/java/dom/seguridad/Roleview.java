@@ -29,6 +29,7 @@ import org.apache.isis.applib.annotation.Bookmarkable;
 import org.apache.isis.applib.annotation.MemberGroupLayout;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Named;
+import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.annotation.PublishedAction;
 import org.apache.isis.applib.annotation.Render;
 import org.apache.isis.applib.annotation.Render.Type;
@@ -70,11 +71,32 @@ public class Roleview extends AbstractViewModel{
 	@Named("Eliminar un rol")
 	@MemberOrder(sequence = "2", name = "Menu")
 	@PublishedAction
-	public String eliminarunrol(@Named("Rol") Role Role) {
+	public Roleview eliminarunrol(@Named("Rol") Role Role) {
 						
-		return rolerepo.removeRole(Role);
+		rolerepo.removeRole(Role);
+		return Newviewmodel();
 	}
 	
+	@Programmatic
+	private Roleview Newviewmodel()
+	{
+		return cuentasrepo.Roles();
+	}
+	
+	@Named("ir a Permisos")
+	@MemberOrder(sequence = "4", name = "Menu")
+	@PublishedAction
+	public Permissionview permisos()
+	{
+		return cuentasrepo.Permisos();
+	}
+	
+	@Named("Ir a Usuarios")
+	@MemberOrder(sequence = "3", name = "Menu")
+	@PublishedAction
+	public ShiroUserview Usuario() {
+		return cuentasrepo.Usuarios();
+	}
 	//private String Menu="Menu";
 	
 	@Named("Menu")
@@ -105,4 +127,6 @@ public class Roleview extends AbstractViewModel{
 
 	@javax.inject.Inject 
 	RoleRepository rolerepo;
+	@javax.inject.Inject 
+	Cuentas cuentasrepo;
 }

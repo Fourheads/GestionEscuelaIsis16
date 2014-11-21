@@ -29,6 +29,7 @@ import org.apache.isis.applib.annotation.Bookmarkable;
 import org.apache.isis.applib.annotation.MemberGroupLayout;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Named;
+import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.annotation.PublishedAction;
 import org.apache.isis.applib.annotation.Render;
 import org.apache.isis.applib.annotation.Render.Type;
@@ -70,10 +71,31 @@ public class Permissionview extends AbstractViewModel{
 	@Named("Eliminar un permiso")
 	@MemberOrder(sequence = "2", name = "Menu")
 	@PublishedAction
-	public String eliminarunpermiso(@Named("Permiso") Permission permission) {
+	public Permissionview eliminarunpermiso(@Named("Permiso") Permission permission) {
 						
-		return permrepo.removePermission(permission);
-
+		permrepo.removePermission(permission);
+		return Newviewmodel();
+	}
+	
+	@Named("ir a Roles")
+	@MemberOrder(sequence = "4", name = "Menu")
+	@PublishedAction
+	public Roleview roles()
+	{
+		return cuentasrepo.Roles();
+	}
+	
+	@Programmatic
+	private Permissionview Newviewmodel()
+	{
+		return cuentasrepo.Permisos();
+	}
+	
+	@Named("Ir a Usuarios")
+	@MemberOrder(sequence = "3", name = "Menu")
+	@PublishedAction
+	public ShiroUserview Usuario() {
+		return cuentasrepo.Usuarios();
 	}
 	
 	//private String Menu="Menu";
@@ -106,4 +128,6 @@ public class Permissionview extends AbstractViewModel{
 
     @javax.inject.Inject 
 	PermissionRepository permrepo;
+	@javax.inject.Inject 
+	Cuentas cuentasrepo;
 }

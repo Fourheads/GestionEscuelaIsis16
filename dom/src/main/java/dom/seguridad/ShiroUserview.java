@@ -26,13 +26,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.isis.applib.AbstractViewModel;
+import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.annotation.Bookmarkable;
 import org.apache.isis.applib.annotation.MemberGroupLayout;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Named;
+import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.annotation.PublishedAction;
 import org.apache.isis.applib.annotation.Render;
 import org.apache.isis.applib.annotation.Render.Type;
+import org.apache.isis.applib.services.memento.MementoService;
+import org.apache.isis.applib.services.memento.MementoService.Memento;
+import org.joda.time.LocalDate;
 
 import dom.libroDiario.HojaLibroDiarioView;
 
@@ -72,9 +77,31 @@ public class ShiroUserview extends AbstractViewModel{
 	@Named("Eliminar un usuario")
 	@MemberOrder(sequence = "2", name = "Menu")
 	@PublishedAction
-	public String eliminarunusuario(@Named("Usuario") ShiroUser ShiroUser) {
+	public ShiroUserview eliminarunusuario(@Named("Usuario") ShiroUser ShiroUser) {
 						
-		return shirorepo.removeUser(ShiroUser);
+		shirorepo.removeUser(ShiroUser);
+		return NuevoViewModel();
+	}
+	
+	@Named("Ir a Roles")
+	@MemberOrder(sequence = "3", name = "Menu")
+	@PublishedAction
+	public Roleview roles()
+	{
+		return cuentasrepo.Roles();
+	}
+	
+	@Named("ir a Permisos")
+	@MemberOrder(sequence = "4", name = "Menu")
+	@PublishedAction
+	public Permissionview permisos()
+	{
+		return cuentasrepo.Permisos();
+	}
+	
+	@Programmatic
+	private ShiroUserview NuevoViewModel() {
+		return cuentasrepo.Usuarios();
 	}
 	
 	//private String Menu="Menu";
@@ -118,6 +145,9 @@ public class ShiroUserview extends AbstractViewModel{
 		setListaPremission(shirorepo.listAll());
 	}
 
+
 	@javax.inject.Inject 
 	ShiroUserRepository shirorepo;
+	@javax.inject.Inject 
+	Cuentas cuentasrepo;
 }
