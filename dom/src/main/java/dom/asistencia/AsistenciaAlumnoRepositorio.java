@@ -22,6 +22,7 @@
 
 package dom.asistencia;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -35,6 +36,8 @@ import org.apache.isis.applib.services.memento.MementoService;
 import org.apache.isis.applib.services.memento.MementoService.Memento;
 import org.joda.time.LocalDate;
 
+import dom.escuela.Alumno;
+
 @Hidden
 @DomainService
 public class AsistenciaAlumnoRepositorio {
@@ -42,13 +45,13 @@ public class AsistenciaAlumnoRepositorio {
 	
 	public List<AsistenciaAlumno> queryAsistenciaAlumnoPorCursoPorDia(
 			LocalDate fecha, int anio, String division, String asistencia) {
-		return container.allMatches(new QueryDefault<AsistenciaAlumno>(
+		return filtroAL(container.allMatches(new QueryDefault<AsistenciaAlumno>(
 				AsistenciaAlumno.class, "asistenciaAlumno_asistenciaDiaCurso", 
 				"anio", anio, 
 				"division", division,
 				"fecha", fecha,
 				"asistencia", asistencia
-				));
+				)),'S');
 	}
 	
 	
@@ -72,13 +75,24 @@ public class AsistenciaAlumnoRepositorio {
 				"dni", dni 
 				));
 			
-		return tempList;
+		return filtroAL(tempList,'S');
 	}
 
 	
 	
 	
-	
+	private List<AsistenciaAlumno>  filtroAL(List<AsistenciaAlumno>  Alumnos, char A)
+	{
+		List<AsistenciaAlumno>  filtroAL=new ArrayList<AsistenciaAlumno> ();
+		
+		for(AsistenciaAlumno al:Alumnos)
+		{
+			if(al.getAlumno().getHabilitado()==A)
+				filtroAL.add(al);
+		}
+		
+		return filtroAL;
+	}
 	
 	
 	// region > injected services
