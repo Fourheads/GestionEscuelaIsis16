@@ -128,8 +128,8 @@ public class CursoFixture extends FixtureScript{
     public void BorrarDBCurso(ExecutionContext executionContext)
     {
     	execute(new GenericTearDownFixture("Curso"),executionContext);
-    	execute(new GenericTearDownFixture("Curso_ListaAlumno"),executionContext);
-    	execute(new GenericTearDownFixture("Curso_materiaDelCursoList"),executionContext);
+    	//execute(new GenericTearDownFixture("Curso_ListaAlumno"),executionContext);
+    	//execute(new GenericTearDownFixture("Curso_materiaDelCursoList"),executionContext);
     	execute(new GenericTearDownFixture("LibroDiario"),executionContext);
     	execute(new GenericTearDownFixture("LibroDiario_materiaDelLibroDiarioList"),executionContext);
 
