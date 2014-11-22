@@ -1,1 +1,0 @@
-java -jar webapp/target/GestionEscuelaIsis-webapp-1.0-SNAPSHOT-jetty-console.jar
