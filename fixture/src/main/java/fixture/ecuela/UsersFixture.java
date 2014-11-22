@@ -46,25 +46,34 @@ public class UsersFixture extends FixtureScript{
 		List<Permission> listapermisos=new ArrayList<Permission>();
 		List<Role>	listaroles=new ArrayList<Role>();
 		
-		listapermisos.add(create("Alumnos-listartodos-lectura","dom:escuela:AlumnoRepositorio:listAll:r", executionContext));
-		listapermisos.add(create("Alumnos-crearAlumno-escritura","dom:escuela:AlumnoRepositorio:create:w", executionContext));
-		listapermisos.add(create("Alumnos-buscarporDNI-lectura","dom:escuela:AlumnoRepositorio:ListByDni:r", executionContext));
-		listapermisos.add(create("Alumnos-listarAlde un Curso-lectura","dom:escuela:AlumnoRepositorio:queryListarAlumnosDeUnCurso:r", executionContext));
-		listapermisos.add(create("Alumnos-RecobrarAlumno-escritura","dom:escuela:AlumnoRepositorio:recoverAlumno:w", executionContext));
-		listapermisos.add(create("Alumnos-BorrarAlumno-escritura","dom:escuela:AlumnoRepositorio:removeAlumno:w", executionContext));
+		listapermisos.add(create("EVERYTHING","*", executionContext));//0
 		
-		listapermisos.add(create("Curso-ListarporPlan-lectura","dom:escuela:CursoRepositorio:listarCursosDeUnPlan:r", executionContext));
-		listapermisos.add(create("Curso-Crear-escritura","dom:escuela:CursoRepositorio:crearCurso:w", executionContext));
-		listapermisos.add(create("Curso-ListarconAlumnos-lectura","dom:escuela:CursoRepositorio:listarCursoConAlumnos:r", executionContext));
-		listapermisos.add(create("Curso-ListarporAño-lectura","dom:escuela:CursoRepositorio:listarCursosDeUnAnio:r", executionContext));
-		listapermisos.add(create("Curso-Seleccionar-lectura","dom:escuela:CursoRepositorio:seleccionarUnCurso:r", executionContext));
-		listapermisos.add(create("Curso-AsignarPreceptor-escritura","dom:escuela:CursoRepositorio:asignarPreceptorAlCurso:w", executionContext));
-		listapermisos.add(create("Curso-AsignarProfesor-escritura","dom:escuela:CursoRepositorio:asignarProfesorAMateriaDelCurso:w", executionContext));
-		listapermisos.add(create("Curso-Verhorario-Todos","dom:escuela:CursoRepositorio:verHorarioDelCurso:*", executionContext));
-		listapermisos.add(create("Curso-Recuperar-escritura","dom:escuela:CursoRepositorio:recuperarCurso:w", executionContext));
-		listapermisos.add(create("Curso-TraerLibroDiario-lectura","dom:escuela:CursoRepositorio:trarlibrodiariorepo:r", executionContext));
-		listapermisos.add(create("Curso-Eliminar-escritura","dom:escuela:CursoRepositorio:eliminarCurso:w", executionContext));
-
+		//1
+		listapermisos.add(create("Alumnos-listartodos","dom.escuela:AlumnoRepositorio:listAll:*", executionContext));
+		listapermisos.add(create("Alumnos-crearAlumno","dom.escuela:AlumnoRepositorio:create:*", executionContext));
+		listapermisos.add(create("Alumnos-buscarporDNI","dom.escuela:AlumnoRepositorio:ListByDni:*", executionContext));
+		listapermisos.add(create("Alumnos-listarAlde un Curso","dom.escuela:AlumnoRepositorio:queryListarAlumnosDeUnCurso:*", executionContext));
+		listapermisos.add(create("Alumnos-RecobrarAlumno","dom.escuela:AlumnoRepositorio:recoverAlumno:*", executionContext));
+		listapermisos.add(create("Alumnos-BorrarAlumno","dom.escuela:AlumnoRepositorio:removeAlumno:*", executionContext));
+		//6
+		
+		//7
+		listapermisos.add(create("Curso-ListarporPlan","dom.escuela:CursoRepositorio:listarCursosDeUnPlan:*", executionContext));
+		listapermisos.add(create("Curso-Crear","dom.escuela:CursoRepositorio:crearCurso:*", executionContext));
+		listapermisos.add(create("Curso-ListarconAlumnos","dom.escuela:CursoRepositorio:listarCursoConAlumnos:*", executionContext));
+		listapermisos.add(create("Curso-ListarporAño","dom.escuela:CursoRepositorio:listarCursosDeUnAnio:*", executionContext));
+		listapermisos.add(create("Curso-Seleccionar","dom.escuela:CursoRepositorio:seleccionarUnCurso:*", executionContext));
+		listapermisos.add(create("Curso-AsignarPreceptor","dom.escuela:CursoRepositorio:asignarPreceptorAlCurso:*", executionContext));
+		listapermisos.add(create("Curso-AsignarProfesor","dom.escuela:CursoRepositorio:asignarProfesorAMateriaDelCurso:*", executionContext));
+		listapermisos.add(create("Curso-Verhorario","dom.escuela:CursoRepositorio:verHorarioDelCurso:*", executionContext));
+		listapermisos.add(create("Curso-Recuperar","dom.escuela:CursoRepositorio:recuperarCurso:*", executionContext));
+		listapermisos.add(create("Curso-TraerLibroDiario","dom.escuela:CursoRepositorio:trarlibrodiariorepo:*", executionContext));
+		listapermisos.add(create("Curso-Eliminar","dom.escuela:CursoRepositorio:eliminarCurso:*", executionContext));
+		//18
+		
+		//19
+		listapermisos.add(create("Curso-Eliminar","dom.escuela:CursoRepositorio:eliminarCurso:*", executionContext));
+		
 	}
 
 
