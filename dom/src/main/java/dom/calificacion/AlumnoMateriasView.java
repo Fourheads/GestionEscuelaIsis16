@@ -35,6 +35,7 @@ import net.sf.jasperreports.engine.JRException;
 import org.apache.isis.applib.AbstractViewModel;
 import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.annotation.Bookmarkable;
+import org.apache.isis.applib.annotation.DescribedAs;
 import org.apache.isis.applib.annotation.Disabled;
 import org.apache.isis.applib.annotation.Hidden;
 import org.apache.isis.applib.annotation.MemberGroupLayout;
@@ -47,6 +48,7 @@ import org.apache.isis.applib.annotation.Render.Type;
 import org.apache.isis.applib.services.memento.MementoService;
 import org.apache.isis.applib.services.memento.MementoService.Memento;
 
+import reportes.E_formato;
 import reportes.GenerarReporte;
 import reportes.MateriasPorAlumno;
 
@@ -228,8 +230,18 @@ public class AlumnoMateriasView extends AbstractViewModel{
 		return memento;
 	}
 	
-	@Named("Imprimir Reporte")	
-	public String imprimirReporte() throws JRException{
+	@Named("Imprimir Reporte")
+	@DescribedAs(value = "El archivo se almacenará en el directorio 'reportes' del proyecto")
+	public void elegirFormato(final @Named("Formato de archivo:") E_formato formato) throws JRException{
+		imprimirReporte(formato);		
+	}
+	
+	public E_formato default0ElegirFormato(final @Named("Formato") E_formato formato){
+		return E_formato.PDF;		
+	}
+	
+	@Hidden
+	public String imprimirReporte(E_formato format) throws JRException{
 		List<Object> listReport = new ArrayList<Object>();
 		
 		
@@ -267,7 +279,9 @@ public class AlumnoMateriasView extends AbstractViewModel{
 			listReport.add(matAlumno);
 		}
 		
-		GenerarReporte.generarReporte("materiasAlumno.jrxml", listReport);
+		String nombreArchivo = "reportes/calificaciones/" + String.valueOf(getDni()) + " " + getPeriodo();
+		
+		GenerarReporte.generarReporte("materiasAlumno.jrxml", listReport, format, nombreArchivo);
 		
 		return "Reporte generado.";
 		

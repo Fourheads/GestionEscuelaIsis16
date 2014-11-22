@@ -39,6 +39,7 @@ import javax.inject.Named;
 import javax.swing.JFrame;
 
 import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JRExporterParameter;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -48,8 +49,14 @@ import net.sf.jasperreports.engine.ReportContext;
 import net.sf.jasperreports.engine.data.JRBeanArrayDataSource;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.export.JRXlsExporter;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import net.sf.jasperreports.export.Exporter;
+import net.sf.jasperreports.export.ExporterInput;
+import net.sf.jasperreports.export.SimpleExporterInput;
+import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
+import net.sf.jasperreports.export.SimpleXlsExporterConfiguration;
+import net.sf.jasperreports.export.SimpleXlsReportConfiguration;
 import net.sf.jasperreports.view.JasperViewer;
 
 import org.apache.isis.applib.DomainObjectContainer;
@@ -61,7 +68,7 @@ import org.apache.isis.applib.value.Blob;
 @DomainService
 public class GenerarReporte {
 	
-	public static void generarReporte(String jrxml, List<Object> parametros)  throws JRException{
+	public static void generarReporte(String jrxml, List<Object> parametros, E_formato formato, String nombreArchivo)  throws JRException{
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		
 		//Levanta el jrxml
@@ -91,9 +98,32 @@ public class GenerarReporte {
 		//viewer.setVisible(true);
 		JasperViewer.viewReport(print, false);
 					
-		//Guarda el reporte para poder levantarlo con un Blob
-		//JasperExportManager.exportReportToPdfFile(print, "reportemp/NUEVO1.pdf");
-					
+		//nombreArchivo = reportes/(calificaciones o asistencia/(nombre)
+		
+		if(formato == E_formato.HojadeCálculo){
+			try{
+				JRXlsExporter exporterXLS = new JRXlsExporter();
+				
+				exporterXLS.setExporterInput(new SimpleExporterInput(print));
+				exporterXLS.setExporterOutput(new SimpleOutputStreamExporterOutput(nombreArchivo + ".xls"));
+				
+				SimpleXlsReportConfiguration configuration = new SimpleXlsReportConfiguration();
+				configuration.setOnePagePerSheet(true);
+				configuration.setDetectCellType(true);
+				configuration.setCollapseRowSpan(false);
+				
+				exporterXLS.setConfiguration(configuration);
+				exporterXLS.exportReport();
+				}catch(Exception e){
+					System.out.println(e.getMessage());
+				}
+		}else{
+			if(formato == E_formato.PDF){				
+				JasperExportManager.exportReportToPdfFile(print, nombreArchivo + ".pdf" );
+			}
+		}
+		
+		
 		//Muestra el reporte en otra ventana
 		//JasperExportManager.exportReportToHtmlFile(print, "reportemp/nuevo.html");
 	

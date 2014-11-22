@@ -37,6 +37,7 @@ import net.sf.jasperreports.engine.JRException;
 import org.apache.isis.applib.AbstractViewModel;
 import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.annotation.Bookmarkable;
+import org.apache.isis.applib.annotation.DescribedAs;
 import org.apache.isis.applib.annotation.Hidden;
 import org.apache.isis.applib.annotation.MemberGroupLayout;
 import org.apache.isis.applib.annotation.MemberGroups;
@@ -54,6 +55,7 @@ import org.apache.isis.applib.services.memento.MementoService.Memento;
 import org.joda.time.LocalDate;
 
 import reportes.AsistenciaPorCurso;
+import reportes.E_formato;
 import reportes.GenerarReporte;
 
 @Named("Contabilizar Asistencias View")
@@ -193,8 +195,18 @@ public class ContabilizarAsistenciasView extends AbstractViewModel {
 	// }} (end region)
 	// //////////////////////////////////////
 	
-	@Named("Imprimir Reporte")	
-	public String imprimirReporte() throws JRException{
+	@Named("Imprimir Reporte")
+	@DescribedAs(value = "El archivo se almacenará en el directorio 'reportes' del proyecto")
+	public void elegirFormato(final @Named("Formato") E_formato formato) throws JRException{
+		imprimirReporte(formato);		
+	}
+	
+	public E_formato default0ElegirFormato(final @Named("Formato") E_formato formato){
+		return E_formato.PDF;		
+	}
+	
+	@Hidden
+	public String imprimirReporte(E_formato format) throws JRException{
 		List<Object> objectsReport = new ArrayList<Object>();
 		
 		for(AnalisisAsistenciaView a: getAnalisisAsistenciaViewList()){
@@ -214,7 +226,8 @@ public class ContabilizarAsistenciasView extends AbstractViewModel {
 			objectsReport.add(asistencia);
 		}
 		
-		GenerarReporte.generarReporte("asistenciaCurso.jrxml", objectsReport);
+		String nombreArchivo = "reportes/asistencia/" + String.valueOf(getAnio()) + getDivision()+ " " + getDesde().toString() + "_" + getHasta().toString(); 
+		GenerarReporte.generarReporte("asistenciaCurso.jrxml", objectsReport, format, nombreArchivo);
 		return "Reporte Generado.";
 	}
 	
