@@ -59,7 +59,7 @@ public class HorarioPlanRepositorio {
 	@NotInServiceMenu
 	public HorarioPlan crearHorarioPlanHora(HorarioPlan horarioPlan,
 			@Named("Tipo de Hora") E_HorarioHoraTipo e_HorarioHoraTipo,
-			@Named("Duración (minutos)") Integer duracion) {
+			@Named("Duración (minutos)") int duracion) {
 
 		Hora inicio = new Hora();
 		Hora fin = new Hora();
@@ -120,14 +120,14 @@ public class HorarioPlanRepositorio {
 
 	public List<Integer> choices2CrearHorarioPlanHora(HorarioPlan horarioPlan,
 			@Named("Tipo de Hora") E_HorarioHoraTipo e_HorarioHoraTipo,
-			@Named("Duración (minutos)") Integer duracion) {
+			@Named("Duración (minutos)") int duracion) {
 
 		List<Integer> minutos = new ArrayList<Integer>();
 
 		if (e_HorarioHoraTipo == E_HorarioHoraTipo.HORA_CATEDRA) {
 			minutos.add(40);
 		} else {
-			for (Integer i = 5; i < 61; i = i + 5) {
+			for (int i = 5; i < 61; i = i + 5) {
 				minutos.add(i);
 			}
 		}
@@ -137,7 +137,7 @@ public class HorarioPlanRepositorio {
 
 	public String validateCrearHorarioPlanHora(HorarioPlan horarioPlan,
 			@Named("Tipo de Hora") E_HorarioHoraTipo e_HorarioHoraTipo,
-			@Named("Duración (minutos)") Integer duracion) {
+			@Named("Duración (minutos)") int duracion) {
 
 		if (horarioPlan.getInicioClases() == null) {
 			return "Antes de agregar una hora debe indicar la hora de inicio de clases";

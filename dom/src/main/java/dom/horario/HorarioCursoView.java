@@ -97,7 +97,7 @@ public class HorarioCursoView extends AbstractViewModel {
 	@MemberOrder(sequence = "2", name = "Detalles del Horario")
 	@Column(allowsNull = "true")
 	@TypicalLength(value = 2)
-	public Integer getAnio() {
+	public int getAnio() {
 		return anio;
 	}
 
