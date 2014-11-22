@@ -73,7 +73,7 @@ public class CursoFixture extends FixtureScript{
 			{
 				for(int x=1;x<=Cantidad;x++)
 				{				
-					if(x%2==0)
+					if(GenericData.Random(1, 100)<=50)
 						valorturno=0;
 					else
 						valorturno=1;

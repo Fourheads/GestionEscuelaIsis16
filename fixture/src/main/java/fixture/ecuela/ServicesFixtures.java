@@ -45,11 +45,11 @@ public class ServicesFixtures extends FixtureScripts {
    	@Prototype
     @MemberOrder(sequence="1")
     public Object instalarFixturesUsers() {
-        final List<FixtureResult> Users = findFixtureScriptFor("".class).run(null);
+        final List<FixtureResult> Users = findFixtureScriptFor(UsersFixture.class).run(null);
         return Users.get(0).getObject();
-    }
+    }*/
      
-     */
+     
     
 	@Prototype
     @MemberOrder(sequence="10")
