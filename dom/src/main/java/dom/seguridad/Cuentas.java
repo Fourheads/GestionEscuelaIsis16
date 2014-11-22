@@ -24,9 +24,16 @@
 package dom.seguridad;
 
 
+import org.apache.isis.applib.DomainObjectContainer;
+import org.apache.isis.applib.annotation.Bookmarkable;
 import org.apache.isis.applib.annotation.DomainService;
+import org.apache.isis.applib.annotation.MemberGroupLayout;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Named;
+import org.apache.isis.applib.services.memento.MementoService;
+import org.apache.isis.applib.services.memento.MementoService.Memento;
+
+import dom.libroDiario.HojaLibroDiarioView;
 
 @DomainService(menuOrder = "45")
 @Named("Cuentas")
@@ -34,31 +41,37 @@ public class Cuentas {
 
     @MemberOrder(sequence = "1")
     @Named("Permisos")
-	public PermissionRepository Permisos()
+	public Permissionview Permisos()
 	{
-		return permrepo;
+		Memento memento = mementoService.create();
+		memento.set("Title","Titulo");
+		return container.newViewModelInstance(
+				Permissionview.class, memento.asString());
 	}
 	
     @MemberOrder(sequence = "2")
     @Named("Roles")
-	public RoleRepository Roles()
+	public Roleview Roles()
 	{
-		return rolerepo;
+		Memento memento = mementoService.create();
+		memento.set("Title","Titulo");
+		return container.newViewModelInstance(
+				Roleview.class, memento.asString());
 	}
     
     @MemberOrder(sequence = "3")
     @Named("Usuarios")
-	public ShiroUserRepository Usuarios()
+	public ShiroUserview Usuarios()
 	{
-		return shirorepo;
+		Memento memento = mementoService.create();
+		memento.set("Title","Titulo");
+		return container.newViewModelInstance(
+				ShiroUserview.class, memento.asString());
 	}
 	
-	@javax.inject.Inject 
-	PermissionRepository permrepo;
-	@javax.inject.Inject 
-	RoleRepository rolerepo;
-	@javax.inject.Inject 
-	ShiroUserRepository shirorepo;
-
+    @javax.inject.Inject
+	DomainObjectContainer container;
+	@javax.inject.Inject
+	MementoService mementoService;
 }
 

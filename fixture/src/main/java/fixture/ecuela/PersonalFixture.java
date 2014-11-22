@@ -26,6 +26,7 @@ import dom.escuela.*;
 
 import org.apache.isis.applib.fixturescripts.FixtureScript;
 import org.apache.isis.objectstore.jdo.applib.service.support.IsisJdoSupport;
+import org.datanucleus.flush.ListAddAtOperation;
 import org.joda.time.LocalDate;
 
 public class PersonalFixture extends FixtureScript {
@@ -47,16 +48,26 @@ public class PersonalFixture extends FixtureScript {
         List<Personal> listPersonal=new ArrayList<Personal>();
         
         int Cantidad=GenericData.ObtenerCantidad();
-        proporciones(Cantidad);
+        
         
         // create
-        for(int x=0; x<Cantidad;x++)
+        for(int x=0; x<Cantidad+50;x++)
         {
-        	listPersonal.add(create(GenericData.ObtenerNombre(),GenericData.ObtenerApellido() ,Persona.E_sexo.MASCULINO,GenericData.Random(15000000, 40000000),LocalDate.now(),Persona.E_nacionalidad.ARGENTINA, Localidad.E_localidades.NEUQUEN,GenericData.ObtenerCalle(), GenericData.Random(1, 9999),null,null,String.valueOf(GenericData.Random(10000000, 88888888)), executionContext));
+        	Personal pe=new Personal();
+        	pe.setNombre(GenericData.ObtenerNombre());
+        	pe.setApellido(GenericData.ObtenerApellido());
+        	
+        	listPersonal.add(pe);
         }
         
-
-        for(Personal personal : listPersonal)
+        listPersonal=removerrepetidos(listPersonal);
+        
+        proporciones(listPersonal.size());
+        
+        for(Personal pe:listPersonal)
+        	create(pe.getNombre(),pe.getApellido(),Persona.E_sexo.MASCULINO,GenericData.Random(15000000, 40000000),LocalDate.now(),Persona.E_nacionalidad.ARGENTINA, Localidad.E_localidades.NEUQUEN,GenericData.ObtenerCalle(), GenericData.Random(1, 9999),null,null,String.valueOf(GenericData.Random(10000000, 88888888)), executionContext);
+        
+        for(Personal personal : this.personal.listAll())
         	{
         		for(int x=0;x<=GenericData.Random(0, 1);x++)
         		{
@@ -65,18 +76,39 @@ public class PersonalFixture extends FixtureScript {
         			String concate=personal.getNombre()+" "+personal.getApellido()+" desempeña la labor de "+newfuncion.getNombre().toString();	
         		
         			personal.createFuncion(newfuncion.getNombre(), concate);
+        			
         		}
         	}
+        
     }
     // //////////////////////////////////////
 
+	private List<Personal> removerrepetidos(List<Personal> listaPersonal)
+	{
+		
+		for(int x=0;x<listaPersonal.size()-1;x++)
+		{
+				for(int y=x+1;y<listaPersonal.size();y++)
+				{
+					
+					if(listaPersonal.get(x).getNombre().equals(listaPersonal.get(y).getNombre()) && listaPersonal.get(x).getApellido().equals(listaPersonal.get(y).getApellido()))
+					{
+						listaPersonal.remove(y);
+					}
+					
+				}
+		}
+		
+		return listaPersonal;
+	}
+    
     private void proporciones(int cantidad)
     {
     	proporcionado=new int[Funciones.length][2];
     	int[] Enproporcion= new int[Funciones.length];
     	Enproporcion[0]=80; //Profesores 80%
-    	Enproporcion[1]=12; //Preceptores 12%
-    	Enproporcion[2]=6; //Secretarios 6%
+    	Enproporcion[1]=16; //Preceptores 16%
+    	Enproporcion[2]=2; //Secretarios 6%
     	Enproporcion[3]=2; //Directivos 2%
     	
     	for(int x=0; x<proporcionado.length;x++)
@@ -98,8 +130,7 @@ public class PersonalFixture extends FixtureScript {
 
     	return newfuncion;
     }
-
-    
+  
     public void BorrarDBPersonal(ExecutionContext executionContext)
     {
     	execute(new GenericTearDownFixture("Funcion"), executionContext);

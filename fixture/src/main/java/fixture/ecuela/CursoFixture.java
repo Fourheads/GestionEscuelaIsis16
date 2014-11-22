@@ -73,7 +73,7 @@ public class CursoFixture extends FixtureScript{
 			{
 				for(int x=1;x<=Cantidad;x++)
 				{				
-					if(x%2==0)
+					if(GenericData.Random(1, 100)<=50)
 						valorturno=0;
 					else
 						valorturno=1;
@@ -128,8 +128,8 @@ public class CursoFixture extends FixtureScript{
     public void BorrarDBCurso(ExecutionContext executionContext)
     {
     	execute(new GenericTearDownFixture("Curso"),executionContext);
-    	execute(new GenericTearDownFixture("Curso_ListaAlumno"),executionContext);
-    	execute(new GenericTearDownFixture("Curso_materiaDelCursoList"),executionContext);
+    	//execute(new GenericTearDownFixture("Curso_ListaAlumno"),executionContext);
+    	//execute(new GenericTearDownFixture("Curso_materiaDelCursoList"),executionContext);
     	execute(new GenericTearDownFixture("LibroDiario"),executionContext);
     	execute(new GenericTearDownFixture("LibroDiario_materiaDelLibroDiarioList"),executionContext);
 

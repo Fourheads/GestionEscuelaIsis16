@@ -65,8 +65,8 @@ public class AlumnoRepositorio {
     @MemberOrder(sequence = "5")
     @Named ("Listar Alumnos")
     public List<Alumno> listAll() {
-        return container.allMatches(new QueryDefault<Alumno>(Alumno.class,
-				"ListarAlumnos"));
+        return filtroAL(container.allMatches(new QueryDefault<Alumno>(Alumno.class,
+				"ListarAlumnos")),'S');
     }
 
 
@@ -125,7 +125,7 @@ public class AlumnoRepositorio {
     // Validar atributos dni y fechaNacimiento
     public String validateCreate(String nombre, String apellido, E_sexo sexo, int dni, LocalDate nacimiento, E_nacionalidad nacionalidad,
 	   		 E_localidades localidad, String calle, int numero, String piso, String departamento, String telefono){	
-    	List<Alumno> dniAlumno = container.allMatches((new QueryDefault<Alumno>(Alumno.class, "findByDni", "dni", dni)));
+    	List<Alumno> dniAlumno =  filtroAL(container.allMatches((new QueryDefault<Alumno>(Alumno.class, "findByDni", "dni", dni))),'S');
     	if(!dniAlumno.isEmpty()){					
 			return "El número de dni ya existe";			
 		}
@@ -154,10 +154,10 @@ public class AlumnoRepositorio {
 	
 	@Programmatic
     public List<Alumno> listByDni(int dni) {
-        return container.allMatches(
+		return filtroAL(container.allMatches(
             new QueryDefault<Alumno>(Alumno.class, 
                     "findByDni", 
-                    "dni", dni));
+                    "dni", dni)),'S');
     }
 	
 		
