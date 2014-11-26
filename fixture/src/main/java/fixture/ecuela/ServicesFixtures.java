@@ -19,7 +19,6 @@
 
 package fixture.ecuela;
 
-
 import java.util.List;
 
 import org.apache.isis.applib.annotation.DomainService;
@@ -47,8 +46,8 @@ public class ServicesFixtures extends FixtureScripts {
     public Object instalarFixturesUsers() {
         final List<FixtureResult> Users = findFixtureScriptFor(UsersFixture.class).run(null);
         return Users.get(0).getObject();
-    }*/
-     
+    }
+     */
      
     
 	@Prototype

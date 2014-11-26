@@ -22,7 +22,6 @@ package fixture.ecuela;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.isis.applib.annotation.Named;
 import org.apache.isis.applib.fixturescripts.FixtureScript;
 import org.apache.isis.applib.fixturescripts.FixtureScript.Discoverability;
 import org.apache.isis.applib.fixturescripts.FixtureScript.ExecutionContext;
@@ -33,7 +32,6 @@ import dom.seguridad.Role;
 import dom.seguridad.RoleRepository;
 import dom.seguridad.ShiroUser;
 import dom.seguridad.ShiroUserRepository;
-import dom.*;
 
 public class UsersFixture extends FixtureScript{
 
@@ -44,39 +42,136 @@ public class UsersFixture extends FixtureScript{
 	@Override
 	protected void execute(ExecutionContext executionContext) {
 		List<Permission> listapermisos=new ArrayList<Permission>();
-		List<Role>	listaroles=new ArrayList<Role>();
+		List<Role>	listaroles=new ArrayList<Role>();//Administrador,Director,Secretario,Preceptor,Profesor,Alumno
 		
 		listapermisos.add(create("EVERYTHING","*", executionContext));//0
 		
-		//1
-		listapermisos.add(create("Alumnos-listartodos","dom.escuela:AlumnoRepositorio:listAll:*", executionContext));
-		listapermisos.add(create("Alumnos-crearAlumno","dom.escuela:AlumnoRepositorio:create:*", executionContext));
-		listapermisos.add(create("Alumnos-buscarporDNI","dom.escuela:AlumnoRepositorio:ListByDni:*", executionContext));
-		listapermisos.add(create("Alumnos-listarAlde un Curso","dom.escuela:AlumnoRepositorio:queryListarAlumnosDeUnCurso:*", executionContext));
-		listapermisos.add(create("Alumnos-RecobrarAlumno","dom.escuela:AlumnoRepositorio:recoverAlumno:*", executionContext));
-		listapermisos.add(create("Alumnos-BorrarAlumno","dom.escuela:AlumnoRepositorio:removeAlumno:*", executionContext));
-		//6
+		listapermisos.addAll(Crearpermisos(dom.escuela.AlumnoRepositorio.class, executionContext));
+		listapermisos.addAll(Crearpermisos(dom.escuela.CursoRepositorio.class, executionContext));
+		listapermisos.addAll(Crearpermisos(dom.escuela.MateriaDelCursoRepositorio.class, executionContext));
+		listapermisos.addAll(Crearpermisos(dom.escuela.LegajoRepositorio.class, executionContext));
+		listapermisos.addAll(Crearpermisos(dom.escuela.PersonalRepositorio.class, executionContext));
 		
-		//7
-		listapermisos.add(create("Curso-ListarporPlan","dom.escuela:CursoRepositorio:listarCursosDeUnPlan:*", executionContext));
-		listapermisos.add(create("Curso-Crear","dom.escuela:CursoRepositorio:crearCurso:*", executionContext));
-		listapermisos.add(create("Curso-ListarconAlumnos","dom.escuela:CursoRepositorio:listarCursoConAlumnos:*", executionContext));
-		listapermisos.add(create("Curso-ListarporAño","dom.escuela:CursoRepositorio:listarCursosDeUnAnio:*", executionContext));
-		listapermisos.add(create("Curso-Seleccionar","dom.escuela:CursoRepositorio:seleccionarUnCurso:*", executionContext));
-		listapermisos.add(create("Curso-AsignarPreceptor","dom.escuela:CursoRepositorio:asignarPreceptorAlCurso:*", executionContext));
-		listapermisos.add(create("Curso-AsignarProfesor","dom.escuela:CursoRepositorio:asignarProfesorAMateriaDelCurso:*", executionContext));
-		listapermisos.add(create("Curso-Verhorario","dom.escuela:CursoRepositorio:verHorarioDelCurso:*", executionContext));
-		listapermisos.add(create("Curso-Recuperar","dom.escuela:CursoRepositorio:recuperarCurso:*", executionContext));
-		listapermisos.add(create("Curso-TraerLibroDiario","dom.escuela:CursoRepositorio:trarlibrodiariorepo:*", executionContext));
-		listapermisos.add(create("Curso-Eliminar","dom.escuela:CursoRepositorio:eliminarCurso:*", executionContext));
-		//18
+		listapermisos.addAll(Crearpermisos(dom.libroDiario.LibroDiarioRepositorio.class, executionContext));
+		listapermisos.addAll(Crearpermisos(dom.libroDiario.EntradadeLibroDiarioRepositorio.class, executionContext));
+		listapermisos.addAll(Crearpermisos(dom.libroDiario.HojaLibroDiarioView.class, executionContext));
+		listapermisos.addAll(Crearpermisos(dom.libroDiario.MateriaDelLibroDiarioRepositorio.class, executionContext));
 		
-		//19
-		listapermisos.add(create("Curso-Eliminar","dom.escuela:CursoRepositorio:eliminarCurso:*", executionContext));
+		listapermisos.addAll(Crearpermisos(dom.planEstudio.PlanRepositorio.class, executionContext));
+		listapermisos.addAll(Crearpermisos(dom.planEstudio.AnioRepositorio.class, executionContext));
+		listapermisos.addAll(Crearpermisos(dom.planEstudio.MateriaRepositorio.class, executionContext));
+		listapermisos.addAll(Crearpermisos(dom.planEstudio.NavegacionServicio.class, executionContext));
 		
+		listapermisos.addAll(Crearpermisos(dom.horario.HorarioCursoView.class, executionContext));
+		listapermisos.addAll(Crearpermisos(dom.horario.HorarioCursoRepositorio.class, executionContext));
+		listapermisos.addAll(Crearpermisos(dom.horario.HorarioDiaRepositorio.class, executionContext));
+		listapermisos.addAll(Crearpermisos(dom.horario.HorarioHoraRepositorio.class, executionContext));
+		listapermisos.addAll(Crearpermisos(dom.horario.HorarioHoraSemanaView.class, executionContext));
+		listapermisos.addAll(Crearpermisos(dom.horario.HorarioPlanRepositorio.class, executionContext));
+		
+		listapermisos.addAll(Crearpermisos(dom.calificacion.AlumnoMateriasView.class, executionContext));
+		listapermisos.addAll(Crearpermisos(dom.calificacion.AlumnoCalificacionRepositorio.class, executionContext));
+		listapermisos.addAll(Crearpermisos(dom.calificacion.CalificacionRepositorio.class, executionContext));
+		listapermisos.addAll(Crearpermisos(dom.calificacion.CargarNotaView.class, executionContext));
+		listapermisos.addAll(Crearpermisos(dom.calificacion.MateriaCalificacionRepositorio.class, executionContext));
+		listapermisos.addAll(Crearpermisos(dom.calificacion.PeriodoRepositorio.class, executionContext));
+		
+		listapermisos.addAll(Crearpermisos(dom.asistencia.AsistenciaDiaRepositorio.class, executionContext));
+		listapermisos.addAll(Crearpermisos(dom.asistencia.AsistenciaRepositorio.class, executionContext));
+		listapermisos.addAll(Crearpermisos(dom.asistencia.AnalisisAsistenciaView.class, executionContext));
+		listapermisos.addAll(Crearpermisos(dom.asistencia.ContabilizarAsistenciasView.class, executionContext));
+		listapermisos.addAll(Crearpermisos(dom.asistencia.TomarAsistenciaView.class, executionContext));
+
 	}
+		private List<Permission> Crearpermisos(Class clase, ExecutionContext executionContext)
+		{
+			String clasenombre=clase.getName().toString();
+			
+			String [] secciones=Dividir(clasenombre);
+			
+			List<Permission> listapermisos=new ArrayList<Permission>();
+			
+			List<String> listametodos= crearlistametodos(clase);
+		
+			if(listametodos!=null && secciones.length>1)
+			{
+				String title=secciones[2]+"-";
+				for(int x=0; x<listametodos.size();x++)
+				{
+					String cuerpo=secciones[0]+"."+secciones[1]+":"+secciones[2]+":"+listametodos.get(x)+":*";
+					String ntitle=title+listametodos.get(x);
+					listapermisos.add(create(ntitle,cuerpo, executionContext));
+				}
+				
+					
+				}
+			else
+			{
+				listapermisos.add(create(clasenombre,secciones[0], executionContext));
+			}
+			
+			return listapermisos;
+		}
 
-
+		private List<String> crearlistametodos(Class clase)
+		{
+			List<String> listametodos= new ArrayList<String>();
+			String metodo="";
+			for(int x=0;x<clase.getMethods().length;x++)
+			{
+				{
+					metodo=clase.getMethods()[x].getName();
+					listametodos.add(metodo);
+				}
+			}
+			
+			return validarmetodo(listametodos);
+		}
+		
+		private List<String> validarmetodo(List<String> metodo)//ver
+		{
+			List<String> listametodos=new ArrayList<String>();
+			listametodos.addAll(metodo);
+			
+			List<String> metodosaquitar=new ArrayList<String>();
+			
+			metodosaquitar.add("getId");
+			metodosaquitar.add("hashCode");
+			metodosaquitar.add("iconName");
+			metodosaquitar.add("wait");
+			metodosaquitar.add("default");
+			metodosaquitar.add("choices");
+			metodosaquitar.add("validate");
+			metodosaquitar.add("equals");
+			metodosaquitar.add("toString");
+			metodosaquitar.add("getClass");
+			metodosaquitar.add("notify");
+			metodosaquitar.add("notifyAll");
+			metodosaquitar.add("set");
+			metodosaquitar.add("get");
+			//metodosaquitar.add("viewModel");
+			metodosaquitar.add("disabled");
+			
+			for(String quitar:metodosaquitar)
+			{
+				for(String palabra:listametodos)
+				{
+					if(palabra.contains(quitar))
+					{
+						metodo.remove(palabra);
+					}
+				}
+			}
+						
+			return metodo;
+		}
+		
+		private String[] Dividir(String texto)
+		{
+			texto=texto.replace('.', ',');
+			String[] partes=texto.split(",");
+			return partes;
+		}
 	     private Permission create(String permissionDescription,String permissionText, ExecutionContext executionContext) 
 	     {
         	return executionContext.add(this, this.permisorpo.create(permissionDescription, permissionText));

@@ -82,7 +82,7 @@ public class GenericData {
 		return Partes[Random(0,Partes.length)];
 	}
 	
-	private static String[] Dividir(String palabras)
+	public static String[] Dividir(String palabras)
 	{
 		String[] partes = palabras.split(",");
 		return partes;
