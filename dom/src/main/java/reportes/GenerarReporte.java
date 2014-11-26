@@ -94,9 +94,7 @@ public class GenerarReporte {
 		JasperPrint print = JasperFillManager.fillReport(reporte, map, jArray);
 		
 		//Lo muestra con el jasperviewer
-		//JasperViewer viewer = new JasperViewer(print, false);		
-		//viewer.setVisible(true);
-		JasperViewer.viewReport(print, false);
+		//JasperViewer.viewReport(print, false);
 					
 		//nombreArchivo = reportes/(calificaciones o asistencia/(nombre)
 		
