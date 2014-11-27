@@ -81,8 +81,42 @@ public class UsersFixture extends FixtureScript{
 		listapermisos.addAll(Crearpermisos(dom.asistencia.AnalisisAsistenciaView.class, executionContext));
 		listapermisos.addAll(Crearpermisos(dom.asistencia.ContabilizarAsistenciasView.class, executionContext));
 		listapermisos.addAll(Crearpermisos(dom.asistencia.TomarAsistenciaView.class, executionContext));
+		
+		listaroles.add(create("Administrador",listapermisos.get(0),executionContext));//Rol administrador
+		create("Administrador","Admin",listaroles.get(0),executionContext);//Usuario administrador.
 
 	}
+	
+		private Permission buscarUnPermiso(List<Permission> lista, String textpermiso)
+		{
+			List<Permission> newlista=new ArrayList<Permission>();
+			
+			for(Permission per:lista)
+			{
+				if(per.getPermissionText().equals(textpermiso))
+				{
+					newlista.add(per);
+				}
+			}
+			
+			return newlista.get(0);
+		}
+		
+		private List<Permission> buscarListaPermiso(List<Permission> lista, String descripermiso)
+		{
+			List<Permission> newlista=new ArrayList<Permission>();
+			
+			for(Permission per:lista)
+			{
+				if(per.getPermissionDescription().equals(descripermiso))
+				{
+					newlista.add(per);
+				}
+			}
+			
+			return newlista;
+		}
+	
 		private List<Permission> Crearpermisos(Class clase, ExecutionContext executionContext)
 		{
 			String clasenombre=clase.getName().toString();
@@ -95,15 +129,13 @@ public class UsersFixture extends FixtureScript{
 		
 			if(listametodos!=null && secciones.length>1)
 			{
-				String title=secciones[2]+"-";
-				for(int x=0; x<listametodos.size();x++)
-				{
-					String cuerpo=secciones[0]+"."+secciones[1]+":"+secciones[2]+":"+listametodos.get(x)+":*";
-					String ntitle=title+listametodos.get(x);
-					listapermisos.add(create(ntitle,cuerpo, executionContext));
-				}
-				
-					
+					String title=secciones[2]+"-";
+					for(int x=0; x<listametodos.size();x++)
+					{
+						String cuerpo=secciones[0]+"."+secciones[1]+":"+secciones[2]+":"+listametodos.get(x)+":*";
+						String ntitle=title+listametodos.get(x);
+						listapermisos.add(create(ntitle,cuerpo, executionContext));
+					}			
 				}
 			else
 			{
@@ -167,11 +199,13 @@ public class UsersFixture extends FixtureScript{
 		}
 		
 		private String[] Dividir(String texto)
+
 		{
 			texto=texto.replace('.', ',');
 			String[] partes=texto.split(",");
 			return partes;
 		}
+		
 	     private Permission create(String permissionDescription,String permissionText, ExecutionContext executionContext) 
 	     {
         	return executionContext.add(this, this.permisorpo.create(permissionDescription, permissionText));
