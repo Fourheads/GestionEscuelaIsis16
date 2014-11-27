@@ -89,13 +89,13 @@ public class UsersFixture extends FixtureScript{
 		
 		
 		//Roles
-		listaroles=llenarlistapermisos(listaroles, listapermisos.get(0), 0);//Rol administrador 
+		List<Role> newlistaroles=llenarlistapermisos(listaroles, listapermisos.get(0), 0);//Rol administrador 
 		
-		ArmaRoles(listaroles, executionContext);//Crea todos los roles
+		//ArmaRoles(newlistaroles, executionContext);//Crea todos los roles, comentado por duplicar los roles
 		
 		
 		//User Administrador
-		create("Administrador","Admin",listaroles.get(0),executionContext);//Usuario administrador.
+		create("Administrador","Admin",newlistaroles.get(0),executionContext);//Usuario administrador.
 
 	}
 	
