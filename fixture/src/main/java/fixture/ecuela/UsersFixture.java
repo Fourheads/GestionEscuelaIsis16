@@ -41,9 +41,14 @@ public class UsersFixture extends FixtureScript{
 	
 	@Override
 	protected void execute(ExecutionContext executionContext) {
-		List<Permission> listapermisos=new ArrayList<Permission>();
-		List<Role>	listaroles=new ArrayList<Role>();//Administrador,Director,Secretario,Preceptor,Profesor,Alumno
 		
+		List<Permission> listapermisos=new ArrayList<Permission>();
+		List<Role>	listaroles=DefautRoles();//Administrador,Director,Secretario,Preceptor,Profesor,Alumno
+		
+		//BorrarDBUser(executionContext);
+		
+		
+		//Permisos
 		listapermisos.add(create("EVERYTHING","*", executionContext));//0
 		
 		listapermisos.addAll(Crearpermisos(dom.escuela.AlumnoRepositorio.class, executionContext));
@@ -82,11 +87,76 @@ public class UsersFixture extends FixtureScript{
 		listapermisos.addAll(Crearpermisos(dom.asistencia.ContabilizarAsistenciasView.class, executionContext));
 		listapermisos.addAll(Crearpermisos(dom.asistencia.TomarAsistenciaView.class, executionContext));
 		
-		listaroles.add(create("Administrador",listapermisos.get(0),executionContext));//Rol administrador
+		
+		//Roles
+		listaroles=llenarlistapermisos(listaroles, listapermisos.get(0), 0);//Rol administrador 
+		
+		ArmaRoles(listaroles, executionContext);//Crea todos los roles
+		
+		
+		//User Administrador
 		create("Administrador","Admin",listaroles.get(0),executionContext);//Usuario administrador.
 
 	}
 	
+		private void BorrarDBUser(ExecutionContext executionContext)
+		{
+			execute(new GenericTearDownFixture("Permission"), executionContext);
+			execute(new GenericTearDownFixture("Role_permissionsList"), executionContext);
+			execute(new GenericTearDownFixture("Role"), executionContext);
+			execute(new GenericTearDownFixture("ShiroUser_rolesList"), executionContext);
+			execute(new GenericTearDownFixture("ShiroUser"), executionContext);
+			return;
+		}
+	
+	
+		private List<Role> llenarlistapermisos(List<Role> listaroles, List<Permission> listapermisos, int index)
+		{
+			listaroles.get(index).getPermissionsList().addAll(listapermisos);
+			return listaroles;
+		}
+		
+		
+		private List<Role> llenarlistapermisos(List<Role> listaroles, Permission permiso, int index)
+		{
+			listaroles.get(index).getPermissionsList().add(permiso);
+			return listaroles;
+		}
+		
+ 		
+		private void ArmaRoles(List<Role> listaroles, ExecutionContext executionContext)
+		{
+ 			for(int x=0;x<listaroles.size();x++)
+				for(Permission per: listaroles.get(x).getPermissionsList())
+					create(listaroles.get(x).getRoleName(),per,executionContext);
+		}
+		
+		
+		private List<Role> DefautRoles()
+	{
+		List<Role>	listaroles=new ArrayList<Role>();
+		
+		List<String> rolesnames=new ArrayList<String>();
+		
+		rolesnames.add("Administrador");
+		rolesnames.add("Director");
+		rolesnames.add("Secretario");
+		rolesnames.add("Preceptor");
+		rolesnames.add("Profesor");
+		rolesnames.add("Alumno");
+		
+		for(int x=0;x<rolesnames.size();x++)
+		{
+			Role newrole=new Role();
+			newrole.setRoleName(rolesnames.get(x));
+			
+			listaroles.add(newrole);
+		}
+		
+		return listaroles;
+	}
+	
+		
 		private Permission buscarUnPermiso(List<Permission> lista, String textpermiso)
 		{
 			List<Permission> newlista=new ArrayList<Permission>();
@@ -101,6 +171,7 @@ public class UsersFixture extends FixtureScript{
 			
 			return newlista.get(0);
 		}
+		
 		
 		private List<Permission> buscarListaPermiso(List<Permission> lista, String descripermiso)
 		{
@@ -117,6 +188,7 @@ public class UsersFixture extends FixtureScript{
 			return newlista;
 		}
 	
+		
 		private List<Permission> Crearpermisos(Class clase, ExecutionContext executionContext)
 		{
 			String clasenombre=clase.getName().toString();
@@ -145,6 +217,7 @@ public class UsersFixture extends FixtureScript{
 			return listapermisos;
 		}
 
+		
 		private List<String> crearlistametodos(Class clase)
 		{
 			List<String> listametodos= new ArrayList<String>();
@@ -198,6 +271,7 @@ public class UsersFixture extends FixtureScript{
 			return metodo;
 		}
 		
+		
 		private String[] Dividir(String texto)
 
 		{
@@ -206,17 +280,20 @@ public class UsersFixture extends FixtureScript{
 			return partes;
 		}
 		
-	     private Permission create(String permissionDescription,String permissionText, ExecutionContext executionContext) 
+	    
+		private Permission create(String permissionDescription,String permissionText, ExecutionContext executionContext) 
 	     {
         	return executionContext.add(this, this.permisorpo.create(permissionDescription, permissionText));
     	 }
     	 
-    	 private Role create(String roleName,Permission permission, ExecutionContext executionContext) 
+    	
+		private Role create(String roleName,Permission permission, ExecutionContext executionContext) 
 	     {
         	return executionContext.add(this, this.rolrepo.create(roleName, permission));
     	 }
     	 
-    	 private ShiroUser create(String userName,String password, Role role, ExecutionContext executionContext) 
+    	 
+    	private ShiroUser create(String userName,String password, Role role, ExecutionContext executionContext) 
 	     {
         	return executionContext.add(this, this.userrepo.create(userName, password, role));
     	 }
