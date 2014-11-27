@@ -57,8 +57,8 @@ public class CargarNotaService {
 		return "SimpleObject";
 	}
 
-	@Named("Por Curso")
-	@MemberOrder(name = "Cargar Notas", sequence = "1")
+	@Named("Cargar Notas")
+	@MemberOrder(name = "Cursos", sequence = "5")
 	@NotContributed
 	public CargarNotaView calificarPorCurso(
 			final @Named("Ciclo: ") Calificaciones inCalificacion,
