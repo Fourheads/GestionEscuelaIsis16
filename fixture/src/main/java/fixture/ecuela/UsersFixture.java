@@ -21,11 +21,13 @@ package fixture.ecuela;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.fixturescripts.FixtureScript;
 import org.apache.isis.applib.fixturescripts.FixtureScript.Discoverability;
 import org.apache.isis.applib.fixturescripts.FixtureScript.ExecutionContext;
+import org.apache.isis.applib.security.RoleMemento;
 import org.apache.isis.objectstore.jdo.applib.service.support.IsisJdoSupport;
 
 import dom.seguridad.Permission;
@@ -48,7 +50,9 @@ public class UsersFixture extends FixtureScript{
 		List<Role>	listaroles=DefautRoles();//Administrador,Director,Secretario,Preceptor,Profesor,Alumno
 		
 		//BorrarDBUser(executionContext);
-				
+			
+
+		
 		
 		//Permisos
 		listapermisos.add(create("EVERYTHING","*", executionContext));//0
@@ -98,28 +102,55 @@ public class UsersFixture extends FixtureScript{
 		
 		//User Administrador
 		create("Administrador","Admin",newlistaroles.get(0),executionContext);//Usuario administrador.
-
+		
 	}
 	
 		private void BorrarDBUser(ExecutionContext executionContext)
 		{
-			if(permisorpo.listAll()!=null)//verificarlo
+			String username= container.getUser().getName();
+			if(username!="" || username!=null)
 			{
-				execute(new GenericTearDownFixture("Permission"), executionContext);
-				execute(new GenericTearDownFixture("Role_permissionsList"), executionContext);
-				execute(new GenericTearDownFixture("Role"), executionContext);
-				execute(new GenericTearDownFixture("ShiroUser_rolesList"), executionContext);
-				execute(new GenericTearDownFixture("ShiroUser"), executionContext);
+				ShiroUser user=new ShiroUser();
+				for(ShiroUser shiro:userrepo.listAll())
+				{
+					if(shiro.getUserName()==username)
+						user=shiro;
+				}
+				
+				List<Map<String, Object>> id=isisJdoSupport.executeSql("SELECT id FROM \"ShiroUser\" WHERE \"userName\"='"+username+"'");
+				String g=id.toString();
+				g=g.replace("[{id=", "");
+				g=g.replace("}]", "");
+				
+				isisJdoSupport.executeUpdate("DELETE FROM \"ShiroUser_rolesList\" WHERE \"id_OID\" <>"+g);
+				isisJdoSupport.executeUpdate("DELETE FROM \"ShiroUser\" WHERE \"id\" <>"+g);
+				
+				/*
+				for(Role rol:user.getRolesList())
+				{
+					for(Permission permiso:rol.getPermissionsList())
+					{
+						create(permiso.getPermissionDescription(), permiso.getPermissionText(), executionContext);
+						create(rol.getRoleName(), permiso, executionContext);
+					}
+					create(user.getUserName(), user.getPassword(), rol, executionContext);
+				}*/
+				
 			}
 			else
-			{
-				isisJdoSupport.executeUpdate("DELETE FROM \"ShiroUser\" WHERE id > 1");//???
-				isisJdoSupport.executeUpdate("DELETE FROM \"Role\" WHERE id > 1");
-				isisJdoSupport.executeUpdate("DELETE FROM \"Permission\" WHERE id > 1");
-			}
+				BorrarallDB(executionContext);
+
 			return;
 		}
 		
+		private void BorrarallDB(ExecutionContext executionContext)
+		{
+			execute(new GenericTearDownFixture("ShiroUser_rolesList"), executionContext);
+			execute(new GenericTearDownFixture("ShiroUser"), executionContext);
+			execute(new GenericTearDownFixture("Role_permissionsList"), executionContext);
+			execute(new GenericTearDownFixture("Role"), executionContext);
+			execute(new GenericTearDownFixture("Permission"), executionContext);
+		}
 	
 		private List<Role> llenarlistapermisos(List<Role> listaroles, List<Permission> listapermisos, int index)
 		{
@@ -309,6 +340,7 @@ public class UsersFixture extends FixtureScript{
         	return executionContext.add(this, this.userrepo.create(userName, password, role));
     	 }
 	
+    	
     @javax.inject.Inject
     DomainObjectContainer container;
     @javax.inject.Inject
