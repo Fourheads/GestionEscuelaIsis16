@@ -22,9 +22,11 @@ package fixture.ecuela;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.fixturescripts.FixtureScript;
 import org.apache.isis.applib.fixturescripts.FixtureScript.Discoverability;
 import org.apache.isis.applib.fixturescripts.FixtureScript.ExecutionContext;
+import org.apache.isis.objectstore.jdo.applib.service.support.IsisJdoSupport;
 
 import dom.seguridad.Permission;
 import dom.seguridad.PermissionRepository;
@@ -46,7 +48,7 @@ public class UsersFixture extends FixtureScript{
 		List<Role>	listaroles=DefautRoles();//Administrador,Director,Secretario,Preceptor,Profesor,Alumno
 		
 		//BorrarDBUser(executionContext);
-		
+				
 		
 		//Permisos
 		listapermisos.add(create("EVERYTHING","*", executionContext));//0
@@ -101,14 +103,23 @@ public class UsersFixture extends FixtureScript{
 	
 		private void BorrarDBUser(ExecutionContext executionContext)
 		{
-			execute(new GenericTearDownFixture("Permission"), executionContext);
-			execute(new GenericTearDownFixture("Role_permissionsList"), executionContext);
-			execute(new GenericTearDownFixture("Role"), executionContext);
-			execute(new GenericTearDownFixture("ShiroUser_rolesList"), executionContext);
-			execute(new GenericTearDownFixture("ShiroUser"), executionContext);
+			if(permisorpo.listAll()!=null)//verificarlo
+			{
+				execute(new GenericTearDownFixture("Permission"), executionContext);
+				execute(new GenericTearDownFixture("Role_permissionsList"), executionContext);
+				execute(new GenericTearDownFixture("Role"), executionContext);
+				execute(new GenericTearDownFixture("ShiroUser_rolesList"), executionContext);
+				execute(new GenericTearDownFixture("ShiroUser"), executionContext);
+			}
+			else
+			{
+				isisJdoSupport.executeUpdate("DELETE FROM \"ShiroUser\" WHERE id > 1");//???
+				isisJdoSupport.executeUpdate("DELETE FROM \"Role\" WHERE id > 1");
+				isisJdoSupport.executeUpdate("DELETE FROM \"Permission\" WHERE id > 1");
+			}
 			return;
 		}
-	
+		
 	
 		private List<Role> llenarlistapermisos(List<Role> listaroles, List<Permission> listapermisos, int index)
 		{
@@ -297,7 +308,11 @@ public class UsersFixture extends FixtureScript{
 	     {
         	return executionContext.add(this, this.userrepo.create(userName, password, role));
     	 }
-	 
+	
+    @javax.inject.Inject
+    DomainObjectContainer container;
+    @javax.inject.Inject
+    private IsisJdoSupport isisJdoSupport;
     @javax.inject.Inject
     private PermissionRepository permisorpo;
     @javax.inject.Inject
