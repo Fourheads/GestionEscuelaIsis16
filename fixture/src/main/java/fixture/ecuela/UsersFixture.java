@@ -49,13 +49,12 @@ public class UsersFixture extends FixtureScript{
 		List<Permission> listapermisos=new ArrayList<Permission>();
 		List<Role>	listaroles=DefautRoles();//Administrador,Director,Secretario,Preceptor,Profesor,Alumno
 		
-		//BorrarDBUser(executionContext);
+		BorrarDBUser(executionContext);
 			
-
-		
 		
 		//Permisos
-		listapermisos.add(create("EVERYTHING","*", executionContext));//0
+		if(!isuserlogin())
+			listapermisos.add(create("EVERYTHING","*", executionContext));//0
 		
 		listapermisos.addAll(Crearpermisos(dom.escuela.AlumnoRepositorio.class, executionContext));
 		listapermisos.addAll(Crearpermisos(dom.escuela.CursoRepositorio.class, executionContext));
@@ -101,46 +100,139 @@ public class UsersFixture extends FixtureScript{
 		
 		
 		//User Administrador
-		create("Administrador","Admin",newlistaroles.get(0),executionContext);//Usuario administrador.
-		
+		 if(!isuserlogin())
+			 create("Administrador","Admin",newlistaroles.get(0),executionContext);//Usuario administrador.
+
 	}
 	
 		private void BorrarDBUser(ExecutionContext executionContext)
 		{
-			String username= container.getUser().getName();
-			if(username!="" || username!=null)
-			{
-				ShiroUser user=new ShiroUser();
-				for(ShiroUser shiro:userrepo.listAll())
-				{
-					if(shiro.getUserName()==username)
-						user=shiro;
-				}
+			
+			if(isuserlogin())
+			{			
+				String username= container.getUser().getName();
 				
-				List<Map<String, Object>> id=isisJdoSupport.executeSql("SELECT id FROM \"ShiroUser\" WHERE \"userName\"='"+username+"'");
-				String g=id.toString();
-				g=g.replace("[{id=", "");
-				g=g.replace("}]", "");
+				isisJdoSupport.executeUpdate("DELETE FROM \"ShiroUser_rolesList\" WHERE \"id_OID\" <>"+TraerIDUsuario(username));
+				isisJdoSupport.executeUpdate("DELETE FROM \"ShiroUser\" WHERE \"id\" <>"+TraerIDUsuario(username));
 				
-				isisJdoSupport.executeUpdate("DELETE FROM \"ShiroUser_rolesList\" WHERE \"id_OID\" <>"+g);
-				isisJdoSupport.executeUpdate("DELETE FROM \"ShiroUser\" WHERE \"id\" <>"+g);
+				String[] roles=TraerIDRoles(TraerIDUsuario(username));
 				
-				/*
-				for(Role rol:user.getRolesList())
-				{
-					for(Permission permiso:rol.getPermissionsList())
-					{
-						create(permiso.getPermissionDescription(), permiso.getPermissionText(), executionContext);
-						create(rol.getRoleName(), permiso, executionContext);
-					}
-					create(user.getUserName(), user.getPassword(), rol, executionContext);
-				}*/
+				isisJdoSupport.executeUpdate("DELETE FROM \"Role_permissionsList\" WHERE"+PrepararString(roles, "id_OID"));
+				isisJdoSupport.executeUpdate("DELETE FROM \"Role\" WHERE"+PrepararString(roles, "id"));
+				
+				String[] permisos = TraerIDPermisos(roles);
+								
+				isisJdoSupport.executeUpdate("DELETE FROM \"Permission\" WHERE"+PrepararString(permisos, "id"));
 				
 			}
 			else
 				BorrarallDB(executionContext);
 
 			return;
+		}
+		
+		private boolean isuserlogin()
+		{
+			boolean islogin=false;
+			String username= container.getUser().getName();
+			if(username!="" || username!=null)
+				islogin=true;
+			
+			return islogin;
+		}
+		
+		private String filtro(String ID, String filtro)
+		{
+			String g=ID;
+			g=g.replace(filtro, "");
+			g=g.replace("=", "");
+			g=g.replace("[", "");
+			g=g.replace("{", "");
+			g=g.replace("}", "");
+			g=g.replace("]", "");
+			
+			return g;
+		}
+		
+		private String TraerIDUsuario(String usuario)
+		{
+			List<Map<String, Object>> id=isisJdoSupport.executeSql("SELECT id FROM \"ShiroUser\" WHERE \"userName\"='"+usuario+"'");
+			String g=filtro(id.toString(),"id");
+			
+			return g;
+		}
+		
+		private String PrepararString(String[] lista, String id)
+		{
+			String seccion="";
+			if(id=="id_OID")
+				seccion=" \""+id+"\" <>";
+			else
+				seccion=" "+id+"<>";
+			
+			seccion=seccion+lista[0];
+			
+			if(lista.length>1)
+			{
+				
+				for(int x=1; x<lista.length;x++)
+				{
+					seccion=seccion+" AND"+seccion.replace(lista[x-1], lista[x]);
+				}
+			}
+			
+			return seccion;
+		}
+		
+		private String[] TraerIDRoles(String idusuario)
+		{
+			List<Map<String, Object>> id=isisJdoSupport.executeSql("SELECT \"id_EID\" FROM \"ShiroUser_rolesList\" WHERE \"id_OID\"="+idusuario+"");
+			String[] g=id.toString().split(",");
+			for(int x=0; x<g.length;x++)
+				g[x]=filtro(g[x],"id_EID");
+			return g;
+		}
+		
+		private String[] TraerIDPermisos(String[] roles)
+		{
+			String cadena="";
+			for(int y=0;y<roles.length;y++)
+			{
+				List<Map<String, Object>> id=isisJdoSupport.executeSql("SELECT \"id_EID\" FROM \"Role_permissionsList\" WHERE \"id_OID\"="+roles[y]+"");
+				cadena=cadena+filtro(id.toString(),"id_EID")+",";
+			}
+			cadena=cadena.substring(0, cadena.length()-1);
+			String[] permisos=cadena.split(",");
+			for(int x=0; x<permisos.length;x++)
+				permisos[x]=filtro(permisos[x],"id_EID");
+			
+			int index=0;
+			int count=0;
+			
+			for(int x=0; x<permisos.length-1;x++)
+			{
+				for(int y=1; y<permisos.length;y++)
+				{
+					if(permisos[x].contains(permisos[y]))
+					{
+						permisos[y]="-";
+						count++;
+					}
+				}
+			}
+			
+			String[] finalpermisos = new String[permisos.length-count];
+			
+			for(int x=0; x<permisos.length;x++)
+			{
+				if(permisos[x]!="-")
+				{
+					finalpermisos[index]=permisos[x];
+					index++;
+				}	
+			}
+			
+			return finalpermisos;
 		}
 		
 		private void BorrarallDB(ExecutionContext executionContext)
