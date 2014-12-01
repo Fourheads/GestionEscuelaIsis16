@@ -64,9 +64,10 @@ public class GenericData {
 		return ObtenerValor(Calle);
 	}
 	
-	public static String ObtenerLetras()
+	public static String ObtenerLetras(int index)
 	{
-		return ObtenerValor(Letras);
+		String[] partes=Dividir(Letras);
+		return partes[index];
 	}
 	
 	public static int Random(int Inicial, int Final)
