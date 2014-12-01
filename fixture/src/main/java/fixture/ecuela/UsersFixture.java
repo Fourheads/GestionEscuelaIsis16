@@ -46,62 +46,112 @@ public class UsersFixture extends FixtureScript{
 	@Override
 	protected void execute(ExecutionContext executionContext) {
 		
-		List<Permission> listapermisos=new ArrayList<Permission>();
+		
 		List<Role>	listaroles=DefautRoles();//Administrador,Director,Secretario,Preceptor,Profesor,Alumno
 		
 		BorrarDBUser(executionContext);
 			
 		
 		//Permisos
-		if(!isuserlogin())
+		
+		//User Desarrollador
+		if(!listaroles.get(0).getRoleName().equals(container.getUser().getName()))
+		{
+			List<Permission> listapermisos=new ArrayList<Permission>();
 			listapermisos.add(create("EVERYTHING","*", executionContext));//0
+			
+			List<Role> newlistaroles=llenarlistapermisos(listaroles, listapermisos.get(0), 0);//Rol Desarrollador
+			
+			create("Desarrollador","fourheads",newlistaroles.get(0),executionContext);//Usuario Desarrollador.
+		}
 		
-		listapermisos.addAll(Crearpermisos(dom.escuela.AlumnoRepositorio.class, executionContext));
-		listapermisos.addAll(Crearpermisos(dom.escuela.CursoRepositorio.class, executionContext));
-		listapermisos.addAll(Crearpermisos(dom.escuela.MateriaDelCursoRepositorio.class, executionContext));
-		listapermisos.addAll(Crearpermisos(dom.escuela.LegajoRepositorio.class, executionContext));
-		listapermisos.addAll(Crearpermisos(dom.escuela.PersonalRepositorio.class, executionContext));
+		//List<Permission> listapermisos=new ArrayList<Permission>();
 		
-		listapermisos.addAll(Crearpermisos(dom.libroDiario.LibroDiarioRepositorio.class, executionContext));
-		listapermisos.addAll(Crearpermisos(dom.libroDiario.EntradadeLibroDiarioRepositorio.class, executionContext));
-		listapermisos.addAll(Crearpermisos(dom.libroDiario.HojaLibroDiarioView.class, executionContext));
-		listapermisos.addAll(Crearpermisos(dom.libroDiario.MateriaDelLibroDiarioRepositorio.class, executionContext));
+		List<Permission> AlumnoRepo=(Crearpermisos(dom.escuela.AlumnoRepositorio.class, executionContext));
+		List<Permission> CursoRepo=(Crearpermisos(dom.escuela.CursoRepositorio.class, executionContext));
+		List<Permission> MateriadelcursoRepo=(Crearpermisos(dom.escuela.MateriaDelCursoRepositorio.class, executionContext));
+		List<Permission> Legajo=(Crearpermisos(dom.escuela.LegajoRepositorio.class, executionContext));
+		List<Permission> PersonalRepo=(Crearpermisos(dom.escuela.PersonalRepositorio.class, executionContext));
 		
-		listapermisos.addAll(Crearpermisos(dom.planEstudio.PlanRepositorio.class, executionContext));
-		listapermisos.addAll(Crearpermisos(dom.planEstudio.AnioRepositorio.class, executionContext));
-		listapermisos.addAll(Crearpermisos(dom.planEstudio.MateriaRepositorio.class, executionContext));
-		listapermisos.addAll(Crearpermisos(dom.planEstudio.NavegacionServicio.class, executionContext));
+		List<Permission> LibroDiarioRepo=(Crearpermisos(dom.libroDiario.LibroDiarioRepositorio.class, executionContext));
+		List<Permission> EntradaLiRepo=(Crearpermisos(dom.libroDiario.EntradadeLibroDiarioRepositorio.class, executionContext));
+		List<Permission> HojalibroDiarioView=(Crearpermisos(dom.libroDiario.HojaLibroDiarioView.class, executionContext));
+		List<Permission> MateriaDelLibroDiario=(Crearpermisos(dom.libroDiario.MateriaDelLibroDiarioRepositorio.class, executionContext));
 		
-		listapermisos.addAll(Crearpermisos(dom.horario.HorarioCursoView.class, executionContext));
-		listapermisos.addAll(Crearpermisos(dom.horario.HorarioCursoRepositorio.class, executionContext));
-		listapermisos.addAll(Crearpermisos(dom.horario.HorarioDiaRepositorio.class, executionContext));
-		listapermisos.addAll(Crearpermisos(dom.horario.HorarioHoraRepositorio.class, executionContext));
-		listapermisos.addAll(Crearpermisos(dom.horario.HorarioHoraSemanaView.class, executionContext));
-		listapermisos.addAll(Crearpermisos(dom.horario.HorarioPlanRepositorio.class, executionContext));
+		List<Permission> PlanRepositorio=(Crearpermisos(dom.planEstudio.PlanRepositorio.class, executionContext));
+		List<Permission> AnioRepositorio=(Crearpermisos(dom.planEstudio.AnioRepositorio.class, executionContext));
+		List<Permission> MateriaRepositorio=(Crearpermisos(dom.planEstudio.MateriaRepositorio.class, executionContext));
 		
-		listapermisos.addAll(Crearpermisos(dom.calificacion.AlumnoMateriasView.class, executionContext));
-		listapermisos.addAll(Crearpermisos(dom.calificacion.AlumnoCalificacionRepositorio.class, executionContext));
-		listapermisos.addAll(Crearpermisos(dom.calificacion.CalificacionRepositorio.class, executionContext));
-		listapermisos.addAll(Crearpermisos(dom.calificacion.CargarNotaView.class, executionContext));
-		listapermisos.addAll(Crearpermisos(dom.calificacion.MateriaCalificacionRepositorio.class, executionContext));
-		listapermisos.addAll(Crearpermisos(dom.calificacion.PeriodoRepositorio.class, executionContext));
 		
-		listapermisos.addAll(Crearpermisos(dom.asistencia.AsistenciaDiaRepositorio.class, executionContext));
-		listapermisos.addAll(Crearpermisos(dom.asistencia.AsistenciaRepositorio.class, executionContext));
-		listapermisos.addAll(Crearpermisos(dom.asistencia.AnalisisAsistenciaView.class, executionContext));
-		listapermisos.addAll(Crearpermisos(dom.asistencia.ContabilizarAsistenciasView.class, executionContext));
-		listapermisos.addAll(Crearpermisos(dom.asistencia.TomarAsistenciaView.class, executionContext));
+		List<Permission> HorarioCursoView=(Crearpermisos(dom.horario.HorarioCursoView.class, executionContext));
 		
+		List<Permission> HorarioCursoRepo=(Crearpermisos(dom.horario.HorarioCursoRepositorio.class, executionContext));
+		List<Permission> HorarioDiaRepo=(Crearpermisos(dom.horario.HorarioDiaRepositorio.class, executionContext));
+		List<Permission> HorarioHoraRepo=(Crearpermisos(dom.horario.HorarioHoraRepositorio.class, executionContext));
+		List<Permission> HorairoHoraSemanaView=(Crearpermisos(dom.horario.HorarioHoraSemanaView.class, executionContext));
+		List<Permission> HorarioPlanRepo=(Crearpermisos(dom.horario.HorarioPlanRepositorio.class, executionContext));
+		
+		List<Permission> AumnosMateriasView=(Crearpermisos(dom.calificacion.AlumnoMateriasView.class, executionContext));
+		List<Permission> AlumnoCalificacionRepo=(Crearpermisos(dom.calificacion.AlumnoCalificacionRepositorio.class, executionContext));
+		List<Permission> CalificacionRepo=(Crearpermisos(dom.calificacion.CalificacionRepositorio.class, executionContext));
+		List<Permission> CargaNotaView=(Crearpermisos(dom.calificacion.CargarNotaView.class, executionContext));
+		List<Permission> MateriaCalificaionRepo=(Crearpermisos(dom.calificacion.MateriaCalificacionRepositorio.class, executionContext));
+		List<Permission> PeriodoRepo=(Crearpermisos(dom.calificacion.PeriodoRepositorio.class, executionContext));
+		
+		List<Permission> AsistenciaDiaRepo=(Crearpermisos(dom.asistencia.AsistenciaDiaRepositorio.class, executionContext));
+		List<Permission> AsistenciaRepo=(Crearpermisos(dom.asistencia.AsistenciaRepositorio.class, executionContext));
+		List<Permission> AnalisisAsistenciaView=(Crearpermisos(dom.asistencia.AnalisisAsistenciaView.class, executionContext));
+		List<Permission> ContabilizarAsistenciasView=(Crearpermisos(dom.asistencia.ContabilizarAsistenciasView.class, executionContext));
+		List<Permission> TomarAsistenaciaView=(Crearpermisos(dom.asistencia.TomarAsistenciaView.class, executionContext));
+		
+		List<Permission> CuentasUsuarios=(Crearpermisos(dom.seguridad.Cuentas.class, executionContext));
 		
 		//Roles
-		List<Role> newlistaroles=llenarlistapermisos(listaroles, listapermisos.get(0), 0);//Rol administrador 
+		List<Permission> newlistapermisosAll=new ArrayList<Permission>();
+		newlistapermisosAll.addAll(CursoRepo);
+		newlistapermisosAll.addAll(CuentasUsuarios);
+		newlistapermisosAll.addAll(ContabilizarAsistenciasView);
+		newlistapermisosAll.addAll(CargaNotaView);
+		newlistapermisosAll.addAll(CalificacionRepo);
+		newlistapermisosAll.addAll(TomarAsistenaciaView);
+		newlistapermisosAll.addAll(AnalisisAsistenciaView);
+		newlistapermisosAll.addAll(AsistenciaRepo);
+		newlistapermisosAll.addAll(AlumnoCalificacionRepo);
+		newlistapermisosAll.addAll(AlumnoRepo);
+		newlistapermisosAll.addAll(AnioRepositorio);
+		newlistapermisosAll.addAll(AsistenciaDiaRepo);
+		newlistapermisosAll.addAll(AumnosMateriasView);
+		newlistapermisosAll.addAll(EntradaLiRepo);
+		newlistapermisosAll.addAll(HojalibroDiarioView);
+		newlistapermisosAll.addAll(HorairoHoraSemanaView);
+		newlistapermisosAll.addAll(HorarioCursoRepo);
+		newlistapermisosAll.addAll(HorarioCursoView);
+		newlistapermisosAll.addAll(HorarioDiaRepo);
+		newlistapermisosAll.addAll(HorarioHoraRepo);
+		newlistapermisosAll.addAll(HorarioPlanRepo);
+		newlistapermisosAll.addAll(Legajo);
+		newlistapermisosAll.addAll(LibroDiarioRepo);
+		newlistapermisosAll.addAll(MateriaCalificaionRepo);
+		newlistapermisosAll.addAll(MateriadelcursoRepo);
+		newlistapermisosAll.addAll(MateriaDelLibroDiario);
+		newlistapermisosAll.addAll(MateriaRepositorio);
+		newlistapermisosAll.addAll(PeriodoRepo);
+		newlistapermisosAll.addAll(PersonalRepo);
+		newlistapermisosAll.addAll(PlanRepositorio);
+
+		if(!listaroles.get(1).getRoleName().equals(container.getUser().getName()))
+		{
+			List<Role> newlistaroles=llenarlistapermisos(listaroles, newlistapermisosAll, 1);//Rol Administrador
+			
+			
+			//ArmaRoles(newlistaroles, executionContext);//Crea todos los roles, comentado por duplicar los roles
+			
+			
+			//Usuarios
+			create("Administrador","admin",newlistaroles.get(1),executionContext);//Usuario Administrador.
+		}
 		
-		//ArmaRoles(newlistaroles, executionContext);//Crea todos los roles, comentado por duplicar los roles
 		
-		
-		//User Administrador
-		 if(!isuserlogin())
-			 create("Administrador","Admin",newlistaroles.get(0),executionContext);//Usuario administrador.
 
 	}
 	
@@ -272,6 +322,7 @@ public class UsersFixture extends FixtureScript{
 		
 		List<String> rolesnames=new ArrayList<String>();
 		
+		rolesnames.add("Desarrollador");
 		rolesnames.add("Administrador");
 		rolesnames.add("Director");
 		rolesnames.add("Secretario");
