@@ -28,6 +28,7 @@ import org.apache.isis.applib.fixturescripts.FixtureScript.ExecutionContext;
 import org.apache.isis.objectstore.jdo.applib.service.support.IsisJdoSupport;
 
 import dom.escuela.Alumno;
+import dom.escuela.AlumnoRepositorio;
 import dom.escuela.Curso;
 import dom.escuela.CursoRepositorio;
 import dom.escuela.MateriaDelCurso;
@@ -49,10 +50,7 @@ public class CursoFixture extends FixtureScript{
 		
 		BorrarDBCurso(executionContext);
 		
-		int Cantidad=(int) Math.ceil((GenericData.ObtenerCantidad()*4)/100);//La cantidad de cursos es proporcional.
-		
-		if(Cantidad<1)
-			Cantidad=1;
+		int Cantidad=3;
 		
 		Turno[] turno=Turno.values();
 		
@@ -67,22 +65,22 @@ public class CursoFixture extends FixtureScript{
 		
 		for(Plan plan: Lplanes)
 		{
-			Cantidad=CantidaddeCursos(Cantidad, plan);
+			//Cantidad=CantidaddeCursos(Cantidad, plan);
 			
 			for(Anio anio:plan.getAnioList())
 			{
-				for(int x=1;x<=Cantidad;x++)
+				for(int x=0;x<Cantidad;x++)
 				{				
-					if(GenericData.Random(1, 100)<=50)
+					if(anio.getAnioNumero()<4)
 						valorturno=0;
 					else
 						valorturno=1;
 					
-					Lcursos.add(createCurso(plan, anio, GenericData.ObtenerLetras(), turno[valorturno], executionContext));
+					Lcursos.add(createCurso(plan, anio, GenericData.ObtenerLetras(x), turno[valorturno], executionContext));
 				}
 			}
 			
-			Cantidad=refcantidad;
+			//Cantidad=refcantidad;
 		}
 		
 		for(Plan plan: Lplanes)
@@ -97,10 +95,10 @@ public class CursoFixture extends FixtureScript{
 					createProfesorCurso(plan, curso, materiadelcurso, curso.choices1AsignarProfesorAMateria().get(GenericData.Random(0, curso.choices1AsignarProfesorAMateria().size())), executionContext);
 				}
 				
-				for(int x=0; x<alumnosxcurso(Cantidad, plan);x++)
+				for(int x=0; x<12;x++)
 				{
-					if(curso.choices0AsignarAlumnos()!=null)
-						curso.asignarAlumnos(curso.choices0AsignarAlumnos().get(0));
+					if(curso.default0AsignarAlumnos()!=null)
+						curso.asignarAlumnos(curso.choices0AsignarAlumnos().get(GenericData.Random(0,curso.choices0AsignarAlumnos().size()-1)));
 					else
 						x=alumnosxcurso(Cantidad, plan);
 				}
@@ -113,7 +111,7 @@ public class CursoFixture extends FixtureScript{
 	
 	private int CantidaddeCursos(int Cantidad, Plan plan)
 	{
-		while (alumnosxcurso(Cantidad, plan)>30) {
+		while (alumnosxcurso(Cantidad, plan)>12) {
 			Cantidad++;
 		}
 		return Cantidad;
@@ -121,7 +119,7 @@ public class CursoFixture extends FixtureScript{
 	
 	private int alumnosxcurso(int Cantidad, Plan plan)
 	{
-		 int Alumnosporcurso=(int) Math.ceil(((GenericData.ObtenerCantidad()*5)/(plan.getAnioList().size()*Cantidad)));
+		 int Alumnosporcurso=(int) Math.ceil(((alumnorepo.listAll().size())/(plan.getAnioList().size()*Cantidad)));
 		 return Alumnosporcurso;
 	}
 
@@ -156,6 +154,8 @@ public class CursoFixture extends FixtureScript{
     private PlanRepositorio Plan;
     @javax.inject.Inject
     private CursoRepositorio Curso;
+    @javax.inject.Inject
+    private AlumnoRepositorio alumnorepo;
 }
 
 

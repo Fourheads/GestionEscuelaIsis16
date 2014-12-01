@@ -41,7 +41,7 @@ public class AlumnosFixture extends FixtureScript {
         // prereqs
     	BorrarDBAlumnos(executionContext);
         
-        int Cantidad=GenericData.ObtenerCantidad()*7;
+        int Cantidad=GenericData.ObtenerCantidad()*14;
         
         List<Alumno> listAl=new ArrayList<Alumno>();
         
