@@ -150,9 +150,29 @@ public class UsersFixture extends FixtureScript{
 			//Usuarios
 			create("Administrador","admin",newlistaroles.get(1),executionContext);//Usuario Administrador.
 		}
+		//dom.escuela:AlumnoRepositorio:create:*
+		//dom.escuela:AlumnoRepositorio:recoverAlumno:*
+		newlistapermisosAll.clear();
+		newlistapermisosAll.addAll(AlumnoRepo);
+		newlistapermisosAll.remove(buscarUnPermiso(newlistapermisosAll, ":create:*"));
+		newlistapermisosAll.remove(buscarUnPermiso(newlistapermisosAll, "recoverAlumno:*"));
+		/*
+		rolesnames.add("Desarrollador");0
+		rolesnames.add("Administrador");1
+		rolesnames.add("Director");2
+		rolesnames.add("Secretario");3
+		rolesnames.add("Preceptor");4
+		rolesnames.add("Profesor");5
+		rolesnames.add("Alumno");6
+		*/
+		listaroles.get(2).getPermissionsList().addAll(newlistapermisosAll);
+		listaroles.get(3).getPermissionsList().addAll(newlistapermisosAll);
 		
+		newlistapermisosAll.remove(buscarUnPermiso(newlistapermisosAll, ":removeAlumno:*"));
 		
-
+		listaroles.get(4).getPermissionsList().addAll(newlistapermisosAll);
+		listaroles.get(5).getPermissionsList().addAll(newlistapermisosAll);
+		
 	}
 	
 		private void BorrarDBUser(ExecutionContext executionContext)
@@ -348,7 +368,7 @@ public class UsersFixture extends FixtureScript{
 			
 			for(Permission per:lista)
 			{
-				if(per.getPermissionText().equals(textpermiso))
+				if(per.getPermissionText().contains(textpermiso))
 				{
 					newlista.add(per);
 				}
