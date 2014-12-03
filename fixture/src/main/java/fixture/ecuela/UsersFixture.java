@@ -30,6 +30,7 @@ import org.apache.isis.applib.fixturescripts.FixtureScript.Discoverability;
 import org.apache.isis.applib.fixturescripts.FixtureScript.ExecutionContext;
 import org.apache.isis.applib.security.RoleMemento;
 import org.apache.isis.objectstore.jdo.applib.service.support.IsisJdoSupport;
+import org.datanucleus.flush.ListAddAtOperation;
 import org.datanucleus.store.types.backed.SortedSet;
 
 import dom.seguridad.Permission;
@@ -49,7 +50,7 @@ public class UsersFixture extends FixtureScript{
 	protected void execute(ExecutionContext executionContext) {
 		
 		
-		List<Role>	listaroles=DefautRoles();//Administrador,Director,Secretario,Preceptor,Profesor,Alumno
+		List<Role>	listaroles=DefautRoles();//Desarrollador,Administrador,Director,Secretario,Preceptor,Profesor,Alumno
 		
 		BorrarDBUser(executionContext);
 			
@@ -143,16 +144,12 @@ public class UsersFixture extends FixtureScript{
 
 		if(!listaroles.get(1).getRoleName().equals(container.getUser().getName()))
 		{
-			List<Role> newlistaroles=llenarlistapermisos(listaroles, newlistapermisosAll, 1);//Rol Administrador
-			
-			
-			//ArmaRoles(newlistaroles, executionContext);//Crea todos los roles, comentado por duplicar los roles
-			
+			List<Role> newlistaroles=llenarlistapermisos(listaroles, newlistapermisosAll, 1);//Rol Administrador	
 			
 			//Usuarios
 			create("Administrador","admin",newlistaroles.get(1),executionContext);//Usuario Administrador.
 		}
-		
+		//Roles alumnoRepositorio
 		newlistapermisosAll.clear();
 		newlistapermisosAll.addAll(AlumnoRepo);
 		
@@ -168,8 +165,10 @@ public class UsersFixture extends FixtureScript{
 		listaroles.get(4).getPermissionsList().addAll(newlistapermisosAll);
 		listaroles.get(5).getPermissionsList().addAll(newlistapermisosAll);
 		
+		
+		//Roles CursoRepositorio
 		newlistapermisosAll.clear();
-		newlistapermisosAll.addAll(CursoRepo);//Seguirlo y ver que onda??
+		newlistapermisosAll.addAll(CursoRepo);
 		
 		newlistapermisosAll.remove(buscarUnPermiso(newlistapermisosAll, ":recuperarCurso:*"));
 		
@@ -190,8 +189,53 @@ public class UsersFixture extends FixtureScript{
 		listaroles.get(5).getPermissionsList().remove(buscarUnPermiso(newlistapermisosAll, "dom.escuela:CursoRepositorio:listarCursosDeUnAnio:*"));
 		listaroles.get(5).getPermissionsList().remove(buscarUnPermiso(newlistapermisosAll, "dom.escuela:CursoRepositorio:listarCursosDeUnPlan:*"));
 		
-		listaroles.get(6).getPermissionsList().add(buscarUnPermiso(newlistapermisosAll, ":verHorarioDelCurso:*"));
+		newlistapermisosAll.clear();
+		newlistapermisosAll.add(buscarUnPermiso(CursoRepo, "dom.escuela:CursoRepositorio:verHorarioDelCurso:*"));
+		listaroles.get(6).getPermissionsList().add(buscarUnPermiso(CursoRepo, "dom.escuela:CursoRepositorio:verHorarioDelCurso:*"));
 		
+		
+		//Roles MateriaDelCursoRepositorio
+		newlistapermisosAll.clear();
+		newlistapermisosAll.addAll(MateriadelcursoRepo);
+		
+		listaroles.get(3).getPermissionsList().addAll(newlistapermisosAll);
+
+		newlistapermisosAll.remove(buscarUnPermiso(newlistapermisosAll, ":asignarProfesorAMateriaDelCurso:*"));
+		listaroles.get(2).getPermissionsList().addAll(newlistapermisosAll);
+
+		newlistapermisosAll.remove(buscarUnPermiso(newlistapermisosAll, ":crearMateriaDelCurso:*"));
+		for(int x=4;x<listaroles.size();x++)
+			listaroles.get(x).getPermissionsList().addAll(newlistapermisosAll);
+		
+		
+		//Roles MateriaDelCursoRepositorio
+		newlistapermisosAll.clear();
+		newlistapermisosAll.addAll(PersonalRepo);
+		
+		newlistapermisosAll.remove(buscarUnPermiso(newlistapermisosAll, ":recoverPersonal:*"));
+		listaroles.get(3).getPermissionsList().addAll(newlistapermisosAll);
+
+		newlistapermisosAll.remove(buscarUnPermiso(newlistapermisosAll, ":removePersonal:*"));
+		newlistapermisosAll.remove(buscarUnPermiso(newlistapermisosAll, ":listarPersonalSegunFuncion:*"));
+		listaroles.get(2).getPermissionsList().addAll(newlistapermisosAll);
+		
+		
+		//Roles LibroDiarioRepositorio
+		newlistapermisosAll.clear();
+		newlistapermisosAll.addAll(LibroDiarioRepo);
+		newlistapermisosAll.remove(buscarUnPermiso(newlistapermisosAll, ":ModificarLibroDiario:*"));
+		newlistapermisosAll.remove(buscarUnPermiso(newlistapermisosAll, ":crearLibroDiario:*"));
+		
+		for(int x=4;x<listaroles.size()-1;x++)
+			listaroles.get(x).getPermissionsList().addAll(newlistapermisosAll);
+		
+		
+		listaroles.get(2).getPermissionsList().add(buscarUnPermiso(LibroDiarioRepo, ":crearLibroDiario:*"));
+		listaroles.get(3).getPermissionsList().add(buscarUnPermiso(LibroDiarioRepo, ":crearLibroDiario:*"));
+		
+		listaroles.get(2).getPermissionsList().add(buscarUnPermiso(LibroDiarioRepo, ":mostrarhojalibrodiario:*"));
+		listaroles.get(3).getPermissionsList().add(buscarUnPermiso(LibroDiarioRepo, ":mostrarhojalibrodiario:*"));
+	
 		/*
 		rolesnames.add("Desarrollador");0
 		rolesnames.add("Administrador");1
@@ -201,7 +245,7 @@ public class UsersFixture extends FixtureScript{
 		rolesnames.add("Profesor");5
 		rolesnames.add("Alumno");6
 		*/
-		for(int x=2;x<=6;x++)
+		for(int x=2;x<listaroles.size();x++)
 			ArmaRoles(listaroles.get(x), executionContext);
 	}
 	
@@ -363,7 +407,6 @@ public class UsersFixture extends FixtureScript{
 					Role nrol=createRole(rol.getRoleName(), rol.getPermissionsList().first(), executionContext);
 					if(rol.getPermissionsList().size()>1)
 					{
-						rol.getPermissionsList().remove(rol.getPermissionsList().first());
 						nrol.setPermissionsList(rol.getPermissionsList());
 					}
 		}
