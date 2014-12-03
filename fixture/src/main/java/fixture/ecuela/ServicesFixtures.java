@@ -21,14 +21,16 @@ package fixture.ecuela;
 
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Named;
+import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.annotation.Prototype;
 import org.apache.isis.applib.fixturescripts.FixtureResult;
-import org.apache.isis.applib.fixturescripts.FixtureScript;
 import org.apache.isis.applib.fixturescripts.FixtureScripts;
-import org.apache.isis.applib.fixturescripts.SimpleFixtureScript;
+
 
 @Named("Test")
 @DomainService(menuOrder = "200")
@@ -40,15 +42,13 @@ public class ServicesFixtures extends FixtureScripts {
 
     
     
-    /*
    	@Prototype
     @MemberOrder(sequence="1")
-    public Object instalarFixturesUsers() {
+    public void instalarFixturesUsers() {
         final List<FixtureResult> Users = findFixtureScriptFor(UsersFixture.class).run(null);
-        return Users.get(0).getObject();
+        //return Users.get(0).getObject();
     }
-     */
-     
+
     
 	@Prototype
     @MemberOrder(sequence="10")

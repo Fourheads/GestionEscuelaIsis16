@@ -54,7 +54,6 @@ public class UsersFixture extends FixtureScript{
 		
 		BorrarDBUser(executionContext);
 			
-		
 		//Permisos
 		
 		//User Desarrollador
@@ -69,6 +68,7 @@ public class UsersFixture extends FixtureScript{
 		}
 		
 		//List<Permission> listapermisos=new ArrayList<Permission>();
+		
 		
 		List<Permission> AlumnoRepo=(Crearpermisos(dom.escuela.AlumnoRepositorio.class, executionContext));
 		List<Permission> CursoRepo=(Crearpermisos(dom.escuela.CursoRepositorio.class, executionContext));
@@ -236,17 +236,124 @@ public class UsersFixture extends FixtureScript{
 		listaroles.get(2).getPermissionsList().add(buscarUnPermiso(LibroDiarioRepo, ":mostrarhojalibrodiario:*"));
 		listaroles.get(3).getPermissionsList().add(buscarUnPermiso(LibroDiarioRepo, ":mostrarhojalibrodiario:*"));
 	
-		/*
-		rolesnames.add("Desarrollador");0
-		rolesnames.add("Administrador");1
-		rolesnames.add("Director");2
-		rolesnames.add("Secretario");3
-		rolesnames.add("Preceptor");4
-		rolesnames.add("Profesor");5
-		rolesnames.add("Alumno");6
-		*/
+		
+		//Roles MateriaLibroDiarioRepositorio, Hojalibrodiarioview y EntradaLibroRepositorio
+		for(int x=4;x<listaroles.size()-1;x++)
+		{
+			listaroles.get(x).getPermissionsList().addAll(MateriaDelLibroDiario);
+			listaroles.get(x).getPermissionsList().addAll(HojalibroDiarioView);
+			listaroles.get(x).getPermissionsList().addAll(EntradaLiRepo);
+		}
+		
+		//Roles PlanRepositorio
+		newlistapermisosAll.clear();
+		newlistapermisosAll.addAll(PlanRepositorio);
+		newlistapermisosAll.remove(buscarUnPermiso(newlistapermisosAll, ":eliminarPlan:*"));
+		newlistapermisosAll.remove(buscarUnPermiso(newlistapermisosAll, ":RecuperarPlan:*"));
+		
+		listaroles.get(2).getPermissionsList().addAll(newlistapermisosAll);
+		
+		newlistapermisosAll.remove(buscarUnPermiso(newlistapermisosAll, ":crearPlan:*"));
+		
+		listaroles.get(3).getPermissionsList().addAll(newlistapermisosAll);
+		
+		//Roles AnioRepositorio
+		listaroles.get(2).getPermissionsList().addAll(AnioRepositorio);
+		listaroles.get(3).getPermissionsList().add(buscarUnPermiso(AnioRepositorio, ":eliminarAnio:*"));
+		
+		//Roles MateriaRepositorio
+		listaroles.get(2).getPermissionsList().addAll(MateriaRepositorio);
+		
+		for(int x=3;x<listaroles.size();x++)
+		{
+			listaroles.get(x).getPermissionsList().add(buscarUnPermiso(MateriaRepositorio, ":listarMateriasDeUnAnio:*"));
+		}
+		
+		
+		//Roles HorarioCursoView
+		newlistapermisosAll.clear();
+		newlistapermisosAll.addAll(HorarioCursoView);
+		
+		listaroles.get(3).getPermissionsList().addAll(HorarioCursoView);
+		
+		newlistapermisosAll.remove(buscarUnPermiso(newlistapermisosAll, ":quitarMateria:*"));
+		
+		listaroles.get(2).getPermissionsList().addAll(newlistapermisosAll);
+		
+		
+		//Roles Horarios
+		listaroles.get(3).getPermissionsList().addAll(HorarioDiaRepo);
+		listaroles.get(3).getPermissionsList().addAll(HorarioHoraRepo);
+		listaroles.get(3).getPermissionsList().addAll(HorairoHoraSemanaView);
+		listaroles.get(3).getPermissionsList().addAll(HorarioPlanRepo);
+		listaroles.get(3).getPermissionsList().addAll(HorarioCursoRepo);
+		
+		
+		//Roles AlumnosMateriasView
+		listaroles.get(2).getPermissionsList().addAll(AumnosMateriasView);
+		listaroles.get(4).getPermissionsList().addAll(AumnosMateriasView);
+		listaroles.get(5).getPermissionsList().addAll(AumnosMateriasView);
+		listaroles.get(6).getPermissionsList().addAll(AumnosMateriasView);
+		
+		
+		//Roles AlumnosCalificaionesRepositorio
+		listaroles.get(4).getPermissionsList().addAll(AlumnoCalificacionRepo);
+		listaroles.get(5).getPermissionsList().addAll(AlumnoCalificacionRepo);
+		listaroles.get(6).getPermissionsList().add(buscarUnPermiso(AlumnoCalificacionRepo, "listPorAlumno:*"));
+		
+		
+		//Roles CalificaionRepositorio
+		listaroles.get(4).getPermissionsList().addAll(CalificacionRepo);
+		listaroles.get(5).getPermissionsList().addAll(CalificacionRepo);
+		
+		
+		//Roles CargaNotaView
+		listaroles.get(4).getPermissionsList().addAll(CargaNotaView);
+		listaroles.get(5).getPermissionsList().addAll(CargaNotaView);
+		listaroles.get(5).getPermissionsList().remove(buscarUnPermiso(CargaNotaView, ":calificar:*"));
+		
+		
+		//Roles MateriaCalificacionRepositorio
+		listaroles.get(4).getPermissionsList().addAll(MateriaCalificaionRepo);
+		listaroles.get(5).getPermissionsList().addAll(MateriaCalificaionRepo);
+		listaroles.get(6).getPermissionsList().add((buscarUnPermiso(MateriaCalificaionRepo, ":materiaCalificacionPorAlumno:*")));
+		
+		
+		//Roles PeriodoRepositorio
+		listaroles.get(4).getPermissionsList().addAll(PeriodoRepo);
+		
+		
+		//Roles AsistenciaDiaRepositorio
+		listaroles.get(4).getPermissionsList().addAll(AsistenciaDiaRepo);
+		listaroles.get(5).getPermissionsList().addAll(AsistenciaDiaRepo);
+		
+		//Roles AsistenciaRepositorio
+		newlistapermisosAll.clear();
+		newlistapermisosAll.addAll(AsistenciaRepo);
+		newlistapermisosAll.remove(buscarUnPermiso(newlistapermisosAll, ":borrarAlumno:*"));
+		
+		listaroles.get(4).getPermissionsList().addAll(newlistapermisosAll);
+		listaroles.get(5).getPermissionsList().addAll(newlistapermisosAll);
+		
+		
+		
+		//Roles AnalisisdeAsistenciaView
+		listaroles.get(4).getPermissionsList().addAll(AnalisisAsistenciaView);
+		listaroles.get(5).getPermissionsList().addAll(AnalisisAsistenciaView);
+		
+		
+		
+		//Roles ContabilizarAsistencia
+		listaroles.get(4).getPermissionsList().addAll(ContabilizarAsistenciasView);
+		listaroles.get(5).getPermissionsList().addAll(ContabilizarAsistenciasView);
+		listaroles.get(2).getPermissionsList().addAll(ContabilizarAsistenciasView);
+		
+		//Roles TomarAsistencia
+		listaroles.get(4).getPermissionsList().addAll(TomarAsistenaciaView);
+
 		for(int x=2;x<listaroles.size();x++)
 			ArmaRoles(listaroles.get(x), executionContext);
+		
 	}
 	
 		private void BorrarDBUser(ExecutionContext executionContext)
@@ -409,6 +516,8 @@ public class UsersFixture extends FixtureScript{
 					{
 						nrol.setPermissionsList(rol.getPermissionsList());
 					}
+					
+				//	create(nrol.getRoleName(),nrol.getRoleName().toLowerCase(), nrol, executionContext);
 		}
 		
 		
