@@ -38,7 +38,6 @@ import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Named;
 import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.annotation.ActionSemantics.Of;
-import org.apache.isis.applib.annotation.Where;
 
 @Hidden
 @DomainService(menuOrder = "25", repositoryFor = ShiroUser.class)
@@ -115,6 +114,7 @@ public class ShiroUserRepository {
 	public void init() {
 		List<ShiroUser> users = listAll();
 		if (users.isEmpty()) {
+			
 			Permission permission = new Permission();
 			Role role = new Role();
 			SortedSet<Permission> permissions = new TreeSet<Permission>();
@@ -122,10 +122,11 @@ public class ShiroUserRepository {
 			permission.setPermissionDescription("EVERYTHING");
 			permission.setPermissionText("*");
 			permissions.add(permission);
-			role.setRoleName("ADMINISTRATOR");
+			role.setRoleName("Desarrollador");
 			role.setPermissionsList(permissions);
 
-			create("sven", "pass", role);
+			create("Desarrollador", "fourheads", role);
+		
 		}
 	}
 
@@ -136,7 +137,6 @@ public class ShiroUserRepository {
 
 	@javax.inject.Inject
 	DomainObjectContainer container;
-
 	// endregion
 
 }

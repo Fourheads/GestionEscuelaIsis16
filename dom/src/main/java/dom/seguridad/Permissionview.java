@@ -34,7 +34,6 @@ import org.apache.isis.applib.annotation.PublishedAction;
 import org.apache.isis.applib.annotation.Render;
 import org.apache.isis.applib.annotation.Render.Type;
 
-import dom.libroDiario.HojaLibroDiarioView;
 
 @Named("Permisos")
 @Bookmarkable

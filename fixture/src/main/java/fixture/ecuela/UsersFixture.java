@@ -69,6 +69,16 @@ public class UsersFixture extends FixtureScript{
 		
 		//List<Permission> listapermisos=new ArrayList<Permission>();
 		
+		List<Permission> AgregaViewmodel=(Crearpermisos(org.apache.isis.applib.AbstractViewModel.class, executionContext));
+		AgregaViewmodel.addAll(Crearpermisos(org.apache.isis.applib.AbstractContainedObject.class, executionContext));
+		AgregaViewmodel.addAll(Crearpermisos(org.apache.isis.applib.ViewModel.class, executionContext));
+		AgregaViewmodel.addAll(Crearpermisos(org.apache.isis.applib.services.memento.MementoService.class, executionContext));//++
+		AgregaViewmodel.addAll(Crearpermisos(org.apache.isis.applib.services.memento.MementoService.Memento.class, executionContext));//++
+		AgregaViewmodel.addAll(Crearpermisos(org.apache.isis.applib.annotation.MemberGroupLayout.class, executionContext));//+
+		AgregaViewmodel.addAll(Crearpermisos(org.apache.isis.applib.annotation.PublishedAction.class, executionContext));//+
+		AgregaViewmodel.addAll(Crearpermisos(org.apache.isis.applib.annotation.Programmatic.class, executionContext));//+
+		AgregaViewmodel.addAll(Crearpermisos(org.apache.isis.applib.annotation.Named.class, executionContext));//+
+		
 		
 		List<Permission> AlumnoRepo=(Crearpermisos(dom.escuela.AlumnoRepositorio.class, executionContext));
 		List<Permission> CursoRepo=(Crearpermisos(dom.escuela.CursoRepositorio.class, executionContext));
@@ -79,6 +89,7 @@ public class UsersFixture extends FixtureScript{
 		List<Permission> LibroDiarioRepo=(Crearpermisos(dom.libroDiario.LibroDiarioRepositorio.class, executionContext));
 		List<Permission> EntradaLiRepo=(Crearpermisos(dom.libroDiario.EntradadeLibroDiarioRepositorio.class, executionContext));
 		List<Permission> HojalibroDiarioView=(Crearpermisos(dom.libroDiario.HojaLibroDiarioView.class, executionContext));
+		HojalibroDiarioView.addAll(AgregaViewmodel);
 		List<Permission> MateriaDelLibroDiario=(Crearpermisos(dom.libroDiario.MateriaDelLibroDiarioRepositorio.class, executionContext));
 		
 		List<Permission> PlanRepositorio=(Crearpermisos(dom.planEstudio.PlanRepositorio.class, executionContext));
@@ -87,27 +98,44 @@ public class UsersFixture extends FixtureScript{
 		
 		
 		List<Permission> HorarioCursoView=(Crearpermisos(dom.horario.HorarioCursoView.class, executionContext));
+		HorarioCursoView.addAll(AgregaViewmodel);
 		
 		List<Permission> HorarioCursoRepo=(Crearpermisos(dom.horario.HorarioCursoRepositorio.class, executionContext));
 		List<Permission> HorarioDiaRepo=(Crearpermisos(dom.horario.HorarioDiaRepositorio.class, executionContext));
 		List<Permission> HorarioHoraRepo=(Crearpermisos(dom.horario.HorarioHoraRepositorio.class, executionContext));
 		List<Permission> HorairoHoraSemanaView=(Crearpermisos(dom.horario.HorarioHoraSemanaView.class, executionContext));
+		HorairoHoraSemanaView.addAll(AgregaViewmodel);
 		List<Permission> HorarioPlanRepo=(Crearpermisos(dom.horario.HorarioPlanRepositorio.class, executionContext));
 		
 		List<Permission> AumnosMateriasView=(Crearpermisos(dom.calificacion.AlumnoMateriasView.class, executionContext));
+		AumnosMateriasView.addAll(AgregaViewmodel);
 		List<Permission> AlumnoCalificacionRepo=(Crearpermisos(dom.calificacion.AlumnoCalificacionRepositorio.class, executionContext));
 		List<Permission> CalificacionRepo=(Crearpermisos(dom.calificacion.CalificacionRepositorio.class, executionContext));
 		List<Permission> CargaNotaView=(Crearpermisos(dom.calificacion.CargarNotaView.class, executionContext));
+		CargaNotaView.addAll(AgregaViewmodel);
 		List<Permission> MateriaCalificaionRepo=(Crearpermisos(dom.calificacion.MateriaCalificacionRepositorio.class, executionContext));
 		List<Permission> PeriodoRepo=(Crearpermisos(dom.calificacion.PeriodoRepositorio.class, executionContext));
 		
 		List<Permission> AsistenciaDiaRepo=(Crearpermisos(dom.asistencia.AsistenciaDiaRepositorio.class, executionContext));
 		List<Permission> AsistenciaRepo=(Crearpermisos(dom.asistencia.AsistenciaRepositorio.class, executionContext));
 		List<Permission> AnalisisAsistenciaView=(Crearpermisos(dom.asistencia.AnalisisAsistenciaView.class, executionContext));
+		AnalisisAsistenciaView.addAll(AgregaViewmodel);
 		List<Permission> ContabilizarAsistenciasView=(Crearpermisos(dom.asistencia.ContabilizarAsistenciasView.class, executionContext));
+		ContabilizarAsistenciasView.addAll(AgregaViewmodel);
 		List<Permission> TomarAsistenaciaView=(Crearpermisos(dom.asistencia.TomarAsistenciaView.class, executionContext));
+		TomarAsistenaciaView.addAll(AgregaViewmodel);
 		
 		List<Permission> CuentasUsuarios=(Crearpermisos(dom.seguridad.Cuentas.class, executionContext));
+		CuentasUsuarios.addAll(Crearpermisos(dom.seguridad.Permission.class, executionContext));
+		CuentasUsuarios.addAll(Crearpermisos(dom.seguridad.Role.class, executionContext));
+		CuentasUsuarios.addAll(Crearpermisos(dom.seguridad.ShiroUser.class, executionContext));
+		CuentasUsuarios.addAll(Crearpermisos(dom.seguridad.PermissionRepository.class, executionContext));
+		CuentasUsuarios.addAll(Crearpermisos(dom.seguridad.RoleRepository.class, executionContext));
+		CuentasUsuarios.addAll(Crearpermisos(dom.seguridad.ShiroUserRepository.class, executionContext));
+		CuentasUsuarios.addAll(Crearpermisos(dom.seguridad.Roleview.class, executionContext));
+		CuentasUsuarios.addAll(Crearpermisos(dom.seguridad.Permissionview.class, executionContext));
+		CuentasUsuarios.addAll(Crearpermisos(dom.seguridad.ShiroUserview.class, executionContext));
+		CuentasUsuarios.addAll(AgregaViewmodel);
 		
 		//Roles
 		List<Permission> newlistapermisosAll=new ArrayList<Permission>();
@@ -630,22 +658,22 @@ public class UsersFixture extends FixtureScript{
 			
 			List<String> metodosaquitar=new ArrayList<String>();
 			
-			metodosaquitar.add("getId");
-			metodosaquitar.add("hashCode");
-			metodosaquitar.add("iconName");
-			metodosaquitar.add("wait");
-			metodosaquitar.add("default");
-			metodosaquitar.add("choices");
-			metodosaquitar.add("validate");
-			metodosaquitar.add("equals");
-			metodosaquitar.add("toString");
-			metodosaquitar.add("getClass");
-			metodosaquitar.add("notify");
-			metodosaquitar.add("notifyAll");
-			metodosaquitar.add("set");
-			metodosaquitar.add("get");
+			//metodosaquitar.add("getId");
+			//metodosaquitar.add("hashCode");//+
+			//metodosaquitar.add("iconName");//+
+			//metodosaquitar.add("wait");//+
+			//metodosaquitar.add("default");
+			//metodosaquitar.add("choices");
+			//metodosaquitar.add("validate");
+			//metodosaquitar.add("equals");//+
+			//metodosaquitar.add("toString");//+
+			//metodosaquitar.add("getClass");//+
+			//metodosaquitar.add("notify");//+
+			//metodosaquitar.add("notifyAll");//+
+			//metodosaquitar.add("set");//+
+			//metodosaquitar.add("get");//+
 			//metodosaquitar.add("viewModel");
-			metodosaquitar.add("disabled");
+			//metodosaquitar.add("disabled");//+
 			
 			for(String quitar:metodosaquitar)
 			{
