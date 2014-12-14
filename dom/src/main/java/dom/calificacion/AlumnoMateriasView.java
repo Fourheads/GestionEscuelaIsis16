@@ -34,6 +34,7 @@ import net.sf.jasperreports.engine.JRException;
 
 import org.apache.isis.applib.AbstractViewModel;
 import org.apache.isis.applib.DomainObjectContainer;
+import org.apache.isis.applib.ViewModel;
 import org.apache.isis.applib.annotation.Bookmarkable;
 import org.apache.isis.applib.annotation.DescribedAs;
 import org.apache.isis.applib.annotation.Disabled;
@@ -232,8 +233,8 @@ public class AlumnoMateriasView extends AbstractViewModel{
 	
 	@Named("Imprimir Reporte")
 	@DescribedAs(value = "El archivo se almacenará en el directorio 'reportes' del proyecto")
-	public void elegirFormato(final @Named("Formato de archivo:") E_formato formato) throws JRException{
-		imprimirReporte(formato);		
+	public String elegirFormato(final @Named("Formato de archivo:") E_formato formato) throws JRException{
+		return imprimirReporte(formato);		
 	}
 	
 	public E_formato default0ElegirFormato(final @Named("Formato") E_formato formato){
@@ -283,8 +284,22 @@ public class AlumnoMateriasView extends AbstractViewModel{
 		
 		GenerarReporte.generarReporte("materiasAlumno.jrxml", listReport, format, nombreArchivo);
 		
-		return "Reporte generado.";
 		
+		/*Memento newMemento = mementoService.create();
+		
+		newMemento.set("titulo", "Calificaciones del Alumno");
+		newMemento.set("alumno", getAlumno());
+		newMemento.set("ciclo", getCiclo());
+		newMemento.set("curso", getCurso());
+		newMemento.set("division", getDivision());
+		newMemento.set("dni", getDni());
+		newMemento.set("periodo", getPeriodo());
+		newMemento.set("turno", getTurno());
+		
+		final AlumnoMateriasView newView = container.newViewModelInstance(AlumnoMateriasView.class, newMemento.asString());
+		return newView;*/
+		return "Reporte generado.";
+				
 	}
 	
 	@javax.inject.Inject

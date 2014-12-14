@@ -197,8 +197,8 @@ public class ContabilizarAsistenciasView extends AbstractViewModel {
 	
 	@Named("Imprimir Reporte")
 	@DescribedAs(value = "El archivo se almacenará en el directorio 'reportes' del proyecto")
-	public void elegirFormato(final @Named("Formato") E_formato formato) throws JRException{
-		imprimirReporte(formato);		
+	public String elegirFormato(final @Named("Formato") E_formato formato) throws JRException{
+		return imprimirReporte(formato);		
 	}
 	
 	public E_formato default0ElegirFormato(final @Named("Formato") E_formato formato){

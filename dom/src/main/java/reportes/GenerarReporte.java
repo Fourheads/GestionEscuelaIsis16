@@ -99,7 +99,7 @@ public class GenerarReporte {
 		//nombreArchivo = reportes/(calificaciones o asistencia/(nombre)
 		
 		if(formato == E_formato.HojadeCálculo){
-			try{
+			
 				JRXlsExporter exporterXLS = new JRXlsExporter();
 				
 				exporterXLS.setExporterInput(new SimpleExporterInput(print));
@@ -112,12 +112,11 @@ public class GenerarReporte {
 				
 				exporterXLS.setConfiguration(configuration);
 				exporterXLS.exportReport();
-				}catch(Exception e){
-					System.out.println(e.getMessage());
-				}
+				
 		}else{
 			if(formato == E_formato.PDF){				
 				JasperExportManager.exportReportToPdfFile(print, nombreArchivo + ".pdf" );
+				
 			}
 		}
 		
