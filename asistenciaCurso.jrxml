@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="asistenciaCurso" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b6ff4566-3270-482d-b8ad-600a6c7802de">
-	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.zoom" value="0.75"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<style name="Title" forecolor="#FFFFFF" fontName="Times New Roman" fontSize="50" isBold="false" pdfFontName="Times-Bold"/>
@@ -42,9 +42,9 @@
 			<frame>
 				<reportElement mode="Opaque" x="0" y="0" width="802" height="65" forecolor="#006699" backcolor="#006699" uuid="b789f3da-bb1f-4b2b-a4d9-d56fb453c2df"/>
 				<staticText>
-					<reportElement style="Title" x="232" y="0" width="436" height="65" uuid="87155b03-2e1a-433b-b2b6-29ef9ac421e6"/>
+					<reportElement style="Title" x="1" y="0" width="801" height="65" uuid="87155b03-2e1a-433b-b2b6-29ef9ac421e6"/>
 					<textElement textAlignment="Center">
-						<font fontName="Times New Roman" size="48" isBold="false" isItalic="true"/>
+						<font fontName="Times New Roman" size="36" isBold="false" isItalic="true"/>
 					</textElement>
 					<text><![CDATA[Listado de asistencias]]></text>
 				</staticText>
@@ -57,11 +57,11 @@
 				<textFieldExpression><![CDATA[$F{curso}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="402" y="75" width="161" height="29" uuid="5a23a076-47da-4fbd-8243-301cc90dc001"/>
+				<reportElement x="344" y="75" width="161" height="29" uuid="5a23a076-47da-4fbd-8243-301cc90dc001"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="20"/>
 				</textElement>
-				<text><![CDATA[Intervalo de fechas: ]]></text>
+				<text><![CDATA[Intervalo: ]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="563" y="75" width="239" height="29" uuid="113a0d5b-1daa-4884-a05f-847676c05115"/>
