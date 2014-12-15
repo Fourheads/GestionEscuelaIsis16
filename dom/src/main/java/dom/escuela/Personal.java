@@ -57,6 +57,10 @@ import dom.escuela.Funcion.E_funciones;
 	@javax.jdo.annotations.Query(name = "findByDni", language = "JDOQL",
 		value ="SELECT FROM dom.simple.Personal, " +
 				" WHERE this.dni == :dni"),
+	@javax.jdo.annotations.Query(name = "ListarTodos", language = "JDOQL",
+		value ="SELECT FROM dom.simple.Personal, " +
+				" WHERE this.habilitado == 'S'" +
+				" order by this.apellido asc, this.nombre asc")
 } )
 
 @ObjectType("PERSONAL")

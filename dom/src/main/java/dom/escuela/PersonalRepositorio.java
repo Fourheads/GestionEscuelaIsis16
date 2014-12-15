@@ -243,6 +243,10 @@ public class PersonalRepositorio {
 			return  remPersonal + " fue eliminado";
 			
 	}
+    
+    public List<Personal> choices0RemovePersonal(@Named("Personal") Personal delPersonal, @Named("¿Está seguro?") Boolean seguro){
+    	return container.allMatches(new QueryDefault<Personal>(Personal.class, "ListarTodos"));
+    }
    
 	public String validateRemovePersonal(Personal delPersonal, Boolean seguro) {
 		if (!seguro) {
